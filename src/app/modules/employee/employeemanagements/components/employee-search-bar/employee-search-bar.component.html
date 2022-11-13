@@ -1,0 +1,83 @@
+<form [formGroup]="Form" class="example-form">
+  <c-container fluid>
+    <c-row>
+      <c-col>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>اسم الموظف</mat-label>
+          <input matInput [matAutocomplete]="auto_FullName" formControlName='fullname'>
+          <mat-autocomplete #auto_FullName="matAutocomplete" [displayWith]="displayEmployeeFn"
+            (optionSelected)='onEmployeeSelected($event.option.value)'>            
+            <ng-container>
+              <mat-option *ngFor="let emp of List_Employee_Filter | async" [value]="emp">
+                <small>{{ emp.fullname }}</small>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+          <button mat-raised-button matSuffix color="primary" (click)="searchEmployee()">...</button>
+        </mat-form-field>
+      </c-col>
+      <c-col>
+        
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>الوضع بالملاك</mat-label>
+          <input id="malakstate_name" matInput formControlName="malakstate_name" >
+        </mat-form-field>
+        
+      </c-col>
+    </c-row>
+    <c-row>
+      <c-col>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>رقم الإضبارة</mat-label>
+          <input id="id" matInput formControlName="id" (change)="idChanged()">
+        </mat-form-field>
+      </c-col>
+      <c-col>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="previousId()">
+          <
+        </button>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="nextId()">></button>
+      </c-col>
+    </c-row>
+    <c-row>
+      <c-col>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>رقم الذاتي السجل العام بالدولة</mat-label>
+          <input id="id" matInput formControlName="global_id" (change)="idChanged()">
+        </mat-form-field>
+      </c-col>
+      <c-col>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="previous_global_id()">
+          <
+        </button>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="next_global_id()">></button>
+      </c-col>
+    </c-row>
+    <c-row>
+      <c-col>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>رقم الحاسوب</mat-label>
+          <input id="id" matInput formControlName="computer_id" (change)="idChanged()">
+        </mat-form-field>
+      </c-col>
+      <c-col>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="previous_computer_id()">
+          <
+        </button>
+      </c-col>
+      <c-col>
+        <button mat-raised-button color="primary" (click)="next_computer_id()">></button>
+      </c-col>
+    </c-row>
+  </c-container>
+</form>
