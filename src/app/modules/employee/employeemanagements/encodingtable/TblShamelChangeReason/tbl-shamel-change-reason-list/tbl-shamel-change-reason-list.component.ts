@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelChangeReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelChangeReason';
 import { TblshamelchangereasonService } from 'src/app/modules/shared/services/employees_department/tblshamelchangereason.service';
@@ -20,7 +21,8 @@ export class TblShamelChangeReasonListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelChangeReasonService:TblshamelchangereasonService) {
+   private tBLShamelChangeReasonService:TblshamelchangereasonService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelChangeReasonService.List_ITBLShamelChangeReason == null ||
       tBLShamelChangeReasonService.List_ITBLShamelChangeReason.length ==0
      )
@@ -46,7 +48,7 @@ export class TblShamelChangeReasonListComponent implements OnInit {
 
    obj.action = action;
    const dialogRef = this.dialog.open(TblShamelChangeReasonAddComponent, {
-     width: '350px',
+     width: '550px',
      data:obj
    });
 
@@ -71,7 +73,12 @@ export class TblShamelChangeReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +95,28 @@ export class TblShamelChangeReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deleteChangeReason(obj:any){
-   this.tBLShamelChangeReasonService.delete(obj).subscribe
+   this.tBLShamelChangeReasonService.delete(obj.changereason_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

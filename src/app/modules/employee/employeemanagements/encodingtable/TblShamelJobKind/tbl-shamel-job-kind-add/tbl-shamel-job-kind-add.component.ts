@@ -33,12 +33,12 @@ export class TblShamelJobKindAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.jobkind_id = data.jobkind_id;
       this.local_data.jobkind_name = data.jobkind_name;
-      this.local_data.jobkind_fixed = data.course_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_JobKind_id.setValue(this.local_data.jobkind_id );
       this.frm_JobKind_name.setValue(this.local_data.jobkind_name );
-      if(this.local_data.jobkind_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_JobKind_fixed.setValue(true );
       else
       this.frm_JobKind_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelJobKindAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelJobKind ={jobkind_id:this.local_data.jobkind_id,jobkind_name:this.frm_JobKind_name.value,jobkind_fixed:this.frm_JobKind_fixed.value == true?1:0};
+    let x: ITBLShamelJobKind ={jobkind_id:this.local_data.jobkind_id,jobkind_name:this.frm_JobKind_name.value,Fixed:this.frm_JobKind_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

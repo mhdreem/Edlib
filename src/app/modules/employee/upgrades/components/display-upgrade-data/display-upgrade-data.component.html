@@ -1,0 +1,261 @@
+<form class="example-form" [formGroup]="Form" #form="ngForm">
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+    <mat-label>عام الترفيع</mat-label>
+    <input type="number"
+            matInput
+            [formControl]="UpgradeYear"
+            [matAutocomplete]="autoUpgradeYear"
+            >
+    <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
+    [displayWith]="displayUpgradeYearProperty.bind(this)">
+        <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
+        {{option.YEAR_ID}}
+        </mat-option>
+    </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>الفئة</mat-label>
+        <input type="text"
+                matInput
+                [formControl]="Class"
+                [matAutocomplete]="autoClass"
+                >
+        <mat-autocomplete #autoClass="matAutocomplete"
+        [displayWith]="displayClassProperty.bind(this)">
+        <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
+            {{option.class_name}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>الصفة الوظيفية</mat-label>
+        <input type="text"
+                matInput
+                [formControl]="JobName"
+                [matAutocomplete]="autoJobName"
+                >
+        <mat-autocomplete #autoJobName="matAutocomplete"
+        [displayWith]="displayJobNameProperty.bind(this)">
+        <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
+            {{option.jobname_name}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>درجة الكفاءة</mat-label>
+        <input type="text"
+                matInput
+                [formControl]="Rank"
+                [matAutocomplete]="autoRank"
+                >
+        <mat-autocomplete #autoRank="matAutocomplete"
+        [displayWith]="displayRankProperty.bind(this)">
+        <mat-option *ngFor="let option of filteredRankOptions | async" [value]="option.rank_id">
+            {{option.rank_name}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>اسم المعتمد</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="Accounter"
+               [matAutocomplete]="auto1" >
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayAccounterNameProperty.bind(this)">
+          <mat-option *ngFor="let option of filteredAccounterOptions | async" [value]="option.accounter_id">
+            {{option.accounter_name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>اسم الموظف</mat-label>
+        <input matInput 
+        [matAutocomplete]="auto" 
+        [formControl]='Autocomplete_EmployeeName_Ctrl'>
+      </mat-form-field>
+      <mat-autocomplete
+       #auto="matAutocomplete"
+       [displayWith]="displayFn">
+        <mat-option *ngIf="isLoading" class="is-loading">
+          <mat-spinner diameter="50"></mat-spinner>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let emp of filteredEmployeeNameList" [value]="emp">
+            <small>{{ emp.fullname }}</small>        
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>من إضبارة</mat-label>
+        <input matInput [formControl]="idStart">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>الى إضبارة</mat-label>
+        <input matInput [formControl]="idEnd">
+      </mat-form-field>
+
+      <mat-radio-group [formControl]="TypeDisplay">
+        <mat-radio-button value="1">عرض جميع العاملين</mat-radio-button>
+        <mat-radio-button value="2">عاملين ليس لديهم قرار ترفيع</mat-radio-button>
+        <mat-radio-button value="3">عاملين لديهم قرار ترفيع</mat-radio-button>
+        <mat-radio-button value="4">عرض العاملين المحجوب ترفيعهم</mat-radio-button>
+        <mat-radio-button value="5">عرض العاملين المؤخر ترفيعهم</mat-radio-button>
+      </mat-radio-group>
+</form>
+
+<button class="view" mat-raised-button color="primary" (click)="View()">عرض</button>
+
+<div class="table-wrap">
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+
+    <!-- Year_ID Column -->
+    <ng-container matColumnDef="Year_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>عام الترفيع </th>
+        <td mat-cell *matCellDef="let element">{{element?.Year_ID}}</td>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الإضبارة </th>
+        <td mat-cell *matCellDef="let element">{{element?.ID}}</td>
+    </ng-container>
+
+    <!-- ID Computer_ID -->
+    <ng-container matColumnDef="Computer_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الحاسوب </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.Computer_ID}}</td>
+    </ng-container>
+
+    <!-- Global_ID Column -->
+    <ng-container matColumnDef="Global_ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الحاسوب </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.Global_ID}}</td>
+    </ng-container>
+
+    <!-- FName Column -->
+    <ng-container matColumnDef="FName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الاسم </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.FName}}</td>
+    </ng-container>
+
+    <!-- LName Column -->
+    <ng-container matColumnDef="LName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الكنية </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.LName}}</td>
+    </ng-container>
+
+    <!-- Father Column -->
+    <ng-container matColumnDef="Father">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الأب </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.Father}}</td>
+    </ng-container>
+
+    <!-- Mother Column -->
+    <ng-container matColumnDef="Mother">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الأم </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelEmployee.Mother}}</td>
+    </ng-container>
+
+    <!-- class_name Column -->
+    <ng-container matColumnDef="class_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelClass.class_name}}</td>
+    </ng-container>
+
+    <!-- jobname_name Column -->
+    <ng-container matColumnDef="jobname_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelJobName.jobname_name}}</td>
+    </ng-container>
+
+    <!-- SalaryBefore Column -->
+    <ng-container matColumnDef="SalaryBefore">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الراتب الحالي </th>
+        <td mat-cell *matCellDef="let element">{{element?.SalaryBefore}}</td>
+    </ng-container>
+
+    <!-- QualityGrade Column -->
+    <ng-container matColumnDef="QualityGrade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>درجة الكفاءة </th>
+        <td mat-cell *matCellDef="let element">{{element?.QualityGrade}}</td>
+    </ng-container>
+
+    <!-- GradePercent Column -->
+    <ng-container matColumnDef="GradePercent">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>نسبة الترفيع </th>
+        <td mat-cell *matCellDef="let element">{{element?.GradePercent}}</td>
+    </ng-container>
+
+    <!-- Duration Column -->
+    <ng-container matColumnDef="Duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>مدة الاستحقاق </th>
+        <td mat-cell *matCellDef="let element">{{element?.Duration}}</td>
+    </ng-container>
+
+    <!-- BonusAmount Column -->
+    <ng-container matColumnDef="BonusAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>مبلغ العلاوة </th>
+        <td mat-cell *matCellDef="let element">{{element?.BonusAmount}}</td>
+    </ng-container>
+
+    <!-- SalaryAfter Column -->
+    <ng-container matColumnDef="SalaryAfter">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الراتب الجديد </th>
+        <td mat-cell *matCellDef="let element">{{element?.SalaryAfter}}</td>
+    </ng-container>
+
+    <!-- Qarar_Num Column -->
+    <ng-container matColumnDef="Qarar_Num">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم القرار </th>
+        <td mat-cell *matCellDef="let element">{{element?.Qarar_Num}}</td>
+    </ng-container>
+
+    <!-- Qarar_Date Column -->
+    <ng-container matColumnDef="Qarar_Date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار </th>
+        <td mat-cell *matCellDef="let element">{{element?.Qarar_Date | date:'yyyy/MM/dd'}}</td>
+    </ng-container>
+    
+    <!-- accounter_name Column -->
+    <ng-container matColumnDef="accounter_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعتمد </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelAccounter.accounter_name}}</td>
+    </ng-container>
+
+    <!-- AccounterSerial Column -->
+    <ng-container matColumnDef="AccounterSerial">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تسلسل المعتمد </th>
+        <td mat-cell *matCellDef="let element">{{element?.AccounterSerial}}</td>
+    </ng-container>
+
+    <!-- blockcases_name Column -->
+    <ng-container matColumnDef="blockcases_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>حجب الترفيع </th>
+        <td mat-cell *matCellDef="let element">{{element?.TBLShamelUpgradeBlockCases.blockcases_name}}</td>
+    </ng-container>
+
+    <!-- BlockReason_Name Column -->
+    <ng-container matColumnDef="BlockReason_Name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>سبب الحجب </th>
+        <td mat-cell *matCellDef="let element">{{element?.BlockReason_Name}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+    [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+    (click)="changeTableRowColor(idx)"></tr>
+</table>
+
+<mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+
+
+</div>

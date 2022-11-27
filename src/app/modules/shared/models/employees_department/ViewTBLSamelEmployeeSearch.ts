@@ -4,7 +4,7 @@ export interface ViewTBLSamelEmployeeSearch
     id?:number;
     payrol_ID?:string;
     computer_ID?:number;
-    global_ID?:number;
+    global_ID?:string;
     insurance_ID?:number;
       fName?:string;
     lName ?:string;

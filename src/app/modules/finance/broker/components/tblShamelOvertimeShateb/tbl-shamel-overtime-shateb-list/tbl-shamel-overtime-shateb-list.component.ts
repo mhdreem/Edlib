@@ -1,12 +1,14 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employee/employeemanagements/components/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employee/employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { TBLShamelArea } from 'src/app/modules/shared/models/employees_department/TBLShamelArea';
 import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
 import { TBLShamelYear } from 'src/app/modules/shared/models/employees_department/TBLShamelYear';
@@ -28,7 +30,10 @@ import { TblShamelOvertimeShatebModifyComponent } from '../tbl-shamel-overtime-s
   templateUrl: './tbl-shamel-overtime-shateb-list.component.html',
   styleUrls: ['./tbl-shamel-overtime-shateb-list.component.scss']
 })
-export class TblShamelOvertimeShatebListComponent implements OnInit {
+export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   rowClicked: number;
 
@@ -36,6 +41,8 @@ export class TblShamelOvertimeShatebListComponent implements OnInit {
     if(this.rowClicked === idx) this.rowClicked = -1;
     else this.rowClicked = idx;
   }
+  
+  
   
   overtime_shateb_List: TBLShamelOverTimeShateb[] = [];
   selected_overtime_shateb: TBLShamelOverTimeShateb;
@@ -385,7 +392,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit {
                 }
 
               )
-
+          this.dataSource.paginator = this.paginator;
           this.snackBar.open('تم الحذف', '', {
             duration: 2000,
           });
@@ -411,10 +418,13 @@ export class TblShamelOvertimeShatebListComponent implements OnInit {
       dialogRef.afterClosed().toPromise().then(result => {
         this.FillTable();
 
-        if (result)
+        if (result){
+          this.dataSource.paginator = this.paginator;
+        
           this.snackBar.open('تم التعديل', '', {
             duration: 2000,
           });
+        }
       });
   }
   }
@@ -456,5 +466,11 @@ export class TblShamelOvertimeShatebListComponent implements OnInit {
   OnSelectArea(event: MatAutocompleteSelectedEvent) {
 
 
+  }
+
+  ngAfterViewInit() {
+
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

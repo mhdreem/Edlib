@@ -157,8 +157,8 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
 
     console.log(this.selected_employee_Punishment);
     const dialogRef = this.dialog.open(TblshamelscpunishmentmodifyComponent, {
-      height: '80%',
-      width: '80%',
+      height: '60%',
+      width: '35%',
       data: {obj: this.selected_employee_Punishment,id:this.selected_employee_Punishment.id}
     });
    
@@ -189,25 +189,20 @@ try{
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
      
-          const snack = this.snackBar.open('سوف يتم الآن الحذف');
-         
-
-
           this.ShamelSCPunishmentService.delete(element.serial).toPromise().then(res=> 
             {
-              snack.dismiss();
 
               console.log(res);
-              if (res==1)
+              if (res==1){
                 this.FillTable();
+                this.snackBar.open('تم الحذف بنجاح', '', {
+                  duration: 3000,
+                });
+              }
 
             });
-            this.snackBar.open('تم الحذف', 'Fechar', {
-              duration: 2000,
-            });
+            
 
-            this.snackBar.dismiss();
- 
          
         }
       });
@@ -226,8 +221,8 @@ try{
       this.selected_employee_Punishment = element;
 
       const dialogRef = this.dialog.open(TblshamelscpunishmentmodifyComponent, {
-        height: '80%',
-        width: '80%',
+        height: '60%',
+        width: '35%',
         data: {obj: this.selected_employee_Punishment,id:this.selected_employee_Punishment.id}
       });
   

@@ -91,16 +91,24 @@ import {
 
 import { IconModule } from '@coreui/icons-angular';
 
-import { ListTBLShamelUpgradeComponent } from './components/TBLShamelUpgrade/list-tblshamel-upgrade/list-tblshamel-upgrade.component';
-import { UpgradePrepareAllComponent } from './components/upgrade-prepare-all/upgrade-prepare-all.component';
 import { UpgradeRoutingModule } from './upgrade-routing.module';
 import { UpgradeComponent } from './upgrade.component';
 import { PrintReferralQararsComponent } from './components/print-referral-qarars/print-referral-qarars.component';
-import { PrintUpgradeQararsComponent } from './components/print-upgrade-qarars/print-upgrade-qarars.component';
+import { PrintUpgradeQararsComponent } from './components/print-upgrade-qarars/print-upgrade-qarars-list/print-upgrade-qarars.component';
 import { ReplaceQararNumbersComponent } from './components/replace-qarar-numbers/replace-qarar-numbers.component';
 import { UpgradePromotionQararsComponent } from './components/upgrade-promotion-qarars/upgrade-promotion-qarars.component';
 import { UpgradeQararsAdjustPrintDialogComponent } from './components/upgrade-qarars-adjust-print-dialog/upgrade-qarars-adjust-print-dialog.component';
-
+import { PrepareUpgradesFileComponent } from './components/prepare-upgrades-file/prepare-upgrades-file.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { RefreshAccounterMalakComponent } from './components/refresh-accounter-malak/refresh-accounter-malak.component';
+import { ClearUpgradesFileComponent } from './components/clear-upgrades-file/clear-upgrades-file.component';
+import { FixUpgradeYearListComponent } from './components/fix-Upgrade-Year/fix-upgrade-year-list/fix-upgrade-year-list.component';
+import { FixUpgradeYearModifyComponent } from './components/fix-Upgrade-Year/fix-upgrade-year-modify/fix-upgrade-year-modify.component';
+import { RemainingOldQararsComponent } from './components/remaining-old-qarars/remaining-old-qarars.component';
+import { DisplayUpgradeDataComponent } from './components/display-upgrade-data/display-upgrade-data.component';
+import { RefreshEmployeeCartComponent } from './components/refresh-employee-cart/refresh-employee-cart.component';
+import { IncreaseSalaryMarsoomComponent } from './components/increase-salary-marsoom/increase-salary-marsoom.component';
+import { PrintUpgradeQararsModifyComponent } from './components/print-upgrade-qarars/print-upgrade-qarars-modify/print-upgrade-qarars-modify.component';
 
 /////////////////////////////
 
@@ -124,14 +132,22 @@ export const MY_FORMATS = {
 @NgModule({
   declarations: [
    
-    ListTBLShamelUpgradeComponent,
-    UpgradePrepareAllComponent,
     UpgradeComponent,
     PrintReferralQararsComponent,
     PrintUpgradeQararsComponent,
     ReplaceQararNumbersComponent,
     UpgradePromotionQararsComponent,
-    UpgradeQararsAdjustPrintDialogComponent
+    UpgradeQararsAdjustPrintDialogComponent,
+    PrepareUpgradesFileComponent,
+    RefreshAccounterMalakComponent,
+    ClearUpgradesFileComponent,
+    FixUpgradeYearListComponent,
+    FixUpgradeYearModifyComponent,
+    RemainingOldQararsComponent,
+    DisplayUpgradeDataComponent,
+    RefreshEmployeeCartComponent,
+    IncreaseSalaryMarsoomComponent,
+    PrintUpgradeQararsModifyComponent,
   ],
   imports: [  
     CommonModule,
@@ -196,7 +212,8 @@ export const MY_FORMATS = {
  TabsModule,
  UtilitiesModule,
  IconModule,
- UpgradeRoutingModule
+ UpgradeRoutingModule,
+ MatProgressBarModule
   ],
   exports:[
   

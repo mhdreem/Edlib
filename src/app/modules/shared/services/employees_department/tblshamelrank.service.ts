@@ -45,7 +45,7 @@ export class TblshamelrankService {
   delete(rank_id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelRank/delete/"+rank_id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelRank/"+rank_id,options);  
   }
 
   add(obj : ITBLShamelRank )  {

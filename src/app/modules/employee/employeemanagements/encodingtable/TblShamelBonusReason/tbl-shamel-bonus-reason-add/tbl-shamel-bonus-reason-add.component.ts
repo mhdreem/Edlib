@@ -33,12 +33,12 @@ export class TblShamelBonusReasonAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.bonusreason_id = data.bonusreason_id;
       this.local_data.bonusreason_name = data.bonusreason_name;
-      this.local_data.bonusreason_fixed = data.bonusreason_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_BonusReason_id.setValue(this.local_data.bonusreason_id );
       this.frm_BonusReason_name.setValue(this.local_data.bonusreason_name );
-      if(this.local_data.bonusreason_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_BonusReason_fixed.setValue(true );
       else
       this.frm_BonusReason_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelBonusReasonAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: TBLShamelBonusReason ={bonusreason_id:this.local_data.bonusreason_id,bonusreason_name:this.frm_BonusReason_name.value,bonusreason_fixed:this.frm_BonusReason_fixed.value == true?1:0};
+    let x: TBLShamelBonusReason ={bonusreason_id:this.local_data.bonusreason_id,bonusreason_name:this.frm_BonusReason_name.value,Fixed:this.frm_BonusReason_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

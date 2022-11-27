@@ -12,7 +12,7 @@ export interface ITBLShamelSCEducation {
     certificate_id?:number  ;
     specification_id?:number  ;
     country_id?:number  ;
-    city_id?:number;
+    City_ID?:number;
     rank_id?:number;
     certificate_name?:string  ;
     specification_name?:string  ;

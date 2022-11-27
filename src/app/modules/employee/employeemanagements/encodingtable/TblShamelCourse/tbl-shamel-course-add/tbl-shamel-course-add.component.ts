@@ -33,12 +33,12 @@ export class TblShamelCourseAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.course_id = data.course_id;
       this.local_data.course_name = data.course_name;
-      this.local_data.course_fixed = data.course_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Course_id.setValue(this.local_data.course_id );
       this.frm_Course_name.setValue(this.local_data.course_name );
-      if(this.local_data.course_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Course_fixed.setValue(true );
       else
       this.frm_Course_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelCourseAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelCourse ={course_id:this.local_data.course_id,course_name:this.frm_Course_name.value,course_fixed:this.frm_Course_fixed.value == true?1:0};
+    let x: ITBLShamelCourse ={course_id:this.local_data.course_id,course_name:this.frm_Course_name.value,Fixed:this.frm_Course_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { EmployeePageService } from '../employee-page-service';
-import { JobServiceDataAdjustPrintDialogComponent } from '../job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { JobServiceDataAdjustPrintDialogComponent } from '../service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 
 @Component({
   selector: 'app-print-employee-card',

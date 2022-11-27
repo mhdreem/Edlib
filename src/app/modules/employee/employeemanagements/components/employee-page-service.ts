@@ -33,10 +33,7 @@ export class EmployeePageService {
     this.Subject_Selected_ViewTBLSamelEmployee.subscribe(
       data=>
       {
-        console.log('start of this.Subject_Selected_ViewTBLSamelEmployee.subscribe');
-        console.log(data);
-        console.log('end  of this.Subject_Selected_ViewTBLSamelEmployee.subscribe');
-
+       
 
         this.Selected_ViewTBLSamelEmployee = data;
 

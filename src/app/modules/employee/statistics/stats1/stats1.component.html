@@ -11,257 +11,258 @@
                 </mat-panel-title>
                 <mat-panel-description>
                     من أجل التحكم بالبحث انقر هنا
-                    <mat-icon>account_circle</mat-icon>
+                    <mat-icon fontIcon="search"></mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <form [formGroup]="Form">
+                <button class="clear" mat-raised-button color="primary" (click)="clearForm()">مسح محتوى حقول البحث</button>
+                <div class="columns">
+                    <div class="col-3">
 
-                <div class="col-4">
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>رقم الإضبارة</mat-label>
-                            <input matInput [formControl]="fcl_ID">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label> رقم الشطب</mat-label>
-                            <input matInput [formControl]="fcl_PAYROL_ID">
-                        </mat-form-field>
-                    </div>
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>رقم التأميني</mat-label>
-                            <input matInput [formControl]="fcl_INSURANCE_ID">
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>رقم الحاسب</mat-label>
-                            <input matInput [formControl]="fcl_COMPUTER_ID">
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>رقم الوطني</mat-label>
-                            <input matInput [formControl]="fcl_ID_NUMBER">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>رقم الذاتي</mat-label>
-                            <input matInput [formControl]="fcl_GLOBAL_ID">
-                        </mat-form-field>
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-4">
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> اسم الوظيفة</mat-label>
-                            <input type="text" matInput [formControl]="fcl_JobName" [matAutocomplete]="auto_jobname_id">
-                            <mat-autocomplete #auto_jobname_id="matAutocomplete"
-                                [displayWith]="displayJobNameProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredJobNameOptions | async"
-                                    [value]="option.jobname_id">
-                                    {{option.jobname_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> الفئة </mat-label>
-                            <input type="text" matInput [formControl]="fcl_Class" [matAutocomplete]="auto_class_id">
-                            <mat-autocomplete #auto_class_id="matAutocomplete"
-                                [displayWith]="displayClassProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredClassOptions  | async"
-                                    [value]="option.class_id">
-                                    {{option.class_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> المركز الوظيفي </mat-label>
-                            <input type="text" matInput [formControl]="fcl_JobKind" [matAutocomplete]="auto_jobkind_id">
-                            <mat-autocomplete #auto_jobkind_id="matAutocomplete"
-                                [displayWith]="displayJobKindProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredJobKindOptions  | async"
-                                    [value]="option.jobkind_id">
-                                    {{option.jobkind_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> القسم </mat-label>
-                            <input type="text" matInput [formControl]="fcl_department"
-                                [matAutocomplete]="auto_department_id">
-                            <mat-autocomplete #auto_department_id="matAutocomplete"
-                                [displayWith]="displayDeparmentProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredDepartmentOptions | async"
-                                    [value]="option.department_id">
-                                    {{option.department_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-                    <div>
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> سبب التبدل</mat-label>
-                            <input type="text" matInput [formControl]="fcl_changereason"
-                                [matAutocomplete]="auto_changereason_id">
-                            <mat-autocomplete #auto_changereason_id="matAutocomplete"
-                                [displayWith]="displayChangeReasonProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredChangeReasonOptions | async"
-                                    [value]="option.changereason_id">
-                                    {{option.changereason_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>الاسم</mat-label>
-                            <input matInput [formControl]="fcl_FNAME">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label> الكنية</mat-label>
-                            <input matInput [formControl]="fcl_LNAME">
-                        </mat-form-field>
-                    </div>
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>الأب</mat-label>
-                            <input matInput [formControl]="fcl_FATHER">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label> الأم</mat-label>
-                            <input matInput [formControl]="fcl_MOTHER">
-                        </mat-form-field>
-                    </div>
-
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>الراتب المقطوع</mat-label>
-                            <input matInput [formControl]="fcl_Salary">
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
-                                <mat-label>التسلسل من </mat-label>
-                                <input matInput [formControl]="fcl_AccounterSerail_From">
+                                <mat-label>رقم الإضبارة</mat-label>
+                                <input matInput [formControl]="ID">
                             </mat-form-field>
                         </div>
-                        <div class="form-group col-sm-6">
+    
+                        <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
-                                <mat-label>التسلسل إلى </mat-label>
-                                <input matInput [formControl]="fcl_AccounterSerail_To">
+                                <mat-label> رقم الشطب</mat-label>
+                                <input matInput [formControl]="PAYROL_ID">
                             </mat-form-field>
                         </div>
-
+    
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>رقم التأميني</mat-label>
+                                <input matInput [formControl]="INSURANCE_ID">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>رقم الحاسب</mat-label>
+                                <input matInput [formControl]="COMPUTER_ID">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>رقم الوطني</mat-label>
+                                <input matInput [formControl]="ID_NUMBER">
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>رقم الذاتي</mat-label>
+                                <input matInput [formControl]="GLOBAL_ID">
+                            </mat-form-field>
+                        </div>
+    
+    
+    
                     </div>
-
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>اسم المعتمد</mat-label>
-                            <input matInput [formControl]="fcl_ACCOUNTER_ID">
-                        </mat-form-field>
+    
+                    <div class="col-3">
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> اسم الوظيفة</mat-label>
+                                <input type="text" matInput [formControl]="JobName" [matAutocomplete]="auto_jobname_id">
+                                <mat-autocomplete #auto_jobname_id="matAutocomplete"
+                                    [displayWith]="displayJobNameProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredJobNameOptions | async"
+                                        [value]="option.jobname_id">
+                                        {{option.jobname_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> الفئة </mat-label>
+                                <input type="text" matInput [formControl]="Class" [matAutocomplete]="auto_class_id">
+                                <mat-autocomplete #auto_class_id="matAutocomplete"
+                                    [displayWith]="displayClassProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredClassOptions  | async"
+                                        [value]="option.class_id">
+                                        {{option.class_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> المركز الوظيفي </mat-label>
+                                <input type="text" matInput [formControl]="JobKind" [matAutocomplete]="auto_jobkind_id">
+                                <mat-autocomplete #auto_jobkind_id="matAutocomplete"
+                                    [displayWith]="displayJobKindProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredJobKindOptions  | async"
+                                        [value]="option.jobkind_id">
+                                        {{option.jobkind_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> القسم </mat-label>
+                                <input type="text" matInput [formControl]="Department"
+                                    [matAutocomplete]="auto_department_id">
+                                <mat-autocomplete #auto_department_id="matAutocomplete"
+                                    [displayWith]="displayDeparmentProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredDepartmentOptions | async"
+                                        [value]="option.department_id">
+                                        {{option.department_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+                        <div>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> سبب التبدل</mat-label>
+                                <input type="text" matInput [formControl]="changereason"
+                                    [matAutocomplete]="auto_changereason_id">
+                                <mat-autocomplete #auto_changereason_id="matAutocomplete"
+                                    [displayWith]="displayChangeReasonProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredChangeReasonOptions | async"
+                                        [value]="option.changereason_id">
+                                        {{option.changereason_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+                        
+    
+                        
+                    </div>
+    
+                    <div class="col-3">
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>الاسم</mat-label>
+                                <input matInput [formControl]="FNAME">
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label> الكنية</mat-label>
+                                <input matInput [formControl]="LNAME">
+                            </mat-form-field>
+                        </div>
+    
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>الأب</mat-label>
+                                <input matInput [formControl]="FATHER">
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label> الأم</mat-label>
+                                <input matInput [formControl]="MOTHER">
+                            </mat-form-field>
+                        </div>
+    
+    
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field appearance="fill">
+                                <mat-label>الراتب المقطوع</mat-label>
+                                <input matInput [formControl]="Salary">
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <div class="form-group col-sm-6">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>التسلسل من </mat-label>
+                                    <input matInput [formControl]="AccounterSerail_From">
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>التسلسل إلى </mat-label>
+                                    <input matInput [formControl]="AccounterSerail_To">
+                                </mat-form-field>
+                            </div>
+    
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> المعتمد</mat-label>
+                                <input type="text" matInput [formControl]="ACCOUNTER_ID"
+                                    [matAutocomplete]="auto_ACCOUNTER_ID">
+                                <mat-autocomplete #auto_ACCOUNTER_ID="matAutocomplete"
+                                    [displayWith]="displayAccounterProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredAccounterOptions | async"
+                                        [value]="option.accounter_id">
+                                        {{option.accounter_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="col-3">
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> آخر وضع وظيفي</mat-label>
+                                <input type="text" matInput [formControl]="MalakState"
+                                    [matAutocomplete]="auto_MalakState">
+                                <mat-autocomplete #auto_MalakState="matAutocomplete"
+                                    [displayWith]="displayMalakStateProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredMalakStateOptions | async"
+                                        [value]="option.malakstate_id">
+                                        {{option.malakstate_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> الاشتراك</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">جميع العاملين</mat-option>
+                                    <mat-option value="3">مشترك بالتأمينات الاجتماعية</mat-option>
+                                    <mat-option value="2">مشترك بالتأمين والمعاشات</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+    
+    
+    
+                        <div class="form-group col-sm-12">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label> الوضع ضمن الملاك</mat-label>
+                                <input type="text" matInput [formControl]="MalakState"
+                                    [matAutocomplete]="auto_MalakState">
+                                <mat-autocomplete #auto_MalakState="matAutocomplete"
+                                    [displayWith]="displayMalakStateProperty.bind(this)">
+                                    <mat-option *ngFor="let option of filteredMalakStateOptions | async"
+                                        [value]="option.malakstate_id">
+                                        {{option.malakstate_name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        
                     </div>
                 </div>
-
-
-                <div class="col-4">
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> آخر وضع وظيفي</mat-label>
-                            <input type="text" matInput [formControl]="fcl_MalakState"
-                                [matAutocomplete]="auto_MalakState">
-                            <mat-autocomplete #auto_MalakState="matAutocomplete"
-                                [displayWith]="displayMalakStateProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredMalakStateOptions | async"
-                                    [value]="option.malakstate_id">
-                                    {{option.malakstate_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> الاشتراك</mat-label>
-                            <mat-select>
-                                <mat-option value="1">جميع العاملين</mat-option>
-                                <mat-option value="3">مشترك بالتأمينات الاجتماعية</mat-option>
-                                <mat-option value="2">مشترك بالتأمين والمعاشات</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-
-
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> الوضع ضمن الملاك</mat-label>
-                            <input type="text" matInput [formControl]="fcl_MalakState"
-                                [matAutocomplete]="auto_MalakState">
-                            <mat-autocomplete #auto_MalakState="matAutocomplete"
-                                [displayWith]="displayMalakStateProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredMalakStateOptions | async"
-                                    [value]="option.malakstate_id">
-                                    {{option.malakstate_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div class="form-group col-sm-12">
-                        <mat-form-field class="example-full-width" appearance="fill">
-                            <mat-label> المعتمد</mat-label>
-                            <input type="text" matInput [formControl]="fcl_ACCOUNTER_ID"
-                                [matAutocomplete]="auto_ACCOUNTER_ID">
-                            <mat-autocomplete #auto_ACCOUNTER_ID="matAutocomplete"
-                                [displayWith]="displayAccounterProperty.bind(this)">
-                                <mat-option *ngFor="let option of filteredAccounterOptions | async"
-                                    [value]="option.accounter_id">
-                                    {{option.accounter_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                </div>
+                
 
 
             </form>
@@ -271,51 +272,116 @@
 
     </mat-accordion>
 </div>
-
+<button class="search" mat-raised-button color="primary" (click)="ExcuteSearch()">عرض السجلات</button>
 <div class="col-md-12">
     <div class="table-wrap">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-
             <!-- certificate_name Column -->
             <ng-container matColumnDef="ID">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الإضبارة</th>
                 <td mat-cell *matCellDef="let element">{{element?.ID}}</td>
             </ng-container>
 
-            <!-- specification_name Column -->
-            <ng-container matColumnDef="FullName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>الاختصاص</th>
-                <td mat-cell *matCellDef="let element">{{element?.fullname}}</td>
-            </ng-container>
-
-            <!-- graduationyear Column -->
-            <ng-container matColumnDef="PAYROL_ID">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>PAYROL_ID</th>
-                <td mat-cell *matCellDef="let element">{{element?.PAYROL_ID}}</td>
-            </ng-container>
-
-
-
-            <!-- country_name Column -->
             <ng-container matColumnDef="COMPUTER_ID">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>COMPUTER_ID</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الحاسوب</th>
                 <td mat-cell *matCellDef="let element">{{element?.COMPUTER_ID}}</td>
             </ng-container>
 
-
-
             <!-- rank_name Column -->
             <ng-container matColumnDef="GLOBAL_ID">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>GLOBAL_ID</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الرقم الذاتي</th>
                 <td mat-cell *matCellDef="let element">{{element?.GLOBAL_ID}}</td>
             </ng-container>
 
             <!-- studyduration Column -->
             <ng-container matColumnDef="INSURANCE_ID">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>INSURANCE_ID</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الرقم التأميني</th>
                 <td mat-cell *matCellDef="let element">{{element?.INSURANCE_ID }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="PAYROL_ID">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الشطب</th>
+                <td mat-cell *matCellDef="let element">{{element?.PAYROL_ID }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="FNAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الاسم</th>
+                <td mat-cell *matCellDef="let element">{{element?.FNAME }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="LNAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الكنية</th>
+                <td mat-cell *matCellDef="let element">{{element?.LNAME }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="FATHER">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الأب</th>
+                <td mat-cell *matCellDef="let element">{{element?.FATHER }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="MOTHER">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الأم</th>
+                <td mat-cell *matCellDef="let element">{{element?.MOTHER }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="JOBNAME_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>اسم الوظيفة</th>
+                <td mat-cell *matCellDef="let element">{{element?.JOBNAME_NAME}}</td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="ACCOUNTER_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعتمد</th>
+                <td mat-cell *matCellDef="let element">{{element?.ACCOUNTER_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ACCOUNTER_ID">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم التسلسل</th>
+                <td mat-cell *matCellDef="let element">{{element?.ACCOUNTER_ID}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="SALARY">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الراتب المقطوع</th>
+                <td mat-cell *matCellDef="let element">{{element?.SALARY}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="INSURANCESALARY">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الراتب التأميني</th>
+                <td mat-cell *matCellDef="let element">{{element?.INSURANCESALARY}}</td>
+            </ng-container>
+
+            
+
+            <ng-container matColumnDef="MALAKSTATE_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الوضع بالملاك</th>
+                <td mat-cell *matCellDef="let element">{{element?.MALAKSTATE_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="CHANGEDATE">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ التبديل</th>
+                <td mat-cell *matCellDef="let element">{{element?.CHANGEDATE | date:'yyyy/MM/dd'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="CHANGEREASON_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>آخر سبب تبديل</th>
+                <td mat-cell *matCellDef="let element">{{element?.CHANGEREASON_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="DOCUMENTTYPE_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>نوع المستند</th>
+                <td mat-cell *matCellDef="let element">{{element?.DOCUMENTTYPE_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="DOC_NUMBER">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم المستند</th>
+                <td mat-cell *matCellDef="let element">{{element?.DOC_NUMBER}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="DOC_DATE">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ المستند</th>
+                <td mat-cell *matCellDef="let element">{{element?.DOC_DATE | date:'yyyy/MM/dd'}}</td>
             </ng-container>
 
 
@@ -323,10 +389,14 @@
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+            [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+            (click)="changeTableRowColor(idx)"></tr>
         </table>
 
-        <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+        <mat-paginator showFirstLastButtons
+        #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)"></mat-paginator>
 
 
     </div>

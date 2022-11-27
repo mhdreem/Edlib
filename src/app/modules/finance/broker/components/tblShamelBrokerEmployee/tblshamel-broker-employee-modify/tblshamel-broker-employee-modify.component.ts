@@ -105,15 +105,17 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         lname: new FormControl<string | null>(null, [Validators.required]),
         father: new FormControl<string | null>(null, [Validators.required]),
         mother: new FormControl<string | null>(null, [Validators.required]),
-        birthdate: new FormControl<Date | null>(null, [Validators.required]),
         servicedayes: new FormControl<number | null>(null, [Validators.required]),
         sex_name: new FormControl<string | null>(null, [Validators.required]),
-        enterusername: new FormControl<string | null>(null, [Validators.required]),
-        enterdate: new FormControl<Date | null>(null, [Validators.required]),
-        entertime: new FormControl<string | null>(null, [Validators.required]),
-        modifyusername: new FormControl<string | null>(null, [Validators.required]),
-        modifydate: new FormControl<Date | null>(null, [Validators.required]),
-        modifytime: new FormControl<string | null>(null, [Validators.required]),
+        enterusername: new FormControl<string | null>(null, []),
+        enterdate: new FormControl<Date | null>(null, []),
+        entertime: new FormControl<string | null>(null, []),
+        modifyusername: new FormControl<string | null>(null, []),
+        modifydate: new FormControl<Date | null>(null, []),
+        modifytime: new FormControl<string | null>(null, []),
+        birthdateDay: new FormControl<number | null>(null, [Validators.required]),
+        birthdateMonth: new FormControl<number | null>(null, [Validators.required]),
+        birthdateYear: new FormControl<number | null>(null, [Validators.required]),
 
       }, Uniqe(this.tblShamelBrokerEmployeeService));
 
@@ -152,8 +154,11 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
       if (this.selected_broker_employee != null && this.selected_broker_employee.mother != null)
         this.Form.controls['mother'].setValue(this.selected_broker_employee?.mother);
 
-      if (this.selected_broker_employee != null && this.selected_broker_employee.birthdate != null)
-        this.Form.controls['birthdate'].setValue(moment(this.selected_broker_employee?.birthdate).toDate());
+      if (this.selected_broker_employee != null && this.selected_broker_employee.birthdate != null){
+        this.Form.controls['birthdateDay'].setValue(+moment(this.selected_broker_employee?.birthdate).date());
+        this.Form.controls['birthdateMonth'].setValue(+moment(this.selected_broker_employee?.birthdate).month()+1);
+        this.Form.controls['birthdateYear'].setValue(+moment(this.selected_broker_employee?.birthdate).year());
+      }
 
       if (this.selected_broker_employee != null && this.selected_broker_employee.servicedayes != null)
         this.Form.controls['servicedayes'].setValue(this.selected_broker_employee?.servicedayes);
@@ -198,6 +203,47 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public getValue() {
+    try {
+
+      if (this.selected_broker_employee != null) {
+
+        if (this.Form.controls['serail'].value != null)
+          this.selected_broker_employee.serial = this.Form.controls['serail'].value;
+
+
+        if (this.Form.controls['fname'].value != null)
+          this.selected_broker_employee.fname = this.Form.controls['fname'].value;
+
+        if (this.Form.controls['lname'].value != null)
+          this.selected_broker_employee.lname = this.Form.controls['lname'].value;
+
+        if (this.Form.controls['father'].value != null)
+          this.selected_broker_employee.father = this.Form.controls['father'].value;
+
+        if (this.Form.controls['mother'].value != null)
+          this.selected_broker_employee.mother = this.Form.controls['mother'].value;
+
+
+
+        if (this.Form.controls['servicedayes'].value != null)
+          this.selected_broker_employee.servicedayes = this.Form.controls['servicedayes'].value;
+
+
+        if (this.Form.controls['birthdateDay'].value != null && this.Form.controls['birthdateMonth'].value != null && this.Form.controls['birthdateYear'].value != null)
+          this.selected_broker_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate();
+
+        if (this.Form.controls['sex_name'].value != null)
+          this.selected_broker_employee.sex_name = this.Form.controls['sex_name'].value;
+
+
+      }
+    } catch (ex: any) {
+
+    }
+
+  }
+
   public async Save() {
 
 
@@ -206,6 +252,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
     if (!this.Form.valid == true) {
       return;
     }
+    this.getValue();
 
 
     if (this.selected_broker_employee &&

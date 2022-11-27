@@ -1,5 +1,5 @@
 import {AbstractControl,AsyncValidatorFn,ValidationErrors,} from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
@@ -15,10 +15,7 @@ export function Validator_GLOBAL_ID( empService:EmployeeServiceService,
             if (!value_From_Control ||
                 value_From_Control.length == 0
             )
-                return new Promise(
-                    resolve => {
-                        null
-                    });
+                return of(null);
 
 
                     if (pageEmployee.Selected_TBLShamelEmployee != null &&

@@ -33,12 +33,12 @@ export class TblShamelDepartmentAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.department_id = data.department_id;
       this.local_data.department_name = data.department_name;
-      this.local_data.department_fixed = data.department_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Department_id.setValue(this.local_data.department_id );
       this.frm_Department_name.setValue(this.local_data.department_name );
-      if(this.local_data.department_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Department_fixed.setValue(true );
       else
       this.frm_Department_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelDepartmentAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelDepartment ={department_id:this.local_data.department_id,department_name:this.frm_Department_name.value,department_fixed:this.frm_Department_fixed.value == true?1:0};
+    let x: ITBLShamelDepartment ={department_id:this.local_data.department_id,department_name:this.frm_Department_name.value,Fixed:this.frm_Department_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

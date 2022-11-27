@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ITBLShamelJobName } from '../../models/employees_department/ITBLShamelJobName';
+import { ITBLShamelUpgradeJobState } from '../../models/employees_department/itblshamelUpgradeJobState';
+import { AddUpgradeToAllEmployeeRequest } from '../../models/employees_department/tblshamelupgrade_help/add-upgrade-to-all-employee-request';
 import { CountEmployeeAndQararRequest } from '../../models/employees_department/tblshamelupgrade_help/CountEmployeeAndQararRequest';
 import { CountEmployeeAndQararResponse } from '../../models/employees_department/tblshamelupgrade_help/CountEmployeeAndQararResponse';
 
@@ -46,6 +49,20 @@ export class TBLShamelUpgradeService {
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +`TBLShamelUpgrade/Get_Upgrade_Max_Qarar_Num/${year_id}`,options);      
+    return this.httpClient.get(this.RestUrl +`TBLShamelUpgrade/Get_Upgrade_Max_Qarar_Num/${year_id}`,options) as Observable<number>;      
+  }
+
+  AddUpgradeToAllEmployee(Reuest:AddUpgradeToAllEmployeeRequest)  {
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+    const options = {  headers: headers };  
+    return this.httpClient.post<CountEmployeeAndQararResponse>(this.RestUrl +"TBLShamelUpgrade/CountEmployeeAndQarar", Reuest,options);      
+  }
+
+  UpgradeJobState(Reuest:ITBLShamelUpgradeJobState, blocked: number, yearId: number)  {
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/Upgrade_JobState/"+blocked+'/'+yearId, Reuest,options);      
   }
 }

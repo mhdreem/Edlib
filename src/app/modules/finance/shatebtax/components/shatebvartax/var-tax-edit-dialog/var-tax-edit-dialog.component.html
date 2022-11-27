@@ -50,13 +50,23 @@
             <input matInput formControlName="fcl_documentnum" required>
         </mat-form-field>
 
-        <mat-form-field color="primary" class="" appearance="fill">
-            <mat-label>تاريخ المستند</mat-label>
-            <input matInput [matDatepicker]="picker2" formControlName="fcl_documentdate" required>
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+        <div class="date">
+          <span>تاريخ المستند:</span>
+          <div class="content">
+            <mat-form-field class="example-full-width small-width" appearance="fill">
+              <mat-label>اليوم</mat-label>
+              <input type="number" matInput formControlName="documentdate_Day" placeholder="ex: 21">
+            </mat-form-field>
+            <mat-form-field class="example-full-width small-width" appearance="fill">
+              <mat-label>الشهر</mat-label>
+              <input type="number" matInput formControlName="documentdate_Month" placeholder="ex: 1">
+            </mat-form-field>
+            <mat-form-field class="example-full-width small-width" appearance="fill">
+              <mat-label>العام</mat-label>
+              <input type="number" matInput formControlName="documentdate_Year" placeholder="ex: 2023">
+            </mat-form-field>
+          </div>
+        </div>
 
         <mat-form-field class="example-full-width fitContent" appearance="fill">
             <mat-label>الحسميات</mat-label>

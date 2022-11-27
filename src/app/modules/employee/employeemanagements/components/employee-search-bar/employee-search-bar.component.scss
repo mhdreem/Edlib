@@ -1,32 +1,28 @@
+:host
+{
+    font-size: small;
+}
 
-.example-form {
+.mat-form-field
+{
+    width: 100% !important;
+}
 
-    min-width: 150px;
-    width: 100%;
-    font-size: 12px; // example
+
+.mat-form-field-infix
+{
+    width: 100% !important;
+}
 
 
   button{
-    margin: 3px;
+   line-height: 3;
     color: white;
-    font-size: 10px;
-    line-height: 18px;
+    font-size: smaller;
     height: auto;
     width: auto;
 }
 
 
-    
-  }
+   
 
-
-.full-width
-{
-  width: 100%;
-}
-
-
-.f
-{
-  font-size: 10;
-}

@@ -46,7 +46,7 @@ export class TBLShamelBonusService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelBonus/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelBonus/"+id,options);  
   }
 
   add(obj : TBLShamelBonus )  {

@@ -1,6 +1,6 @@
 export interface TblShamelUpgradeYear
 {
-    year_id?:number ;
-    upgradestart:Date;
+    YEAR_ID?:number ;
+    UpgradeStart:Date;
     UpgradeEnd :Date;
 }

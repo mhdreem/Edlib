@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelRank } from 'src/app/modules/shared/models/employees_department/ITBLShamelRank';
 import { TblshamelrankService } from 'src/app/modules/shared/services/employees_department/tblshamelrank.service';
@@ -22,7 +23,8 @@ export class TblShamelRankListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelRankService: TblshamelrankService ) {
+   private tBLShamelRankService: TblshamelrankService,
+   private _snaker: MatSnackBar, ) {
 
      if (tBLShamelRankService.list_ITBLShamelRank == null ||
       tBLShamelRankService.list_ITBLShamelRank.length ==0
@@ -76,7 +78,12 @@ export class TblShamelRankListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    )
 }
@@ -90,17 +97,27 @@ export class TblShamelRankListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    )
  }
  deleteRank(obj:any){
 
-   this.tBLShamelRankService.delete(obj).subscribe
+   this.tBLShamelRankService.delete(obj.rank_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    )
 

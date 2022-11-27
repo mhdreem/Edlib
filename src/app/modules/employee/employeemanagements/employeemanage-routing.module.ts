@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DeleteemployeeComponent } from './components/deleteemployee/deleteemployee/deleteemployee.component';
 import { EmployeeManagementComponent } from './components/employee-management.component';
 import { EmployeechangeidComponent } from './components/employeechangeid/employeechangeid/employeechangeid.component';
-import { JobServiceDataComponent } from './components/job-service-data/job-service-data.component';
+import { JobServiceDataComponent } from './components/service-data/job-service-data/job-service-data.component';
 import { PrintEmployeeCardComponent } from './components/print-employee-card/print-employee-card.component';
 import { EmpShowDataComponent } from './components/tblshamelemployee/emp-show-data/emp-show-data.component';
 import { NewEmployeeCardComponent } from './components/tblshamelemployee/new-employee-card/new-employee-card.component';
@@ -49,6 +49,12 @@ const routes: Routes = [
     component: EmployeeCardComponent,
   
     children:[
+      {
+        path: 'NewEmployeeCard', component: NewEmployeeCardComponent, data:
+        {
+          title: 'ذاتية الموظف'
+        }
+      },
      
       {
         path: 'manage',
@@ -78,22 +84,17 @@ const routes: Routes = [
           }
     
           ,
-          {
-            path: 'newemployee', component: NewEmployeeCardComponent, data:
-            {
-              title: 'ذاتية الموظف'
-            }
-          },
+          
           {
             path: 'deleteemployee', component: DeleteemployeeComponent, data:
             {
-              title: 'ذاتية الموظف'
+              title: 'حذف بطاقة'
             }
           },
           {
             path: 'changeid', component: EmployeechangeidComponent, data:
             {
-              title: 'ذاتية الموظف'
+              title: 'تغيير رقم البطاقة'
             }
           },
     
@@ -106,13 +107,13 @@ const routes: Routes = [
           {
             path: 'course', component: TblshamelsccourselistComponent, data:
             {
-              title: 'ذاتية الموظف'
+              title: 'الدراسات والدورات'
             }
           },
           {
             path: 'education', component: TblshamelsceducationlistComponent, data:
             {
-              title: 'ذاتية الموظف'
+              title: 'المؤهل العلمي'
             }
           },
     
@@ -143,7 +144,7 @@ const routes: Routes = [
           {
             path: 'incmarsoom', component: TblshamelincmarsoomlistComponent, data:
             {
-              title: 'ذاتية الموظف'
+              title: 'مراسيم الزيادة'
             }
           },
     
@@ -162,7 +163,13 @@ const routes: Routes = [
           {
             path: 'printcard', component: PrintEmployeeCardComponent, data:
             {
-              title: 'بيانات الخدمة'
+              title: 'طباعة بطاقة'
+            }
+          },
+          {
+            path: 'NewEmployeeCard', component: NewEmployeeCardComponent, data:
+            {
+              title: 'إدخال بطاقة موظف'
             }
           }
         ]

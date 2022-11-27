@@ -20,5 +20,8 @@ export interface Stats4 {
     is_TBLShamelSCHealthHoliday?: boolean;
 
     changereason_id?:number;
+
+    pageSize?: number,            
+    pageNumber?: number
     
   }

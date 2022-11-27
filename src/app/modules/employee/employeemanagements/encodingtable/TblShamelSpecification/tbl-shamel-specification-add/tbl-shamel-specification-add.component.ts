@@ -33,12 +33,12 @@ export class TblShamelSpecificationAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.specification_id = data.specification_id;
       this.local_data.specification_name = data.specification_name;
-      this.local_data.specification_fixed = data.specification_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Specification_id.setValue(this.local_data.specification_id );
       this.frm_Specification_name.setValue(this.local_data.specification_name );
-      if(this.local_data.specification_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Specification_fixed.setValue(true );
       else
       this.frm_Specification_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelSpecificationAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelSpecification ={specification_id:this.local_data.specification_id,specification_name:this.frm_Specification_name.value,specification_fixed:this.frm_Specification_fixed.value == true?1:0};
+    let x: ITBLShamelSpecification ={specification_id:this.local_data.specification_id,specification_name:this.frm_Specification_name.value,Fixed:this.frm_Specification_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

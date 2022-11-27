@@ -20,29 +20,30 @@ export class StatisticsComponent implements OnInit {
   },
 
   {
-    name: 'احصائية رقم 1',
+    name: 'البحث المبسط',
     url: 'employees/module/statistics/models/stats1',
     iconComponent: { name: 'cil-pencil' },
   }
   ,
 
+  
   {
-    name: 'احصائية رقم 2',
-    url: 'employees/module/statistics/models/stats2',
+    name: 'البحث الموسع',
     iconComponent: { name: 'cil-pencil' },
+    url: 'employees/module/statistics/models/stats2',
+
   },
+
   {
-    name: 'احصائية رقم 3',
+    name: 'إحصائيات وظيفية',
     iconComponent: { name: 'cil-pencil' },
     url: 'employees/module/statistics/models/stats3',
 
   },
-
   {
-    name: 'احصائية رقم 4',
-    iconComponent: { name: 'cil-pencil' },
+    name: 'احصائيات بين تاريخين',
     url: 'employees/module/statistics/models/stats4',
-
+    iconComponent: { name: 'cil-pencil' },
   }
 
 

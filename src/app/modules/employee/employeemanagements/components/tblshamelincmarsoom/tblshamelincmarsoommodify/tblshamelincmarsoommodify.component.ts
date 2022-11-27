@@ -16,6 +16,7 @@ import { ITBLShamelIncMarsoom } from 'src/app/modules/shared/models/employees_de
 import { TblshamelchangereasonService } from 'src/app/modules/shared/services/employees_department/tblshamelchangereason.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/employees_department/tblshamelincmarsoom.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tblshamelincmarsoommodify',
@@ -80,10 +81,12 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
     public incmarsoomService: TblshamelincmarsoomService,
     public changereasonService: TblshamelchangereasonService,
     public ShameldocumenttypeService: TblshameldocumenttypeService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private snackBar: MatSnackBar
   ) {
 
     this.BuildForm();
+    this.Load_Data();
     this.FillArrayUsingService();
 
     if (data != null && data.obj != null) {
@@ -428,7 +431,10 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
         console.log(res)
         if (res == 1) {
         
-          this.ClearForm();
+          this.snackBar.open('تمت الإضافة بنجاح', '', {
+            duration: 3000,
+          });
+          this.dialogRef.close();
         } else {
 
 
@@ -444,6 +450,9 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
       this.incmarsoomService.update(this.Selected_IncMarsoom).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
+          this.snackBar.open('تم التعديل بنجاح', '', {
+            duration: 3000,
+          });
           this.dialogRef.close(1);
 
         } else {

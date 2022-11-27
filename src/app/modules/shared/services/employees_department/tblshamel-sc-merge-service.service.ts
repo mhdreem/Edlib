@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TBLShamelSCMergeService } from '../../models/employees_department/TBLShamelSCMergeService';
 
 @Injectable({
@@ -42,4 +43,7 @@ export class TBLShamelSCMergeServiceService {
     return this.httpClient.put(this.RestUrl +"TBLShamelSCMergeService/"+obj.serial,obj,options);
   }
 
+  Validate(obj : TBLShamelSCMergeService ) :Observable<TBLShamelSCMergeService[]>  {
+    return this.httpClient.put<TBLShamelSCMergeService[]>(this.RestUrl +"TBLShamelSCMergeService/Validate",obj);
+  }
 }

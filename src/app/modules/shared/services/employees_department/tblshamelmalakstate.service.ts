@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ITBLShamelMalakState } from '../../models/employees_department/ITBLShamelMalakState';
 import { ITBLShamelRank } from '../../models/employees_department/ITBLShamelRank';
 
@@ -24,7 +24,7 @@ export class TblshamelmalakstateService {
   list()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TBLShamelMalakState/list",options);  
+    return this.httpClient.get(this.RestUrl +"TBLShamelMalakState/list",options) as Observable<ITBLShamelMalakState[]>;  
     
   }
 

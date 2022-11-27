@@ -1,0 +1,62 @@
+<form action="" [formGroup]="Form">
+    <div class="date">
+        <span>تاريخ القرار الوهمي:</span>
+        <div class="content">
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>اليوم</mat-label>
+            <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21">
+          </mat-form-field>
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>الشهر</mat-label>
+            <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1">
+          </mat-form-field>
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>العام</mat-label>
+            <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023">
+          </mat-form-field>
+        </div>
+      </div>
+    
+</form>
+
+<button mat-raised-button color="primary" (click)="View()">عرض</button>
+
+<div class="table-wrap">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  
+  
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الإضبارة </th>
+            <td mat-cell *matCellDef="let element">{{element?.id}}</td>
+        </ng-container>
+  
+        <!-- worker_name Column -->
+        <ng-container matColumnDef="worker_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>اسم العامل</th>
+            <td mat-cell *matCellDef="let element">{{element?.worker_name}}</td>
+        </ng-container>
+  
+        <!-- qarar_num Column -->
+        <ng-container matColumnDef="qarar_num">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم القرار</th>
+          <td mat-cell *matCellDef="let element">{{element?.qarar_num}}</td>
+        </ng-container>
+  
+        <!-- qarar_date Column -->
+        <ng-container matColumnDef="qarar_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار</th>
+          <td mat-cell *matCellDef="let element">{{element?.qarar_date | date:'yyyy/MM/dd'}}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"></tr>
+    </table>
+  
+    <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+  
+  
+  </div>

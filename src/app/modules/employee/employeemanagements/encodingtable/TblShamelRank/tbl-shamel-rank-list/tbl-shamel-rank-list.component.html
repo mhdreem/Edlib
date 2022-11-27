@@ -24,7 +24,7 @@
     <!-- Fixed Column -->
     <ng-container matColumnDef="rank_fixed" >
       <th mat-header-cell *matHeaderCellDef> مثبت  </th>
-      <td mat-cell *matCellDef="let element">  <div  *ngIf="element.rank_fixed==true;else spanFalse">نعم</div>
+      <td mat-cell *matCellDef="let element">  <div  *ngIf="element.Fixed==true;else spanFalse">نعم</div>
         <ng-template #spanFalse>لا</ng-template> </td>
     </ng-container>
 

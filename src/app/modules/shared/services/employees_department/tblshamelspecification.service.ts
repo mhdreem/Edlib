@@ -43,7 +43,7 @@ export class TblshamelspecificationService {
   delete(specification_id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelSpecification/delete/"+specification_id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelSpecification/"+specification_id,options);  
   }
 
   add(obj : ITBLShamelSpecification )  {

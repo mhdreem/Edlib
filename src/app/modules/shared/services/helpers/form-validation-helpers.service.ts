@@ -159,7 +159,6 @@ export class FormValidationHelpersService {
     {
 
       const formPathAsArray: string[] = formName.split('.')
-
       const nestedFormValue = formPathAsArray.reduce((o,i)=> {
 
         // console.log("o", o)
@@ -168,12 +167,13 @@ export class FormValidationHelpersService {
 
         // console.log("o[i]", o[i])
 
-
+        console.log('777',o + ' 666 '+ i );
         return o.controls[i]
         },
         form
       )
 
+      console.log('555', nestedFormValue);
 
       return nestedFormValue;
 
@@ -264,8 +264,8 @@ export class FormValidationHelpersService {
 
 
       const nestedFormValue = this.caclFormFieldNestedName(form, field);
-
-      const errors = nestedFormValue.errors;
+      console.log('444', nestedFormValue);
+      const errors = nestedFormValue?.errors;
 
 
       if(errors)

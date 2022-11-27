@@ -5,10 +5,8 @@
 
   <form [formGroup]="Form">
 
-    <div class="row justify-content-between text-left">
-
-      <div class="form-group col-sm-6 flex-column d-flex">
-
+    <div class="inputsGroup">
+      <div class="group1">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الدورة</mat-label>
           <input type="text" matInput formControlName="course_id" 
@@ -28,10 +26,8 @@
 
         </mat-form-field>
 
-      </div>
 
 
-      <div class="form-group col-sm-6 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الاختصاص</mat-label>
           <input type="text" matInput formControlName="specification_id"
@@ -44,15 +40,9 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
 
 
-    </div>
 
-    <div class="row justify-content-between text-left">
-
-
-      <div class="form-group col-sm-6 flex-column d-flex">
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الدولة أو البلد</mat-label>
@@ -65,10 +55,8 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
 
 
-      <div class="form-group col-sm-6 flex-column d-flex">
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدينة</mat-label>
@@ -81,21 +69,8 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-
-
       </div>
-
-    </div>
-
-
-
-
-
-
-    <div class="row justify-content-between text-left">
-      <div class="form-group col-sm-4 flex-column d-flex">
-
-
+      <div class="group2">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ بداية الدورة</mat-label>
           <input matInput [matDatepicker]="Datepicker_startdate" formControlName="startdate"
@@ -103,8 +78,6 @@
           <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_startdate></mat-datepicker>
         </mat-form-field>
-      </div>
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ نهاية الدورة</mat-label>
           <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate"
@@ -112,9 +85,7 @@
           <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_enddate></mat-datepicker>
         </mat-form-field>
-      </div>
 
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>مدة الدورة</mat-label>
 
@@ -122,8 +93,18 @@
 
         </mat-form-field>
       </div>
-
     </div>
+        
+
+
+
+
+
+
+
+
+
+        
 
   </form>
 </mat-dialog-content>

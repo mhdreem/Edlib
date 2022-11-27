@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TBLShamelSCLegalHoliday } from '../../models/employees_department/TBLShamelSCLegalHoliday';
 
 @Injectable({
@@ -43,4 +44,7 @@ export class TBLShamelSCLEgalHolidayService {
     return this.httpClient.put(this.RestUrl +"TBLShamelSCLegalHoliday/"+obj.serial,obj,options);
   }
 
+  Validate(obj : TBLShamelSCLegalHoliday ) :Observable<TBLShamelSCLegalHoliday[]>  {
+    return this.httpClient.post<TBLShamelSCLegalHoliday[]>(this.RestUrl +"TBLShamelSCLegalHoliday/Validate",obj);
+  }
 }

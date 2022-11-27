@@ -1,7 +1,7 @@
 
 import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { combineLatest, forkJoin, Observable, of, Subscription } from 'rxjs';
 
 import { map, startWith } from 'rxjs/operators';
@@ -23,6 +23,7 @@ import { TblshamelrankService } from 'src/app/modules/shared/services/employees_
 import { TblshamelspecificationService } from 'src/app/modules/shared/services/employees_department/tblshamelspecification.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { Validator_Education } from './Validator_Education';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tblshamelsceducationmodify',
@@ -37,7 +38,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
   @Input() set Selected_Employee_Education(obj: ITBLShamelSCEducation) {
     this._Selected_Employee_Education = obj;
 
-
+    console.log('Selected_Employee_Education', this.Selected_Employee_Education);
     if (this._Selected_Employee_Education != null &&
       this._Selected_Employee_Education != undefined) {
 
@@ -85,6 +86,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
 
   //#region Constuctor 
   constructor(
+    public dialogRef: MatDialogRef<TblshamelsceducationmodifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCEducation, id: number },
     public educationService: TblshamelsceducationService,
     public countryService: TblshamelcountryService,
@@ -94,6 +96,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
     public specificationService: TblshamelspecificationService,
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
+    private snackBar: MatSnackBar
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
       this.id_employee = data.id;
@@ -369,22 +372,26 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
   //#region SetValue And GetValue Function
   public SetValue() {
     try {
+      console.log('Selected_Employee_Education', this.Selected_Employee_Education);
       if (this.Selected_Employee_Education != null &&
         this.Selected_Employee_Education != undefined) {
 
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
-          this.city_id.setValue(this.Selected_Employee_Education.city_id);
+        if (this.Selected_Employee_Education.City_ID != null && this.Selected_Employee_Education.City_ID != undefined)
+          this.city_id.setValue(this.Selected_Employee_Education.City_ID);
 
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
+        if (this.Selected_Employee_Education.country_id != null && this.Selected_Employee_Education.country_id != undefined)
           this.country_id.setValue(this.Selected_Employee_Education.country_id);
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
+        if (this.Selected_Employee_Education.graduationyear != null && this.Selected_Employee_Education.graduationyear != undefined)
           this.graduationyear.setValue(this.Selected_Employee_Education.graduationyear);
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
+        if (this.Selected_Employee_Education.rank_id != null && this.Selected_Employee_Education.rank_id != undefined)
           this.rank_id.setValue(this.Selected_Employee_Education.rank_id);
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
+        if (this.Selected_Employee_Education.specification_id != null && this.Selected_Employee_Education.specification_id != undefined)
           this.specification_id.setValue(this.Selected_Employee_Education.specification_id);
-        if (this.Selected_Employee_Education.city_id != null && this.Selected_Employee_Education.city_id != undefined)
+        if (this.Selected_Employee_Education.studyduration != null && this.Selected_Employee_Education.studyduration != undefined)
           this.studyduration.setValue(this.Selected_Employee_Education.studyduration);
+        if (this.Selected_Employee_Education.certificate_id!= null && this.Selected_Employee_Education.certificate_id != undefined)
+          this.certificate_id.setValue(this.Selected_Employee_Education.certificate_id);
+          console.log('cert',this.certificate_id.value );
       }
     } catch (ex: any) {
 
@@ -398,7 +405,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
       if (this.Selected_Employee_Education != null &&
         this.Selected_Employee_Education != undefined) {
         console.log(this.city_id.value);
-        this.Selected_Employee_Education.city_id = this.city_id.value;
+        this.Selected_Employee_Education.City_ID = this.city_id.value;
         this.Selected_Employee_Education.country_id = this.country_id.value;
         this.Selected_Employee_Education.graduationyear = this.graduationyear.value;
         this.Selected_Employee_Education.rank_id = this.rank_id.value;
@@ -420,7 +427,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
 
   public OnSelectStateChange(event: MatAutocompleteSelectedEvent) {
     if (event && this.Selected_Employee_Education)
-      this.Selected_Employee_Education.city_id = event.option.value;
+      this.Selected_Employee_Education.City_ID = event.option.value;
 
 
   }
@@ -526,7 +533,11 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
         console.log(res)
         if (res == 1) {
           this.ClearObject();
-          this.ClearForm();
+          this.snackBar.open('تمت الإضافة بنجاح', '', {
+            duration: 3000,
+          });
+          this.dialogRef.close();
+          
         }
       });
 
@@ -539,8 +550,11 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
       this.educationService.update(this.Selected_Employee_Education).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
-
-
+          
+          this.snackBar.open('تم التعديل بنجاح', '', {
+            duration: 3000,
+          });
+          this.dialogRef.close();
         }
       });
 
@@ -578,6 +592,6 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
   }
   /* Handle form errors in Angular 8 */
   public errorHandling = (control: string, error: string) => {
-    return this.Form.controls[control].hasError(error);
+    return this.Form.controls[control]?.hasError(error);
   }
 }

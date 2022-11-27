@@ -26,7 +26,8 @@ export class EmployeeManagementComponent implements OnInit, OnDestroy, OnChanges
   public SelectedEmp: BehaviorSubject<TBLShamelEmployee> = new BehaviorSubject({});
   currentChildComponent: BehaviorSubject<string> = new BehaviorSubject('');
   Window: String = '';
-
+  SearchOpen:boolean;
+  
   constructor(public activatedRoute: ActivatedRoute,
 
     private fb: UntypedFormBuilder,

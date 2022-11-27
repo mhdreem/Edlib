@@ -113,7 +113,6 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
     if (this.ShamelPunishmentService.List_ITBLShamelPunishment == null ||
       this.ShamelPunishmentService.List_ITBLShamelPunishment == undefined ||
       this.ShamelPunishmentService.List_ITBLShamelPunishment.length == 0) {
-      this._Subscription.add(
 
         this.ShamelPunishmentService.list().subscribe
           (
@@ -123,7 +122,6 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
               this.filteredPunishmentOptions = of(res);
               this.ShamelPunishmentService.List_ITBLShamelPunishment = res;
             }
-          )
       );
 
     }
@@ -137,7 +135,6 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.PunishmentReasonService.List_ITBLShamelPunishmentReason == undefined ||
       this.PunishmentReasonService.List_ITBLShamelPunishmentReason.length == 0) {
 
-      this._Subscription.add(
         this.PunishmentReasonService.list().subscribe
           (
             res => {
@@ -148,7 +145,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
               return of(res);
 
             }
-          ));
+          );
 
 
     }
@@ -161,14 +158,13 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
     if (this.ShameldocumenttypeService.List_ITBLShamelDocumentType == null ||
       this.ShameldocumenttypeService.List_ITBLShamelDocumentType == undefined ||
       this.ShameldocumenttypeService.List_ITBLShamelDocumentType.length == 0) {
-      this._Subscription.add(
+        this.ShameldocumenttypeService.fill();
         this.ShameldocumenttypeService.List_ITBLShamelDocumentType_BehaviorSubject.subscribe(
           data => {
             this.DocumentType_List = data;
             this.filteredDocumentTypeOptions = of(this.DocumentType_List);
             return of(data);
           })
-      )
     }
 
     return of(this.ShameldocumenttypeService.List_ITBLShamelDocumentType);
@@ -186,12 +182,28 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
           if (this.Selected_Emp != null && this.Selected_Emp.id != null)
             this.id_employee = this.Selected_Emp.id;
 
-          forkJoin(
+            this._Subscription = forkJoin(
             this.Load_List_ITBLShamelDocumentType(),
             this.Load_ITBLShamelPunishment(),
             this.Load_ITBLShamelPunishmentReason(),
           ).subscribe(
             res => {
+              console.log('res[0]', res[0]);
+              this.DocumentType_List = res[0];
+              this.ShameldocumenttypeService.List_ITBLShamelDocumentType = res[0];
+              this.ShameldocumenttypeService.List_ITBLShamelDocumentType_BehaviorSubject.next(res[0]);
+              this.filteredDocumentTypeOptions = of(this.DocumentType_List);
+
+              this.TBLShamelPunishment_List = res[1];
+              this.ShamelPunishmentService.List_ITBLShamelPunishment = res[1];
+              this.ShamelPunishmentService.List_ITBLShamelPunishment_BehaviorSubject.next(res[1]);
+              this.filteredPunishmentOptions = of(this.TBLShamelPunishment_List);
+
+              this.TBLShamelPunishmentReason_List = res[2];
+              this.PunishmentReasonService.List_ITBLShamelPunishmentReason = res[2];
+              this.PunishmentReasonService.List_ITBLShamelPunishmentReason_BehaviorSubject.next(res[2]);
+              this.filteredPunishmentReasonOptions = of(this.TBLShamelPunishmentReason_List);
+
               this.FillArrayUsingService();
             }
           )
@@ -249,8 +261,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
   public BuildForm() {
     try {
       this.Form = this.fb.group({
-        'serial': this.punishment_id = new FormControl<number | null>(null, [Validators.required]),
-        'id': this.punishment_id = new FormControl<number | null>(null, [Validators.required]),
+        'serial': this.punishment_id = new FormControl<number | null>(null, []),
+        'id': this.punishment_id = new FormControl<number | null>(null, []),
         'punishment_id': this.punishment_id = new FormControl<number | null>(null, [Validators.required]),
         'reason_id': this.reason_id = new FormControl<number | null>(null, []),
         'documenttype_id': this.documenttype_id = new FormControl<number | null>(null, []),
@@ -456,11 +468,12 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
   public async Save() {
 
-
     if (!this.Form.valid) {
+
       return;
     }
     if (!this.ValidateForm() == true) {
+
       return;
     }
     this.getValue();
@@ -472,7 +485,9 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.tblshamelscpunishmentservice.add(this.Selected_Employee_SCPunishment).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
-          this._snaker.open('تم الحفظ بنجاح', 'موافق');
+          this._snaker.open('تمت الإضافة بنجاح', '', {
+            duration: 3000,
+          });
           this.dialogRef.close();
         } else {
           this._snaker.open('لم يتم الحفظ', 'موافق');
@@ -490,9 +505,11 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.tblshamelscpunishmentservice.update(this.Selected_Employee_SCPunishment).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
-
-          this._snaker.open('تم الحفظ بنجاح', 'موافق');
+          this._snaker.open('تم التعديل بنجاح', '', {
+            duration: 3000,
+          });
           this.dialogRef.close();
+
         } else {
           this._snaker.open('لم يتم الحفظ', 'موافق');
         }

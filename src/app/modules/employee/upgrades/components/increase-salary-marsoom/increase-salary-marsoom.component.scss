@@ -1,0 +1,75 @@
+.dateLabel{
+    background-color: gray;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    width: fit-content;
+}
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px;
+    margin-left: 10px;
+}
+
+.oldDate{
+    width: 260px;
+}
+
+mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+output{
+    background-color: rgb(196, 196, 196);
+    width: 50px;
+    height: 30px;
+    display: inline-flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+button{
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+mat-progress-bar{
+    margin-block: 10px;
+    width: 50%;
+    margin-left: 10px;
+}
+
+mat-form-field{
+    margin-left: 10px;
+}
+
+.progressBox{
+    display: flex;
+}
+
+textarea {
+    resize: none;
+ }
+
+ form{
+     display: flex;
+     border: 1px solid black;
+     padding: 10px;
+ }

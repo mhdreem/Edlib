@@ -31,7 +31,8 @@ export class TBLShamelSCHealthHolidayService {
 
   add(obj : ITBLShamelSCHealthHoliday )  {
     const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});  
-    const options = { headers: headers };    
+    const options = { headers: headers }; 
+    console.log("post", obj);   
     return this.httpClient.post("https://localhost:44335/api/TBLShamelSCHealthHoliday",obj,options); 
 
   }

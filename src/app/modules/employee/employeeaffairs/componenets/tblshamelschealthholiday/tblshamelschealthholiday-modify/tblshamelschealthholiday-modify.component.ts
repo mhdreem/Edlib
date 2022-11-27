@@ -73,6 +73,9 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
   submitted = false;
   loading: boolean = false;
 
+  isStartDateSelected: boolean= false;
+  isEndDateSelected: boolean= false;
+
   //#region Constuctor 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCHealthHoliday, id: number },
@@ -92,20 +95,6 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
     this.BuildForm();
 
     this.Load_Data();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   }
 
@@ -188,6 +177,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
             res => {
               this.isLoadingFinish = true;
               this.Doctor_List = res[0];
+              console.log("Doctor_List", this.Doctor_List);
               this.filteredDoctorOptions = of(this.Doctor_List);
               this.ShamelDoctorService.List_TBLShamelDoctor = this.Doctor_List;
               this.ShamelDoctorService.List_TBLShamelDoctor_BehaviorSubject.next(this.Doctor_List);
@@ -232,14 +222,6 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
 
 
     } catch (Exception: any) { }
-
-
-
-
-
-
-
-
   }
 
 
@@ -449,9 +431,9 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.Selected_Employee_SCHealthHoliday != undefined &&
       (this.Selected_Employee_SCHealthHoliday.serial == null || this.Selected_Employee_SCHealthHoliday.serial <= 0)
     ) {
-      this.ShamelHealthHolidayService.add(this.Selected_Employee_SCHealthHoliday).toPromise().then(res => {
-        console.log(res)
-        if (res == 1) {
+      this.ShamelHealthHolidayService.add(this.Selected_Employee_SCHealthHoliday).toPromise().then((res:any) => {
+        console.log("res",res)
+        if (res.Result == 1) {
           this.dialogRef.close(true);
         } else {
 
@@ -467,9 +449,9 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       console.log('update');
       console.log(this.Selected_Employee_SCHealthHoliday);
 
-      this.ShamelHealthHolidayService.update(this.Selected_Employee_SCHealthHoliday).toPromise().then(res => {
-        console.log(res)
-        if (res == 1) {
+      this.ShamelHealthHolidayService.update(this.Selected_Employee_SCHealthHoliday).toPromise().then((res:any) => {
+        console.log("res",res)
+        if (res.Result == 1) {
           this.dialogRef.close(true);
 
         } else {
@@ -526,6 +508,10 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.Selected_Employee_SCHealthHoliday != null)
       this.Selected_Employee_SCHealthHoliday.startdate = moment(event.value).toDate();
 
+      this.isStartDateSelected= true;
+      this.calcDuration();
+
+
   }
 
 
@@ -535,8 +521,16 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.Selected_Employee_SCHealthHoliday != null)
       this.Selected_Employee_SCHealthHoliday.enddate = moment(event.value).toDate();
 
+      this.isEndDateSelected= true;
+      this.calcDuration();
+
   }
 
+  calcDuration(){
+    if (this.isStartDateSelected && this.isEndDateSelected)
+    this.duration.setValue(moment.duration(moment(this.Selected_Employee_SCHealthHoliday.enddate).diff(moment(this.Selected_Employee_SCHealthHoliday.startdate))).asDays());
+    else return;
+  }
 
 
 }

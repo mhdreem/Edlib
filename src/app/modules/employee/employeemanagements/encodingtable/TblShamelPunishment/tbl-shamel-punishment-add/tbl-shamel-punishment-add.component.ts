@@ -33,12 +33,12 @@ export class TblShamelPunishmentAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.punishment_id = data.punishment_id;
       this.local_data.punishment_name = data.punishment_name;
-      this.local_data.punishment_fixed = data.punishment_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Punishment_id.setValue(this.local_data.punishment_id );
       this.frm_Punishment_name.setValue(this.local_data.punishment_name );
-      if(this.local_data.punishment_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Punishment_fixed.setValue(true );
       else
       this.frm_Punishment_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelPunishmentAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelPunishment ={punishment_id:this.local_data.punishment_id,punishment_name:this.frm_Punishment_name.value,punishment_fixed:this.frm_Punishment_fixed.value == true?1:0};
+    let x: ITBLShamelPunishment ={punishment_id:this.local_data.punishment_id,punishment_name:this.frm_Punishment_name.value,Fixed:this.frm_Punishment_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

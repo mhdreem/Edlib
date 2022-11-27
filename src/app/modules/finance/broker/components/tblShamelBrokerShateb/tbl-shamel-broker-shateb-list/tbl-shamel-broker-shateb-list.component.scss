@@ -8,5 +8,50 @@ table {
 }
 
 mat-expansion-panel{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+mat-panel-title{
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.mat-column-serialNumber {
+    padding-right: 40px;
+}
+.mat-column-action {
+    text-align: right;
+}
+
+:host{
+    direction: rtl;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.mat-header-row.cdk-header-row {
+    th{
+        font-weight: bold ;
+        font-size: 18px ;
+    }
+}
+
+td{
+    border-left: 1px solid rgba(8, 8, 8, 0.116);
+    padding-inline: 5px !important;
 }

@@ -15,9 +15,10 @@ th, td{
 
 mat-radio-group{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 600px;
+    width: fit-content;
 }
 
 #view{
@@ -26,4 +27,30 @@ mat-radio-group{
 
 mat-expansion-panel{
     margin-bottom: 20px;
+}
+
+.searchGroups{
+    display: flex;
+}
+
+.searchGroup1, .searchGroup2, .searchGroup3, .searchGroup4{
+    display: flex;
+    flex-direction: column;
+}
+
+mat-expansion-panel{
+    width: fit-content;
+}
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px;
+    margin-left: 10px;
 }

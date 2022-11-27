@@ -34,28 +34,26 @@ export class TblShamelChangeReasonAddComponent implements OnInit {
       this.myform.addControl('malakstate_id',this.frm_MalakState_id);
       this.myform.addControl('countservice_id',this.frm_CountService_id);
 
-    console.log(this.data);
-      this.local_data.changereason_id = data.changereason_id;
+    console.log('111',this.data);
       this.local_data.changereason_name = data.changereason_name;
-      this.local_data.malakstate_id = data.malakstate_id;
-      this.local_data.countservice_id = data.countservice_id;
 
+      
       this.action = this.data.action;
-      this.frm_ChangeReason_id.setValue(this.local_data.changereason_id );
-      this.frm_ChangeReason_name.setValue(this.local_data.changereason_name );
-      if(this.local_data.malakstate_id >0 )
-      this.frm_MalakState_id.setValue(true );
+      this.frm_ChangeReason_id.setValue(data.changereason_id );
+      this.frm_ChangeReason_name.setValue( data.changereason_name );
+      if(data.malakstate_id >0 )
+      this.frm_MalakState_id.setValue('1');
       else
-      this.frm_MalakState_id.setValue(false );
-      if(this.local_data.countservice_id >0 )
-      this.frm_CountService_id.setValue(true );
+      this.frm_MalakState_id.setValue('0');
+      if(data.countservice_id >0 )
+      this.frm_CountService_id.setValue('1');
       else
-      this.frm_CountService_id.setValue(false );
+      this.frm_CountService_id.setValue('0');
 
   }
 
   doAction(){
-    let x: ITBLShamelChangeReason ={changereason_id:this.local_data.changereason_id,changereason_name:this.frm_ChangeReason_name.value,malakstate_id:this.frm_MalakState_id.value == true?1:0,countservice_id:this.frm_CountService_id.value == true?1:0};
+    let x: ITBLShamelChangeReason ={changereason_id:this.frm_ChangeReason_id.value,changereason_name:this.frm_ChangeReason_name.value,malakstate_id:this.frm_MalakState_id.value == true?1:0,countservice_id:this.frm_CountService_id.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

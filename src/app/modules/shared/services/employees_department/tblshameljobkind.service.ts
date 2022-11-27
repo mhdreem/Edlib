@@ -23,14 +23,14 @@ export class TblshameljobkindService {
   list()  :Observable<ITBLShamelJobKind[]>{
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get<ITBLShamelJobKind[]>(this.RestUrl +"TBLShamelJobKind/list/",options);  
+    return this.httpClient.get<ITBLShamelJobKind[]>(this.RestUrl +"TBLShamelJobKind/",options);  
     
   }
 
   fill()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-     this.httpClient.get<ITBLShamelJobKind[]>(this.RestUrl +"TBLShamelJobKind/list/",options).subscribe
+     this.httpClient.get<ITBLShamelJobKind[]>(this.RestUrl +"TBLShamelJobKind/",options).subscribe
      (
       data=>
       {
@@ -45,7 +45,7 @@ export class TblshameljobkindService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelJobKind/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelJobKind/"+id,options);  
   }
 
   add(obj : ITBLShamelJobKind )  {
@@ -61,7 +61,7 @@ export class TblshameljobkindService {
     
   
     const options = {  headers: headers };
-    return this.httpClient.post(this.RestUrl +"TBLShamelJobKind/"+obj.jobkind_id,obj,options);  
+    return this.httpClient.put(this.RestUrl +"TBLShamelJobKind/"+obj.jobkind_id,obj,options);  
   }
 
 }

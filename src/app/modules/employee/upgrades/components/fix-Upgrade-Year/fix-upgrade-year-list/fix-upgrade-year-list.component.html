@@ -1,0 +1,50 @@
+<span class="date">{{fixedYear}}</span>
+
+<button mat-raised-button color="primary" class="add" (click)="Add('')">إضافة</button>
+
+<div class="table-wrap">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  
+  
+        <!-- YEAR_ID Column -->
+        <ng-container matColumnDef="YEAR_ID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>العام </th>
+            <td mat-cell *matCellDef="let element">{{element?.YEAR_ID}}</td>
+        </ng-container>
+  
+        <!-- UpgradeStart Column -->
+        <ng-container matColumnDef="UpgradeStart">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>بداية دورة الترفيع</th>
+            <td mat-cell *matCellDef="let element">{{element?.UpgradeStart | date:'yyyy/MM/dd'}}</td>
+        </ng-container>
+  
+        <!-- UpgradeEnd Column -->
+        <ng-container matColumnDef="UpgradeEnd">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>نهاية دورة الترفيع</th>
+            <td mat-cell *matCellDef="let element">{{element?.UpgradeEnd | date:'yyyy/MM/dd'}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> حذف\تعديل </th>
+        
+            <td mat-cell *matCellDef="let element" style="width:20%">
+                <button class="delete" mat-icon-button color="warn" (click)="Delete(element)"
+                    title="Delete Contact">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button class="edit" mat-icon-button color="primary" (click)="Update(element)" title="Edit Contact">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+    </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"></tr>
+    </table>
+  
+    <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+  
+  
+  </div>

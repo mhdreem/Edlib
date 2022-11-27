@@ -25,6 +25,7 @@ export class TBLShamelSCPunishmentService {
 
 
   add(obj : ITBLShamelSCPunishment )  {   
+    console.log('bbb', obj);
     return this.httpClient.post("https://localhost:44335/api/TBLShamelSCPunishment",obj); 
   }
 
@@ -33,6 +34,7 @@ export class TBLShamelSCPunishmentService {
   }
 
   Validate(obj : ITBLShamelSCPunishment ):Observable<ITBLShamelSCPunishment>  {   
+    console.log('obj1', obj);
     return this.httpClient.post<ITBLShamelSCPunishment>("https://localhost:44335/api/TBLShamelSCPunishment/Validate",obj); 
   }
 }

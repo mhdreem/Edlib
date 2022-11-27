@@ -20,7 +20,7 @@ export function ValidateForm(tblshamelsccourseservice: TblshamelsccourseService)
             return of(null);
         }
 
-
+console.log('aaa',formGroup.value );
 
 
         return tblshamelsccourseservice.Validate(formGroup.value).pipe(map(

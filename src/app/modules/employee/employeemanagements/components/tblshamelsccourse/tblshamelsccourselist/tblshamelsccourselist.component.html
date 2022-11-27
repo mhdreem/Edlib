@@ -1,9 +1,9 @@
 <div class="col-md-12 text-center ">
-  <h2 >الدورات التدريبية</h2>
+  <h2 >الدراسات والدورات</h2>
 </div>
 <div>
   للإضافة على الجدول انقر على اضافة
-  <button mat-button color="primary" (click)="Add()">اضافة</button>
+  <button mat-raised-button color="primary" class="add" (click)="Add()" [disabled]="Selected_Emp?.id== null">اضافة</button>
 </div>
 
   <div class="col-md-12">

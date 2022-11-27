@@ -33,12 +33,12 @@ export class TblShamelCertificateAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.certificate_id = data.certificate_id;
       this.local_data.certificate_name = data.certificate_name;
-      this.local_data.certificate_fixed = data.certificate_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Certificate_id.setValue(this.local_data.certificate_id );
       this.frm_Certificate_name.setValue(this.local_data.certificate_name );
-      if(this.local_data.certificate_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Certificate_fixed.setValue(true );
       else
       this.frm_Certificate_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelCertificateAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelCertificate ={certificate_id:this.local_data.certificate_id,certificate_name:this.frm_Certificate_name.value,certificate_fixed:this.frm_Certificate_fixed.value == true?1:0};
+    let x: ITBLShamelCertificate ={certificate_id:this.local_data.certificate_id,certificate_name:this.frm_Certificate_name.value,Fixed:this.frm_Certificate_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

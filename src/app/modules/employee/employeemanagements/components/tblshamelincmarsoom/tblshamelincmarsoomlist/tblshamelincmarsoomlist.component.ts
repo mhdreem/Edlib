@@ -103,8 +103,8 @@ export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  
 
 
     const dialogRef = this.dialog.open(TblshamelincmarsoommodifyComponent, {
-      height: '80%',
-      width: '80%',
+      height: '60%',
+      width: '35%',
       data: {obj: this.selected_IncMarsoom}
     });
    
@@ -135,7 +135,6 @@ try{
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
      
-          const snack = this.snackBar.open('سوف يتم الآن الحذف');
          
 
           if (element.incmarsoom_id != null )
@@ -143,19 +142,20 @@ try{
 
           this.IncMarsoomService.delete(element.incmarsoom_id).toPromise().then(res=> 
             {
-              snack.dismiss();
 
               console.log(res);
-              if (res==1)
+              if (res==1){
+
+              this.snackBar.open('تم الحذف بنجاح', '', {
+                duration: 3000,
+              });
                 this.FillTable();
+              }
 
             });
 
-            this.snackBar.open('تم الحذف', 'Fechar', {
-              duration: 2000,
-            });
+            
 
-            this.snackBar.dismiss();
  
           }
         }
@@ -175,8 +175,8 @@ try{
       this.selected_IncMarsoom = element;
 
       const dialogRef = this.dialog.open(TblshamelincmarsoommodifyComponent, {
-        height: '80%',
-        width: '80%',
+        height: '60%',
+        width: '35%',
         data: {obj: this.selected_IncMarsoom}
       });
   

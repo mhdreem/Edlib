@@ -110,8 +110,8 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
     this.selected_employee_Bonus.id = this.Selected_Emp.id;
 
     const dialogRef = this.dialog.open(TblshamelscbonusmodifyComponent, {
-      height: '50%',
-      width: '60%',
+      height: '60%',
+      width: '35%',
       data: { obj: this.selected_employee_Bonus, id: this.Selected_Emp.id }
     });
 
@@ -139,23 +139,23 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
 
-          const snack = this.snackBar.open('سوف يتم الآن الحذف');
 
 
-
-          this.ShamelSCBonusService.delete(element.serial).toPromise().then(res => {
-            snack.dismiss();
+          this.ShamelSCBonusService.delete(element.serial).toPromise().then((res: any) => {
 
             console.log(res);
-            if (res == 1)
+            if (res.Result == 1){
+
               this.FillTable();
-
+              
+          
+          this.snackBar.open(' تم الحذف بنجاح', '', {
+            duration: 3000,
           });
-          this.snackBar.open('تم الحذف', 'Fechar', {
-            duration: 2000,
-          });
 
-          this.snackBar.dismiss();
+        }
+
+      });
 
 
         }
@@ -173,8 +173,8 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
       console.log(this.selected_employee_Bonus);
 
       const dialogRef = this.dialog.open(TblshamelscbonusmodifyComponent, {
-        height: '65%',
-        width: '50%',
+        height: '60%',
+        width: '35%',
         data: { obj: this.selected_employee_Bonus, id: this.Selected_Emp.id }
       });
 

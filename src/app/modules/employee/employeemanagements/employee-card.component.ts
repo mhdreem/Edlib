@@ -18,56 +18,69 @@ export class EmployeeCardComponent implements OnInit {
     },
   
     {
+      name: 'إدخال بطاقة موظف',
+      url: 'employees/module/employeecards/Cards/NewEmployeeCard',
+      iconComponent: { name: 'cil-pencil' }
+    }
+    ,
+    {
       name: 'البيانات الشخصية',
       url: 'employees/module/employeecards/Cards/manage/employeeinfo',
       iconComponent: { name: 'cil-pencil' }
     }
     ,
-  
-    {
-      name: 'ادخال بطاقة شخصية',
-      url: 'employees/module/employeecards/Cards/manage/newemployee',
-      iconComponent: { name: 'cil-pencil' }
-    },
+    
     {
       name: 'المؤهل العلمي',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/education'
-  
-    },
+      url: 'employees/module/employeecards/Cards/manage/education',
+      iconComponent: { name: 'cil-pencil' }
+    }
+    ,
+    
     {
       name: 'الدراسات والدورات',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/course'
+      url: 'employees/module/employeecards/Cards/manage/course',
+      iconComponent: { name: 'cil-pencil' }
+    }
+    ,
   
-    },
-    {
-      name: 'المكافئات',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/bonus'
-  
-    },
-    {
-      name: 'الإجازات الخاصة',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/scfreeholiday'
-  
-    },
     {
       name: 'الوضع الوظيفي',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/employeecards/Cards/manage/scjobstate'
   
     },
+
+    {
+      name: 'الإجازات الخاصة',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/employeecards/Cards/manage/scfreeholiday'
+  
+    },
+
+    {
+      name: 'المكافئات',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/employeecards/Cards/manage/bonus'
+  
+    },
+
     {
       name: 'العقوبات',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/employeecards/Cards/manage/punishment'
     },
+
+    
+    
+    
+    
+    
+    
     {
       name: 'طباعة بطاقة',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/punishment'
+      url: 'employees/module/employeecards/Cards/manage/printcard'
     },
     {
       name: 'مراسيم الزيادة',
@@ -82,7 +95,7 @@ export class EmployeeCardComponent implements OnInit {
     {
       name: 'حذف بطاقة',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/deletecardid'
+      url: 'employees/module/employeecards/Cards/manage/deleteemployee'
     },
     {
       name: 'تغيير رقم البطاقة',
@@ -93,11 +106,6 @@ export class EmployeeCardComponent implements OnInit {
       name: 'عرض تشابه الاسماء',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/employeecards/Cards/manage/changeid'
-    },
-    {
-      name: 'بيانات الخدمة',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/jobservicedata'
     },
     {
       name: 'طباعة بطاقة',
@@ -236,7 +244,12 @@ export class EmployeeCardComponent implements OnInit {
   
     }
   
-  
+  ,
+  {
+    name: 'ادخال بطاقة شخصية',
+    url: 'employees/module/employeecards/Cards/manage/newemployee',
+    iconComponent: { name: 'cil-pencil' }
+  },
   
   
   

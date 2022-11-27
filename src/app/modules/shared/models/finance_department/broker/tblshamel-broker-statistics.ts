@@ -7,6 +7,6 @@ export interface TblshamelBrokerStatistics {
     payrol_id?: string,
     book?: string,
     shateb?: string,
-    start_date?: string,
-    end_date?: string
+    start_date?: Date,
+    end_date?: Date
 }

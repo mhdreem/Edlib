@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TblShamelReplaceQararNumbers } from '../../models/employees_department/tbl-shamel-replace-qarar-numbers';
+import { ITBLShamelSCJobState } from '../../models/employees_department/ITBLShamelSCJobState';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,12 @@ ListQarar(Request?: TblShamelReplaceQararNumbers)
   const headers = new HttpHeaders().set('Content-Type', 'application/json');
   const options = {  headers: headers };
   return this.httpClient.post(this.RestUrl +`TBLShamelSCJobState/List_TblShamelSCJobState_Upgrad_Qara`,Request,options);  
+}
+
+updateJobState(Request?: ITBLShamelSCJobState)
+{
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  const options = {  headers: headers };
+  return this.httpClient.post(this.RestUrl +`TBLShamelSCJobState`,Request,options);  
 }
 }

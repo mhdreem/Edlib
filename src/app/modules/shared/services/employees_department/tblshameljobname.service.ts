@@ -23,13 +23,13 @@ export class TblshameljobnameService {
   list() : Observable<ITBLShamelJobName[]>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get<ITBLShamelJobName[]>(this.RestUrl +"TBLShamelJobName/list",options);      
+    return this.httpClient.get<ITBLShamelJobName[]>(this.RestUrl +"TBLShamelJobName",options) as Observable<ITBLShamelJobName[]>;      
   }
 
   fill()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-     this.httpClient.get<ITBLShamelJobName[]>(this.RestUrl +"TBLShamelJobName/list",options).subscribe(
+     this.httpClient.get<ITBLShamelJobName[]>(this.RestUrl +"TBLShamelJobName",options).subscribe(
       data=>
       {
         this.List_ITBLShamelJobName_BehaviorSubject.next(data);

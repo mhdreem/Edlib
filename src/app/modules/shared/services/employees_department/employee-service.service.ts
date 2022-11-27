@@ -57,12 +57,12 @@ export class EmployeeServiceService {
   }
 
 
-  Check_ID(value: string, id: number | undefined): Observable<TBLShamelEmployee[]> {
+  Check_ID(value: string, id: number | undefined): Observable<TBLShamelEmployee> {
     if (id == null || id == undefined)
       id = -1;
     if (value == null || value == undefined)
       return null;
-    return this.httpClient.get<TBLShamelEmployee[]>(this.RestUrl + `TBLShamelEmployee/check_id/${value}/${id}`);
+    return this.httpClient.get<TBLShamelEmployee>(this.RestUrl + `TBLShamelEmployee/check_id/${value}/${id}`);
   }
 
   Check_PAYROL_ID(value: string, id: number | undefined): Observable<TBLShamelEmployee> {
@@ -212,5 +212,20 @@ Check_FullName(employee: TBLShamelEmployee,id:number|undefined): Observable<TBLS
 
   }
 
+  SetEmployeeAccounter(accounterId: number, accounterSerial: number, id: number){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = { headers: headers };
+
+    return this.httpClient.get(this.RestUrl + "TBLShamelEmployee/SetEmployeeAccounter/" + accounterId + "/" + accounterSerial+ "/" + id, options);
+
+  }
+
+  UnSetEmployeeAccounter( id: number){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = { headers: headers };
+
+    return this.httpClient.get(this.RestUrl + "TBLShamelEmployee/UnSetEmployeeAccounter/"+ id, options);
+
+  }
 
 }

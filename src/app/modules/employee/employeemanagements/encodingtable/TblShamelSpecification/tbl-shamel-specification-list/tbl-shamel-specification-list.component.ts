@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelSpecification } from 'src/app/modules/shared/models/employees_department/ITBLShamelSpecification';
 import { TblshamelspecificationService } from 'src/app/modules/shared/services/employees_department/tblshamelspecification.service';
@@ -20,7 +21,8 @@ export class TblShamelSpecificationListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelSpecificationService:TblshamelspecificationService) {
+   private tBLShamelSpecificationService:TblshamelspecificationService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelSpecificationService.list_TBLShamelSpecification == null ||
        tBLShamelSpecificationService.list_TBLShamelSpecification.length ==0
      )
@@ -60,7 +62,7 @@ export class TblShamelSpecificationListComponent implements OnInit {
      }else if(result.event == 'تعديل'){
        this.updateSpecification(result.data);
      }else if(result.event == 'حذف'){
-       this.deleteSpecification(result.data);
+       this.deleteSpecification(result.data.specification_id);
      }
    });
  }
@@ -71,7 +73,12 @@ export class TblShamelSpecificationListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,7 +95,12 @@ export class TblShamelSpecificationListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -99,7 +111,12 @@ export class TblShamelSpecificationListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

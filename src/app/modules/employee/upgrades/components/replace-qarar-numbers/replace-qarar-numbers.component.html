@@ -1,35 +1,53 @@
 <form action="" [formGroup]="Form">
   
-    <div class="right">
-        <mat-form-field appearance="fill" class="fitContent oldDate">
-            <mat-label>تاريخ القرار الوهمي المراد استبداله</mat-label>
-            <input matInput [matDatepicker]="picker1" formControlName="fcl_QararDate">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-    
-        <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>رقم الإضبارة</mat-label>
-            <input matInput type="number" value="" formControlName="fcl_Id">
-        </mat-form-field>
-    </div>
+  <mat-form-field class="example-full-width fitContent" appearance="fill">
+    <mat-label>رقم الإضبارة</mat-label>
+    <input matInput type="number" value="" [formControl]="Id">
+  </mat-form-field>
 
-    <div class="left">
-        <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>رقم القرار الجديد</mat-label>
-            <input matInput type="number" value="" formControlName="fcl_NewQararNumber">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>تاريخ القرار الجديد</mat-label>
-            <input matInput [matDatepicker]="picker2" formControlName="fcl_NewQararDate">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
+  <div class="date">
+    <span>تاريخ القرار الوهمي المراد استبداله:</span>
+    <div class="content">
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>اليوم</mat-label>
+        <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21">
+      </mat-form-field>
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>الشهر</mat-label>
+        <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1">
+      </mat-form-field>
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>العام</mat-label>
+        <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023">
+      </mat-form-field>
     </div>
+  </div>
+
         
-        
+
+  <mat-form-field class="example-full-width fitContent" appearance="fill">
+      <mat-label>رقم القرار الجديد</mat-label>
+      <input matInput type="number" value="" [formControl]="NewQararNumber">
+  </mat-form-field>
+  
+  <div class="date">
+    <span>تاريخ القرار الجديد:</span>
+    <div class="content">
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>اليوم</mat-label>
+        <input type="number" matInput [formControl]="NewQararDateDay" placeholder="ex: 21">
+      </mat-form-field>
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>الشهر</mat-label>
+        <input type="number" matInput [formControl]="NewQararDateMonth" placeholder="ex: 1">
+      </mat-form-field>
+      <mat-form-field class="example-full-width small-width" appearance="fill">
+        <mat-label>العام</mat-label>
+        <input type="number" matInput [formControl]="NewQararDateYear" placeholder="ex: 2023">
+      </mat-form-field>
+    </div>
+  </div>
+
   </form>
   <button mat-raised-button color="primary" (click)="View()">عرض</button>
   <button id="view" mat-raised-button color="primary" (click)="Replace()">استبدال</button>
@@ -69,11 +87,13 @@
         <!-- qarar_date Column -->
         <ng-container matColumnDef="qarar_date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار</th>
-          <td mat-cell *matCellDef="let element">{{element?.qarar_date}}</td>
+          <td mat-cell *matCellDef="let element">{{element?.qarar_date | date:'yyyy/MM/dd'}}</td>
         </ng-container>
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"></tr>
     </table>
   
     <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>

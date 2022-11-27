@@ -4,7 +4,7 @@ import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy } from '@ang
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { Observable, combineLatest, tap, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -80,6 +80,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
 
   //#region Constuctor
   constructor(
+    public dialogRef: MatDialogRef<TblshamelscbonusmodifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCBonus, id: number },
     public GlobalList: IGlobalEmployeeList,
     public ShamelSCBonusService: TBLShamelSCBonusService,
@@ -396,12 +397,14 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
         console.log(res)
         if (res) {
 
-          this.snackBar.open('تم بنجاح', 'موافق');
+          this.dialogRef.close();
+          this.snackBar.open('تمت الإضافة بنجاح', '', {
+            duration: 3000,
+          });
 
 
 
           this.ClearObject();
-          this.ClearForm();
 
         } else {
 
@@ -421,7 +424,10 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
         if (res) {
           this.getValue();
 
-          this.snackBar.open('تم بنجاح', 'موافق');
+          this.dialogRef.close();
+          this.snackBar.open('تم التعديل بنجاح', '', {
+            duration: 3000,
+          });
 
 
         } else {

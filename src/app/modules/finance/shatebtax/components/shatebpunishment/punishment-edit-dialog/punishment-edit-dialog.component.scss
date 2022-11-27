@@ -2,3 +2,16 @@ mat-form-field{
     width: fit-content;
     margin-left: 10px;
 }
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px;
+    margin-left: 10px;
+}

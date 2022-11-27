@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelPunishmentReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelPunishmentReason';
 import { TBLShamelPunishmentReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-punishment-reason.service';
@@ -20,7 +21,8 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelPunishmentReasonService:TBLShamelPunishmentReasonService) {
+   private tBLShamelPunishmentReasonService:TBLShamelPunishmentReasonService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelPunishmentReasonService.List_ITBLShamelPunishmentReason == null ||
       tBLShamelPunishmentReasonService.List_ITBLShamelPunishmentReason.length ==0
      )
@@ -31,6 +33,7 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
        {
          this.ELEMENT_DATA = data;
          this.dataSource.data =this.ELEMENT_DATA;
+         console.log('data1', data);
        }
      )
    }
@@ -71,7 +74,12 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +96,28 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deletePunishmentReason(obj:any){
-   this.tBLShamelPunishmentReasonService.delete(obj).subscribe
+   this.tBLShamelPunishmentReasonService.delete(obj.punishmentreason_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

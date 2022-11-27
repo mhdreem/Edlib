@@ -3,7 +3,8 @@ import { Component, OnInit, AfterViewInit, Input, Inject, NgZone, OnDestroy } fr
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { Observable, of, startWith, map, Subscription, combineLatest, forkJoin } from 'rxjs';
@@ -109,6 +110,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
   //#region Constuctor 
   constructor(
     public PageService: EmployeePageService,
+    public dialogRef: MatDialogRef<TblshamelscjobstatemodifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCJobState, id: number },
     public jobstateService: TblshamelscjobstateService,
     public marsoomService: TblshamelincmarsoomService,
@@ -120,6 +122,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
     public changereasonService: TblshamelchangereasonService,
     private fb: FormBuilder,
     private ngZone: NgZone,
+    private snackBar: MatSnackBar
   ) {
 
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -198,6 +201,15 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
   }
 
+  Load_TBLShamelClass(): Observable<ITBLShamelClass[]> {
+    if (this.classService.List_ITBLShamelClass == null ||
+      this.classService.List_ITBLShamelClass == undefined ||
+      this.classService.List_ITBLShamelClass.length == 0)
+      return this.classService.list();
+    return of(this.classService.List_ITBLShamelClass);
+
+  }
+
 
   Load_Data() {
     combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
@@ -213,7 +225,8 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
             this.Load_TBLShamelDepartment(),
             this.Load_ITBLShamelJobName(),
             this.Load_ITBLShamelJobKind(),
-            this.Load_TBLShamelDocumentType()
+            this.Load_TBLShamelDocumentType(),
+            this.Load_TBLShamelClass()
           ).subscribe(
             res => {
 
@@ -251,6 +264,11 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
               this.filteredDocumentTypeOptions = of(res[5]);
               this.documentTypeService.List_ITBLShamelDocumentType = res[5];
               this.documentTypeService.List_ITBLShamelDocumentType_BehaviorSubject.next(res[5]);
+
+              this.Class_List = res[6];
+              this.filteredClassOptions = of(res[6]);
+              this.classService.List_ITBLShamelClass = res[6];
+              this.classService.List_ITBLShamelClass_BehaviorSubject.next(res[6]);
 
 
               this.FillArrayUsingService();
@@ -780,7 +798,10 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
         console.log(res)
         if (res == 1) {
 
-          this.ClearForm();
+          this.dialogRef.close();
+          this.snackBar.open('تمت الإضافة بنجاح', 'Fechar', {
+            duration: 3000,
+          });
         } else {
 
 
@@ -798,8 +819,10 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.jobstateService.update(this.Selected_Employee_JobState).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
-
-
+          this.dialogRef.close();
+          this.snackBar.open(' تم التعديل بنجاح', 'Fechar', {
+            duration: 3000,
+          });
         } else {
         }
       });

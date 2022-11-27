@@ -78,25 +78,19 @@ mat-form-field{
 }
 
 .add {
-    font-size: 20px;
-    padding: 10px;
     cursor: pointer;
     margin-right: 10px;
 }
 
 .view{
-    font-size: 20px;
-    padding: 10px;
     cursor: pointer;
 }
 
 .edit {
-    padding: 5px;
     cursor: pointer;
 }
 
 .delete {
-    padding: 5px;
     cursor: pointer;
     margin-left: 10px;
 }
@@ -110,4 +104,28 @@ mat-form-field{
 
 mat-expansion-panel{
     margin-bottom: 20px;
+    width: fit-content;
+}
+
+mat-panel-title{
+    display: flex;
+    justify-content: center;
+}
+
+td{
+    border-left: 1px solid rgba(8, 8, 8, 0.116);
+    padding-inline: 5px !important;
+}
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px !important;
+    margin-left: 10px;
 }

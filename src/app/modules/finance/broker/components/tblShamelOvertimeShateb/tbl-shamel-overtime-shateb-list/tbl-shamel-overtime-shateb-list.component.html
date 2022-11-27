@@ -26,12 +26,17 @@
       </div>
 
     </div>
-
-    <mat-expansion-panel [expanded]="false" hideToggle>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel >
       <mat-expansion-panel-header>
         <mat-panel-title>
-          بحث
+          مفاتيح البحث
+          
         </mat-panel-title>
+        <mat-panel-description>
+          من أجل التحكم بالبحث انقر هنا
+          <mat-icon fontIcon="search"></mat-icon>
+      </mat-panel-description>
       </mat-expansion-panel-header>
 
       <div class="filterGroup">
@@ -130,7 +135,7 @@
       </div>
 
     </mat-expansion-panel>
-
+  </mat-accordion>
     <div class="table-responsive">
 
       <button mat-raised-button color="primary" (click)="OnSearch()">عرض</button>
@@ -200,10 +205,11 @@
   
   
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; sticky: true; let idx=index;"
           [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   
   </div>
 

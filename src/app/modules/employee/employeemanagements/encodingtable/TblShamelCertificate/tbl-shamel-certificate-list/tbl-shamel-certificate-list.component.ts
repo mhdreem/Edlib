@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelCertificate } from 'src/app/modules/shared/models/employees_department/ITBLShamelCertificate';
 import { TBLShamelCertificateService } from 'src/app/modules/shared/services/employees_department/tblshamel-certificate.service';
@@ -20,7 +21,8 @@ export class TblShamelCertificateListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelCertificateService:TBLShamelCertificateService) {
+   private tBLShamelCertificateService:TBLShamelCertificateService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelCertificateService.List_ITBLShamelCertificate == null ||
        tBLShamelCertificateService.List_ITBLShamelCertificate.length ==0
      )
@@ -71,7 +73,12 @@ export class TblShamelCertificateListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +95,28 @@ export class TblShamelCertificateListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deleteCertificate(obj:any){
-   this.tBLShamelCertificateService.delete(obj).subscribe
+   this.tBLShamelCertificateService.delete(obj.certificate_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+       if (data == 1){
+         this.RefreshDataSource();
+         this._snaker.open('تم الحذف بنجاح', '', {
+          duration: 3000,
+        });
+       }
      }
    );
 

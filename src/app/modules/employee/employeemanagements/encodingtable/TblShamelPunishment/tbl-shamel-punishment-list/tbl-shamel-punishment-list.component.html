@@ -24,7 +24,7 @@
     <ng-container matColumnDef="punishment_fixed" >
       <th mat-header-cell *matHeaderCellDef> مثبت  </th>
       <td mat-cell *matCellDef="let element">
-         <div  *ngIf="element.punishment_fixed==true;else spanFalse">نعم</div>
+         <div  *ngIf="element.Fixed==true;else spanFalse">نعم</div>
          <ng-template #spanFalse>لا</ng-template>
        </td>
     </ng-container>

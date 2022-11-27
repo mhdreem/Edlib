@@ -1,8 +1,10 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { TblShamelReplaceQararNumbers } from 'src/app/modules/shared/models/employees_department/tbl-shamel-replace-qarar-numbers';
 import { TblShamelUpgradeGovReport } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeGovReport';
 import { TblshamelScJobStateService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-job-state.service';
@@ -17,19 +19,50 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  Form = new FormGroup({
-    fcl_QararDate: new FormControl(''),
-    fcl_Id: new FormControl(''),
-    fcl_NewQararNumber: new FormControl(''),
-    fcl_NewQararDate: new FormControl(''),
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = [
+    'id','worker_name','new_salary','qarar_num','qarar_date'];
 
-  });
+  Form: FormGroup;
+  Id: FormControl<number | null>;
+  NewQararNumber: FormControl<number | null>;
+  QararDateDay: FormControl<number | null>;
+  QararDateMonth: FormControl<number | null>;
+  QararDateYear: FormControl<number | null>;
+  NewQararDateDay: FormControl<number | null>;
+  NewQararDateMonth: FormControl<number | null>;
+  NewQararDateYear: FormControl<number | null>;
 
-  request: TblShamelReplaceQararNumbers = {new_Qara_Date: "", new_Qara_Num: 0, old_Qara_Date: "", old_Qara_Num: 0};
 
-  constructor(private tblshamelScJobStateService: TblshamelScJobStateService) {
+  request: TblShamelReplaceQararNumbers= {};
+
+  constructor(private tblshamelScJobStateService: TblshamelScJobStateService,
+    private fb: UntypedFormBuilder,
+    private _liveAnnouncer: LiveAnnouncer,) {
     
+    this.BuildForm();
    }
+
+   public BuildForm() {
+    try {
+
+      this.Form = this.fb.group(
+        {
+          'Id: : ': this.Id = new FormControl<number | null>(null, [Validators.required]),
+          'NewQararNumber: ': this.NewQararNumber = new FormControl<number | null>(null, [Validators.required]),
+          'QararDateDay: ': this.QararDateDay = new FormControl<number | null>(null, [Validators.required]),
+          'QararDateMonth: ': this.QararDateMonth = new FormControl<number | null>(null, [Validators.required]),
+          'QararDateYear: ': this.QararDateYear = new FormControl<number | null>(null, [Validators.required]),
+          'NewQararDateDay: ': this.NewQararDateDay = new FormControl<number | null>(null, [Validators.required]),
+          'NewQararDateMonth: ': this.NewQararDateMonth = new FormControl<number | null>(null, [Validators.required]),
+          'NewQararDateYear: ': this.NewQararDateYear = new FormControl<number | null>(null, [Validators.required]),
+        }
+      );
+
+    } catch (Exception: any) {
+      console.log(Exception);
+    }
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -40,9 +73,13 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
   }
 
   View(){
+    this.request.old_Qara_Num= +this.Id.value;
+    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).toDate();
+    this.request.new_Qara_Num= +this.NewQararNumber.value;
+    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).toDate();
     this.tblshamelScJobStateService.ListQarar(this.request).subscribe(
       res => {
-        this.dataSource= res as any;
+        this.dataSource.data= res as any;
         console.log('res', res);
         console.log('req', this.request);
       }
@@ -50,21 +87,35 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
   }
 
   Replace(){
-    this.request.old_Qara_Num= +this.Form.get('fcl_Id').value;
-    this.request.old_Qara_Date= this.Form.get('fcl_QararDate').value;
-    this.request.new_Qara_Num= +this.Form.get('fcl_NewQararNumber').value;
-    this.request.new_Qara_Date= this.Form.get('fcl_NewQararDate').value;
+    this.request.old_Qara_Num= +this.Id.value;
+    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).toDate();
+    this.request.new_Qara_Num= +this.NewQararNumber.value;
+    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).toDate();
+    console.log('req', this.request);
     this.tblshamelScJobStateService.UpgradeQarar(this.request).subscribe(
       res => {
-        this.dataSource= res as any;
+        this.dataSource.data= res as any;
         console.log('res', res);
-        console.log('req', this.request);
       }
     );
   }
 
-  dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = [
-    'id','worker_name','new_salary','qarar_num','qarar_date'];
+  
+
+    rowClicked: number;
+  changeTableRowColor(idx: any) { 
+    if(this.rowClicked === idx) this.rowClicked = -1;
+    else this.rowClicked = idx;
+  }
+
+  announceSortChange(sortState: any) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
 
 }
+
+

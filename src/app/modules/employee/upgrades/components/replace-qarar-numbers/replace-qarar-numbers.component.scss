@@ -22,9 +22,40 @@ form{
 
 .oldDate{
     width: 260px;
-    margin-left: 20px;
 }
 
 #view{
     margin-right: 10px;
+}
+
+mat-form-field{
+    margin-left: 10px;
+}
+
+td, th{
+    padding: 10px;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px;
+    margin-left: 10px;
 }

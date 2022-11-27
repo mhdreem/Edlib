@@ -145,8 +145,8 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
     }
 
     const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
-      height: '80%',
-      width: '80%',
+      height: '60%',
+      width: '35%',
       data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
     });
 
@@ -214,8 +214,8 @@ if (element.serial!= null)
       this.selected_employee_JobState.id = this.Selected_Emp.id;
 
       const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
-        height: '80%',
-        width: '80%',
+        height: '60%',
+        width: '35%',
         data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
       });
 

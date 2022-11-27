@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, take, takeUntil } from 'rxjs';
@@ -28,12 +28,12 @@ export class EmployeeListSearchComponent implements OnInit {
 
   //Variable For Scroll
   PageIndex: number = 1;
-  fcl_EmployeeName: UntypedFormControl ;
-  fcl_Payrol_ID: UntypedFormControl ;
-  fcl_Global_ID: UntypedFormControl ;
-  fcl_Insurance_ID: UntypedFormControl ;
-  fcl_Computer_ID: UntypedFormControl ;
-  fcl_Employee_ID: UntypedFormControl ;
+  fcl_EmployeeName: FormControl<string|null> ;
+  fcl_Payrol_ID:  FormControl<string|null> ;
+  fcl_Global_ID:  FormControl<string|null> ;
+  fcl_Insurance_ID: FormControl<number|null> ;
+  fcl_Computer_ID: FormControl<number|null> ;
+  fcl_Employee_ID: FormControl<number|null> ;
 
   
   Payrol_ID_Sort: string ;
@@ -49,24 +49,26 @@ export class EmployeeListSearchComponent implements OnInit {
 
   @Output() OnFindEmployee = new EventEmitter<TBLShamelEmployee>();
 
-
+Form:FormGroup;
 
   constructor(
     private router:Router,
     private route: ActivatedRoute,
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private pageService:EmployeePageService,
     public restApi:EmployeeServiceService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     public GlobalEmployeeList : IGlobalEmployeeList,
     public dialog: MatDialog) {
       this.PageIndex =1;
-      this.fcl_EmployeeName= new UntypedFormControl() ;
-      this.fcl_Payrol_ID= new UntypedFormControl();
-      this.fcl_Global_ID= new UntypedFormControl();
-      this.fcl_Insurance_ID= new UntypedFormControl();
-      this.fcl_Computer_ID= new UntypedFormControl();
-      this.fcl_Employee_ID= new UntypedFormControl();
+this.Form =this.fb.group({
+  'fcl_EmployeeName':this.fcl_EmployeeName = new  FormControl<string|null>(null) ,
+  'fcl_Payrol_ID':this.fcl_Payrol_ID=new  FormControl<string|null> (null),
+  'fcl_Global_ID':this.fcl_Global_ID=new FormControl<string|null> (null),
+  'fcl_Insurance_ID':this.fcl_Insurance_ID=new FormControl<number|null> (null),
+  'fcl_Computer_ID':this.fcl_Computer_ID=new FormControl<number|null> (null),
+  'fcl_Employee_ID':this.fcl_Employee_ID=new FormControl<number|null>(null) 
+});
 
       this.pageService.Subject_Selected_ViewTBLSamelEmployeeSearch.subscribe(
         data=>
@@ -83,8 +85,7 @@ export class EmployeeListSearchComponent implements OnInit {
 
   SelectItemChange (Selected_Employee: ViewTBLShamelEmployee)
   {
-    console.log(Selected_Employee);
-    console.log('Selected_Employee');
+
 
     this.Selected_Employee = Selected_Employee;
     

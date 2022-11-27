@@ -84,7 +84,9 @@ export class PunishmentEditDialogComponent implements OnInit {
       duration: new FormControl<number | null>(null),
       documenttype_id: new FormControl<number | null>(null),
       documentnum: new FormControl<string | null>(null),
-      documentdate: new FormControl<Date | null>(null),
+      documentdate_Day: new FormControl<Date | null>(null),
+      documentdate_Month: new FormControl<Date | null>(null),
+      documentdate_Year: new FormControl<Date | null>(null),
       salary: new FormControl<number | null>(null),
       amount: new FormControl<number | null>(null),
       month_id: new FormControl<number | null>(null),
@@ -113,7 +115,14 @@ export class PunishmentEditDialogComponent implements OnInit {
 
 
       if (this.Selected_Punishment.documentdate != null)
-        this.Form.controls['documentdate'].setValue(moment(this.Selected_Punishment.documentdate).toDate());
+        this.Form.controls['documentdate_Day'].setValue(moment(this.Selected_Punishment.documentdate).date());
+
+      if (this.Selected_Punishment.documentdate != null)
+      this.Form.controls['documentdate_Month'].setValue(moment(this.Selected_Punishment.documentdate).month()+1);
+      
+      if (this.Selected_Punishment.documentdate != null)
+      this.Form.controls['documentdate_Year'].setValue(moment(this.Selected_Punishment.documentdate).year());
+
       if (this.Selected_Punishment.documentnum != null)
         this.Form.controls['documentnum'].setValue(this.Selected_Punishment.documentnum);
       if (this.Selected_Punishment.documenttype_id != null)
@@ -365,7 +374,7 @@ export class PunishmentEditDialogComponent implements OnInit {
     let obj : TBLShamelShatebPunishment =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : this.Form.controls['documentdate'].value,
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,

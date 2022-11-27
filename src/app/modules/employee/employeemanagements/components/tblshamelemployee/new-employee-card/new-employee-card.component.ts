@@ -39,6 +39,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {
     this._Selected_Employee = passFromParent;
+    // console.log('passFromParent',passFromParent);
     this.getValue();
   }
 
@@ -109,6 +110,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   QararDate: FormControl;
   Emp_IN_Military_Service: FormControl;
 
+  
   constructor(
     private pageEmployee: EmployeePageService,
     public formValidatorsService: FormValidationHelpersService,
@@ -132,12 +134,6 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
 
   BuildForm() {
-
-
-
-
-
-
     this.Form = new FormGroup({
       id: this.id = new FormControl<number | null>(null, [Validators.required],),
 
@@ -162,14 +158,14 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
 
       'LName': this.LName = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form.value)]),
+        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
 
 
       'Father': this.Father = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form.value)]),
+        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
 
       'Mother': this.Mother = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form.value)]),
+        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
 
 
       'Birth_Place': this.Birth_Place = new FormControl<number | null>(null,
@@ -370,7 +366,6 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-
   }
 
   private _filtered_MARTIALSTATE(name: string): TBLShamelMartialState[] {
@@ -518,6 +513,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
       console.log(this.Selected_Employee);
       this.empService.add(this.Selected_Employee).subscribe(
         data => {
+          console.log('data99', data);
           if (data > 0) {
             this._snackBar.open('تم بنجاح', 'موافق');
           }
@@ -570,12 +566,12 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
 
 
-    if (this.Sex_Name.value != null && this.Sex_Name.value != undefined)
-      this.Selected_Employee.Sex_Name = this.Sex_Name.value;
+    if (this.Sex_Name.value != null && this.Sex_Name.value.Sex_Name != undefined)
+      this.Selected_Employee.Sex_Name = this.Sex_Name.value.Sex_Name;
 
 
     if (this.Nationality_ID.value != null && this.Nationality_ID.value != undefined)
-      this.Selected_Employee.Nationality_ID = this.Nationality_ID.value;
+      this.Selected_Employee.Nationality_ID = this.Nationality_ID.value.Nationality_ID;
 
     if (this.Selected_Employee != null && this.City_ID.value != null)
       this.Selected_Employee.City_ID = this.City_ID.value;
@@ -583,7 +579,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
     if (this.Selected_Employee != null && this.Area_ID.value != undefined)
       this.Selected_Employee.Area_ID = this.Area_ID.value.Area_ID;
 
-    if (this.Selected_Employee != null && this.MiniArea_ID.value.MiniArea_ID != undefined)
+    if (this.Selected_Employee != null && this.MiniArea_ID.value?.MiniArea_ID != undefined)
       this.Selected_Employee.MiniArea_ID = this.MiniArea_ID.value.MiniArea_ID;
 
     if (this.Selected_Employee != null && this.StreetOrVillage_ID.value != undefined)
@@ -647,6 +643,8 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
     if (this.Selected_Employee.id != null)
       this.id.setValue(this.Selected_Employee.id);
 
+      console.log('Selected_Employee', this.Selected_Employee);
+      console.log('this.id', this.id);
     if (this.Selected_Employee.Payrol_ID != null)
       this.Payrol_ID.setValue(this.Selected_Employee.Payrol_ID);
 

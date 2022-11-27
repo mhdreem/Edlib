@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { forkJoin, map, Observable, of, startWith } from 'rxjs';
 import { TBLShamelArea } from 'src/app/modules/shared/models/employees_department/TBLShamelArea';
 import { TblShamelBrokerPrintTotals } from 'src/app/modules/shared/models/finance_department/broker/TblShamelBrokerPrintTotals';
@@ -15,6 +18,10 @@ import { TblShamelBrokerShatebService } from 'src/app/modules/shared/services/fi
 })
 export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -36,6 +43,12 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 
   displayedColumns: string[] = ['area_name', 'fullname', 'daycount', 'totaldaycount'];
   
+  ngAfterViewInit() {
+
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+  
   constructor(private frmBuilder : FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
     private tblShamelBrokerShatebService: TblShamelBrokerShatebService,
@@ -45,8 +58,12 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 
       this.Form = this. frmBuilder.group({
         area_name: new FormControl<string|undefined|null>(null),
-        start_date: new FormControl<Date | null>(null),
-        end_date: new FormControl<Date | null>(null),
+        startdateDay: new FormControl<number|undefined|null>(null),
+      startdateMonth: new FormControl<number|undefined|null>(null),
+      startdateYear: new FormControl<number|undefined|null>(null),
+      enddateDay: new FormControl<number|undefined|null>(null),
+      enddateMonth: new FormControl<number|undefined|null>(null),
+      enddateYear: new FormControl<number|undefined|null>(null)
       });
   
       this.LoadData();
@@ -108,9 +125,9 @@ public displayAreaProperty(value: string): string {
 
 OnSearch()
   {
-    if(this.Form.controls['start_date'].value == null || this.Form.controls['end_date'].value == null){
+    if(this.Form.controls['startdateDay'].value == null || this.Form.controls['startdateMonth'].value == null || this.Form.controls['startdateYear'].value == null || this.Form.controls['enddateDay'].value == null || this.Form.controls['enddateMonth'].value == null || this.Form.controls['enddateYear'].value == null){
     this.snackBar.open('الرجاء إدخال التواريخ', '', {
-      duration: 2000,
+      duration: 3000,
     });
     return;
   }
@@ -129,8 +146,8 @@ OnSearch()
       // call Search
       this.tblShamelBrokerShatebService.statistics({
         area_name: this.Form.controls['area_name'].value,
-        start_date: this.Form.controls['start_date'].value,
-        end_date: this.Form.controls['end_date'].value
+        start_date: moment(this.Form.controls['startdateMonth'].value+'/'+this.Form.controls['startdateDay'].value+'/'+this.Form.controls['startdateYear'].value).toDate(),
+        end_date: moment(this.Form.controls['enddateMonth'].value+'/'+this.Form.controls['enddateDay'].value+'/'+this.Form.controls['enddateYear'].value).toDate()
       }).subscribe(
         (data: TblShamelBrokerPrintTotals[] )=> {
 

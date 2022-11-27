@@ -1,9 +1,9 @@
 <div class="col-md-12 text-center d-flex justify-content-between">
-  <h2>الدورات التدريبية</h2>
+  <h2>المكافئات</h2>
 </div>
 <div class="mb-3">
   للإضافة على الجدول انقر على اضافة
-  <button mat-flat-button color="primary" class="mr-2 action-button" (click)="Add()">اضافة</button>
+  <button class="add" mat-raised-button color="primary" class="mr-2 action-button" (click)="Add()" [disabled]="Selected_Emp?.id== null">اضافة</button>
 </div>
 
 <div class="col-md-12">
@@ -53,7 +53,7 @@
               <mat-icon>delete</mat-icon>
             </button>
             <button mat-button color="primary" (click)="Update(element)" title="تعديل" style="font-size: 10px;">
-              <mat-icon>update</mat-icon>
+              <mat-icon>edit</mat-icon>
             </button>
           </td>
         <tr>

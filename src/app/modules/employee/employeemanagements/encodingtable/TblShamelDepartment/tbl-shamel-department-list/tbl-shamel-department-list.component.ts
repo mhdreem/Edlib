@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelDepartment } from 'src/app/modules/shared/models/employees_department/ITBLShamelDepartment';
 import { TblshameldepartmentService } from 'src/app/modules/shared/services/employees_department/tblshameldepartment.service';
@@ -20,7 +21,8 @@ export class TblShamelDepartmentListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelDepartmentService:TblshameldepartmentService) {
+   private tBLShamelDepartmentService:TblshameldepartmentService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelDepartmentService.List_ITBLShamelDepartment == null ||
       tBLShamelDepartmentService.List_ITBLShamelDepartment.length ==0
      )
@@ -71,7 +73,12 @@ export class TblShamelDepartmentListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +95,28 @@ export class TblShamelDepartmentListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deleteDepartment(obj:any){
-   this.tBLShamelDepartmentService.delete(obj).subscribe
+   this.tBLShamelDepartmentService.delete(obj.department_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

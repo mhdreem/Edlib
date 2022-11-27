@@ -161,8 +161,9 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 import { EmployeeCardComponent } from './employee-card.component';
 import { PrintEmployeeCardComponent } from './components/print-employee-card/print-employee-card.component';
-import { JobServiceDataComponent } from './components/job-service-data/job-service-data.component';
-import { JobServiceDataAdjustPrintDialogComponent } from './components/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { JobServiceDataComponent } from './components/service-data/job-service-data/job-service-data.component';
+import { JobServiceDataAdjustPrintDialogComponent } from './components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { DisplayNamesSimilarityComponent } from './components/display-names-similarity/display-names-similarity.component';
 
 
 
@@ -277,7 +278,8 @@ export const MY_FORMATS = {
     EmployeeCardComponent,
     PrintEmployeeCardComponent,
     JobServiceDataComponent,
-    JobServiceDataAdjustPrintDialogComponent
+    JobServiceDataAdjustPrintDialogComponent,
+    DisplayNamesSimilarityComponent
   ],
   imports: [  
     CommonModule,

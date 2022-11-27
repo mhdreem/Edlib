@@ -1,0 +1,39 @@
+table{
+    width: 100%;
+}
+
+td, th{
+    padding: 10px;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.date{
+    background-color: gray;
+    padding: 10px;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+}
+
+.edit {
+    cursor: pointer;
+}
+
+.delete {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.add {
+    margin-block: 10px;
+}

@@ -1,7 +1,8 @@
-<h2 mat-dialog-title>الدورات التدريبية</h2>
+<h2 mat-dialog-title>تعديا الإجازة القانونية</h2>
 
 <mat-dialog-content class="mat-typography">
 
+  <!-- <ngx-hover-opacity [isHoverVisible]="isLoadingFinish"> -->
 
   <form [formGroup]="Form">
 
@@ -11,7 +12,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ بداية الإجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_startdate" [formControl]="fcl_startdate"  >
+          <input matInput [matDatepicker]="Datepicker_startdate" [formControl]="startdate"
+          (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)"  >
           <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_startdate></mat-datepicker>
         </mat-form-field>
@@ -20,7 +22,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ انتهاء الاجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="fcl_enddate"  >
+          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate"
+          (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)"  >
           <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_enddate></mat-datepicker>
         </mat-form-field>
@@ -29,7 +32,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدة</mat-label>        
-            <input matInput type="number" placeholder="Ex. Pizza" value="" [formControl]="fcl_duration"   >        
+            <input matInput type="number" placeholder="Ex. Pizza" value="" [formControl]="duration"   >        
         </mat-form-field>
   
       </div>
@@ -43,7 +46,7 @@
 
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>المستند</mat-label>
-            <input type="text" matInput [formControl]="fcl_documenttype_id" formControlName="documenttype_id"
+            <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
               [matAutocomplete]="auto_documenttype_id">
             <mat-autocomplete #auto_documenttype_id="matAutocomplete"
               [displayWith]="displayDocumentTypeProperty.bind(this)"
@@ -59,7 +62,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>        
-            <input matInput type="number" placeholder="Ex. Pizza" value="Sushi" [formControl]="fcl_document_number"   >        
+            <input matInput type="number" placeholder="Ex. Pizza" value="Sushi" [formControl]="document_number"   >        
         </mat-form-field>
   
       </div>
@@ -67,7 +70,9 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ المستند</mat-label>
-          <input matInput [matDatepicker]="Datepicker_documentdate" [formControl]="fcl_documentdate">
+          <input matInput [matDatepicker]="Datepicker_documentdate" [formControl]="documentdate"
+          (dateInput)="addEventDocumentDate('input', $event)"
+            (dateChange)="addEventDocumentDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_documentdate></mat-datepicker>
         </mat-form-field>
@@ -76,6 +81,8 @@
 
     </div>
   </form>
+<!-- </ngx-hover-opacity> -->
+
   </mat-dialog-content>
   <mat-dialog-actions >
     <button mat-raised-button color="warn" mat-dialog-close >

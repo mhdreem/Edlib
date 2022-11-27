@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ITBLShamelSCFreeHoliday } from '../../models/employees_department/ITBLShamelSCFreeHoliday';
 import { TBLShamelSuddenHoliday } from '../../models/employees_department/TBLShamelSuddenHoliday';
 
@@ -23,7 +23,7 @@ export class TBLShamelSuddenHolidayService {
   list()  {
     const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
     const options = {  headers: headers };  
-    return this.httpClient.get<TBLShamelSuddenHoliday[]>(this.RestUrl +`TBLShamelSuddenHoliday`,options);  
+    return this.httpClient.get<TBLShamelSuddenHoliday[]>(this.RestUrl +`TBLShamelSuddenHoliday`,options) as Observable<TBLShamelSuddenHoliday[]>;  
     
   }
 

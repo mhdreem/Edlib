@@ -100,7 +100,11 @@ public change_employee_id()
   console.log('دخل');
   this.restApi.change_employee_id(this.old_Computer_ID.value,this.new_Computer_ID.value).subscribe
   (data=>{
-    
+    if (data == 1){
+      this.snackBar.open('تم التعديل بنجاح', '', {
+        duration: 3000,
+      });
+    }
   }
 
   );

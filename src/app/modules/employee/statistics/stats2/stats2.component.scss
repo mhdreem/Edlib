@@ -1,0 +1,52 @@
+table{
+    width: 100%;
+    margin-top: 20px;
+}
+
+form .columns{
+    display: flex;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.search{
+    margin-top: 10px;
+}
+
+.group1{
+    display: flex;
+}
+
+.table-wrap{
+    overflow: auto;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
+.clear{
+    margin-bottom: 10px;
+}
+
+.date .content{
+    display: flex;
+}
+
+.hideDate{
+    display: none !important;
+}
+
+.small-width{
+    width: 90px;
+    margin-left: 10px;
+}

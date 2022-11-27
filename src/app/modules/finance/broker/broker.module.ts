@@ -79,8 +79,7 @@ import { TblshamelBrokerEmployeeModifyComponent } from './components/tblShamelBr
 import { TblShamelBrokerShatebListComponent } from './components/tblShamelBrokerShateb/tbl-shamel-broker-shateb-list/tbl-shamel-broker-shateb-list.component';
 import { TblShamelBrokerShatebModifyComponent } from './components/tblShamelBrokerShateb/tbl-shamel-broker-shateb-modify/tbl-shamel-broker-shateb-modify.component';
 import { TblShamelBrokerPrintTotalsListComponent } from './components/tblShamelBrokerPrintTotals/tbl-shamel-broker-print-totals-list/tbl-shamel-broker-print-totals-list.component';
-
-
+import {MatSortModule} from '@angular/material/sort';
 /////////////////////////////
 
 //component 
@@ -215,7 +214,8 @@ TabsModule,
 UtilitiesModule,
 IconModule,
 BrokerRoutingModule,
-MatExpansionModule
+MatExpansionModule,
+MatSortModule
 
   ]
 })

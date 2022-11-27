@@ -1,0 +1,87 @@
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="Form">
+        
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>دورة الترفيع</mat-label>
+            <input matInput type="number" value="" [formControl]="upgradeYear" required>
+        </mat-form-field>
+
+        <div class="date">
+            <span>بداية دورة الترفيع:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="StartDay" (change)="onStartDayChange()" placeholder="ex: 21">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="StartMonth" (change)="onStartMonthChange()" placeholder="ex: 1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="StartYear" (change)="onStartYearChange()" placeholder="ex: 2023">
+              </mat-form-field>
+            </div>
+          </div>
+
+        <mat-form-field appearance="fill" class="hideDate">
+            <mat-label>بداية دورة الترفيع</mat-label>
+            <input matInput [matDatepicker]="Datepicker_upgradeYearStart" [formControl]="upgradeYearStart" required>
+            <mat-datepicker-toggle matSuffix [for]="Datepicker_upgradeYearStart"></mat-datepicker-toggle>
+            <mat-datepicker #Datepicker_upgradeYearStart></mat-datepicker>
+        </mat-form-field>
+
+        <div class="date">
+            <span>نهاية دورة الترفيع:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="endDay" (change)="onEndDayChange()" placeholder="ex: 21">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="endMonth" (change)="onEndMonthChange()" placeholder="ex: 1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="endYear" (change)="onEndYearChange()" placeholder="ex: 2023">
+              </mat-form-field>
+            </div>
+          </div>
+
+        <mat-form-field appearance="fill" class="hideDate">
+            <mat-label>نهاية دورة الترفيع</mat-label>
+            <input matInput [matDatepicker]="Datepicker_upgradeYearEnd" [formControl]="upgradeYearEnd" required>
+            <mat-datepicker-toggle matSuffix [for]="Datepicker_upgradeYearEnd"></mat-datepicker-toggle>
+            <mat-datepicker #Datepicker_upgradeYearEnd></mat-datepicker>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">
+        <mat-icon class="mat-icon-rtl-mirror">close
+        </mat-icon>
+        اغلاق
+    </button>
+
+
+
+
+
+    <button mat-raised-button color="accent" (click)="onReset()">
+        <mat-icon class="mat-icon-rtl-mirror">clear
+        </mat-icon>
+        مسح الشاشة
+    </button>
+
+
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
+        [disabled]="Form.invalid   ">
+        <mat-icon class="mat-icon-rtl-mirror">save
+        </mat-icon>
+        حفظ
+    </button>
+
+</mat-dialog-actions>

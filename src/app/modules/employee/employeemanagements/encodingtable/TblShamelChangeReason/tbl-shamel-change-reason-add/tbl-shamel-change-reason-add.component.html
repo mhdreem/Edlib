@@ -5,8 +5,8 @@
 
    <div mat-dialog-content>
 
-    <div class="col-8" *ngIf="action != 'حذف'; else elseTemplate">
-      <div class="col-8 row">
+    <div class="col-12" *ngIf="action != 'حذف'; else elseTemplate">
+      <div class="col-12 row">
       <div class="col-6">
         <mat-form-field >
           <input placeholder="{{action}}  سبب التبدل" matInput
@@ -16,9 +16,9 @@
       <div class="col-6">
         <section class="example-section">
           <label class="example-margin">الوضع بالملاك:</label>
-          <mat-radio-group [(ngModel)]="local_data!.malakstate_id">
-            <mat-radio-button class="example-margin" value="0">قائم على رأس عمله</mat-radio-button>
-            <mat-radio-button class="example-margin" value="1"> خارج الملاك</mat-radio-button>
+          <mat-radio-group color="primary" formControlName="malakstate_id" >
+            <mat-radio-button color="primary" class="example-margin" value="0">قائم على رأس عمله</mat-radio-button>
+            <mat-radio-button color="primary" class="example-margin" value="1"> خارج الملاك</mat-radio-button>
           </mat-radio-group>
         </section>
        <!-- <mat-checkbox [formControl]="frm_MalakState_id" [(ngModel)]="local_data!.malakstate_id"> الوضع بالملاك         </mat-checkbox>-->
@@ -27,9 +27,9 @@
       <div class="col-6">
         <section class="example-section">
           <label class="example-margin">احتساب الخدمة  :</label>
-          <mat-radio-group [(ngModel)]="local_data!.countservice_id">
-            <mat-radio-button class="example-margin" value="0">   لا</mat-radio-button>
-            <mat-radio-button class="example-margin" value="1">  نعم</mat-radio-button>
+          <mat-radio-group color="primary" formControlName="countservice_id" >
+            <mat-radio-button color="primary" class="example-margin" value="0">   لا</mat-radio-button>
+            <mat-radio-button color="primary" class="example-margin" value="1">  نعم</mat-radio-button>
           </mat-radio-group>
         </section>
         <!-- <mat-checkbox [formControl]="frm_CountService_id" [(ngModel)]="local_data!.countservice_id"> احتساب الخدمة         </mat-checkbox>-->

@@ -126,8 +126,9 @@ ngAfterViewInit() {
   console.log(this.selected_employee_MergeService);
 
     const dialogRef = this.dialog.open(TblshamelscmergeserviceModifyComponent, {
-      height: '80%',
-       width: '80%',
+      height: '60%',
+       width: '50%',
+       position: {top: '10%', left: '20%'},
       data: {obj: this.selected_employee_MergeService,id:this.Selected_Emp.id}
     });
    
@@ -201,7 +202,8 @@ ngAfterViewInit() {
     
       const dialogRef = this.dialog.open(TblshamelscmergeserviceModifyComponent, {
         height: '60%',
-        width: '80%',
+        width: '50%',
+        position: {top: '10%', left: '20%'},
         data: {obj: this.selected_employee_MergeService,id:this.Selected_Emp.id}
       });
   
@@ -214,8 +216,17 @@ ngAfterViewInit() {
   
   }
   
+  rowClicked: number;
+
+  changeTableRowColor(idx: any) { 
+    if(this.rowClicked === idx) this.rowClicked = -1;
+    else this.rowClicked = idx;
+  }
   
-  
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   
   }
   

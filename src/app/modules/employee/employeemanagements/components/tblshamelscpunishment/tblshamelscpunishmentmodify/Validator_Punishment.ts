@@ -1,5 +1,5 @@
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITBLShamelSCPunishment } from 'src/app/modules/shared/models/employees_department/ITBLShamelSCPunishment';
 import { TBLShamelSCPunishmentService } from 'src/app/modules/shared/services/employees_department/tblshamel-scpunishment.service';
@@ -13,10 +13,7 @@ export function Validator_Punishment(empService: TBLShamelSCPunishmentService): 
         if (frmGroup == null ||
             frmGroup.controls == null
         )
-            return new Promise(
-                resolve => {
-                    null
-                });
+        return of(null);
 
 
 

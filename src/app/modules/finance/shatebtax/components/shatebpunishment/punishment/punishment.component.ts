@@ -24,6 +24,7 @@ import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finan
 import { ITBLShamelAccounter } from 'src/app/modules/shared/models/employees_department/TBLShamelAccounter';
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-punishment',
@@ -91,13 +92,21 @@ BuilForm()
     duration: new FormControl<number | undefined|null>(undefined),
     documenttype_id: new FormControl<string | undefined|null>(undefined),
     documentnum: new FormControl<string| undefined|null>(undefined),
-    documentdate_from: new FormControl<Date | undefined|null>(undefined),
-    documentdate_to: new FormControl<Date| undefined|null>(undefined),
+    documentdate_From_Day: new FormControl<number | undefined|null>(undefined),
+    documentdate_From_Month: new FormControl<number | undefined|null>(undefined),
+    documentdate_From_Year: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Day: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Month: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Year: new FormControl<number | undefined|null>(undefined),
     salary: new FormControl<number | undefined|null>(undefined),
     amount: new FormControl<number | undefined|null>(undefined),
     eisalnum: new FormControl<string | undefined|null>(undefined),
-    eisaldate_from: new FormControl<Date| undefined|null>(undefined),
-    eisaldate_to: new FormControl<Date | undefined|null>(undefined),
+    eisaldate_From_Day: new FormControl<number | undefined|null>(undefined),
+    eisaldate_From_Month: new FormControl<number | undefined|null>(undefined),
+    eisaldate_From_Year: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Day: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Month: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Year: new FormControl<number | undefined|null>(undefined),
     year_id: new FormControl<number | undefined|null>(undefined),
     month_id: new FormControl<number | undefined|null>(undefined),
     fullname: new FormControl<string| undefined|null>(undefined),
@@ -311,7 +320,29 @@ BuilForm()
 
 
    
-    this.ShamelShatebPunishmentService.fill(this.Form.value);
+    this.ShamelShatebPunishmentService.fill({
+      'rowInPage': this.Form.controls['rowinpage'].value,
+      'pageIndex': this.Form.controls['pageindex'].value,
+      'serial': this.Form.controls['serial'].value,
+      'id': this.Form.controls['id'].value,
+      'duration': this.Form.controls['duration'].value,
+      'documenttype_id': this.Form.controls['documenttype_id'].value,
+      'documentnum': this.Form.controls['documentnum'].value,
+      'salary': this.Form.controls['salary'].value,
+      'amount': this.Form.controls['amount'].value,
+      'year_id': this.Form.controls['year_id'].value,
+      'month_id': this.Form.controls['month_id'].value,
+      'fname': this.Form.controls['fname'].value,
+      'lname': this.Form.controls['lname'].value,
+      'father': this.Form.controls['father'].value,
+      'tax_status': this.Form.controls['tax_status'].value,
+      'accounter_id': this.Form.controls['accounter_id'].value,
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
+
+    });
 
     this.ShamelShatebPunishmentService.List_TblShamelPunishmentServicet_BehaviorSubject.subscribe(
       data =>{

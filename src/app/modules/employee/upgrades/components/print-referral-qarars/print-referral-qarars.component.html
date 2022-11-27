@@ -1,63 +1,80 @@
-<form action="" [formGroup]="Form" #form="ngForm">
-  
-  <mat-form-field class="example-full-width fitContent" appearance="fill">
-      <mat-label>عام الترفيع</mat-label>
-      <input type="number"
-              matInput
-              formControlName="fcl_UpgradeYear"
-              [matAutocomplete]="auto1"
-              required>
-      <mat-autocomplete #auto1="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width fitContent" appearance="fill">
-        <mat-label>الفئة</mat-label>
-        <input type="text"
-                matInput
-                formControlName="fcl_Class"
-                [matAutocomplete]="auto2"
-                required>
-        <mat-autocomplete #auto2="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            مفاتيح البحث
+        </mat-panel-title>
+        <mat-panel-description>
+            من أجل التحكم بالبحث انقر هنا
+            <mat-icon fontIcon="search"></mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form action="" [formGroup]="Form" #form="ngForm">
+      
       <mat-form-field class="example-full-width fitContent" appearance="fill">
-        <mat-label>الصفة الوظيفية</mat-label>
-        <input type="text"
-                matInput
-                formControlName="fcl_JobName"
-                [matAutocomplete]="auto3"
-                required>
-        <mat-autocomplete #auto3="matAutocomplete" (optionSelected)='getJobName($event.option.value)'>
-          <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    
-  <mat-form-field class="example-full-width fitContent" appearance="fill">
-      <mat-label>من رقم قرار</mat-label>
-      <input matInput type="number" value="" formControlName="fcl_FirstQararNum" required>
-    </mat-form-field>
+          <mat-label>عام الترفيع</mat-label>
+          <input type="number"
+                  matInput
+                  [formControl]="UpgradeYear"
+                  [matAutocomplete]="autoUpgradeYear"
+                  >
+          <mat-autocomplete #autoUpgradeYear="matAutocomplete"
+          [displayWith]="displayUpgradeYearProperty.bind(this)">
+            <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
+              {{option.YEAR_ID}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
-    <mat-form-field class="example-full-width fitContent" appearance="fill">
-      <mat-label>الى رقم قرار</mat-label>
-      <input matInput type="number" value="" formControlName="fcl_LastQararNum" required>
-    </mat-form-field>
-        
-  <button id="view" mat-raised-button color="primary" (click)="Search()" [disabled]="!form.valid">عرض السجلات</button>
-  <button id="view" mat-raised-button color="primary" (click)="print()" >طباعة الإحالات</button>
-  <button id="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
-        
-</form>
+        <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>الفئة</mat-label>
+            <input type="text"
+                    matInput
+                    [formControl]="Class"
+                    [matAutocomplete]="autoClass"
+                    >
+            <mat-autocomplete #autoClass="matAutocomplete"
+            [displayWith]="displayClassProperty.bind(this)">
+              <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
+                {{option.class_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
 
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>الصفة الوظيفية</mat-label>
+            <input type="text"
+                    matInput
+                    [formControl]="JobName"
+                    [matAutocomplete]="autoJobName"
+                    >
+            <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value)'
+            [displayWith]="displayJobNameProperty.bind(this)">
+              <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
+                {{option.jobname_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        
+      <mat-form-field class="example-full-width fitContent" appearance="fill">
+          <mat-label>من رقم قرار</mat-label>
+          <input matInput type="number" value="" [formControl]="FirstQararNum">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width fitContent" appearance="fill">
+          <mat-label>الى رقم قرار</mat-label>
+          <input matInput type="number" value="" [formControl]="LastQararNum">
+        </mat-form-field>
+            
+        <button id="view" mat-raised-button color="primary" (click)="Search()">بحث</button>
+        
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
+  <button class="view" mat-raised-button color="primary" (click)="list()">عرض السجلات</button>
+<button mat-raised-button color="primary" (click)="print()" >طباعة الإحالات</button>
+<button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
 
 <div class="table-wrap">
 
@@ -79,7 +96,7 @@
         <!-- qarar_date Column -->
         <ng-container matColumnDef="qarar_date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار</th>
-            <td mat-cell *matCellDef="let element">{{element?.qarar_date}}</td>
+            <td mat-cell *matCellDef="let element">{{element?.qarar_date | date:'yyyy/MM/dd'}}</td>
         </ng-container>
   
   
@@ -111,7 +128,9 @@
   
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"></tr>
     </table>
   
     <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>

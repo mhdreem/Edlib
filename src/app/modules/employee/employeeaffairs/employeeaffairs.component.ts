@@ -38,7 +38,7 @@ export class EmployeeaffairsComponent implements OnInit {
   
     },
     {
-      name: 'صم الخدمة',
+      name: 'ضم الخدمة',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/employeeaffairs/manage/scmergeservice',
   

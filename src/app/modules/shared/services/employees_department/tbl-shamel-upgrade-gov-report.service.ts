@@ -45,10 +45,10 @@ export class TblShamelUpgradeGovReportService {
     
   }
 
-  delete(id:number )  {
+  delete(yearId:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TblShamelUpgradeGovReport/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TblShamelUpgradeGovReport/Delete_All_UpgradeGovReport_By_Year_ID/"+yearId,options);  
   }
 
   add(obj : TblShamelUpgradeGovReport )  {

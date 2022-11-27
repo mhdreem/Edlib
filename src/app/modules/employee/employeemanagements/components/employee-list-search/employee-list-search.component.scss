@@ -1,79 +1,50 @@
-:host {
+:host
+{
+    font-size: small;
+}
 
-  font-size: small;
-
-  .input-form-field {
-    ::ng-deep {
-      .mat-form-field-infix {
-        width: 135px !important;
-      }
-    }
-  }
-
-  .grid-button
-  {
-    ::ng-deep {
-      .mat-grid-tile-content {
-        align-items: flex-start !important;
-      }
-
-     }
-  }
+.mat-form-field
+{
+    width: 100% !important;
 }
 
 
-mat-icon
+.mat-form-field-infix
+{
+    width: 100% !important;
+}
+
+.mat-grid-tile
+{
+    font-size: small!important;
+}
+
+.mat-icon
 {
     font-size: smaller;
     font-weight: bold;
     vertical-align: middle;
 }
-mat-form-field
-{
-    font-size: small;
-}
 
-mat-grid-tile
-{
-    font-size: small;
-}
 
-mat-button-toggle-group
+
+.mat-button-toggle-group
 {
     width: 100%;
 }
-mat-button-toggle
+
+.mat-button-toggle
 {
     width:100%;
 }
 
 mat-list-item
 {
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 
 
-mat-list-item
-{
-  transition: 0.3s background-color;
-  &:hover {
+mat-list-item:hover {
     background: #76b900 !important;
-  }
-}
-
-mat-list-item.active {
-  background: #76b900 !important;
-}
-
-  .sort-button {
-    height: 48px !important;
-    width: 48px !important;
-    min-width: 0px !important;
-    padding: 0 0.1rem !important;
-
-    &--active {
-      background-color: red;
-    }
-
   }

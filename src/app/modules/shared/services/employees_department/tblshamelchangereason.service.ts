@@ -22,14 +22,14 @@ List_ITBLShamelChangeReason_BehaviorSubject : BehaviorSubject<ITBLShamelChangeRe
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
     console.log("TBLShamelChangeReason");
-    return this.httpClient.get<ITBLShamelChangeReason[]>(this.RestUrl +"TBLShamelChangeReason/list",options);    
+    return this.httpClient.get<ITBLShamelChangeReason[]>(this.RestUrl +"TBLShamelChangeReason",options) as Observable<ITBLShamelChangeReason[]>;    
   }
 
   fill ()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
     console.log("TBLShamelChangeReason");
-    this.httpClient.get<ITBLShamelChangeReason[]>(this.RestUrl +"TBLShamelChangeReason/list",options).subscribe
+    this.httpClient.get<ITBLShamelChangeReason[]>(this.RestUrl +"TBLShamelChangeReason",options).subscribe
     (
       data=>
       {
@@ -43,7 +43,7 @@ List_ITBLShamelChangeReason_BehaviorSubject : BehaviorSubject<ITBLShamelChangeRe
   delete(changereason_id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelChangeReason/delete/"+changereason_id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelChangeReason/"+changereason_id,options);  
   }
 
   add(obj : ITBLShamelChangeReason )  {

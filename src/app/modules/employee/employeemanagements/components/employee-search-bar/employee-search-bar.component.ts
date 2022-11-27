@@ -1,8 +1,8 @@
 import { _isNumberValue } from '@angular/cdk/coercion';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { startWith, map, debounceTime, switchMap, tap, finalize, forkJoin, Observable, of } from 'rxjs';
+import { startWith, map, debounceTime, switchMap, tap, finalize, forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { SearchEmployeeDialogComponent } from 'src/app/modules/finance/payrol/componenets/employee/search-employee-dialog/search-employee-dialog.component';
@@ -15,13 +15,14 @@ import { TBLShamelAccounterService } from 'src/app/modules/shared/services/emplo
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { EmployeeSeachDialogComponent } from '../employee-seach-dialog/employee-seach-dialog.component';
+import { EmployeePageService } from '../employee-page-service';
 
 @Component({
   selector: 'app-employee-search-bar',
   templateUrl: './employee-search-bar.component.html',
   styleUrls: ['./employee-search-bar.component.scss']
 })
-export class EmployeeSearchBarComponent implements OnInit {
+export class EmployeeSearchBarComponent implements OnInit,OnDestroy {
 
   _Selected_Employee: ViewTBLShamelEmployee;
   set Selected_Employee(obj:ViewTBLShamelEmployee)
@@ -31,7 +32,8 @@ export class EmployeeSearchBarComponent implements OnInit {
     {
       this.employeeService.search_by_id(this._Selected_Employee.id.toString()).
       subscribe(res => {
-        this.pageService.TBLShamelEmployee = res;
+        this.pageService.Selected_TBLShamelEmployee = res;
+        this.pageService.Subject_Selected_TBLShamelEmployee.next(res);
       });
     }
 
@@ -49,6 +51,8 @@ return this._Selected_Employee;
   List_Employee: ViewTBLShamelEmployee[];
   List_Employee_Filter: Observable<ViewTBLShamelEmployee[]>;
   Form: FormGroup;
+
+  _Subscription:Subscription = new Subscription() ;
   
   constructor(
     public dialog: MatDialog,
@@ -56,9 +60,13 @@ return this._Selected_Employee;
  
     public viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
     public employeeService: EmployeeServiceService,
-    public pageService: TblShamelNewPayrolAddPageServiceService
+    public pageService: EmployeePageService
   ) {
     this.BuildForm();
+  }
+  ngOnDestroy(): void {
+    this._Subscription.unsubscribe();
+
   }
 
   ngOnInit(): void {
@@ -73,6 +81,9 @@ return this._Selected_Employee;
       'malakstate_name': new FormControl<string | null>(null)
     });
     if (this.Form != null) {
+      this._Subscription.add(
+        
+
       this.Form.controls['fullname']
         .valueChanges
         .pipe(
@@ -91,7 +102,9 @@ return this._Selected_Employee;
             this.List_Employee_Filter = of(emps);
            
           }
-        });
+        })
+
+        );
 
     }
   }
@@ -163,12 +176,15 @@ return this._Selected_Employee;
   next_global_id() {
     if (this.Selected_Employee != null &&
       this.Selected_Employee.global_id != null) {
+        this._Subscription.add(
 
       this.viewTBLShamelEmployeeService.next_global_id(this.Selected_Employee.global_id).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
 
   }
@@ -179,12 +195,15 @@ return this._Selected_Employee;
       this.Selected_Employee.global_id != null &&
       this.Selected_Employee.global_id != null) {
 
+        this._Subscription.add(
 
       this.viewTBLShamelEmployeeService.prev_global_id(this.Selected_Employee.global_id).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
@@ -192,11 +211,15 @@ return this._Selected_Employee;
   previous_computer_id() {
     if (this.Selected_Employee != null &&
       this.Selected_Employee.computer_id != null) {
+        this._Subscription.add(
+
         this.viewTBLShamelEmployeeService.prev_computer_id(this.Selected_Employee.computer_id.toString()).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
 
   }
@@ -206,12 +229,15 @@ return this._Selected_Employee;
     if (this.Selected_Employee != null &&
       this.Selected_Employee.computer_id != null &&
       this.Selected_Employee.computer_id != null) {
+        this._Subscription.add(
 
       this.viewTBLShamelEmployeeService.next_computer_id(this.Selected_Employee.computer_id.toString()).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
@@ -219,11 +245,15 @@ return this._Selected_Employee;
     if (this.Form != null &&
       this.Form.controls['computer_id'].value != null &&
       this.Form.controls['computer_id'].value != null) {
+        this._Subscription.add(
+
       this.viewTBLShamelEmployeeService.Search_computer_id(this.Form.controls['computer_id'].value).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
@@ -231,33 +261,45 @@ return this._Selected_Employee;
     if (this.Form != null &&
       this.Form.controls['global_id'].value != null &&
       this.Form.controls['global_id'].value != null) {
+        this._Subscription.add(
+
       this.viewTBLShamelEmployeeService.Search_global_id(this.Form.controls['global_id'].value ).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
   nextId() {
     if (this.Selected_Employee != null &&
       this.Selected_Employee.id != null) {
+        this._Subscription.add(
+
       this.viewTBLShamelEmployeeService.next_id(this.Selected_Employee.id.toString()).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
   previousId() {
     if (this.Selected_Employee != null &&
       this.Selected_Employee.id != null) {
+        this._Subscription.add(
+
       this.viewTBLShamelEmployeeService.prev_id(this.Selected_Employee.id.toString()).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 
@@ -266,11 +308,15 @@ return this._Selected_Employee;
     if (this.Form != null &&
       this.Form.controls['id'].value != null &&
       this.Form.controls['id'].value != null)  {
+        this._Subscription.add(
+
       this.viewTBLShamelEmployeeService.search_by_id(this.Form.controls['id'].value.toString()).subscribe(
         res => {
           this.Selected_Employee = res;
         }
-      );
+      )
+
+        );
     }
   }
 

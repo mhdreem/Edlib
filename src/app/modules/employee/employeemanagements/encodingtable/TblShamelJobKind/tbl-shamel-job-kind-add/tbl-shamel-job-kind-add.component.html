@@ -5,8 +5,8 @@
 
    <div mat-dialog-content>
 
-    <div class="col-8" *ngIf="action != 'حذف'; else elseTemplate">
-      <div class="col-8 row">
+    <div class="col-12" *ngIf="action != 'حذف'; else elseTemplate">
+      <div class="col-12 row">
       <div class="col-6">
         <mat-form-field >
           <input placeholder="{{action}} نوع العمل " matInput
@@ -14,7 +14,7 @@
         </mat-form-field>
       </div>
       <div class="col-6">
-        <mat-checkbox [formControl]="frm_JobKind_fixed" [(ngModel)]="local_data!.jobkind_fixed"> هل هو مثبت         </mat-checkbox>
+        <mat-checkbox color="primary" [formControl]="frm_JobKind_fixed" [(ngModel)]="local_data!.Fixed"> هل هو مثبت         </mat-checkbox>
       </div>
 
 

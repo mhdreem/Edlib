@@ -1,4 +1,5 @@
 import { AsyncValidatorFn,  ValidationErrors, FormGroup, AbstractControl } from "@angular/forms";
+import * as moment from "moment";
 import { Observable, map, of } from "rxjs";
 import { TblShamelBrokerEmployeeService } from "src/app/modules/shared/services/finance_department/broker/tbl-shamel-broker-employee.service";
 import { TBLShamelOvertimeEmployeeService } from "src/app/modules/shared/services/finance_department/broker/tblshamel-overtime-employee.service";
@@ -19,12 +20,17 @@ export function  Uniqe( tblShamelBrokerEmployeeService:TblShamelBrokerEmployeeSe
         return of(null);
         if (Form.value != null && Form.value.startdate == null || Form.value.startdate == undefined)
         return of(null);
-        if (Form.value != null &&Form.value.documentdate == null || Form.value.documentdate == undefined)
-        return of(null);
 
-
-
-        return tblShamelBrokerEmployeeService.isUniqueRecord (Form.value).
+        return tblShamelBrokerEmployeeService.isUniqueRecord ({
+          serial: Form.value.serail,
+          fname: Form.value.fname,
+          lname: Form.value.lname,
+          father: Form.value.father,
+          mother: Form.value.mother,
+          birthdate: moment(Form.value.birthdateMonth+'/'+Form.value.birthdateDay+'/'+Form.value.birthdateYear).toDate(),
+          sex_name: Form.value.sex_name,
+          servicedayes: Form.value.servicedayes	
+        }).
         pipe(map(
           (data:any ) => 
           {           

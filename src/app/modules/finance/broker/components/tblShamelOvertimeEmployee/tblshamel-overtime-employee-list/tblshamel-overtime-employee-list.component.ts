@@ -24,6 +24,10 @@ import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_d
 })
 export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
 
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatTable) table!: MatTable<TBLShamelOvertimeEmployee>;
+  
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -67,12 +71,6 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   dataSource = new MatTableDataSource<TBLShamelOvertimeEmployee>(this.overtime_employee_List);
 
 
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatTable) table!: MatTable<TBLShamelOvertimeEmployee>;
-
-
-
   // constructor First Method Call 
   constructor(public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
     public dialog: MatDialog,
@@ -91,11 +89,13 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
       lname: new FormControl<string|undefined|null>(null),
       father: new FormControl<string|undefined|null>(null),
       mother: new FormControl<string|undefined|null>(null),
-      birthdate: new FormControl<Date|undefined|null>(null),
       sex_name: new FormControl<string|undefined|null>(null),
       servicedayes: new FormControl<number|undefined|null>(null),     
       servicedayes_operator: new FormControl<string|undefined|null>(null),
-      fullname: new FormControl<string|undefined|null>(null)
+      fullname: new FormControl<string|undefined|null>(null),
+      birthdateDay: new FormControl<number|undefined|null>(null),
+      birthdateMonth: new FormControl<number|undefined|null>(null),
+      birthdateYear: new FormControl<number|undefined|null>(null)
     });
 
     this.LoadData();
@@ -233,7 +233,17 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
       console.log(this.Form.value);
       // call Search
-      this.ShamelOvertimeEmployeeService.Search(this.Form.value, this.PageIndex).subscribe(
+      this.ShamelOvertimeEmployeeService.Search({
+        "serial": this.Form.controls['serial'].value,
+        "fname": this.Form.controls['fname'].value,
+        "lname": this.Form.controls['lname'].value,
+        "father": this.Form.controls['father'].value,
+        "mother": this.Form.controls['mother'].value,
+        "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate(),
+        "sex_name": this.Form.controls['sex_name'].value,
+        "servicedayes": this.Form.controls['servicedayes'].value,
+        "servicedayes_operator": this.Form.controls['servicedayes_operator'].value
+      }, this.PageIndex).subscribe(
         (data: TBLShamelOvertimeEmployee[] )=> {
 
          

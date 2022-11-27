@@ -11,7 +11,7 @@ export interface TBLShamelShatebVartax {
     duration?: number,
     documenttype_id?: number,
     documentnum?: string,
-    documentdate?: string,
+    documentdate?: Date,
     salary?: number,
     amount?: number,
     month_id?: number,

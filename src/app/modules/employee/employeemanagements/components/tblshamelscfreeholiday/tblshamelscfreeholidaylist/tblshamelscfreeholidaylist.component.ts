@@ -139,8 +139,8 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
 
   
       const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
-        height: '80%',
-        width: '80%',
+        height: '60%',
+        width: '35%',
         data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
       });
      
@@ -171,24 +171,21 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
         dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
           if (confirmed) {
        
-            const snack = this.snackBar.open('سوف يتم الآن الحذف');
-           
   
   
             this.ShamelSCFreeHolidayService.delete(element.serial).toPromise().then(res=> 
               {
-                snack.dismiss();
-  
                 console.log(res);
-                if (res==1)
+                if (res==1){
+
                   this.FillTable();
-  
+                  this.snackBar.open(' تم الحذف بنجاح', '', {
+                    duration: 3000,
+                  }); 
+                }
               });
-              this.snackBar.open('تم الحذف', 'Fechar', {
-                duration: 2000,
-              });
+              
   
-              this.snackBar.dismiss();
    
            
           }
@@ -209,8 +206,8 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
 
   
         const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
-          height: '80%',
-          width: '80%',
+          height: '60%',
+          width: '35%',
           data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
         });
     

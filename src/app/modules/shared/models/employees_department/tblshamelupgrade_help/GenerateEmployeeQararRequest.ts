@@ -7,5 +7,5 @@ export interface GenerateEmployeeQararRequest
     class_id?:number;
     blocked?:number;
     qarar_num?:number;
-    qarar_date?:string;
+    qarar_date?:Date;
 }

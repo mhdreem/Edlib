@@ -1,0 +1,83 @@
+<button class="search" mat-raised-button color="primary" (click)="Search()">عرض السجلات</button>
+
+<div class="col-md-12">
+    <div class="table-wrap">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+            <ng-container matColumnDef="CLASS_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة</th>
+                <td mat-cell *matCellDef="let element">{{element?.CLASS_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="JOBNAME_NAME">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية</th>
+                <td mat-cell *matCellDef="let element">{{element?.JOBNAME_NAME}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="MALESCOUNT">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ذكور</th>
+                <td mat-cell *matCellDef="let element">{{element?.MALESCOUNT}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="FEMALESCOUNT">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>إناث</th>
+                <td mat-cell *matCellDef="let element">{{element?.FEMALESCOUNT}}</td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+            [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+            (click)="changeTableRowColor(idx)"></tr>
+        </table>
+
+        <mat-paginator showFirstLastButtons
+        #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
+
+    </div>
+</div>
+
+<div class="columnsGrpup">
+    <div class="column1">
+        <output class="grey">الفئة</output>
+        <output class="darkGrey">فئة أولى</output>
+        <output class="darkGrey">فئة ثانية</output>
+        <output class="darkGrey">فئة ثالثة</output>
+        <output class="darkGrey">فئة رابعة</output>
+        <output class="darkGrey">فئة  خامسة</output>
+    </div>
+
+    <div class="column2">
+        <output class="darkGrey">ذكور</output>
+        <output class="grey" id="malesInClass1"></output>
+        <output class="grey" id="malesInClass2"></output>
+        <output class="grey" id="malesInClass3"></output>
+        <output class="grey" id="malesInClass4"></output>
+        <output class="grey" id="malesInClass5"></output>
+        <output class="darkGrey" id="maleTotal"></output>
+    </div>
+
+    <div class="column3">
+        <output class="darkGrey">إناث</output>
+        <output class="grey" id="femalesInClass1"></output>
+        <output class="grey" id="femalesInClass2"></output>
+        <output class="grey" id="femalesInClass3"></output>
+        <output class="grey" id="femalesInClass4"></output>
+        <output class="grey" id="femalesInClass5"></output>
+        <output class="darkGrey" id="femaleTotal"></output>
+    </div>
+
+    <div class="column4">
+        <output class="darkGrey">المجموع</output>
+        <output class="grey"  id="totalOfClass1"></output>
+        <output class="grey" id="totalOfClass2"></output>
+        <output class="grey" id="totalOfClass3"></output>
+        <output class="grey" id="totalOfClass4"></output>
+        <output class="grey" id="totalOfClass5"></output>
+        <output class="darkGrey" id="Total"></output>
+    </div>
+</div>

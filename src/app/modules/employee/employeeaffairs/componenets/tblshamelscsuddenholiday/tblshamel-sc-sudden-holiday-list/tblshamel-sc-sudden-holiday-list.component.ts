@@ -48,6 +48,7 @@ this.employee_SuddenHoliday_List=[]
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
           this.Selected_Emp = data;
+          this.id = this.Selected_Emp .id;
         }
       )
   
@@ -117,8 +118,9 @@ Add(): void {
   this.selected_employee_SuddenHoliday.id = this.Selected_Emp.id;
 
   const dialogRef = this.dialog.open(TBLShamelSCSuddenHolidayAddComponent, {
-    height: '80%',
-    width: '80%',
+    height: '60%',
+    width: '50%',
+    position: {top: '10%', left: '20%'},
     data: {obj: this.selected_employee_SuddenHoliday,id:this.Selected_Emp.id}
   });
  
@@ -191,8 +193,9 @@ async Update(element:TBLShamelSCSuddenHoliday)
     
 
     const dialogRef = this.dialog.open(TBLShamelSCSuddenHolidayAddComponent, {
-      height: '80%',
-      width: '80%',
+      height: '60%',
+      width: '50%',
+      position: {top: '10%', left: '20%'},
       data: {obj: this.selected_employee_SuddenHoliday,id:this.Selected_Emp.id}
     });
 
@@ -205,7 +208,16 @@ async Update(element:TBLShamelSCSuddenHoliday)
 
 }
 
+rowClicked: number;
 
+changeTableRowColor(idx: any) { 
+  if(this.rowClicked === idx) this.rowClicked = -1;
+  else this.rowClicked = idx;
+}
 
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+}
 
 }

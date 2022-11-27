@@ -67,7 +67,7 @@ export class VarTaxEditDialogComponent implements OnInit {
     public ShamelYearService: TBLShamelYearService,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PunishmentEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebPunishment,
+    @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebVartax,
 
   ) {
 
@@ -87,7 +87,9 @@ export class VarTaxEditDialogComponent implements OnInit {
       duration: new FormControl<number | null>(null),
       documenttype_id: new FormControl<number | null>(null),
       documentnum: new FormControl<string | null>(null),
-      documentdate: new FormControl<Date | null>(null),
+      documentdate_Day: new FormControl<Date | null>(null),
+      documentdate_Month: new FormControl<Date | null>(null),
+      documentdate_Year: new FormControl<Date | null>(null),
       salary: new FormControl<number | null>(null),
       amount: new FormControl<number | null>(null),
       month_id: new FormControl<number | null>(null),
@@ -111,8 +113,14 @@ export class VarTaxEditDialogComponent implements OnInit {
         this.Form.controls['amount'].setValue(this.Selected_TBLShamelShatebVarTax.amount);
 
 
+        if (this.Selected_TBLShamelShatebVarTax.documentdate != null)
+        this.Form.controls['documentdate_Day'].setValue(moment(this.Selected_TBLShamelShatebVarTax.documentdate).date());
+
       if (this.Selected_TBLShamelShatebVarTax.documentdate != null)
-        this.Form.controls['documentdate'].setValue(moment(this.Selected_TBLShamelShatebVarTax.documentdate).toDate());
+      this.Form.controls['documentdate_Month'].setValue(moment(this.Selected_TBLShamelShatebVarTax.documentdate).month()+1);
+      
+      if (this.Selected_TBLShamelShatebVarTax.documentdate != null)
+      this.Form.controls['documentdate_Year'].setValue(moment(this.Selected_TBLShamelShatebVarTax.documentdate).year());
       if (this.Selected_TBLShamelShatebVarTax.documentnum != null)
         this.Form.controls['documentnum'].setValue(this.Selected_TBLShamelShatebVarTax.documentnum);
       if (this.Selected_TBLShamelShatebVarTax.documenttype_id != null)
@@ -373,10 +381,10 @@ export class VarTaxEditDialogComponent implements OnInit {
 
 
   save() {
-    let obj : TBLShamelShatebPunishment =
+    let obj : TBLShamelShatebVartax =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : this.Form.controls['documentdate'].value,
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,
@@ -387,7 +395,6 @@ export class VarTaxEditDialogComponent implements OnInit {
       month_id : this.Form.controls['month_id'].value,
       salary : this.Form.controls['salary'].value,
       serial : this.Form.controls['serial'].value,    
-      percent : this.Form.controls['percent'].value,
       year_id : this.Form.controls['year_id'].value,
 
 

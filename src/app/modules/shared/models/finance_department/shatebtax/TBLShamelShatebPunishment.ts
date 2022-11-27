@@ -10,7 +10,7 @@ export interface TBLShamelShatebPunishment {
     duration?: number,
     documenttype_id?: number,
     documentnum?: string,
-    documentdate?: string,
+    documentdate?: Date,
     salary?: number,
     amount?: number,
     month_id?: number,

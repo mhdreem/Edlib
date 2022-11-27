@@ -40,9 +40,23 @@ export class UpgradeComponent implements OnInit {
     },
 
     {
-      name: 'طباعة إحالات القرار',
+      name: 'تجهيز ملف الترفيعات',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/upgrades/upgrades/printReferralQarar',
+      url: 'employees/module/upgrades/upgrades/prepareUpgradesFile',
+  
+    },
+
+    {
+      name: 'عرض بيانات الترفيع',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/DisplayUpgradeData',
+  
+    },
+
+    {
+      name: 'تهيئة قرارات الترفيع',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/upgradePromotionQarars',
   
     },
 
@@ -50,6 +64,48 @@ export class UpgradeComponent implements OnInit {
       name: 'طباعة قرارات الترفيع',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/upgrades/upgrades/printUpgradeQarars',
+  
+    },
+
+    {
+      name: 'طباعة إحالات القرار',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/printReferralQarar',
+  
+    },
+
+    {
+      name: 'تحديث البطاقة الذاتية',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/RefreshEmployeeCart',
+  
+    },
+
+    {
+      name: 'مراسيم زيادة الرواتب',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/IncreaseSalaryMarsoom',
+  
+    },
+
+    {
+      name: 'تحديث ملاك المعتمد',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/refreshAccounterMalak',
+  
+    },
+
+    {
+      name: 'تثبيت دورة الترفيع',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/FixUpgradeYearList',
+  
+    },
+
+    {
+      name: 'مسح ملف الترفيعات',
+      iconComponent: { name: 'cil-pencil' },
+      url: 'employees/module/upgrades/upgrades/clearUpgradesFile',
   
     },
   
@@ -61,13 +117,13 @@ export class UpgradeComponent implements OnInit {
     },
 
     {
-      name: 'تهيئة قرارات الترفيع',
+      name: 'القرارات الوهمية المتبقة',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/upgrades/upgrades/upgradePromotionQarars',
+      url: 'employees/module/upgrades/upgrades/RemainingOldQarars',
   
     },
-  
-  
+
+    
   
   
   

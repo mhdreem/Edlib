@@ -18,7 +18,7 @@ export class TblShamelBonusAddComponent implements OnInit {
   local_data:TBLShamelBonus={
     bonus_id: 0,
     bonus_name: '',
-    bonus_fixed: 0
+    Fixed: 0
   };
   constructor(private frmBuilder:FormBuilder,
     public dialogRef: MatDialogRef<TblShamelBonusAddComponent>,
@@ -37,12 +37,12 @@ export class TblShamelBonusAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.bonus_id = data.bonus_id;
       this.local_data.bonus_name = data.bonus_name;
-      this.local_data.bonus_fixed = data.bonus_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Bonus_id.setValue(this.local_data.bonus_id );
       this.frm_Bonus_name.setValue(this.local_data.bonus_name );
-      if(this.local_data.bonus_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Bonus_fixed.setValue(true );
       else
       this.frm_Bonus_fixed.setValue(false );
@@ -50,7 +50,7 @@ export class TblShamelBonusAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: TBLShamelBonus ={bonus_id:this.local_data.bonus_id,bonus_name:this.frm_Bonus_name.value,bonus_fixed:this.frm_Bonus_fixed.value == true?1:0};
+    let x: TBLShamelBonus ={bonus_id:this.local_data.bonus_id,bonus_name:this.frm_Bonus_name.value,Fixed:this.frm_Bonus_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }

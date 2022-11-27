@@ -5,9 +5,8 @@
 
   <form [formGroup]="Form">
 
-    <div class="row justify-content-between text-left">
-
-      <div class="form-group col-sm-4 flex-column d-flex">
+    <div class="inputsGroup">
+      <div class="group1">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ بداية الإجازة</mat-label>
           <input matInput [matDatepicker]="Datepicker_startdate" formControlName="startdate" [formControl]="startdate"
@@ -15,9 +14,6 @@
           <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_startdate></mat-datepicker>
         </mat-form-field>
-      </div>
-
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ انتهاء الإجازة</mat-label>
           <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate"
@@ -25,22 +21,11 @@
           <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_enddate></mat-datepicker>
         </mat-form-field>
-      </div>
-
-
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>duration</mat-label>
-          <input matInput type="number" placeholder="Ex. Pizza" value="" [formControl]="duration"
+          <mat-label>المدة</mat-label>
+          <input matInput type="number" [formControl]="duration"
             formControlName="duration">
         </mat-form-field>
-      </div>
-
-    </div>
-
-    <div class="row justify-content-between text-left">
-
-      <div class="form-group col-sm-12 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>السبب</mat-label>
           <input type="text" matInput [formControl]="reason_id" formControlName="reason_id"
@@ -71,14 +56,7 @@
 
         </mat-form-field>
       </div>
-    </div>
-
-
-
-    <div class="row justify-content-between text-left">
-
-
-      <div class="form-group col-sm-4 flex-column d-flex">
+      <div class="group2">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
@@ -91,19 +69,13 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
-
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>document_number</mat-label>
+          <mat-label>رقم المستند</mat-label>
 
-          <input matInput type="number" placeholder="Ex. Pizza" value="Sushi" [formControl]="document_number"
+          <input matInput type="number" [formControl]="document_number"
             formControlName="document_number">
 
         </mat-form-field>
-      </div>
-
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ المستند</mat-label>
           <input matInput [matDatepicker]="Datepicker_documentdate" formControlName="documentdate"
@@ -113,16 +85,15 @@
           <mat-datepicker #Datepicker_documentdate></mat-datepicker>
         </mat-form-field>
       </div>
-
     </div>
 
+        
 
 
 
 
 
-
-
+        
 
 
   </form>

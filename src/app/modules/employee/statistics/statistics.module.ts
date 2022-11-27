@@ -88,10 +88,12 @@ import {
 
 import { IconModule } from '@coreui/icons-angular';
 
-import { StatsBetweenDateComponent } from './stats-between-date/stats-between-date.component';
+import { stats4 } from './stats4/stats4.component';
 import { Stats1Component } from './stats1/stats1.component';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticsComponent } from './statistics.component';
+import { Stats2Component } from './stats2/stats2.component';
+import { Stats3Component } from './stats3/stats3.component';
 
 
 /////////////////////////////
@@ -116,9 +118,11 @@ export const MY_FORMATS = {
 @NgModule({
   declarations: [
    
-    StatsBetweenDateComponent,
+    stats4,
     Stats1Component,
-    StatisticsComponent
+    StatisticsComponent,
+    Stats2Component,
+    Stats3Component
   ],
   imports: [  
     CommonModule,

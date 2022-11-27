@@ -21,10 +21,11 @@ export class TBLShamelDoctorService {
  
   constructor(private httpClient : HttpClient) { }
 
-  list() : Observable<ITBLShamelDoctor[]> {
+  list()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get<ITBLShamelDoctor[]>(this.RestUrl +"TBLShamelDoctor",options);      
+    return this.httpClient.get(this.RestUrl +"TBLShamelDoctor",options) as Observable<ITBLShamelDoctor[]>;  
+    
   }
 
   fill()  {

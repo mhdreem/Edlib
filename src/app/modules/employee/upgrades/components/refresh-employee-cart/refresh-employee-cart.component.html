@@ -1,0 +1,94 @@
+<span class="dateLabel">عام الترفيع:{{fixedYear}}</span>
+<form [formGroup]="Form">
+    <div class="date">
+        <span>تاريخ التبدل:</span>
+        <div class="content">
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>اليوم</mat-label>
+            <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21">
+          </mat-form-field>
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>الشهر</mat-label>
+            <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1">
+          </mat-form-field>
+          <mat-form-field class="example-full-width small-width" appearance="fill">
+            <mat-label>العام</mat-label>
+            <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023">
+          </mat-form-field>
+        </div>
+      </div>
+    
+    
+    <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>سبب التبدل</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="ChangeReason"
+               [matAutocomplete]="ChangeReason_auto" 
+               >
+        <mat-autocomplete #ChangeReason_auto="matAutocomplete"
+        [displayWith]="displayChangeReasonProperty.bind(this)">
+          <mat-option *ngFor="let option of ChangeReason_Filter | async" [value]="option.changereason_id">
+            {{option.changereason_name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>نوع المستند</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="DocumentType"
+               [matAutocomplete]="autoDocumentType" 
+               >
+        <mat-autocomplete #autoDocumentType="matAutocomplete"
+        [displayWith]="displayDocumentTypeProperty.bind(this)">
+          <mat-option *ngFor="let option of DocumentType_Filter | async" [value]="option.documenttype_id">
+            {{option.documenttype_name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>مركز الوظيفة</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="Department"
+               [matAutocomplete]="autoDepartment" 
+               >
+        <mat-autocomplete #autoDepartment="matAutocomplete"
+        [displayWith]="displayDepartmentProperty.bind(this)">
+          <mat-option *ngFor="let option of Department_Filter | async" [value]="option.department_id">
+            {{option.department_name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width fitContent" appearance="fill">
+        <mat-label>نوع الوظيفة</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="JobKind"
+               [matAutocomplete]="autoJobKind" 
+               >
+        <mat-autocomplete #autoJobKind="matAutocomplete"
+        [displayWith]="displayJobKindProperty.bind(this)">
+          <mat-option *ngFor="let option of JobKind_Filter | async" [value]="option.jobkind_id">
+            {{option.jobkind_name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-radio-group [formControl]="blocked">
+        <mat-radio-button value="2" color="primary">قرارات ترفيع نظامية</mat-radio-button>
+        <mat-radio-button value="3" color="primary">قرارات تأخير ترفيع</mat-radio-button>
+    </mat-radio-group>
+</form>
+
+<button mat-raised-button color="primary" (click)="updateJobState()"[disabled]="!Form.valid">تحديث الوضع الوظيفي</button>
+<span>رقم الإضبارة</span>
+<output id="id"></output>
+<div class="progressBox">
+    <mat-progress-bar mode="determinate" value="progressBarValue"></mat-progress-bar>
+    <span>{{progressBarValue}}%</span>
+</div>

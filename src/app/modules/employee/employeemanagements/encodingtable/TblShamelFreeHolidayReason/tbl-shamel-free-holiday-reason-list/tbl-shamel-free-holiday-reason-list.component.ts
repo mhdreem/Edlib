@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelFreeHolidayReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelFreeHolidayReason';
 import { TBLShamelFreeHolidayReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-free-holiday-reason.service';
@@ -20,7 +21,8 @@ export class TblShamelFreeHolidayReasonListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelFreeHolidayReasonService:TBLShamelFreeHolidayReasonService) {
+   private tBLShamelFreeHolidayReasonService:TBLShamelFreeHolidayReasonService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelFreeHolidayReasonService.List_TBLShamelFreeHolidayReason == null ||
       tBLShamelFreeHolidayReasonService.List_TBLShamelFreeHolidayReason.length ==0
      )
@@ -71,7 +73,12 @@ export class TblShamelFreeHolidayReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +95,28 @@ export class TblShamelFreeHolidayReasonListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deleteFreeHolidayReason(obj:any){
-   this.tBLShamelFreeHolidayReasonService.delete(obj).subscribe
+   this.tBLShamelFreeHolidayReasonService.delete(obj.freeholidayreason_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

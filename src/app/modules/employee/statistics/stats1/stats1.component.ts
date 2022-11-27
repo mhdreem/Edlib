@@ -1,6 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ITBLShamelAccounter } from '../../../shared/models/employees_department/TBLShamelAccounter';
 import { ITBLShamelChangeReason } from '../../../shared/models/employees_department/ITBLShamelChangeReason';
 import { ITBLShamelClass } from '../../../shared/models/employees_department/ITBLShamelClass';
@@ -21,48 +21,49 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TblshamelmalakstateService } from '../../../shared/services/employees_department/tblshamelmalakstate.service';
 import { ITBLShamelMalakState } from '../../../shared/models/employees_department/ITBLShamelMalakState';
 import { EmployeeStatsService } from '../../../shared/services/employees_department/employee-stats.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-stats1',
   templateUrl: './stats1.component.html',
   styleUrls: ['./stats1.component.scss']
 })
-export class Stats1Component implements OnInit {
+export class Stats1Component implements OnInit, OnDestroy {
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  _Subscription: Subscription;
 
   Form: FormGroup;
-  fcl_ID: FormControl=new FormControl();;
-  fcl_PAYROL_ID: FormControl=new FormControl();;
-  fcl_COMPUTER_ID: FormControl=new FormControl();;
-  fcl_GLOBAL_ID: FormControl=new FormControl();;
-  fcl_INSURANCE_ID: FormControl=new FormControl();;
-  fcl_FNAME: FormControl=new FormControl();;
-  fcl_LNAME: FormControl=new FormControl();;
+  ID: FormControl<number | null>;
+  PAYROL_ID: FormControl<number | null>;
+  COMPUTER_ID: FormControl<number | null>;
+  GLOBAL_ID: FormControl<number | null>;
+  INSURANCE_ID: FormControl<number | null>;
+  FNAME: FormControl<string | null>;
+  LNAME: FormControl<string | null>;
+  FATHER: FormControl<string | null>;
+  MOTHER: FormControl<string | null>;
+  ID_NUMBER: FormControl<number | null>;
+  MALAKSTATE_NAME: FormControl<string | null>;
+  INSURANCESALARY: FormControl<Date | null>;
+  ACCOUNTER_ID: FormControl<number | null>;
+  ACCOUNTERSERIAL: FormControl<Date | null>;
+  AccounterSerail_To: FormControl<number | null>;
+  AccounterSerail_From: FormControl<number | null>;
+  EMP_IN_MILITARY_SERVICE: FormControl<boolean | null>;
+  changereason: FormControl<number | null>;
+  JobName: FormControl<number | null>;
+  Class: FormControl<number | null>;
+  JobKind: FormControl<number | null>;
+  MalakState: FormControl<Date | null>;
+  Salary: FormControl<Date | null>;
+  Saldepartmentary: FormControl<Date | null>;
+  Department: FormControl<number | null>;
 
-  fcl_FATHER: FormControl=new FormControl();;
-  fcl_MOTHER: FormControl=new FormControl();;
-
-
-
-  fcl_ID_NUMBER: FormControl=new FormControl();;
-
-  fcl_MALAKSTATE_NAME: FormControl=new FormControl();;
-
-  fcl_INSURANCESALARY: FormControl=new FormControl();;
-
-  fcl_ACCOUNTER_ID: FormControl=new FormControl();;
-  fcl_ACCOUNTERSERIAL: FormControl=new FormControl();;
-
-  fcl_AccounterSerail_To: FormControl=new FormControl();;
-  fcl_AccounterSerail_From : FormControl=new FormControl();;
-
-  fcl_EMP_IN_MILITARY_SERVICE: FormControl=new FormControl();;
-  fcl_changereason: FormControl=new FormControl();;
-  fcl_JobName: FormControl=new FormControl();;
-  fcl_Class: FormControl=new FormControl();;
-  fcl_JobKind: FormControl=new FormControl();;
-  fcl_MalakState: FormControl=new FormControl();;
-  fcl_Salary: FormControl=new FormControl();;
-  fcl_department: FormControl=new FormControl();
 
   TBLShamelMalakState_List : ITBLShamelMalakState[]=[];
   filteredMalakStateOptions: Observable< ITBLShamelMalakState[]>;
@@ -92,16 +93,24 @@ export class Stats1Component implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [
-    'FullName', 'PAYROL_ID', 'COMPUTER_ID',
-    'GLOBAL_ID', 'INSURANCE_ID'
-    /*
-    ,
-     'FNAME',
-    'LNAME','FATHER',  'MOTHER',
-    'BIRTH_PLACE', 'BIRTHDATE'
-  */
+    'ID', 'COMPUTER_ID', 'GLOBAL_ID', 'INSURANCE_ID', 'PAYROL_ID', 'FNAME', 'LNAME', 'FATHER', 'MOTHER',
+    'ACCOUNTER_NAME', 
+    'ACCOUNTER_ID', 'SALARY', 'INSURANCESALARY', 'MALAKSTATE_NAME', 'CHANGEDATE', 'CHANGEREASON_NAME',
+    'DOC_NUMBER', 'DOC_DATE', 'DOCUMENTTYPE_NAME',
   ];
 
+  //for pagination
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.ExcuteSearch();
+  }
 
   constructor(
   
@@ -114,302 +123,287 @@ export class Stats1Component implements OnInit {
     public ShamelmalakstateService :TblshamelmalakstateService,
     public EmployeeStatsService :EmployeeStatsService,
     private fb: UntypedFormBuilder,
-    private ngZone: NgZone,) {
+    private ngZone: NgZone,
+    private _liveAnnouncer: LiveAnnouncer,) {
 
       this.dataSource = new MatTableDataSource<any>([]);
 
+      this.BuildForm();
+      this.Load_Data();
+
+    }
+
+    ngAfterViewInit() {
+
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }
+
+    announceSortChange(sortState: any) {
+      if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      } else {
+        this._liveAnnouncer.announce('Sorting cleared');
+      }
+    }
+  public BuildForm() {
+    try {
+      this.Form = this.fb.group(
+        {
+          'ID: ': this.ID = new FormControl<number | null>(null, []),
+          'PAYROL_ID: : ': this.PAYROL_ID = new FormControl<number | null>(null, []),
+          'COMPUTER_ID: ': this.COMPUTER_ID = new FormControl<number | null>(null, []),
+          'GLOBAL_ID: ': this.GLOBAL_ID = new FormControl<number | null>(null, []),
+          'INSURANCE_ID: ': this.INSURANCE_ID = new FormControl<number | null>(null, []),
+          'ID_NUMBER: ': this.ID_NUMBER = new FormControl<number | null>(null, []),
+          'ACCOUNTER_ID: ': this.ACCOUNTER_ID = new FormControl<number | null>(null, []),
+          'FNAME: ': this.FNAME = new FormControl<string | null>(null, []),
+          'LNAME: ': this.LNAME = new FormControl<string | null>(null, []),
+          'FATHER: ': this.FATHER = new FormControl<string | null>(null, []),
+          'MOTHER: ': this.MOTHER = new FormControl<string | null>(null, []),
+          'MALAKSTATE_NAME: ': this.MALAKSTATE_NAME = new FormControl<string | null>(null, []),
+          'INSURANCESALARY: ': this.INSURANCESALARY = new FormControl<Date | null>(null, []),
+          'ACCOUNTERSERIAL: ': this.ACCOUNTERSERIAL = new FormControl<Date | null>(null, []),
+          'AccounterSerail_To: ': this.AccounterSerail_To = new FormControl<number | null>(null, []),
+          'AccounterSerail_From: ': this.AccounterSerail_From = new FormControl<number | null>(null, []),
+          'EMP_IN_MILITARY_SERVICE: ': this.EMP_IN_MILITARY_SERVICE = new FormControl<boolean | null>(null, []),
+          'changereason: ': this.changereason = new FormControl<number | null>(null, []),
+          'JobName: ': this.JobName = new FormControl<number | null>(null, []),
+          'Class: ': this.Class = new FormControl<number | null>(null, []),
+          'JobKind: ': this.JobKind = new FormControl<number | null>(null, []),
+          'MalakState: ': this.MalakState = new FormControl<Date | null>(null, []),
+          'Salary: ': this.Salary = new FormControl<Date | null>(null, []),
+          'Saldepartmentary: ': this.Saldepartmentary = new FormControl<Date | null>(null, []),
+          'Department: ': this.Department = new FormControl<number | null>(null, []),
+        }
+      );
+
+    } catch (Exception: any) {
+      console.log(Exception);
+    }
+  }
+
+  Load_Data() {
+    
+    this._Subscription = forkJoin(
+      this.Load_TBLShamelMalakState(),
+      this.Load_TBLShamelChangeReason(),
+      this.Load_TBLShamelAccounter(),
+      this.Load_TBLShamelDepartment(),
+      this.Load_TBLShamelJobName(),
+      this.Load_TBLShamelJobKind(),
+      this.Load_TBLShamelClass(),
+    ).subscribe(
+      res => {
+        this.TBLShamelMalakState_List = res[0];
+        this.filteredMalakStateOptions = of(this.TBLShamelMalakState_List);
+        this.ShamelmalakstateService.list_ITBLShamelMalakState = this.TBLShamelMalakState_List;
+        this.ShamelmalakstateService.List_ITBLShamelMalakState_BehaviorSubject.next(this.TBLShamelMalakState_List);
+
+        this.ChangeReason_List = res[1];
+        this.filteredChangeReasonOptions = of(this.ChangeReason_List);
+        this.changereasonService.List_ITBLShamelChangeReason = this.ChangeReason_List;
+        this.changereasonService.List_ITBLShamelChangeReason_BehaviorSubject.next(this.ChangeReason_List);
+
+        this.Accounter_List = res[2];
+        this.filteredAccounterOptions = of(this.Accounter_List);
+        this.ShamelAccounterService.List_TBLShamelAccounter = this.Accounter_List;
+        this.ShamelAccounterService.List_TBLShamelAccounter_BehaviorSubject.next(this.Accounter_List);
+
+        this.Department_List = res[3];
+        this.filteredDepartmentOptions = of(this.Department_List);
+        this.departmentService.List_ITBLShamelDepartment = this.Department_List;
+        this.departmentService.List_ITBLShamelDepartment_BehaviorSubject.next(this.Department_List);
+
+        this.JobName_List = res[4];
+        this.filteredJobNameOptions = of(this.JobName_List);
+        this.jobNameService.list_ITBLShamelJobName = this.JobName_List;
+        this.jobNameService.List_ITBLShamelJobName_BehaviorSubject.next(this.JobName_List);
+
+        this.JobKind_List = res[5];
+        this.filteredJobKindOptions = of(this.JobKind_List);
+        this.jobKindService.list_ITBLShamelJobKind = this.JobKind_List;
+        this.jobKindService.List_ITBLShamelJobKind_BehaviorSubject.next(this.JobKind_List);
+
+        this.Class_List = res[6];
+        this.filteredClassOptions = of(this.Class_List);
+        this.classService.List_ITBLShamelClass = this.Class_List;
+        this.classService.List_ITBLShamelClass_BehaviorSubject.next(this.Class_List);
+
+        this.Init_AutoComplete();
+      }
       
+    )
+  }
 
+  Load_TBLShamelMalakState(){
+    if (this.ShamelmalakstateService.list_ITBLShamelMalakState == null ||
+      this.ShamelmalakstateService.list_ITBLShamelMalakState == undefined ||
+      this.ShamelmalakstateService.list_ITBLShamelMalakState.length == 0)
+      return this.ShamelmalakstateService.list();
+    return of(this.ShamelmalakstateService.list_ITBLShamelMalakState);
+  }
 
-      if (this.ShamelmalakstateService.list_ITBLShamelMalakState== null ||
-        this.ShamelmalakstateService.list_ITBLShamelMalakState == undefined ||
-        this.ShamelmalakstateService.list_ITBLShamelMalakState.length == 0)
-        this.ShamelmalakstateService.fill();
-      this.ShamelmalakstateService.List_ITBLShamelMalakState_BehaviorSubject.subscribe(
-        data => {
-          this.TBLShamelMalakState_List = data;
-          this.filteredMalakStateOptions = of(this.TBLShamelMalakState_List);
-        }
-      )
-
-      if (this.ShamelAccounterService.List_TBLShamelAccounter== null ||
-        this.ShamelAccounterService.List_TBLShamelAccounter == undefined ||
-        this.ShamelAccounterService.List_TBLShamelAccounter.length == 0)
-        this.ShamelAccounterService.fill();
-      this.ShamelAccounterService.List_TBLShamelAccounter_BehaviorSubject.subscribe(
-        data => {
-          this.Accounter_List = data;
-          this.filteredAccounterOptions = of(this.Accounter_List);
-        }
-      )
-
-
+  Load_TBLShamelChangeReason(){
     if (this.changereasonService.List_ITBLShamelChangeReason == null ||
       this.changereasonService.List_ITBLShamelChangeReason == undefined ||
       this.changereasonService.List_ITBLShamelChangeReason.length == 0)
-      this.changereasonService.fill();
-    this.changereasonService.List_ITBLShamelChangeReason_BehaviorSubject.subscribe(
-      data => {
-        this.ChangeReason_List = data;
-        this.filteredChangeReasonOptions = of(this.ChangeReason_List);
-      }
-    )
-
-
+      return this.changereasonService.list();
+    return of(this.changereasonService.List_ITBLShamelChangeReason);
+  }
+  
+  Load_TBLShamelAccounter(){
+    if (this.ShamelAccounterService.List_TBLShamelAccounter == null ||
+      this.ShamelAccounterService.List_TBLShamelAccounter == undefined ||
+      this.ShamelAccounterService.List_TBLShamelAccounter.length == 0)
+      return this.ShamelAccounterService.list();
+    return of(this.ShamelAccounterService.List_TBLShamelAccounter);
+  }
+  Load_TBLShamelDepartment(){
     if (this.departmentService.List_ITBLShamelDepartment == null ||
       this.departmentService.List_ITBLShamelDepartment == undefined ||
       this.departmentService.List_ITBLShamelDepartment.length == 0)
-      this.departmentService.fill();
-    this.departmentService.List_ITBLShamelDepartment_BehaviorSubject.subscribe(
-      data => {
-        this.Department_List = data;
-        this.filteredDepartmentOptions = of(this.Department_List);
-      }
-    )
-
-
+      return this.departmentService.list();
+    return of(this.departmentService.List_ITBLShamelDepartment);
+  }
+  
+  Load_TBLShamelJobName(){
     if (this.jobNameService.list_ITBLShamelJobName == null ||
       this.jobNameService.list_ITBLShamelJobName == undefined ||
       this.jobNameService.list_ITBLShamelJobName.length == 0)
-      this.jobNameService.fill();
-    this.jobNameService.List_ITBLShamelJobName_BehaviorSubject.subscribe(
-      data => {
-        this.JobName_List = data;
-        this.filteredJobNameOptions = of(this.JobName_List);
-      }
-    )
-
+      return this.jobNameService.list();
+    return of(this.jobNameService.list_ITBLShamelJobName);
+  }
+  
+  Load_TBLShamelJobKind(){
     if (this.jobKindService.list_ITBLShamelJobKind == null ||
       this.jobKindService.list_ITBLShamelJobKind == undefined ||
       this.jobKindService.list_ITBLShamelJobKind.length == 0)
-      this.jobKindService.fill();
-    this.jobKindService.List_ITBLShamelJobKind_BehaviorSubject.subscribe(
-      data => {
-        this.JobKind_List = data;
-        this.filteredJobKindOptions = of(this.JobKind_List);
-      }
-    )
-
-    this.Form = new FormGroup({});
-    this.fcl_ID = new FormControl<number|undefined>(undefined);
-    this.fcl_COMPUTER_ID = new FormControl<number|undefined>(undefined);
-    this.fcl_INSURANCE_ID = new FormControl<number|undefined>(undefined);
-    this.fcl_PAYROL_ID =  new FormControl<number|undefined>(undefined);
-    this.fcl_ID_NUMBER =  new FormControl<number|undefined>(undefined);
-    this.fcl_ACCOUNTER_ID=  new FormControl<number|undefined>(undefined);
-    this.fcl_FNAME =  new FormControl<string|undefined>(undefined);
-    this.fcl_LNAME =  new FormControl<string|undefined>(undefined);
-    this.fcl_FATHER =  new FormControl<string|undefined>(undefined);
-    this.fcl_MOTHER =  new FormControl<string|undefined>(undefined);
-    this.fcl_MalakState =  new FormControl<string|undefined>(undefined);
-    this.fcl_AccounterSerail_From =  new FormControl<number|undefined>(undefined);
-    this.fcl_AccounterSerail_To =  new FormControl<number|undefined>(undefined);
-    this.fcl_EMP_IN_MILITARY_SERVICE =  new FormControl<boolean|undefined>(undefined);
-    
-    this.fcl_Class =  new FormControl<number|undefined>(undefined);
-    this.fcl_JobKind =  new FormControl<number|undefined>(undefined);
-    this.fcl_JobName =  new FormControl<number|undefined>(undefined);
-    this.fcl_department =  new FormControl<number|undefined>(undefined);
-    this.fcl_changereason =  new FormControl<number|undefined>(undefined);
-
-   
-
-    this.Form.addControl('ID',this.fcl_ID);
-    this.Form.addControl('COMPUTER_ID',this.fcl_COMPUTER_ID);
-    this.Form.addControl('INSURANCE_ID',this.fcl_INSURANCE_ID);
-    this.Form.addControl('PAYROL_ID',this.fcl_PAYROL_ID);
-    this.Form.addControl('GLOBAL_ID',this.fcl_GLOBAL_ID);
-    this.Form.addControl('ID_NUMBER',this.fcl_ID_NUMBER);
-    this.Form.addControl('ACCOUNTER_ID',this.fcl_ACCOUNTER_ID);
-    this.Form.addControl('FNAME',this.fcl_FNAME);
-    this.Form.addControl('LNAME',this.fcl_LNAME);
-    this.Form.addControl('FATHER',this.fcl_FATHER);
-    this.Form.addControl('MOTHER',this.fcl_MOTHER);
-
-    this.Form.addControl('MalakState',this.fcl_MalakState);
-    this.Form.addControl('EMP_IN_MILITARY_SERVICE',this.fcl_EMP_IN_MILITARY_SERVICE);
-    this.Form.addControl('AccounterSerail_From',this.fcl_AccounterSerail_From);
-    this.Form.addControl('AccounterSerail_To',this.fcl_AccounterSerail_To);
-
-
-
-    this.Form.addControl('Class',this.fcl_Class);
-    this.Form.addControl('JobKind',this.fcl_JobKind);
-    this.Form.addControl('JobName',this.fcl_JobName);
-    this.Form.addControl('department',this.fcl_department);
-    this.Form.addControl('changereason',this.fcl_changereason);
-
-
-
-
-
+      return this.jobKindService.list();
+    return of(this.jobKindService.list_ITBLShamelJobKind);
+  }
+  Load_TBLShamelClass(){
+    if (this.classService.List_ITBLShamelClass == null ||
+      this.classService.List_ITBLShamelClass == undefined ||
+      this.classService.List_ITBLShamelClass.length == 0)
+      return this.classService.list();
+    return of(this.classService.List_ITBLShamelClass);
   }
 
-  ngOnInit(): void {
-  }
-
-  public async FillArrayUsingService() {
-
-
+  public async Init_AutoComplete() {
     try {
-
-      this.filteredMalakStateOptions = this.fcl_MalakState.valueChanges
+      this.filteredMalakStateOptions = this.MalakState.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredMalakState(value) : this.TBLShamelMalakState_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterMalakState(value) : this.TBLShamelMalakState_List.slice())
         );
 
-    } catch (ex: any) {
-      console.log(ex);
-
-    }
-
-    try {
-
-      this.filteredDepartmentOptions = this.fcl_department.valueChanges
+      this.filteredChangeReasonOptions = this.changereason.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredDepartment(value) : this.Department_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterChangeReason(value) : this.ChangeReason_List.slice())
         );
 
-    } catch (ex: any) {
-      console.log(ex);
-
-    }
-
-
-    try {
-
-      this.filteredChangeReasonOptions = this.fcl_changereason.valueChanges
+        this.filteredAccounterOptions = this.ACCOUNTER_ID.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredChangeReason(value) : this.ChangeReason_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterAccounter(value) : this.Accounter_List.slice())
         );
 
-    } catch (ex: any) {
-      console.log(ex);
-
-    }
-
-
-    try {
-
-      this.filteredClassOptions = this.fcl_Class.valueChanges
+        this.filteredDepartmentOptions = this.Department.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredClass(value) : this.Class_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterDepartment(value) : this.Department_List.slice())
         );
 
-    } catch (ex: any) {
-      console.log(ex);
-
-    }
-
-
-    try {
-
-      this.filteredJobKindOptions = this.fcl_JobKind.valueChanges
+        this.filteredJobNameOptions = this.JobName.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredJobKind(value) : this.JobKind_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterJobName(value) : this.JobName_List.slice())
         );
-    } catch (ex: any) {
-      console.log(ex);
 
-    }
-
-    try {
-
-      this.filteredJobNameOptions = this.fcl_JobName.valueChanges
+        this.filteredJobKindOptions = this.JobKind.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredJobName(value) : this.JobName_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterJobKind(value) : this.JobKind_List.slice())
         );
-    } catch (ex: any) {
-      console.log(ex);
 
-    }
-
-    try {
-
-      this.filteredAccounterOptions = this.fcl_ACCOUNTER_ID.valueChanges
+        this.filteredClassOptions = this.Class.valueChanges
         .pipe(
           startWith(''),
-          map(value => value && typeof value === 'string' ? this._filteredAccounter(value) : this.Accounter_List.slice())
+          map(value => value && typeof value === 'string' ? this._filterClass(value) : this.Class_List.slice())
         );
-    } catch (ex: any) {
-      console.log(ex);
-
-    }
-
+    } catch (Exception: any) { }
   }
 
-  private _filteredChangeReason(value: string): ITBLShamelChangeReason[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.ChangeReason_List.filter(obj => obj.changereason_name.includes(filterValue));
-    }
-    return this.ChangeReason_List.slice();
-  }
-
-  private _filteredDepartment(value: string): ITBLShamelDepartment[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.Department_List.filter(obj => obj.department_name.includes(filterValue));
-    }
-    return this.Department_List.slice();
-  }
-
-  private _filteredJobKind(value: string): ITBLShamelJobKind[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.JobKind_List.filter(obj => obj.jobkind_name.includes(filterValue));
-
-    }
-    return this.JobKind_List.slice();
-  }
-  private _filteredJobName(value: string): ITBLShamelJobName[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.JobName_List.filter(obj => obj.jobname_name.includes(filterValue));
-
-    }
-    return this.JobName_List.slice();
-  }
-
-  private _filteredAccounter(value: string): ITBLShamelAccounter[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.Accounter_List.filter(obj => obj.accounter_name != null &&  obj.accounter_name.includes(filterValue));
-    }
-    return this.Accounter_List.slice();
-  }
-
-  
-
-  private _filteredMalakState(value: string): ITBLShamelMalakState[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.TBLShamelMalakState_List.filter(obj => obj.malakstate_name.includes(filterValue));
+  private _filterMalakState(value: string): ITBLShamelMalakState[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.TBLShamelMalakState_List.filter(option => option.malakstate_name.toLowerCase().includes(filterValue));
     }
     return this.TBLShamelMalakState_List.slice();
   }
 
-  private _filteredClass(value: string): ITBLShamelClass[] {
-    if (value != null) {
-      const filterValue = value;
-      return this.Class_List.filter(obj => obj.class_name.includes(filterValue));
+  private _filterChangeReason(value: string): ITBLShamelChangeReason[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.ChangeReason_List.filter(option => option.changereason_name.toLowerCase().includes(filterValue));
+    }
+    return this.ChangeReason_List.slice();
+  }
+
+  private _filterAccounter(value: string): ITBLShamelAccounter[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.Accounter_List.filter(option => option.accounter_name.toLowerCase().includes(filterValue));
+    }
+    return this.Accounter_List.slice();
+  }
+
+  private _filterDepartment(value: string): ITBLShamelDepartment[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.Department_List.filter(option => option.department_name.toLowerCase().includes(filterValue));
+    }
+    return this.Department_List.slice();
+  }
+
+  private _filterJobName(value: string): ITBLShamelJobName[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.JobName_List.filter(option => option.jobname_name.toLowerCase().includes(filterValue));
+    }
+    return this.JobName_List.slice();
+  }
+
+  private _filterJobKind(value: string): ITBLShamelJobKind[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.JobKind_List.filter(option => option.jobkind_name.toLowerCase().includes(filterValue));
+    }
+    return this.JobKind_List.slice();
+  }
+
+  private _filterClass(value: string): ITBLShamelClass[] {
+    if (value){
+      const filterValue = value.toLowerCase();
+      return this.Class_List.filter(option => option.class_name.toLowerCase().includes(filterValue));
     }
     return this.Class_List.slice();
   }
 
+  
+  ngOnInit(): void {
+  }
 
-  //#endregion
+  ngOnDestroy(): void {
+    this._Subscription.unsubscribe();
+  }
 
 
   //#region  Display Display Member
   public displayDocumentTypeProperty(value: string): string {
-    if (value && this.JobKind_List) {
+    if (value && this.DocumentType_List) {
       let cer: any = this.DocumentType_List.find(cer => cer.documenttype_id.toString() == value);
       if (cer)
         return cer.documenttype_name;
@@ -490,44 +484,52 @@ export class Stats1Component implements OnInit {
   {
     let SearchRequest =
     {
-      'ID': (this.fcl_ID.value!= null?this.fcl_ID.value:null ),
-      'COMPUTER_ID': (this.fcl_ID.value!= null?this.fcl_COMPUTER_ID.value:null ),
-      'PAYROL_ID': (this.fcl_ID.value!= null?this.fcl_PAYROL_ID.value:null ),
-      'INSURANCE_ID': (this.fcl_ID.value!= null?this.fcl_INSURANCE_ID.value:null ),
-      'GLOBAL_ID': (this.fcl_ID.value!= null?this.fcl_GLOBAL_ID.value:null ),
-      'ID_NUMBER': (this.fcl_ID.value!= null?this.fcl_ID_NUMBER.value:null ),
-      'FNAME': (this.fcl_ID.value!= null?this.fcl_FNAME.value:null ),
-      'LNAME': (this.fcl_ID.value!= null?this.fcl_LNAME.value:null ),
-      'FATHER': (this.fcl_ID.value!= null?this.fcl_FATHER.value:null ),
-      'MOTHER': (this.fcl_ID.value!= null?this.fcl_MOTHER.value:null ),
-      'MalakState': (this.fcl_ID.value!= null?this.fcl_MalakState.value:null ),
-      'ACCOUNTER_ID': (this.fcl_ID.value!= null?this.fcl_ACCOUNTER_ID.value:null ),
-      'EMP_IN_MILITARY_SERVICE': (this.fcl_ID.value!= null?this.fcl_EMP_IN_MILITARY_SERVICE.value:null ),
-      'changereason': (this.fcl_ID.value!= null?this.fcl_changereason.value:null ),
-      'department': (this.fcl_ID.value!= null?this.fcl_department.value:null ),
-      'Class': (this.fcl_ID.value!= null?this.fcl_Class.value:null ),
-      'JobKind': (this.fcl_ID.value!= null?this.fcl_JobKind.value:null ),
-      'JobName': (this.fcl_ID.value!= null?this.fcl_JobName.value:null ),
-      'INSURANCESALARY': (this.fcl_ID.value!= null?this.fcl_INSURANCESALARY.value:null ),            
+      'ID': (this.ID.value!= null?this.ID.value:null ),
+      'COMPUTER_ID': (this.ID.value!= null?this.COMPUTER_ID.value:null ),
+      'PAYROL_ID': (this.ID.value!= null?this.PAYROL_ID.value:null ),
+      'INSURANCE_ID': (this.ID.value!= null?this.INSURANCE_ID.value:null ),
+      'GLOBAL_ID': (this.ID.value!= null?this.GLOBAL_ID.value:null ),
+      'ID_NUMBER': (this.ID.value!= null?this.ID_NUMBER.value:null ),
+      'FNAME': (this.ID.value!= null?this.FNAME.value:null ),
+      'LNAME': (this.ID.value!= null?this.LNAME.value:null ),
+      'FATHER': (this.ID.value!= null?this.FATHER.value:null ),
+      'MOTHER': (this.ID.value!= null?this.MOTHER.value:null ),
+      'MalakState': (this.ID.value!= null?this.MalakState.value:null ),
+      'ACCOUNTER_ID': (this.ID.value!= null?this.ACCOUNTER_ID.value:null ),
+      'EMP_IN_MILITARY_SERVICE': (this.ID.value!= null?this.EMP_IN_MILITARY_SERVICE.value:null ),
+      'changereason': (this.ID.value!= null?this.changereason.value:null ),
+      'department': (this.ID.value!= null?this.Department.value:null ),
+      'Class': (this.ID.value!= null?this.Class.value:null ),
+      'JobKind': (this.ID.value!= null?this.JobKind.value:null ),
+      'JobName': (this.ID.value!= null?this.JobName.value:null ),
+      'INSURANCESALARY': (this.ID.value!= null?this.INSURANCESALARY.value:null ),            
 
-      'AccounterSerail_From': (this.fcl_ID.value!= null?this.fcl_AccounterSerail_From.value:null ),            
-      'AccounterSerail_To': (this.fcl_ID.value!= null?this.fcl_AccounterSerail_To.value:null ),            
-
-
-       
-
-
+      'AccounterSerail_From': (this.ID.value!= null?this.AccounterSerail_From.value:null ),            
+      'AccounterSerail_To': (this.ID.value!= null?this.AccounterSerail_To.value:null ), 
+      'pageSize': (this.pageSize ),            
+      'pageNumber': (this.currentPage),            
 
     }
     this.EmployeeStatsService.Stats1(SearchRequest).subscribe
     (
       data=>
       {
+        console.log('data1', data);
         if (data!= null )
           this.dataSource.data = (data as any[]);
         else 
           this.dataSource.data = [];
       }
     )
+  }
+
+  rowClicked: number;
+  changeTableRowColor(idx: any) { 
+    if(this.rowClicked === idx) this.rowClicked = -1;
+    else this.rowClicked = idx;
+  }
+
+  clearForm(){
+    this.Form.reset();
   }
 }

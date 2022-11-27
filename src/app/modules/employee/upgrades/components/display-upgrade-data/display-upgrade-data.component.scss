@@ -1,0 +1,50 @@
+form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    mat-form-field{
+        margin-left: 20px;
+    }
+}
+
+table{
+    width: 100%;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 10px;
+
+    mat-radio-button{
+        margin-bottom: 4px;
+    }
+}
+
+.view{
+    margin-bottom: 10px;
+}
+
+
+
+  .table-wrap{
+    overflow-x: scroll;
+  }

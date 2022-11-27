@@ -23,7 +23,7 @@ export class TblShamelUpgradeYearService {
   list()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TblShamelUpgradeYear",options);  
+    return this.httpClient.get(this.RestUrl +"TblShamelUpgradeYear",options) as Observable<TblShamelUpgradeYear[]>;  
     
   }
 
@@ -62,7 +62,7 @@ export class TblShamelUpgradeYearService {
     const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;
   
     const options = {  headers: headers };
-    return this.httpClient.put(this.RestUrl +"TblShamelUpgradeYear/"+obj.year_id,obj,options);  
+    return this.httpClient.put(this.RestUrl +"TblShamelUpgradeYear/"+obj.YEAR_ID,obj,options);  
   }
 
   GetFixedYear()  {
@@ -72,6 +72,12 @@ export class TblShamelUpgradeYearService {
     
   }
 
+  Validate(obj : any )  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;
   
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TblShamelUpgradeYear/Validate",obj,options);  
+  }
 
 }

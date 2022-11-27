@@ -27,6 +27,7 @@ import { ITBLShamelAccounter } from '../../../../../shared/models/employees_depa
 import { TBLShamelMonth } from '../../../../../../modules/shared/models/employees_department/TBLShamelMonth';
 import { TBLShamelYear } from '../../../../../../modules/shared/models/employees_department/TBLShamelYear';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import * as moment from 'moment';
 
 
 @Component({
@@ -86,24 +87,36 @@ export class HealthComponent implements OnInit, AfterViewInit {
   { 
    
     this.Form = this. frmBuilder.group({
-      startdate_from: new FormControl(''),
-      startdate_to: new FormControl(''),
-       id: new FormControl(''),
-       fname: new FormControl(''),
-       lname: new FormControl(''),
-       father: new FormControl(''),
-       documenttype_id:new FormControl(''),
-       documentnum: new FormControl(''),
-       documentdate_from: new FormControl(''),
-       documentdate_to: new FormControl(''),
-       eisaltnum: new FormControl(''),
-       eisaldate_from: new FormControl(''),
-       eisaldate_to: new FormControl(''),
-       accounter_id: new FormControl(''),
-       healthnosalary_name: new FormControl(''),
-       tax_status: new FormControl(''),
-       pageindex:new FormControl(''),
-       rowinpage:new FormControl(''),
+      startdate_From_Day: new FormControl(''),
+      startdate_From_Month: new FormControl(''),
+      startdate_From_Year: new FormControl(''),
+      startdate_To_Day: new FormControl(''),
+      startdate_To_Month: new FormControl(''),
+      startdate_To_Year: new FormControl(''),
+      id: new FormControl(''),
+      fname: new FormControl(''),
+      lname: new FormControl(''),
+      father: new FormControl(''),
+      documenttype_id:new FormControl(''),
+      documentnum: new FormControl(''),
+      documentdate_From_Day: new FormControl(''),
+      documentdate_From_Month: new FormControl(''),
+      documentdate_From_Year: new FormControl(''),
+      documentdate_To_Day: new FormControl(''),
+      documentdate_To_Month: new FormControl(''),
+      documentdate_To_Year: new FormControl(''),
+      eisaltnum: new FormControl(''),
+      eisaldate_From_Day: new FormControl(''),
+      eisaldate_From_Month: new FormControl(''),
+      eisaldate_From_Year: new FormControl(''),
+      eisaldate_To_Day: new FormControl(''),
+      eisaldate_To_Month: new FormControl(''),
+      eisaldate_To_Year: new FormControl(''),
+      accounter_id: new FormControl(''),
+      healthnosalary_name: new FormControl(''),
+      tax_status: new FormControl(''),
+      pageindex:new FormControl(''),
+      rowinpage:new FormControl(''),
   
 
     });
@@ -325,7 +338,26 @@ export class HealthComponent implements OnInit, AfterViewInit {
     this.Form.controls['rowinpage'].setValue(this.rowInPage);
 
 
-    this.healthService.fill(this.Form.value);
+    this.healthService.fill({
+      'pageIndex': this.Form.controls['pageindex'].value,
+      'rowInPage': this.Form.controls['rowinpage'].value,
+      'id': this.Form.controls['id'].value,
+      'fname': this.Form.controls['fname'].value,
+      'lname': this.Form.controls['lname'].value,
+      'father': this.Form.controls['father'].value,
+      'documenttype_id': this.Form.controls['documenttype_id'].value,
+      'documentnum': this.Form.controls['documentnum'].value,
+      'eisalnum': this.Form.controls['eisaltnum'].value,
+      'accounter_id': this.Form.controls['accounter_id'].value,
+      'healthnosalary_name': this.Form.controls['healthnosalary_name'].value,
+      'tax_status': this.Form.controls['tax_status'].value,
+      'startdate_From': moment(this.Form.controls['startdate_From_Month'].value+'/'+this.Form.controls['startdate_From_Day'].value+'/'+this.Form.controls['startdate_From_Year'].value).toDate(),
+      'startdate_To': moment(this.Form.controls['startdate_To_Month'].value+'/'+this.Form.controls['startdate_To_Day'].value+'/'+this.Form.controls['startdate_To_Year'].value).toDate(),
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
+    });
 
     this.healthService.List_TblShamelHealthServicet_BehaviorSubject.subscribe(
       data =>{

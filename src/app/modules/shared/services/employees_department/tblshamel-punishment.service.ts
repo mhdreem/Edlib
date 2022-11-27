@@ -47,7 +47,7 @@ export class TBLShamelPunishmentService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelPunishment/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelPunishment/"+id,options);  
   }
 
   add(obj : ITBLShamelPunishment )  {

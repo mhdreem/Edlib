@@ -17,7 +17,7 @@ export class TblShamelRankAddComponent implements OnInit {
 
   action:string;
 
-  local_data:ITBLShamelRank={rank_id:0,rank_name:'',rank_fixed:0};
+  local_data:ITBLShamelRank={rank_id:0,rank_name:'',Fixed:0};
 
   constructor(private frmBuilder:FormBuilder,
     public dialogRef: MatDialogRef<TblShamelRankAddComponent>,
@@ -39,12 +39,12 @@ export class TblShamelRankAddComponent implements OnInit {
 
       this.local_data.rank_id = data.rank_id;
       this.local_data.rank_name = data.rank_name;
-      this.local_data.rank_fixed = data.rank_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_Rank_id.setValue(this.local_data.rank_id );
       this.frm_Rank_name.setValue(this.local_data.rank_name );
-      if(this.local_data.rank_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_Rank_fixed.setValue(true );
       else
       this.frm_Rank_fixed.setValue(false );
@@ -52,7 +52,7 @@ export class TblShamelRankAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelRank ={rank_id:this.local_data.rank_id,rank_name:this.frm_Rank_name.value,rank_fixed:this.frm_Rank_fixed.value == true?1:0};
+    let x: ITBLShamelRank ={rank_id:this.local_data.rank_id,rank_name:this.frm_Rank_name.value,Fixed:this.frm_Rank_fixed.value == true?1:0};
 
     console.log(x);
     this.dialogRef.close({event:this.action,data:x});

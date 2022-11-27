@@ -48,7 +48,7 @@ export class TblshamelincmarsoomService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelIncMarsoom/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelIncMarsoom/"+id,options);  
   }
 
   add(obj : ITBLShamelIncMarsoom )  {

@@ -1,9 +1,10 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { Observable, of, startWith, map } from 'rxjs';
+import { Observable, of, startWith, map, Subscription, combineLatest, forkJoin } from 'rxjs';
 import { ITBLShamelDocumentType } from 'src/app/modules/shared/models/employees_department/ITBLShamelDocumentType';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelSCSuddenHoliday } from 'src/app/modules/shared/models/employees_department/TBLShamelSCSuddenHoliday';
@@ -12,6 +13,7 @@ import { TBLShamelSCSuddenHolidayService } from 'src/app/modules/shared/services
 import { TBLShamelSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sudden-holiday.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
+import { ValidateForm } from './validate/ValidateForm';
 
 @Component({
   selector: 'app-tblshamel-sc-sudden-holiday-add',
@@ -20,7 +22,7 @@ import { EmployeePageService } from '../../pageservice/employee-page-service';
 })
 export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
 
-  id: number;
+  id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
   
   _Selected_Employee_SCSuddenHoliday: TBLShamelSCSuddenHoliday
@@ -40,6 +42,9 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
     return this._Selected_Employee_SCSuddenHoliday;
   }
 
+  isLoadingFinish: boolean = false;
+  _Subscription: Subscription;
+
   //Array Of AutoComplere With Filter
   
   DocumentType_List :ITBLShamelDocumentType[]=[];
@@ -52,21 +57,27 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
 
 
   // Access To Element in Form
-  Form: UntypedFormGroup ;
-  fcl_duration   = new UntypedFormControl();
-  fcl_startdate  = new UntypedFormControl();
-  fcl_enddate  = new UntypedFormControl();
-  fcl_suddenholiday_id= new UntypedFormControl();
-  fcl_notes= new UntypedFormControl();
-  fcl_documenttype_id   = new UntypedFormControl();  
-  fcl_document_number  = new UntypedFormControl();
-  fcl_documentdate = new UntypedFormControl();
+
+  Form: FormGroup;
+  serial: FormControl<number | null>;
+  id: FormControl<number | null>;
+  duration: FormControl<number | null>;
+  startdate: FormControl<Date | null>;
+  enddate: FormControl<Date | null>;
+  suddenholiday_id: FormControl<number | null>;
+  notes: FormControl<string | null>;
+  documenttype_id: FormControl<number | null>;
+  document_number: FormControl<string | null>;
+  documentdate: FormControl<Date | null>;
 
   //Local Var
 
   submitted = false;
   loading: boolean = false;
 
+
+  isStartDateSelected: boolean= false;
+  isEndDateSelected: boolean= false;
   //#region Constuctor 
   constructor(    
     @Inject(MAT_DIALOG_DATA) public data: {obj: TBLShamelSCSuddenHoliday,id:number},
@@ -75,43 +86,23 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
     public ShameldocumenttypeService:TblshameldocumenttypeService ,
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
+    public dialogRef: MatDialogRef<TBLShamelSCSuddenHolidayAddComponent>,
+
     ) {
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
           this.Selected_Emp = data;
-          this.id = this.Selected_Emp.id;
+          this.id_employee = this.Selected_Emp.id;
         }
       )
-  
-      if (this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService == null ||
-        this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService == undefined ||
-        this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService.length == 0)
-        this.ShamelSuddenHolidayService.fill();
-      this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService_BehaviorSubject.subscribe(
-        data => {
-          this.TBLShamelSuddenHoliday_List = data;
-          this.Filtered_TBLShamelSuddenHoliday = of(this.TBLShamelSuddenHoliday_List);
-        }
-      )
-  
-      if (this.ShameldocumenttypeService.List_ITBLShamelDocumentType == null ||
-        this.ShameldocumenttypeService.List_ITBLShamelDocumentType == undefined ||
-        this.ShameldocumenttypeService.List_ITBLShamelDocumentType.length == 0)
-        this.ShameldocumenttypeService.fill();
-      this.ShameldocumenttypeService.List_ITBLShamelDocumentType_BehaviorSubject.subscribe(
-        data => {
-          this.DocumentType_List = data;
-          this.filteredDocumentTypeOptions = of(this.DocumentType_List);
-        }
-      )
-  
+      this.Load_Data();
       this.BuildForm();
       this.FillArrayUsingService();
   
       if (data!= null  && data.obj!= null && data.id != null &&  data.id > 0) {
         console.log('ddddddddddddddddddddddddddddddd');
 
-        this.id = data.id;
+        this.id_employee = data.id;
         this.Selected_Employee_SCSuddenHoliday = data.obj;
         console.log(this.Selected_Employee_SCSuddenHoliday);
       }
@@ -125,12 +116,97 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
     }
   
   
+  Load_Data() {
+    combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
+      (
+        res => {
+          this.Selected_Emp = res[0];
+          if (this.Selected_Emp != null && this.Selected_Emp.id != null)
+            this.id_employee = this.Selected_Emp.id;
+
+          this._Subscription = forkJoin(
+            this.Load_ITBLShamelDocumentType(),
+            this.Load_ITBLShamelSuddenHoliday()
+          ).subscribe(
+            res => {
+              this.isLoadingFinish = true;
+              this.DocumentType_List = res[0];
+              this.filteredDocumentTypeOptions = of(this.DocumentType_List);
+              this.ShameldocumenttypeService.List_ITBLShamelDocumentType = this.DocumentType_List;
+              this.ShameldocumenttypeService.List_ITBLShamelDocumentType_BehaviorSubject.next(this.DocumentType_List);
+
+              this.TBLShamelSuddenHoliday_List  = res[1];
+              this.Filtered_TBLShamelSuddenHoliday = of(this.TBLShamelSuddenHoliday_List);
+              this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService = this.TBLShamelSuddenHoliday_List;
+              this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService_BehaviorSubject.next(this.TBLShamelSuddenHoliday_List);
+              this.Init_AutoComplete();
+
+              this.SetValue();
+            },
+            (err => {
+              this.isLoadingFinish = true;
+            })
+          )
+        }
+      )
+  }
   
-  
+
+  Load_ITBLShamelDocumentType(): Observable<ITBLShamelDocumentType[]> {
+    if (this.ShameldocumenttypeService.List_ITBLShamelDocumentType == null ||
+      this.ShameldocumenttypeService.List_ITBLShamelDocumentType == undefined ||
+      this.ShameldocumenttypeService.List_ITBLShamelDocumentType.length == 0)
+      return this.ShameldocumenttypeService.list();
+    return of(this.ShameldocumenttypeService.List_ITBLShamelDocumentType);
+
+  }
+
+  Load_ITBLShamelSuddenHoliday(): Observable<TBLShamelSuddenHoliday[]> {
+    if (this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService == null ||
+      this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService == undefined ||
+      this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService.length == 0)
+      return this.ShamelSuddenHolidayService.list();
+    return of(this.ShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService);
+
+  }
+
+  public async Init_AutoComplete() {
+    try {
+      this.filteredDocumentTypeOptions = this.documenttype_id.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => value && typeof value === 'string' ? this._filteredDocumentType(value) : this.DocumentType_List.slice())
+        );
+
+        this.Filtered_TBLShamelSuddenHoliday = this.suddenholiday_id.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => value && typeof value === 'string' ? this._filteredSuddenHoliday(value) : this.TBLShamelSuddenHoliday_List.slice())
+        );
+    } catch (Exception: any) { }
+  }
     ngOnInit(): void {
   
   
   
+    }
+
+    private _filteredDocumentType(value: string): ITBLShamelDocumentType[] {
+      if (value) {
+        const filterValue = value;
+        return this.DocumentType_List.filter(obj => obj.documenttype_name.includes(filterValue));
+  
+      }
+      return this.DocumentType_List.slice();
+    }
+  
+    private _filteredSuddenHoliday(value: string): TBLShamelSuddenHoliday[] {
+      if (value) {
+        const filterValue = value;
+        return this.TBLShamelSuddenHoliday_List.filter(obj => obj.suddenholiday_name.includes(filterValue));
+  
+      }
+      return this.TBLShamelSuddenHoliday_List.slice();
     }
   
   
@@ -144,14 +220,14 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
 
       
        
-       this.filteredDocumentTypeOptions = this.fcl_documenttype_id.valueChanges
+       this.filteredDocumentTypeOptions = this.documenttype_id.valueChanges
        .pipe(
          startWith(''),        
          map(value => value   && typeof value === 'string'  ? this._Filtered_DocumentType(value) : this.DocumentType_List.slice() )
        );  
      
 
-       this.Filtered_TBLShamelSuddenHoliday = this.fcl_suddenholiday_id.valueChanges
+       this.Filtered_TBLShamelSuddenHoliday = this.suddenholiday_id.valueChanges
        .pipe(
          startWith(''),        
          map(value => value   && typeof value === 'string'  ? this._Filtered_TBLShamelSuddenHoliday(value) : this.TBLShamelSuddenHoliday_List.slice() )
@@ -178,29 +254,24 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
    {
     
 
-      this.Form = new UntypedFormGroup({});
-      this.fcl_duration   = new UntypedFormControl();
-      this.fcl_startdate  = new UntypedFormControl();
-      this.fcl_enddate = new UntypedFormControl();
-
-      this.fcl_notes = new UntypedFormControl();
-      this.fcl_suddenholiday_id = new UntypedFormControl([Validators.required]);
-
-      this.fcl_document_number = new UntypedFormControl();
-      this.fcl_documenttype_id  = new UntypedFormControl();
-      this.fcl_document_number  = new UntypedFormControl();
-      this.fcl_documentdate   = new UntypedFormControl();      
-      this.Form.addControl('duration',this.fcl_duration);
-      this.Form.addControl('startdate',this.fcl_startdate);
-      this.Form.addControl('enddate',this.fcl_enddate);
-      this.Form.addControl('document_number',this.fcl_document_number);
-      this.Form.addControl('documenttype_id',this.fcl_documenttype_id);
-      this.Form.addControl('document_number',this.fcl_document_number);
-      this.Form.addControl('documentdate',this.fcl_documentdate);
-
-      this.Form.addControl('notes',this.fcl_notes);
-      this.Form.addControl('suddenholiday_id',this.fcl_suddenholiday_id);
-
+    this.Form = this.fb.group(
+      {
+        'duration': this.duration = new FormControl<number | null>(null, []),
+        'serial': this.serial = new FormControl<number | null>(null, []),
+        'id': this.id = new FormControl<number | null>(null, []),
+        'notes': this.notes = new FormControl<string | null>(null, []),
+        'suddenholiday_id': this.suddenholiday_id = new FormControl<number | null>(null, []),
+        'startdate': this.startdate = new FormControl<Date | null>(null, [Validators.required]),
+        'enddate': this.enddate = new FormControl<Date | null>(null, [Validators.required]),
+        'document_number': this.document_number = new FormControl<string | null>(null, []),
+        'documenttype_id': this.documenttype_id = new FormControl<number | null>(null, []),
+        'documentdate': this.documentdate = new FormControl<Date | null>(null, []),
+      },
+      {
+        updateOn: 'change',
+        asyncValidators: ValidateForm(this.ShamelSCSuddenHolidayService).bind(this) // <= async validator
+      }
+    );
 
      
    
@@ -234,21 +305,12 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
   //#region SetValue And GetValue Function
   public ClearForm()
   {
-    try{
-      console.log('ClearForm');
-      this.fcl_document_number.reset();
-      this.fcl_documentdate.reset();
-      this.fcl_documenttype_id.reset();
-      this.fcl_duration.reset();
-      this.fcl_enddate.reset();
-      this.fcl_startdate.reset();
-      this.fcl_suddenholiday_id.reset();
-      this.fcl_notes.reset();
-  }catch(ex: any)
-  {
+    try {
+      this.Form.reset();
 
-  }
-  
+    } catch (ex: any) {
+
+    }
   }
 
 
@@ -260,29 +322,39 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
       this.Selected_Employee_SCSuddenHoliday.serial>0)
     {
 
-    
-      this.fcl_duration.setValue(this.Selected_Employee_SCSuddenHoliday.duration); 
+      if (this.Selected_Employee_SCSuddenHoliday.serial != null)
+          this.serial.setValue(this.Selected_Employee_SCSuddenHoliday.serial);
+
+
+        if (this.Selected_Employee_SCSuddenHoliday.id != null)
+          this.id.setValue(this.Selected_Employee_SCSuddenHoliday.id);
+
+    if (this.Selected_Employee_SCSuddenHoliday.duration !=null)
+      this.duration.setValue(this.Selected_Employee_SCSuddenHoliday.duration); 
 
       if (this.Selected_Employee_SCSuddenHoliday != null &&
           this.Selected_Employee_SCSuddenHoliday.startdate != null )
-         this.fcl_startdate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.startdate).toDate() ); 
+         this.startdate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.startdate).toDate() ); 
 
       if (this.Selected_Employee_SCSuddenHoliday != null &&
           this.Selected_Employee_SCSuddenHoliday.enddate != null )
-         this.fcl_enddate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.enddate).toDate()); 
+         this.enddate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.enddate).toDate()); 
 
+        if (this.Selected_Employee_SCSuddenHoliday.documenttype_id != null)
+      this.documenttype_id.setValue(this.Selected_Employee_SCSuddenHoliday.documenttype_id); 
 
-      this.fcl_documenttype_id.setValue(this.Selected_Employee_SCSuddenHoliday.documenttype_id); 
-      this.fcl_document_number.setValue(this.Selected_Employee_SCSuddenHoliday.document_number); 
+      if (this.Selected_Employee_SCSuddenHoliday.document_number != null)
+      this.document_number.setValue(this.Selected_Employee_SCSuddenHoliday.document_number); 
 
       if (this.Selected_Employee_SCSuddenHoliday != null &&
         this.Selected_Employee_SCSuddenHoliday.documentdate != null )        
-        this.fcl_documentdate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.documentdate).toDate() ); 
+        this.documentdate.setValue(moment(this.Selected_Employee_SCSuddenHoliday.documentdate).toDate() ); 
 
+        if (this.Selected_Employee_SCSuddenHoliday.suddenholiday_id != null)
+      this.suddenholiday_id.setValue(this.Selected_Employee_SCSuddenHoliday.suddenholiday_id)
 
-      this.fcl_suddenholiday_id.setValue(this.Selected_Employee_SCSuddenHoliday.suddenholiday_id)
-
-      this.fcl_notes.setValue(this.Selected_Employee_SCSuddenHoliday.notes);
+      if (this.Selected_Employee_SCSuddenHoliday.notes != null)
+      this.notes.setValue(this.Selected_Employee_SCSuddenHoliday.notes);
       
     
     }
@@ -296,23 +368,23 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
 if (this.Selected_Employee_SCSuddenHoliday != null )
 {
 
-  this.Selected_Employee_SCSuddenHoliday.id = this.id;
-  this.Selected_Employee_SCSuddenHoliday.duration = this.fcl_duration.value;
+  this.Selected_Employee_SCSuddenHoliday.id = this.Selected_Emp.id;
+  this.Selected_Employee_SCSuddenHoliday.duration = this.duration.value;
 
-  if (this.fcl_startdate.value != null )
-  this.Selected_Employee_SCSuddenHoliday.enterdate =moment( this.fcl_startdate.value).toDate();
+  if (this.startdate.value != null )
+  this.Selected_Employee_SCSuddenHoliday.enterdate =moment( this.startdate.value).toDate();
 
-  if (this.fcl_enddate.value != null )
-    this.Selected_Employee_SCSuddenHoliday.startdate =moment(this.fcl_enddate.value).toDate();
+  if (this.enddate.value != null )
+    this.Selected_Employee_SCSuddenHoliday.startdate =moment(this.enddate.value).toDate();
     
-    this.Selected_Employee_SCSuddenHoliday.documenttype_id = this.fcl_documenttype_id.value;        
-    this.Selected_Employee_SCSuddenHoliday.document_number = this.fcl_document_number.value;
+    this.Selected_Employee_SCSuddenHoliday.documenttype_id = this.documenttype_id.value;        
+    this.Selected_Employee_SCSuddenHoliday.document_number = this.document_number.value;
 
-    if (this.fcl_documentdate.value )
+    if (this.documentdate.value )
     
-    this.Selected_Employee_SCSuddenHoliday.documentdate = moment(this.fcl_documentdate.value).toDate();    
-    this.Selected_Employee_SCSuddenHoliday.notes = this.fcl_notes.value    
-    this.Selected_Employee_SCSuddenHoliday.suddenholiday_id = this.fcl_suddenholiday_id.value
+    this.Selected_Employee_SCSuddenHoliday.documentdate = moment(this.documentdate.value).toDate();    
+    this.Selected_Employee_SCSuddenHoliday.notes = this.notes.value    
+    this.Selected_Employee_SCSuddenHoliday.suddenholiday_id = this.suddenholiday_id.value
     
   }
   }catch(ex: any)
@@ -384,6 +456,7 @@ if (this.Selected_Employee_SCSuddenHoliday != null )
 console.log('1');   
     
     if (!this.Form.valid == true ) {
+      console.log("invalid",this.Form.errors);
       return;
     }
     console.log('2');   
@@ -402,8 +475,7 @@ console.log('1');
           console.log(res)
           if (res == 1)
         {
-          this.ClearForm();
-          this.onReset();
+          this.dialogRef.close(true);
         }else
         {
 
@@ -421,8 +493,7 @@ console.log('1');
         console.log(res)
         if (res == 1)
         {
-          this.ClearForm();
-          this.onReset();
+          this.dialogRef.close(true);
 
         }else
         {
@@ -448,9 +519,39 @@ public errorHandling = (control: string, error: string) => {
 
 
 
+addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  if (event.value != null &&
+    this.Selected_Employee_SCSuddenHoliday != null)
+    this.Selected_Employee_SCSuddenHoliday.documentdate = moment(event.value).toDate();
+
+}
+
+
+addEventStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  if (event.value != null &&
+    this.Selected_Employee_SCSuddenHoliday != null)
+    this.Selected_Employee_SCSuddenHoliday.startdate = moment(event.value).toDate();
+
+    this.isStartDateSelected= true;
+    this.calcDuration();
+}
 
 
 
+addEventEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  if (event.value != null &&
+    this.Selected_Employee_SCSuddenHoliday != null)
+    this.Selected_Employee_SCSuddenHoliday.enddate = moment(event.value).toDate();
+
+    this.isEndDateSelected= true;
+    this.calcDuration();
+}
+
+calcDuration(){
+  if (this.isStartDateSelected && this.isEndDateSelected)
+  this.duration.setValue(moment.duration(moment(this.Selected_Employee_SCSuddenHoliday.enddate).diff(moment(this.Selected_Employee_SCSuddenHoliday.startdate))).asDays());
+  else return;
+}
 
 
 }

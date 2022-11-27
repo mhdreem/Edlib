@@ -5,9 +5,9 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { EmployeePageService } from '../../employee-page-service';
-import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Inject } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of, startWith, map, combineLatest, forkJoin, Subscription } from 'rxjs';
 import { ITBLShamelDocumentType } from 'src/app/modules/shared/models/employees_department/ITBLShamelDocumentType';
 import { ITBLShamelFreeHolidayReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelFreeHolidayReason';
@@ -16,7 +16,7 @@ import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_d
 import { TBLShamelFreeHolidayReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-free-holiday-reason.service';
 import { TBLShamelSCFreeHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-scfree-holiday.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
-import { SubscriptionLike } from 'subsink/dist/subsink';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const moment = _moment;
 
@@ -26,7 +26,7 @@ const moment = _moment;
   templateUrl: './tblshamelscfreeholidaymodify.component.html',
   styleUrls: ['./tblshamelscfreeholidaymodify.component.scss']
 })
-export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewInit,OnDestroy {
+export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewInit {
 
 
   id_employee: number;
@@ -76,6 +76,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
 
   //#region Constuctor 
   constructor(
+    public dialogRef: MatDialogRef<TblshamelscfreeholidaymodifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCFreeHoliday, id: number },
     public GlobalList: IGlobalEmployeeList,
     public ShamelSCFreeHolidayService: TBLShamelSCFreeHolidayService,
@@ -83,6 +84,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: FormBuilder,
     public PageService: EmployeePageService,
+    private snackBar: MatSnackBar
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
       this.id_employee = data.id;
@@ -419,8 +421,11 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.ShamelSCFreeHolidayService.add(this.Selected_Employee_SCFreeHoliday).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
-
-
+          this.snackBar.open('تمت الإضافة بنجاح', '', {
+            duration: 3000,
+          });
+          this.dialogRef.close();
+          
         } else {
 
 
@@ -439,7 +444,10 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
         console.log(res)
         if (res == 1) {
           this.getValue();
-
+          this.snackBar.open('تم التعديل بنجاح', '', {
+            duration: 3000,
+          });
+          this.dialogRef.close();
         } else {
         }
       });

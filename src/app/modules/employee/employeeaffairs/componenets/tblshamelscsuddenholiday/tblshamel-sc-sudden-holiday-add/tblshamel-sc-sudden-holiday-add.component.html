@@ -1,7 +1,8 @@
-<h2 mat-dialog-title>الدورات التدريبية</h2>
+<h2 mat-dialog-title>تعديل الإجازة الاضطرارية</h2>
 
 <mat-dialog-content class="mat-typography">
 
+  <!-- <ngx-hover-opacity [isHoverVisible]="isLoadingFinish"> -->
 
   <form [formGroup]="Form">
 
@@ -14,7 +15,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ بداية الإجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_startdate" [formControl]="fcl_startdate"  >
+          <input matInput [matDatepicker]="Datepicker_startdate" [formControl]="startdate"  
+          (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_startdate></mat-datepicker>
         </mat-form-field>
@@ -23,7 +25,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ الانتهاء</mat-label>
-          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="fcl_enddate"  >
+          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate" 
+          (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)" >
           <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_enddate></mat-datepicker>
         </mat-form-field>
@@ -32,7 +35,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدة</mat-label>        
-            <input matInput type="number" placeholder="المدة" value="" [formControl]="fcl_duration"   >        
+            <input matInput type="number" placeholder="المدة" value="" [formControl]="duration"   >        
         </mat-form-field>
   
       </div>
@@ -44,7 +47,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>السبب</mat-label>
-          <input type="text" matInput [formControl]="fcl_suddenholiday_id"  [matAutocomplete]="auto_suddenholiday_id">
+          <input type="text" matInput [formControl]="suddenholiday_id"  [matAutocomplete]="auto_suddenholiday_id">
           <mat-autocomplete #auto_suddenholiday_id="matAutocomplete" [displayWith]="Display_TBLShamelSuddenHoliday.bind(this)" (optionSelected)="OnSelect_SuddenHoliday($event)">
             <mat-option *ngFor="let option of Filtered_TBLShamelSuddenHoliday | async" [value]="option.suddenholiday_id">
               {{option.suddenholiday_name}}
@@ -61,7 +64,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>المستند</mat-label>
-            <input type="text" matInput [formControl]="fcl_documenttype_id" formControlName="documenttype_id"
+            <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
               [matAutocomplete]="auto_documenttype_id">
             <mat-autocomplete #auto_documenttype_id="matAutocomplete"
               [displayWith]="displayDocumentTypeProperty.bind(this)"
@@ -76,7 +79,7 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>        
-            <input matInput type="number" placeholder="رقم المستند" value="رقم المستند" [formControl]="fcl_document_number"   >        
+            <input matInput type="number" placeholder="رقم المستند" value="رقم المستند" [formControl]="document_number"   >        
         </mat-form-field>
   
       </div>
@@ -84,7 +87,9 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field appearance="fill">
           <mat-label>تاريخ المستند</mat-label>
-          <input matInput [matDatepicker]="Datepicker_documentdate" [formControl]="fcl_documentdate">
+          <input matInput [matDatepicker]="Datepicker_documentdate" [formControl]="documentdate"
+          (dateInput)="addEventDocumentDate('input', $event)"
+            (dateChange)="addEventDocumentDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_documentdate></mat-datepicker>
         </mat-form-field>
@@ -99,7 +104,7 @@
       <div class="form-group col-sm-10 flex-column d-flex">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>ملاحظات</mat-label>
-            <input type="text" matInput [formControl]="fcl_notes" formControlName="notes">
+            <input type="text" matInput [formControl]="notes" formControlName="notes">
           </mat-form-field>
       </div>
 
@@ -107,6 +112,8 @@
     </div>
 
   </form>
+<!-- </ngx-hover-opacity> -->
+
   </mat-dialog-content>
   <mat-dialog-actions >
     <button mat-raised-button color="warn" mat-dialog-close >

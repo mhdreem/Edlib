@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelCourse } from 'src/app/modules/shared/models/employees_department/ITBLShamelCourse';
 import { TblshamelcourseService } from 'src/app/modules/shared/services/employees_department/tblshamelcourse.service';
@@ -20,7 +21,8 @@ export class TblShamelCourseListComponent implements OnInit {
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
  constructor(public dialog: MatDialog,
-   private tBLShamelCourseService:TblshamelcourseService) {
+   private tBLShamelCourseService:TblshamelcourseService,
+   private _snaker: MatSnackBar,) {
      if (tBLShamelCourseService.List_ITBLShamelCourse == null ||
        tBLShamelCourseService.List_ITBLShamelCourse.length ==0
      )
@@ -71,7 +73,12 @@ export class TblShamelCourseListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تمت الإضافة بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
@@ -88,18 +95,28 @@ export class TblShamelCourseListComponent implements OnInit {
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم التعديل بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 
 
  }
  deleteCourse(obj:any){
-   this.tBLShamelCourseService.delete(obj).subscribe
+   this.tBLShamelCourseService.delete(obj.course_id).subscribe
    (
      data=>
      {
-       this.RefreshDataSource();
+      if (data == 1){
+        this.RefreshDataSource();
+        this._snaker.open('تم الحذف بنجاح', '', {
+         duration: 3000,
+       });
+      }
      }
    );
 

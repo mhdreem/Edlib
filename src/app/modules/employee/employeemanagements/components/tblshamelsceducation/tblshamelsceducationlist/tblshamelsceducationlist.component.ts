@@ -43,12 +43,12 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
     this.dataSource = new MatTableDataSource([]);
 
-
     this.dataSource.data = this.employee_education_List;
 
     this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
       data => {
         this.Selected_Emp = data;
+        console.log('data', data);
       }
     )
 
@@ -58,6 +58,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
         data => {
           this.employee_education_List = data.TBLShamelSCEducations;
           this.dataSource.data = this.employee_education_List;
+          console.log('employee_education_List', this.employee_education_List);
+
         }
       )
 
@@ -114,8 +116,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
 
     const dialogRef = this.dialog.open(TblshamelsceducationmodifyComponent, {
-      height: '80%',
-      width: '80%',
+      height: '60%',
+      width: '30%',
       data: { obj: this.selected_employee_education, id: this.Selected_Emp.id }
     });
 
@@ -145,21 +147,18 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
 
-          const snack = this.snackBar.open('سوف يتم الآن الحذف');
-
-
-
           this.educationService.delete(element.serial).toPromise().then(res => {
-            snack.dismiss();
-
             console.log(res);
-            if (res == 1)
+            if (res == 1){
+
               this.FillTable();
+              this.snackBar.open('تم الحذف بنجاح', '', {
+                duration: 3000,
+              });
+            } 
 
           });
-          this.snackBar.open('تم الحذف', 'Fechar', {
-            duration: 2000,
-          });
+          
 
           this.snackBar.dismiss();
 
@@ -180,8 +179,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
 
       const dialogRef = this.dialog.open(TblshamelsceducationmodifyComponent, {
-        height: '80%',
-        width: '80%',
+        height: '60%',
+        width: '30%',
         data: { obj: this.selected_employee_education, id: this.Selected_Emp.id }
       });
 

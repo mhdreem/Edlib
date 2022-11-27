@@ -1,0 +1,132 @@
+<form [formGroup]="Form">
+    <div class="right">
+        <div class="date">
+            <span>تاريخ التبدل:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023">
+              </mat-form-field>
+            </div>
+          </div>
+        
+        <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>سبب التبدل</mat-label>
+            <input type="text"
+                   matInput
+                   [formControl]="ChangeReason"
+                   [matAutocomplete]="ChangeReason_auto" 
+                   >
+            <mat-autocomplete #ChangeReason_auto="matAutocomplete"
+            [displayWith]="displayChangeReasonProperty.bind(this)">
+              <mat-option *ngFor="let option of ChangeReason_Filter | async" [value]="option.changereason_id">
+                {{option.changereason_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+    
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>نوع المستند</mat-label>
+            <input type="text"
+                   matInput
+                   [formControl]="DocumentType"
+                   [matAutocomplete]="autoDocumentType" 
+                   >
+            <mat-autocomplete #autoDocumentType="matAutocomplete"
+            [displayWith]="displayDocumentTypeProperty.bind(this)">
+              <mat-option *ngFor="let option of DocumentType_Filter | async" [value]="option.documenttype_id">
+                {{option.documenttype_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+    
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>رقم النستند</mat-label>
+            <input matInput [formControl]="DocumentId">
+          </mat-form-field>
+    
+          <div class="date">
+            <span>تاريخ المستند:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="DocumentDateDay" placeholder="ex: 21">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="DocumentDateMonth" placeholder="ex: 1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="DocumentDateYear" placeholder="ex: 2023">
+              </mat-form-field>
+            </div>
+          </div>
+        
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>مركز الوظيفة</mat-label>
+            <input type="text"
+                   matInput
+                   [formControl]="Department"
+                   [matAutocomplete]="autoDepartment" 
+                   >
+            <mat-autocomplete #autoDepartment="matAutocomplete"
+            [displayWith]="displayDepartmentProperty.bind(this)">
+              <mat-option *ngFor="let option of Department_Filter | async" [value]="option.department_id">
+                {{option.department_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+    
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>نوع الوظيفة</mat-label>
+            <input type="text"
+                   matInput
+                   [formControl]="JobKind"
+                   [matAutocomplete]="autoJobKind" 
+                   >
+            <mat-autocomplete #autoJobKind="matAutocomplete"
+            [displayWith]="displayJobKindProperty.bind(this)">
+              <mat-option *ngFor="let option of JobKind_Filter | async" [value]="option.jobkind_id">
+                {{option.jobkind_name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+    
+    </div>
+
+    <div class="left">
+        <textarea [formControl]="textArea" name="" id="" cols="60" rows="15"></textarea>
+    </div>
+</form>
+
+<button mat-raised-button color="primary" style="display: inline;">أخذ نسخة احتياطية</button>
+<button mat-raised-button color="primary" style="display: inline;">مشاهدة التكرارات في الوضع الوظيفي</button>
+<button mat-raised-button color="primary" style="display: inline;">رفع السقوف على المرسوم الجديد 2020</button>
+<button mat-raised-button color="primary" style="display: inline;">حل بعض المشاكل بالذاتية</button>
+
+<hr>
+<button mat-raised-button color="primary">تحديث الوضع الوظيفي للمرسوم الجديد 2020</button>
+<button mat-raised-button color="primary">تحديث السقوف</button>
+<span>رقم الإضبارة</span>
+<output id="id1"></output>
+<div class="progressBox">
+    <mat-progress-bar mode="determinate" value="progressBarValue1"></mat-progress-bar>
+    <span>{{progressBarValue1}}%</span>
+</div>
+<hr>
+<button mat-raised-button color="primary">تحديث البيانات الشخصية</button>
+<span>رقم الإضبارة</span>
+<output id="id2"></output>
+<div class="progressBox">
+    <mat-progress-bar mode="determinate" value="progressBarValue2"></mat-progress-bar>
+    <span>{{progressBarValue2}}%</span>
+</div>

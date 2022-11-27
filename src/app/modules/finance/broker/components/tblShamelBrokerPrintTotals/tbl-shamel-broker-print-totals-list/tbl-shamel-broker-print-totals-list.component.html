@@ -17,26 +17,43 @@
 
         </div>
 
-        <div class="filterGroup3">
             
-            <mat-form-field appearance="fill">
-                <mat-label>من تاريح</mat-label>
-                <input matInput [matDatepicker]="picker1" formControlName="start_date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-              </mat-form-field>
+            <div class="date">
+                <span>من تاريخ:</span>
+                <div class="content">
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>اليوم</mat-label>
+                    <input type="number" matInput formControlName="startdateDay" placeholder="ex: 21">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>الشهر</mat-label>
+                    <input type="number" matInput formControlName="startdateMonth" placeholder="ex: 1">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>العام</mat-label>
+                    <input type="number" matInput formControlName="startdateYear" placeholder="ex: 2023">
+                  </mat-form-field>
+                </div>
+              </div>
 
-              <mat-form-field appearance="fill">
-                <mat-label>الى تاريخ</mat-label>
-                <input matInput [matDatepicker]="picker2" formControlName="end_date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
+              <div class="date">
+                <span>الى تاريخ:</span>
+                <div class="content">
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>اليوم</mat-label>
+                    <input type="number" matInput formControlName="enddateDay" placeholder="ex: 21">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>الشهر</mat-label>
+                    <input type="number" matInput formControlName="enddateMonth" placeholder="ex: 1">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>العام</mat-label>
+                    <input type="number" matInput formControlName="enddateYear" placeholder="ex: 2023">
+                  </mat-form-field>
+                </div>
+              </div>
 
-
-        </div>
 
         
     </form>
@@ -48,7 +65,7 @@
 
 <div>
 <h3>
-    <button class="view" (click)="OnSearch()">عرض</button>
+    <button mat-raised-button color="primary" class="view" (click)="OnSearch()">عرض</button>
 </h3>
 </div>
 
@@ -82,9 +99,10 @@
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; sticky: true; let idx=index;"
     [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
 <!-- </div> -->

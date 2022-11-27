@@ -28,6 +28,7 @@ import {
   TabsModule,
   UtilitiesModule,
   
+  
 } from '@coreui/angular';
 
 import { IconModule } from '@coreui/icons-angular';
@@ -99,7 +100,7 @@ import { EmployeeaffairsManageComponent } from './componenets/employeeaffairs-ma
   imports: [
     CommonModule,
     RouterModule,
-    NgxHoverOpacityModule,
+   
     MatCardModule,
     MatAutocompleteModule,
     MatRadioModule,
@@ -158,7 +159,8 @@ import { EmployeeaffairsManageComponent } from './componenets/employeeaffairs-ma
  TabsModule,
  UtilitiesModule,
  IconModule,
-    EmployeeaffairsRoutingModule
+    EmployeeaffairsRoutingModule,
+    NgxHoverOpacityModule
   ]
 })
 export class EmployeeaffairsModule { }

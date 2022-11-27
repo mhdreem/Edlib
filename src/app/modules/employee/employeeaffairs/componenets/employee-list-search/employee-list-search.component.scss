@@ -3,27 +3,37 @@
     font-size: small;
 }
 
-mat-icon
+.mat-form-field
+{
+    width: 100% !important;
+}
+
+
+.mat-form-field-infix
+{
+    width: 100% !important;
+}
+
+.mat-grid-tile
+{
+    font-size: medium!important;
+}
+
+.mat-icon
 {
     font-size: smaller;
     font-weight: bold;
     vertical-align: middle;
 }
-mat-form-field
-{
-    font-size: small;
-}
 
-mat-grid-tile
-{
-    font-size: small;
-}
 
-mat-button-toggle-group
+
+.mat-button-toggle-group
 {
     width: 100%;
 }
-mat-button-toggle
+
+.mat-button-toggle
 {
     width:100%;
 }

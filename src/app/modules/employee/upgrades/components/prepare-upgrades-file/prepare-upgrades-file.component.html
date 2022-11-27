@@ -1,0 +1,62 @@
+
+<span class="date">عام الترفيع: {{fixedYear}}</span>
+<div class= "form">
+    <form [formGroup]="Form" >
+        <div class="right">
+            <mat-radio-group [formControl]="inputType" (change)="onInputTypeChange()">
+                <mat-radio-button value="1" color="primary" [checked]="true">قراءة آلية من البطاقة</mat-radio-button>
+                <mat-radio-button value="0" color="primary">إدخالات يدوية</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="left">
+            <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label #Auto>درجة الكفاءة</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="autoOptions"
+                       [matAutocomplete]="auto1" >
+                <mat-error *ngIf="fieldHasErrors(Form, 'autoOptions')">
+                {{
+                  autoPrintFirstErrorMessage(
+                    Form,
+                    "autoOptions",
+                    Auto.innerHTML
+                  )
+                }}
+              </mat-error>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayRankProperty.bind(this)">
+                  <mat-option *ngFor="let option of filteredAutoOptions | async" [value]="option.rank_id">
+                    {{option.rank_name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+            <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>درجة الكفاءة</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="manualOptions"
+                       [matAutocomplete]="auto2" >
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayRankProperty.bind(this)">
+                  <mat-option *ngFor="let option of filteredManualOptions | async" [value]="option.rank_id">
+                    {{option.rank_name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+    
+    
+            <mat-form-field class="example-full-width">
+                <mat-label>المدة</mat-label>
+                <input matInput [formControl]="duration">
+            </mat-form-field>
+        </div>        
+       
+    </form>
+</div>
+<button mat-raised-button color="primary" (click)="prepareFile()">تجهيز الملف</button>
+<span>رقم الإضبارة</span>
+<output id="id"></output>
+<div class="progressBox">
+    <mat-progress-bar mode="determinate" value="progressBarValue"></mat-progress-bar>
+    <span>{{progressBarValue}}%</span>
+</div>

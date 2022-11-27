@@ -24,6 +24,7 @@ import { TblShamelVarTaxService } from 'src/app/modules/shared/services/finance_
 import { TBLShamelShatebVarTaxService } from 'src/app/modules/shared/services/finance_department/shatebtax/tblshamel-shateb-var-tax.service';
 import { VarTaxDeleteDialogComponent } from '../var-tax-delete-dialog/var-tax-delete-dialog.component';
 import { VarTaxEditDialogComponent } from '../var-tax-edit-dialog/var-tax-edit-dialog.component';
+import * as moment from 'moment';
 
 
 
@@ -108,13 +109,21 @@ BuilForm()
     id: new FormControl<number | undefined|null>(undefined),   
     documenttype_id: new FormControl<string | undefined|null>(undefined),
     documentnum: new FormControl<string| undefined|null>(undefined),
-    documentdate_from: new FormControl<Date | undefined|null>(undefined),
-    documentdate_to: new FormControl<Date| undefined|null>(undefined),
+    documentdate_From_Day: new FormControl<number | undefined|null>(undefined),
+    documentdate_From_Month: new FormControl<number | undefined|null>(undefined),
+    documentdate_From_Year: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Day: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Month: new FormControl<number | undefined|null>(undefined),
+    documentdate_To_Year: new FormControl<number | undefined|null>(undefined),
     salary: new FormControl<number | undefined|null>(undefined),
     amount: new FormControl<number | undefined|null>(undefined),
     eisalnum: new FormControl<string | undefined|null>(undefined),
-    eisaldate_from: new FormControl<Date| undefined|null>(undefined),
-    eisaldate_to: new FormControl<Date | undefined|null>(undefined),
+    eisaldate_From_Day: new FormControl<number | undefined|null>(undefined),
+    eisaldate_From_Month: new FormControl<number | undefined|null>(undefined),
+    eisaldate_From_Year: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Day: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Month: new FormControl<number | undefined|null>(undefined),
+    eisaldate_To_Year: new FormControl<number | undefined|null>(undefined),
     year_id: new FormControl<number | undefined|null>(undefined),
     month_id: new FormControl<number | undefined|null>(undefined),
     fname: new FormControl<string| undefined|null>(undefined),
@@ -348,7 +357,24 @@ BuilForm()
     this.Form.controls['rowinpage'].setValue(this.rowInPage);
 
 
-    this.ShamelShatebVarTaxService.fill(this.Form.value);
+    this.ShamelShatebVarTaxService.fill({
+      'rowInPage': this.Form.controls['rowinpage'].value,
+      'pageIndex': this.Form.controls['pageindex'].value,
+      'serial': this.Form.controls['serial'].value,
+      'id': this.Form.controls['id'].value,
+      'documenttype_id': this.Form.controls['documenttype_id'].value,
+      'documentnum': this.Form.controls['documentnum'].value,
+      'fname': this.Form.controls['fname'].value,
+      'lname': this.Form.controls['lname'].value,
+      'father': this.Form.controls['father'].value,
+      'tax_status': this.Form.controls['tax_status'].value,
+      'accounter_id': this.Form.controls['accounter_id'].value,
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
+
+    });
 
     this.ShamelShatebVarTaxService.List_TblShamelVarTaxServicet_BehaviorSubject.subscribe(
       data =>{

@@ -17,25 +17,25 @@ export class EmployeeStatsService {
   Stats1(request:any)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"EmployeeStats/Stats1",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats1",request,options);      
   }
 
   Stats2(request:any)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"EmployeeStats/Stats2",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats2",request,options);      
   }
 
-  Stats3(request:any)  {
+  Stats3()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"EmployeeStats/Stats3",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats3",options);      
   }
 
   Stats4(request:any)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"EmployeeStats/Stats4",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats4",request,options);      
   }
   
 }

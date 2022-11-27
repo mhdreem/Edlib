@@ -1,0 +1,27 @@
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="Form">
+        <textarea name="" id="" cols="100" rows="15" [formControl]= text></textarea>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">
+        <mat-icon class="mat-icon-rtl-mirror">close
+        </mat-icon>
+        اغلاق
+    </button>
+
+    <button mat-raised-button color="accent" (click)="onReset()">
+        <mat-icon class="mat-icon-rtl-mirror">clear
+        </mat-icon>
+        مسح الشاشة
+    </button>
+
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="save()"
+        [disabled]="Form.invalid   ">
+        <mat-icon class="mat-icon-rtl-mirror">save
+        </mat-icon>
+        حفظ
+    </button>
+
+</mat-dialog-actions>

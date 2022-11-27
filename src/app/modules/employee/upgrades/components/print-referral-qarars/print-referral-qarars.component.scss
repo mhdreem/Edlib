@@ -20,3 +20,22 @@ button{
     margin-bottom: 20px;
     margin-left: 10px;
 }
+
+.view{
+    margin-top: 10px;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}

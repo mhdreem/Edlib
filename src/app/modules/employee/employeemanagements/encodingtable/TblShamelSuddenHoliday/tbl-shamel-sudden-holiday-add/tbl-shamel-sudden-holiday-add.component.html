@@ -7,7 +7,7 @@
             formControlName="SuddenHoliday_name">
     </mat-form-field>
     
-    <mat-checkbox [formControl]="frm_fixed" [(ngModel)]="local_data!.Fixed"> هل هو مثبت         </mat-checkbox>  
+    <mat-checkbox color="primary" [formControl]="frm_fixed" [(ngModel)]="local_data!.Fixed"> هل هو مثبت         </mat-checkbox>  
 
     <ng-template #elseTemplate>
       هل أنت متأكد من حذف الإجازة <b>{{local_data.suddenholiday_name}}</b>؟

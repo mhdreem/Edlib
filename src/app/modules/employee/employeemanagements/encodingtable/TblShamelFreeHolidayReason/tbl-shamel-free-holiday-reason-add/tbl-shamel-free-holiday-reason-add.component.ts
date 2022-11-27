@@ -33,12 +33,12 @@ export class TblShamelFreeHolidayReasonAddComponent implements OnInit {
     console.log(this.data);
       this.local_data.freeholidayreason_id = data.freeholidayreason_id;
       this.local_data.freeholidayreason_name = data.freeholidayreason_name;
-      this.local_data.freeholidayreason_fixed = data.freeholidayreason_fixed;
+      this.local_data.Fixed = data.Fixed;
 
       this.action = this.data.action;
       this.frm_FreeHolidayReason_id.setValue(this.local_data.freeholidayreason_id );
       this.frm_FreeHolidayReason_name.setValue(this.local_data.freeholidayreason_name );
-      if(this.local_data.freeholidayreason_fixed >0 )
+      if(this.local_data.Fixed >0 )
       this.frm_FreeHolidayReason_fixed.setValue(true );
       else
       this.frm_FreeHolidayReason_fixed.setValue(false );
@@ -46,7 +46,7 @@ export class TblShamelFreeHolidayReasonAddComponent implements OnInit {
   }
 
   doAction(){
-    let x: ITBLShamelFreeHolidayReason ={freeholidayreason_id:this.local_data.freeholidayreason_id,freeholidayreason_name:this.frm_FreeHolidayReason_name.value,freeholidayreason_fixed:this.frm_FreeHolidayReason_fixed.value == true?1:0};
+    let x: ITBLShamelFreeHolidayReason ={freeholidayreason_id:this.local_data.freeholidayreason_id,freeholidayreason_name:this.frm_FreeHolidayReason_name.value,Fixed:this.frm_FreeHolidayReason_fixed.value == true?1:0};
 
     this.dialogRef.close({event:this.action,data:x});
 }
