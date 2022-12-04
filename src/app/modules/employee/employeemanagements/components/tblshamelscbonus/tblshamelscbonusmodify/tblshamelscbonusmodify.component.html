@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>مراسيم زيادة الراتب</h2>
+<h2 mat-dialog-title>المكافئات</h2>
 
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="Form" >
@@ -82,23 +82,26 @@
               }}
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label #DOCUMENTDATE>تاريخ المستند</mat-label>
-          <input matInput [matDatepicker]="Datepicker_documentdate"
-            [formControl]="documentdate" (dateInput)="addEventDocumentDate('input', $event)"
-            (dateChange)="addEventDocumentDate('change', $event)">
-            <mat-error *ngIf="fieldHasErrors(Form, 'documentdate')">
-              {{
-                autoPrintFirstErrorMessage(
-                  Form,
-                  "documentdate",
-                  DOCUMENTDATE.innerHTML
-                )
-              }}
-            </mat-error>
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_documentdate></mat-datepicker>
-        </mat-form-field>
+        <div class="date">
+          <span>تاريخ المستند:</span>
+          <div class="dateContent">
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>اليوم</mat-label>
+              <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>الشهر</mat-label>
+              <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>السنة</mat-label>
+              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          </div>
+      </div>
+        
 
       </div>
     </div>

@@ -12,14 +12,15 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TblShamelUpgradeGovReport } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeGovReport';
 import { TblShamelUpgradeGovReportService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-gov-report.service';
 import { TblShamelUpgradeGovReportSearch } from 'src/app/modules/shared/models/employees_department/tbl-shamel-upgrade-gov-report-search';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import { UpgradeQararsAdjustPrintDialogComponent } from '../upgrade-qarars-adjust-print-dialog/upgrade-qarars-adjust-print-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TblShamelPrintReferralQararsResult } from 'src/app/modules/shared/models/employees_department/tbl-shamel-print-referral-qarars-result';
 import { ITBLShamelClass } from 'src/app/modules/shared/models/employees_department/ITBLShamelClass';
 import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobName';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
+import { JobServiceDataAdjustPrintDialogComponent } from '../../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { PrintReferralsComponent } from '../print/print-referrals/print-referrals.component';
 
 @Component({
   selector: 'app-print-referral-qarars',
@@ -53,6 +54,19 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   filteredJobNameOptions: Observable<ITBLShamelJobName[]>;
 
   fixedYear: string;
+
+  //for pagination
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.Search();
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -238,11 +252,19 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   Search()
   {
 
-    this.request= {year_id: +this.UpgradeYear.value, class_name:  this.Class.value, jobname_name: this.JobName.value, first_qarar_num: +this.FirstQararNum.value, last_qarar_num: +this.LastQararNum.value};
+    this.request= {
+      year_id: +this.UpgradeYear.value,
+      class_name:  this.Class.value,
+      jobname_name: this.JobName.value,
+      first_qarar_num: +this.FirstQararNum.value,
+      last_qarar_num: +this.LastQararNum.value,
+      pageSize: this.pageSize,            
+      pageNumber: this.currentPage};
 
     this.tblShamelUpgradeGovReportService.Search(this.request).subscribe(
-      res=>{
-        this.dataSource.data= res as any;
+      (res: any)=>{
+        this.dataSource.data= res.Item1;
+        this.totalRows= res.Item2;
         console.log('res', res);
         console.log('req', this.request);
       }
@@ -262,9 +284,9 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   
 
     adjustPrintFooter(){
-      const dialogRef = this.dialog.open(UpgradeQararsAdjustPrintDialogComponent, {
+      const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
         width: '1150px',
-        data: {},
+        data: 'UpgradePrintE7ala',
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -273,7 +295,15 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     }
 
     print(){
-      
+      const dialogRef = this.dialog.open(PrintReferralsComponent, {
+        height: '70%',
+        width: '60%',
+        data: this.dataSource.data
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        
+      });
     }
 
   rowClicked: number;

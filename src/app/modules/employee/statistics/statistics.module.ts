@@ -94,6 +94,7 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
 import { StatisticsComponent } from './statistics.component';
 import { Stats2Component } from './stats2/stats2.component';
 import { Stats3Component } from './stats3/stats3.component';
+import { Stats3PrintComponent } from './print/stats3-print/stats3-print.component';
 
 
 /////////////////////////////
@@ -122,7 +123,8 @@ export const MY_FORMATS = {
     Stats1Component,
     StatisticsComponent,
     Stats2Component,
-    Stats3Component
+    Stats3Component,
+    Stats3PrintComponent,
   ],
   imports: [  
     CommonModule,

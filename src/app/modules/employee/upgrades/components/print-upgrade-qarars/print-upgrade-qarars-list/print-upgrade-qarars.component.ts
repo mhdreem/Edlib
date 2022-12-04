@@ -9,11 +9,12 @@ import { TblshameljobnameService } from 'src/app/modules/shared/services/employe
 import {map, startWith} from 'rxjs/operators';
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { UpgradeQararsAdjustPrintDialogComponent } from '../../upgrade-qarars-adjust-print-dialog/upgrade-qarars-adjust-print-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ITBLShamelClass } from 'src/app/modules/shared/models/employees_department/ITBLShamelClass';
 import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobName';
 import { PrintUpgradeQararsModifyComponent } from '../print-upgrade-qarars-modify/print-upgrade-qarars-modify.component';
+import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employee/employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { PrintQararsComponent } from '../../print/print-qarars/print-qarars.component';
 
 @Component({
   selector: 'app-print-upgrade-qarars',
@@ -462,9 +463,9 @@ export class PrintUpgradeQararsComponent implements OnInit {
 
 
   adjustPrintFooter(){
-    const dialogRef = this.dialog.open(UpgradeQararsAdjustPrintDialogComponent, {
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
       width: '1150px',
-      data: {},
+      data: 'UpgradePrintQarar',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -478,7 +479,15 @@ export class PrintUpgradeQararsComponent implements OnInit {
         duration: 4000
       });
     else{
-
+      const dialogRef = this.dialog.open(PrintQararsComponent, {
+        height: '70%',
+        width: '60%',
+        data: ""
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        
+      });
     }
     
   }

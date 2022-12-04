@@ -51,7 +51,6 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
 
       this.dataSource = new MatTableDataSource([]);
     
-    
       this.dataSource.data = this.employee_Punishment_List;
   
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
@@ -68,7 +67,10 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
         (
           data => {
             this.employee_Punishment_List = data.TBLShamelSCPunishments;
+            
             this.dataSource.data = this.employee_Punishment_List;
+    console.log('dataSource', this.dataSource.data);
+
           }
         )
 

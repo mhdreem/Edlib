@@ -71,7 +71,7 @@ export class stats4 implements OnInit, OnDestroy {
   //for pagination
   totalRows = 0;
   pageSize = 5;
-  currentPage = 0;
+  currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   pageChanged(event: PageEvent) {
@@ -294,11 +294,9 @@ export class stats4 implements OnInit, OnDestroy {
       pageSize: this.pageSize,            
       pageNumber: this.currentPage};
     this.service.Stats4(this.request).subscribe(
-      res=>{
-        console.log('res2', res);
-        this.dataSource= res as any;
-        console.log('res', res);
-        console.log('req', this.request);
+      (res: any)=>{
+        this.dataSource.data= res.Item1;
+        this.totalRows= res.Item2;
       }
     );
     

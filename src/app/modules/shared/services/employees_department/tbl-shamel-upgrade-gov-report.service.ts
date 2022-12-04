@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IPaging } from '../../models/employees_department/ipaging';
 import { TblShamelUpgradeGovReportSearch } from '../../models/employees_department/tbl-shamel-upgrade-gov-report-search';
 import { TblShamelUpgradeGovReport } from '../../models/employees_department/TblShamelUpgradeGovReport';
 import { GenerateEmployeeQararRequest } from '../../models/employees_department/tblshamelupgrade_help/GenerateEmployeeQararRequest';
@@ -77,14 +78,14 @@ GenerateUpgradeRreport(Request?: GenerateEmployeeQararRequest)
 {
   const headers = new HttpHeaders().set('Content-Type', 'application/json');
   const options = {  headers: headers };
-  return this.httpClient.post(this.RestUrl +`TblShamelUpgradeGovReport/GenerateEmployeeQararRequest/`,Request,options);  
+  return this.httpClient.post(this.RestUrl +`TblShamelUpgradeGovReport/GenerateUpgradeRreport/`,Request,options);  
 }
 
-Search(Request?: TblShamelUpgradeGovReportSearch)
+Search(Request?: TblShamelUpgradeGovReportSearch): Observable<IPaging>
 {
   const headers = new HttpHeaders().set('Content-Type', 'application/json');
   const options = {  headers: headers };
-  return this.httpClient.post(this.RestUrl +`TblShamelUpgradeGovReport/Search/`,Request,options);  
+  return this.httpClient.post(this.RestUrl +`TblShamelUpgradeGovReport/Search/`,Request,options) as Observable<IPaging>;  
 }
 
 }

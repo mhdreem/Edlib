@@ -133,7 +133,8 @@
         (click)="changeTableRowColor(idx)"></tr>
     </table>
   
-    <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
   
   
   </div>

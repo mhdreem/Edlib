@@ -70,12 +70,6 @@ export class EmployeeCardComponent implements OnInit {
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/employeecards/Cards/manage/punishment'
     },
-
-    
-    
-    
-    
-    
     
     {
       name: 'طباعة بطاقة',
@@ -105,13 +99,9 @@ export class EmployeeCardComponent implements OnInit {
     {
       name: 'عرض تشابه الاسماء',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/changeid'
+      url: 'employees/module/employeecards/Cards/manage/DisplayEmployeeSimilarityName'
     },
-    {
-      name: 'طباعة بطاقة',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/printcard'
-    },
+   
     {
       title: true,
       name: 'جداول الترميز'
@@ -220,9 +210,17 @@ export class EmployeeCardComponent implements OnInit {
   
   
     {
+      name: 'جدول الفئات',
+  
+      url: 'employees/module/employeecards/Cards/encoding/class',
+      iconComponent: { name: 'cil-pencil' }
+  
+    },
+
+    {
       name: 'جدول نوع المستند',
   
-      url: 'employees/module/employeecards/Cards/encoding/documenttype',
+      url: 'employees/module/employeecards/Cards/encoding/documentType',
       iconComponent: { name: 'cil-pencil' }
   
     },

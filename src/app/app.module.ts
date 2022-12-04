@@ -97,7 +97,7 @@ import { ConfirmationdialogComponent } from './modules/shared/components/confirm
       ConfirmationdialogComponent,
       TBLShamelUserListComponent,
       TBLShamelUserEditComponent,
-      TBLShamelPrivilagesComponent
+      TBLShamelPrivilagesComponent,
   ],
   imports: [
     CommonModule,

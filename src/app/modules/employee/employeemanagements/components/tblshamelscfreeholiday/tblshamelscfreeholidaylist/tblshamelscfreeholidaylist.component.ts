@@ -140,7 +140,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
   
       const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
         height: '60%',
-        width: '35%',
+        width: '45%',
         data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
       });
      
@@ -207,7 +207,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
   
         const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
           height: '60%',
-          width: '35%',
+          width: '45%',
           data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
         });
     

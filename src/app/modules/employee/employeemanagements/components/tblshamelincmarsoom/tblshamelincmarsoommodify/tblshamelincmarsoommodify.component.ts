@@ -74,6 +74,26 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
   submitted = false;
   loading: boolean = false;
 
+  changeDateDay: string= '';
+  changeDateMonth: string= '';
+  changeDateYear: string= '';
+  beginDateDay: string= '';
+  beginDateMonth: string= '';
+  beginDateYear: string= '';
+  docDateDay: string= '';
+  docDateMonth: string= '';
+  docDateYear: string= '';
+
+  changeDateDayIsFilled: boolean= false;
+  changeDateMonthIsFilled: boolean= false;
+  changeDateYearIsFilled: boolean= false;
+  beginDateDayIsFilled: boolean= false;
+  beginDateMonthIsFilled: boolean= false;
+  beginDateYearIsFilled: boolean= false;
+  docDateDayIsFilled: boolean= false;
+  docDateMonthIsFilled: boolean= false;
+  docDateYearIsFilled: boolean= false;
+
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelincmarsoommodifyComponent>,
@@ -505,18 +525,59 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
 
 
 
-  addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.Selected_IncMarsoom.documentdate = moment(event.value).toDate();
+  addEventDocumentDate(date: Date) {
+    this.Selected_IncMarsoom.documentdate = date;
   }
 
-  addEventBeginDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.Selected_IncMarsoom.begindate = moment(event.value).toDate();
+  addEventBeginDate(date: Date) {
+    this.Selected_IncMarsoom.begindate = date;
   }
 
-  addEventChangeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  addEventChangeDate(date: Date) {
 
-    this.Selected_IncMarsoom.changedate = moment(event.value).toDate();
+    this.Selected_IncMarsoom.changedate = date;
   }
 
+  changeDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.changeDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.changeDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.changeDateYearIsFilled= true;
+
+    if (this.changeDateDayIsFilled && this.changeDateMonthIsFilled && this.changeDateYearIsFilled){
+      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).toDate());
+      this.addEventChangeDate(this.changedate.value);
+    }
+   }
+
+   beginDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.beginDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.beginDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.beginDateYearIsFilled= true;
+
+    if (this.beginDateDayIsFilled && this.beginDateMonthIsFilled && this.beginDateYearIsFilled){
+      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).toDate());
+      this.addEventBeginDate(this.begindate.value);
+    }
+   }
+
+  docDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.docDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.docDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.docDateYearIsFilled= true;
+
+    if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.addEventDocumentDate(this.documentdate.value);
+    }
+   }
 
 }

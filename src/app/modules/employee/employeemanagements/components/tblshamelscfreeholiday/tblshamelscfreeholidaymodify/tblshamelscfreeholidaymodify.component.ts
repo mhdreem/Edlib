@@ -74,6 +74,25 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
   submitted = false;
   loading: boolean = false;
 
+  startDateDay: string= '';
+  startDateMonth: string= '';
+  startDateYear: string= '';
+  endDateDay: string= '';
+  endDateMonth: string= '';
+  endDateYear: string= '';
+  docDateDay: string= '';
+  docDateMonth: string= '';
+  docDateYear: string= '';
+
+  startDateDayIsFilled: boolean= false;
+  startDateMonthIsFilled: boolean= false;
+  startDateYearIsFilled: boolean= false;
+  endDateDayIsFilled: boolean= false;
+  endDateMonthIsFilled: boolean= false;
+  endDateYearIsFilled: boolean= false;
+  docDateDayIsFilled: boolean= false;
+  docDateMonthIsFilled: boolean= false;
+  docDateYearIsFilled: boolean= false;
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelscfreeholidaymodifyComponent>,
@@ -494,27 +513,67 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
 
 
 
-  addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (event.value != null)
-      this.Selected_Employee_SCFreeHoliday.documentdate = moment(event.value).toDate();;
+  addEventDocumentDate(date: Date) {
+    if (date != null)
+      this.Selected_Employee_SCFreeHoliday.documentdate = date;
 
   }
 
 
-  addEventStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (event.value != null)
-      this.Selected_Employee_SCFreeHoliday.startdate = moment(event.value).toDate();
-
-  }
-
-
-
-  addEventEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (event.value != null)
-      this.Selected_Employee_SCFreeHoliday.enddate = moment(event.value).toDate();;
+  addEventStartDate(date: Date) {
+    if (date != null)
+      this.Selected_Employee_SCFreeHoliday.startdate = date;
 
   }
 
 
 
+  addEventEndDate(date: Date) {
+    if (date != null)
+      this.Selected_Employee_SCFreeHoliday.enddate = date;
+
+  }
+
+
+  startDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.startDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.startDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.startDateYearIsFilled= true;
+
+    if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
+      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).toDate());
+      this.addEventStartDate(this.startdate.value);
+    }
+   }
+
+   endDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.endDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.endDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.endDateYearIsFilled= true;
+
+    if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
+      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).toDate());
+      this.addEventEndDate(this.enddate.value);
+    }
+   }
+
+   docDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.docDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.docDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.docDateYearIsFilled= true;
+
+    if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.addEventDocumentDate(this.documentdate.value);
+    }
+   }
 }

@@ -119,7 +119,7 @@ export class DeleteemployeeComponent implements OnInit {
       startWith(''),
       map(value => {
         // Filter the options
-        this.filteredEmployeeNameList = this.EmployeeNameList.filter(option => option.fullname != null && option.fullname.includes(value.toLowerCase()));
+        this.filteredEmployeeNameList = this.EmployeeNameList.filter(option => option.fullname != null && option.fullname.includes(value?.toLowerCase()));
         console.log(this.filteredEmployeeNameList);
 
         // Recompute how big the viewport should be.

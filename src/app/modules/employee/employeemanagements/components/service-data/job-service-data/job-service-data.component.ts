@@ -6,7 +6,10 @@ import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_depar
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { EmployeePageService } from '../../employee-page-service';
+import { EmployeeStateDataPrintComponent } from '../employee-state-data-print/employee-state-data-print.component';
+import { ExperienceCertificatePrintComponent } from '../experience-certificate-print/experience-certificate-print.component';
 import { JobServiceDataAdjustPrintDialogComponent } from '../job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { ServiceDataPrintComponent } from '../service-data-print/service-data-print.component';
 
 @Component({
   selector: 'app-job-service-data',
@@ -22,13 +25,13 @@ export class JobServiceDataComponent implements OnInit {
   Form: UntypedFormGroup;
   checkBoxGroup: FormControl;
   jobName: FormControl;
-  oneCheckbox: FormControl;
-  twoCheckbox: FormControl;
-  threeCheckbox: FormControl;
-  fourCheckbox: FormControl;
-  fiveCheckbox: FormControl;
-  sixCheckbox: FormControl;
-  sevenCheckbox: FormControl;
+  employeeDataCheckbox: FormControl;
+  certificateCheckbox: FormControl;
+  bonusCheckbox: FormControl;
+  punishmentCheckbox: FormControl;
+  freeHolidaysCheckbox: FormControl;
+  mergeServiceCheckbox: FormControl;
+  jobStateCheckbox: FormControl;
 
   JobName_List: ITBLShamelJobName[] = [];
   filteredJobNameOptions: Observable<ITBLShamelJobName[]>;
@@ -53,13 +56,13 @@ export class JobServiceDataComponent implements OnInit {
     this.Form = new FormGroup({
       'checkBoxGroup': this.checkBoxGroup = new FormControl<number | null>(null, [Validators.required],),
       'jobName': this.jobName = new FormControl<number | null>(null),
-      'oneCheckbox': this.oneCheckbox = new FormControl<number | null>(null),
-      'twoCheckbox': this.twoCheckbox = new FormControl<number | null>(null),
-      'threeCheckbox': this.threeCheckbox = new FormControl<number | null>(null),
-      'fourCheckbox': this.fourCheckbox = new FormControl<number | null>(null),
-      'fiveCheckbox': this.fiveCheckbox = new FormControl<number | null>(null),
-      'sixCheckbox': this.sixCheckbox = new FormControl<number | null>(null),
-      'sevenCheckbox': this.sevenCheckbox = new FormControl<number | null>(null),
+      'employeeDataCheckbox': this.employeeDataCheckbox = new FormControl<number | null>(null),
+      'certificateCheckbox': this.certificateCheckbox = new FormControl<number | null>(null),
+      'bonusCheckbox': this.bonusCheckbox = new FormControl<number | null>(null),
+      'punishmentCheckbox': this.punishmentCheckbox = new FormControl<number | null>(null),
+      'freeHolidaysCheckbox': this.freeHolidaysCheckbox = new FormControl<number | null>(null),
+      'mergeServiceCheckbox': this.mergeServiceCheckbox = new FormControl<number | null>(null),
+      'jobStateCheckbox': this.jobStateCheckbox = new FormControl<number | null>(null),
 
       });
 
@@ -119,13 +122,13 @@ export class JobServiceDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.Form.get('jobName').disable();
-    this.oneCheckbox.setValue(1);
-    this.twoCheckbox.setValue(1);
-    this.threeCheckbox.setValue(1);
-    this.fourCheckbox.setValue(1);
-    this.fiveCheckbox.setValue(1);
-    this.sixCheckbox.setValue(1);
-    this.sevenCheckbox.setValue(1);
+    this.employeeDataCheckbox.setValue(1);
+    this.certificateCheckbox.setValue(1);
+    this.bonusCheckbox.setValue(1);
+    this.punishmentCheckbox.setValue(1);
+    this.freeHolidaysCheckbox.setValue(1);
+    this.mergeServiceCheckbox.setValue(1);
+    this.jobStateCheckbox.setValue(1);
   }
 
   jobNameChecked(){
@@ -146,14 +149,11 @@ export class JobServiceDataComponent implements OnInit {
     this.Form.get('jobName').disable();
   }
 
-  change4(event: any){
 
-  }
-
-  adjustPrintFooter(){
+  adjustPrintFooter1(){
     const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
       width: '1150px',
-      data: {},
+      data: 'PrintEmpExperience',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -161,8 +161,70 @@ export class JobServiceDataComponent implements OnInit {
     });
   }
 
-  print(){
-    
+  adjustPrintFooter2(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: 'PrintEmpState',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
+  adjustPrintFooter3(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: 'PrintEmpService',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  serviceDataPrint(){
+    const dialogRef = this.dialog.open(ServiceDataPrintComponent, {
+      height: '70%',
+      width: '60%',
+      data: this.Selected_Emp,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  certificatePrint(){
+    const dialogRef = this.dialog.open(ExperienceCertificatePrintComponent, {
+      height: '70%',
+      width: '60%',
+      data: [this.Selected_Emp, {checkBoxGroup: this.checkBoxGroup.value, jobName: this.jobName.value}],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  employeeStateDataPrint(){
+    const dialogRef = this.dialog.open(EmployeeStateDataPrintComponent, {
+      height: '70%',
+      width: '60%',
+      data: [this.Selected_Emp,
+        {
+          employeeDataCheckbox: this.employeeDataCheckbox.value,
+          certificateCheckbox: this.certificateCheckbox.value,
+          bonusCheckbox: this.bonusCheckbox.value,
+          punishmentCheckbox: this.punishmentCheckbox.value,
+          freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
+          mergeServiceCheckbox: this.mergeServiceCheckbox.value,
+          jobStateCheckbox: this.jobStateCheckbox.value
+        }],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
 }

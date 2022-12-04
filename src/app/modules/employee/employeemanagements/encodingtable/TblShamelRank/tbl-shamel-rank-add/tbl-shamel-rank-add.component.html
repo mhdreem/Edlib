@@ -2,17 +2,19 @@
 <form [formGroup]="myform" >
   <h1 mat-dialog-title> :: <strong>{{action}}</strong>  التقدير</h1>
    <div mat-dialog-content>
-    <mat-form-field *ngIf="action != 'حذف'; else elseTemplate">
-      <input placeholder="{{action}} التقدير" matInput
+    <div class="col-12" *ngIf="action != 'حذف'; else elseTemplate">
+    <mat-form-field >
+      <input placeholder="اسم التقدير" matInput
             formControlName="Rank_name">
     </mat-form-field>
 
     <mat-checkbox color="primary" [formControl]="frm_Rank_fixed" [(ngModel)]="local_data!.Fixed"> هل هو مثبت         </mat-checkbox>
+  </div>
 
     <ng-template #elseTemplate>
       هل أنت متأكد من حذف التقدير <b>{{local_data.rank_name}}</b>؟
     </ng-template>
-   </div>
+    </div>
    <div mat-dialog-actions>
     <button mat-button (click)="doAction()">{{action}}</button>
     <button mat-button (click)="closeDialog()" mat-flat-button color="warn">إلغاء</button>

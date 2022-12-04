@@ -152,5 +152,18 @@ console.log(this.SelectedEmp );
     });
   }
 
+  insertionEmployee(){
+    if (this.SelectedEmp?.id!= null){
+      const dialogRef = this.dialog.open(DataEntryDialogComponent, {
+        width: '350px',
+        data: ""
+      });
+   
+      dialogRef.afterClosed().subscribe(result => {
+  
+      })
+    }
+    
+  }
 
 }

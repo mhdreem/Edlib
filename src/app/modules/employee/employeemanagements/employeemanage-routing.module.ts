@@ -35,6 +35,8 @@ import { TblShamelPunishmentListComponent } from './encodingtable/TblShamelPunis
 import { TblShamelPunishmentReasonListComponent } from './encodingtable/TblShamelPunishmentReason/tbl-shamel-punishment-reason-list/tbl-shamel-punishment-reason-list.component';
 import { TblShamelRankListComponent } from './encodingtable/TblShamelRank/tbl-shamel-rank-list/tbl-shamel-rank-list.component';
 import { TblShamelSpecificationListComponent } from './encodingtable/TblShamelSpecification/tbl-shamel-specification-list/tbl-shamel-specification-list.component';
+import { DisplayEmployeeSimilarityNameComponent } from './components/display-employee-similarity-name/display-employee-similarity-name.component';
+import { TblShamelClassListComponent } from './encodingtable/TblShamelClass/tbl-shamel-class-list/tbl-shamel-class-list.component';
 
 
 const routes: Routes = [
@@ -171,6 +173,13 @@ const routes: Routes = [
             {
               title: 'إدخال بطاقة موظف'
             }
+          },
+
+          {
+            path: 'DisplayEmployeeSimilarityName', component: DisplayEmployeeSimilarityNameComponent, data:
+            {
+              title: 'عرض تشابه الأسماء'
+            }
           }
         ]
       },
@@ -199,8 +208,9 @@ const routes: Routes = [
             { path: 'bonusreason', component: TblShamelBonusReasonListComponent },
             { path: 'footerh1', component: TblShamelFooterh1ListComponent },
             { path: 'footerh2', component: TblShamelFooterh2ListComponent },
-            { path: 'documenttype', component: TblShamelDocumentTypeListComponent },
             { path: 'freeholidayreason', component: TblShamelFreeHolidayReasonListComponent },        
+            { path: 'class', component: TblShamelClassListComponent },        
+            { path: 'documentType', component: TblShamelDocumentTypeListComponent },        
           ]
       }
 

@@ -89,6 +89,20 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   //يظهر عند تحميل البيانات
   loading: boolean = false;
 
+  startDateDay: string= '';
+  startDateMonth: string= '';
+  startDateYear: string= '';
+  endDateDay: string= '';
+  endDateMonth: string= '';
+  endDateYear: string= '';
+
+  startDateDayIsFilled: boolean= false;
+  startDateMonthIsFilled: boolean= false;
+  startDateYearIsFilled: boolean= false;
+  endDateDayIsFilled: boolean= false;
+  endDateMonthIsFilled: boolean= false;
+  endDateYearIsFilled: boolean= false;
+
   //#region Constuctor 
   constructor(
     private frmBuilder: FormBuilder,
@@ -618,10 +632,9 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
 
 
-  addEventStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (event != null && event.value != null) {
-      this.Selected_Employee_Course.startdate = moment(event.value).toDate();
-      console.log('date');
+  addEventStartDate(date: Date) {
+    if (date != null) {
+      this.Selected_Employee_Course.startdate = date;
       if (this.Selected_Employee_Course != null &&
         this.Selected_Employee_Course.startdate != null &&
         this.Selected_Employee_Course.enddate != null
@@ -634,11 +647,9 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addEventEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    if (event != null && event.value != null) {
-
-      this.Selected_Employee_Course.enddate = moment(event.value).toDate();
-
+  addEventEndDate(date: Date) {
+    if (date != null ) {
+      this.Selected_Employee_Course.enddate = date;
       if (this.Selected_Employee_Course != null &&
         this.Selected_Employee_Course.startdate != null &&
         this.Selected_Employee_Course.enddate != null
@@ -652,6 +663,33 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
   }
 
+  startDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.startDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.startDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.startDateYearIsFilled= true;
+
+    if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
+      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).toDate());
+      this.addEventStartDate(this.startdate.value);
+    }
+   }
+
+   endDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.endDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.endDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.endDateYearIsFilled= true;
+
+    if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
+      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).toDate());
+      this.addEventEndDate(this.enddate.value);
+    }
+   }
 
 }
 
