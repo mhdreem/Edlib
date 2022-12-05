@@ -231,10 +231,10 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;
+        this.UpgradeYear.setValue(this.fixedYear);
       }
     );
 
-    this.UpgradeYear.setValue(this.fixedYear);
   }
 
   ngOnDestroy(): void {
@@ -274,9 +274,9 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
 
   list(){
     this.tblShamelUpgradeGovReportService.list().subscribe(
-      res=>{
+      (res: any)=>{
         console.log('res', res);
-        this.dataSource.data= res as any;
+        this.dataSource.data= res.Item1;
       }
     );
   }
@@ -295,15 +295,16 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     }
 
     print(){
-      const dialogRef = this.dialog.open(PrintReferralsComponent, {
-        height: '70%',
-        width: '60%',
-        data: this.dataSource.data
-      });
+
+      // const dialogRef = this.dialog.open(PrintReferralsComponent, {
+      //   height: '70%',
+      //   width: '60%',
+      //   data: this.dataSource.data
+      // });
   
-      dialogRef.afterClosed().subscribe(result => {
+      // dialogRef.afterClosed().subscribe(result => {
         
-      });
+      // });
     }
 
   rowClicked: number;

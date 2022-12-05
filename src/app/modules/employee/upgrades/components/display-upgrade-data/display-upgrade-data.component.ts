@@ -84,6 +84,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     this.View();
   }
 
+  rankInput: ITBLShamelUpgrade[];
+
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private tblshamelclassService: TblshamelclassService,
     private tblshameljobnameService: TblshameljobnameService,
@@ -98,6 +100,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,) {
       this.BuildForm();
       this.Load_Data();
+
+      this.rankInput= this.dataSource.data;
      }
 
      public BuildForm() {
@@ -397,32 +401,6 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     });
   }
 
-  printRank(){
-    let request= {
-      "year_id": this.UpgradeYear.value,
-      "class_id": this.Class.value,
-      "jobname_id": this.JobName.value,
-      "accounter_id": this.Accounter.value,
-      "qualitygrade": this.Rank.value,
-      "id_start": this.idStart.value,
-      "id_end": this.idEnd.value,
-      "type_display_Option": this.TypeDisplay.value,
-    };
-    this.tblShamelUpgradeService.list(request).subscribe(
-      (res: any) =>{
-        const dialogRef = this.dialog.open(PrintRankComponent, {
-          height: '70%',
-          width: '60%',
-          data: res
-        });
-    
-        dialogRef.afterClosed().subscribe(result => {
-          
-        });
-      }
-    );
-    
-  }
 
   printUpgradeData(){
     // const dialogRef = this.dialog.open(ServiceDataPrintComponent, {

@@ -23,19 +23,35 @@ export class PrintEmployeeCardComponent implements OnInit {
     holidaiesCheckbox: new FormControl(''),
   });
   
+  printInput: any;
   constructor(public PageService:EmployeePageService, public dialog: MatDialog) {
     this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
       data => {
         this.Selected_Emp = data;
+
+        this.Form.get('allDataCheckbox').setValue('1');
+        this.Form.get('punishmentsCheckbox').setValue('1');
+        this.Form.get('bonusCheckbox').setValue('1');
+        this.Form.get('holidaiesCheckbox').setValue('1');
+
+        this.printInput= [this.Selected_Emp,
+          {
+            punishmentsCheckbox: this.Form.get('punishmentsCheckbox').value,
+            bonusCheckbox: this.Form.get('bonusCheckbox').value,
+            holidaiesCheckbox: this.Form.get('holidaiesCheckbox').value,
+          }];
       }
     );
+
+    
+
+    
+
+      console.log('this.printInput',this.printInput);
    }
 
   ngOnInit(): void {
-    this.Form.get('allDataCheckbox').setValue('1');
-    this.Form.get('punishmentsCheckbox').setValue('1');
-    this.Form.get('bonusCheckbox').setValue('1');
-    this.Form.get('holidaiesCheckbox').setValue('1');
+    
   }
 
   change1(event: any){
@@ -43,40 +59,17 @@ export class PrintEmployeeCardComponent implements OnInit {
   }
 
   change2(event: any){
-
+    this.printInput= [this.Selected_Emp,
+      {
+        punishmentsCheckbox: this.Form.get('punishmentsCheckbox').value,
+        bonusCheckbox: this.Form.get('bonusCheckbox').value,
+        holidaiesCheckbox: this.Form.get('holidaiesCheckbox').value,
+      }];
   }
 
-  printCard(){
-      const dialogRef = this.dialog.open(PrintCardComponent, {
-        height: '70%',
-        width: '60%',
-        data: this.Selected_Emp,
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        
-      });
-    }
 
   printInterface(){
 
-  }
-
-  print(){
-    const dialogRef = this.dialog.open(PrintComponent, {
-      height: '70%',
-      width: '60%',
-      data: [this.Selected_Emp,
-        {
-          punishmentsCheckbox: this.Form.get('punishmentsCheckbox').value,
-          bonusCheckbox: this.Form.get('bonusCheckbox').value,
-          holidaiesCheckbox: this.Form.get('holidaiesCheckbox').value,
-        }],
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
   }
 
   adjustPrintFooter(){

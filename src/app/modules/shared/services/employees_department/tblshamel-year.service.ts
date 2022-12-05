@@ -23,7 +23,7 @@ export class TBLShamelYearService {
   list()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get< TBLShamelYear[]>(this.RestUrl +"TBLShamelYear",options);  
+    return this.httpClient.get< TBLShamelYear[]>(this.RestUrl +"TBLShamelYear/list",options);  
     
   }
 

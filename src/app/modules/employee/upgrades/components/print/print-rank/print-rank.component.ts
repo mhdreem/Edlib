@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelUpgrade } from 'src/app/modules/shared/models/employees_department/ITBLShamelUpgrade';
 import { TblshamelPrintFooterService } from 'src/app/modules/shared/services/employees_department/tblshamel-print-footer.service';
@@ -9,7 +9,8 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
   templateUrl: './print-rank.component.html',
   styleUrls: ['./print-rank.component.scss']
 })
-export class PrintRankComponent implements OnInit {
+export class PrintRankComponent implements OnInit, OnChanges {
+  @Input() data!: ITBLShamelUpgrade[];
   
   todayDate: Date;
   userId: number;
@@ -26,12 +27,12 @@ export class PrintRankComponent implements OnInit {
   title4: string;
   title5: string;
 
-  partialDate: ITBLShamelUpgrade[][]= [];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ITBLShamelUpgrade[],
+  partialData: ITBLShamelUpgrade[][]= [];
+  constructor(
   private tblShamelUserService: TBLShamelUserService,
   private tblshamelPrintFooterService: TblshamelPrintFooterService) { 
     this.todayDate= new Date();
-    console.log('data123', data);
+    console.log('data123', this.data);
 
     this.tblShamelUserService.Login_User_BehavourSubject.subscribe(
       userId =>{
@@ -57,10 +58,31 @@ export class PrintRankComponent implements OnInit {
 
       }
     );
+    
+    for (let i=0; i<this.data?.length/20 ;i++){
+      for (let j=0; j<20 ;j++){
+        this.partialData[i]= [{}];
+      }
+    }
 
-    // for (let i=0; i<data.length/20 ;i++){
-    //   partialData[i]= data
-    // }
+    for (let i=0; i<this.data?.length/20 ;i++){
+      for (let j=0; j<20 ;j++){
+        this.partialData[i][j]= this.data[i*20+j]
+      }
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let i=0; i<this.data?.length/20 ;i++){
+      for (let j=0; j<20 ;j++){
+        this.partialData[i]= [{}];
+      }
+    }
+
+    for (let i=0; i<this.data?.length/20 ;i++){
+      for (let j=0; j<20 ;j++){
+        this.partialData[i][j]= this.data[i*20+j]
+      }
+    }
   }
 
   ngOnInit(): void {

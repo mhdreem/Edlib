@@ -14,6 +14,7 @@ import { TBLShamelSex } from 'src/app/modules/shared/models/employees_department
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -34,11 +35,12 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
 
   submitted = false;
 
-  constructor(
+  constructor(public dialogRef: MatDialogRef<TBLShamelOvertimeEmployeeModifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: TBLShamelOvertimeEmployee },
     public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
     private ShamelSexService: TBLShamelSexService,
-    public frmBuild: FormBuilder
+    public frmBuild: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.selected_overtime_employee = data.obj;
     this.BuildForm();
@@ -150,12 +152,12 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
         mother: new FormControl<string | null>(null, [Validators.required]),
         servicedayes: new FormControl<number | null>(null, [Validators.required]),
         sex_name: new FormControl<string | null>(null, [Validators.required]),
-        enterusername: new FormControl<string | null>(null, [Validators.required]),
-        enterdate: new FormControl<Date | null>(null, [Validators.required]),
-        entertime: new FormControl<string | null>(null, [Validators.required]),
-        modifyusername: new FormControl<string | null>(null, [Validators.required]),
-        modifydate: new FormControl<Date | null>(null, [Validators.required]),
-        modifytime: new FormControl<string | null>(null, [Validators.required]),
+        enterusername: new FormControl<string | null>(null, []),
+        enterdate: new FormControl<Date | null>(null, []),
+        entertime: new FormControl<string | null>(null, []),
+        modifyusername: new FormControl<string | null>(null, []),
+        modifydate: new FormControl<Date | null>(null, []),
+        modifytime: new FormControl<string | null>(null, []),
         birthdateDay: new FormControl<number | null>(null, [Validators.required]),
         birthdateMonth: new FormControl<number | null>(null, [Validators.required]),
         birthdateYear: new FormControl<number | null>(null, [Validators.required]),
@@ -308,7 +310,10 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
         data => {
           if (data > 0) // Succeess 
           {
-            this.ClearForm();
+            this.snackBar.open('تمت الإضافة بنجاح', '', {
+              duration: 3000,
+            });
+            this.dialogRef.close();
           }
 
         }
@@ -325,7 +330,10 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
         data => {
           if (data > 0) // Succeess 
           {
-            this.ClearForm();
+            this.snackBar.open('تم التعديل بنجاح', '', {
+              duration: 3000,
+            });
+            this.dialogRef.close();
           }
         }
       )

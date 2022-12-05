@@ -1,5 +1,5 @@
 <mat-dialog-content class="mat-typography">
-<div class=WordSection1>
+<div class=WordSection1 *ngIf="data[0]!= null && data[0].id != null &&  data[0].id>0"> 
 
     <div align=center>
     
@@ -1045,40 +1045,6 @@
     
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
-    
-    <div align=center>
-    
-    <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
-     style='border-collapse:collapse;border:none'>
-     <tr>
-      <td width=156 style='width:116.85pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>شركة نور</span></p>
-      </td>
-      <td width=156 style='width:116.85pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SY
-      style='font-family:"Arial",sans-serif'>{{todayDate | date:'shortTime':'+0200'}}</span></p>
-      </td>
-      <td width=156 style='width:116.9pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>{{todayDate | date:'yyyy/MM/dd'}}</span></p>
-      </td>
-      <td width=156 style='width:116.9pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SY
-      style='font-family:"Arial",sans-serif'>صفحة 1</span></p>
-      </td>
-     </tr>
-    </table>
-    
-    </div>
     
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span dir=ltr>&nbsp;</span></p>

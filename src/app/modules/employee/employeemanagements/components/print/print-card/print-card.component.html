@@ -1,5 +1,5 @@
 <mat-dialog-content class="mat-typography">
-    <div class=WordSection1>
+    <div class=WordSection1 *ngIf="data!= null && data.id != null &&  data.id>0">
 
         <div align=center>
         
@@ -1217,43 +1217,6 @@
         
         <p class=MsoNormal dir=rtl style='text-align:right;direction:rtl;unicode-bidi:
         embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
-        
-        <div align=center>
-        
-        <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
-         width=768 style='width:576.3pt;border-collapse:collapse;border:none'>
-         <tr>
-          <td width=228 style='width:171.15pt;border:solid windowtext 1.0pt;border-left:
-          none;padding:0in 5.4pt 0in 5.4pt'>
-          <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-          center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-          style='font-family:"Arial",sans-serif'>بيانات العامل: {{data.FName}} {{data.LName}}</span></p>
-          </td>
-          <td width=156 style='width:116.85pt;border-top:solid windowtext 1.0pt;
-          border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
-          padding:0in 5.4pt 0in 5.4pt'>
-          <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-          center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-          style='font-family:"Arial",sans-serif'>صفحة 2 من 2</span></p>
-          </td>
-          <td width=156 style='width:116.9pt;border-top:solid windowtext 1.0pt;
-          border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
-          padding:0in 5.4pt 0in 5.4pt'>
-          <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-          center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-          style='font-family:"Arial",sans-serif'>موظف الطباعة: شركة نور</span></p>
-          </td>
-          <td width=229 style='width:171.4pt;border:solid windowtext 1.0pt;border-right:
-          none;padding:0in 5.4pt 0in 5.4pt'>
-          <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-          center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-          style='font-family:"Arial",sans-serif'>التاريخ: {{todayDate | date:'yyyy/MM/dd'}}<br>
-          الساعة: {{todayDate | date:'shortTime':'+0200'}}</span></p>
-          </td>
-         </tr>
-        </table>
-        
-        </div>
         
         <p class=MsoNormal dir=rtl style='text-align:right;direction:rtl;unicode-bidi:
         embed'><span >&nbsp;</span></p>

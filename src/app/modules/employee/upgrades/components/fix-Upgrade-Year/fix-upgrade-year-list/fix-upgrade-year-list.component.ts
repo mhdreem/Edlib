@@ -88,7 +88,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(FixUpgradeYearModifyComponent, {
       height: '60%',
       width: '30%',
-      data: { obj: this.selected_upgrade_year }
+      data: { obj: this.selected_upgrade_year, action: 'add' }
     });
 
     dialogRef.afterClosed().toPromise().then(result => {
@@ -155,7 +155,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
       const dialogRef = this.dialog.open(FixUpgradeYearModifyComponent, {
         height: '60%',
         width: '30%',
-        data: { obj: this.selected_upgrade_year }
+        data: { obj: this.selected_upgrade_year, action: 'update' }
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
