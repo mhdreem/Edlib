@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>الدورات التدريبية</h2>
+<h2 mat-dialog-title>الإجازات الخاصة</h2>
 
 <mat-dialog-content class="mat-typography">
 
@@ -7,20 +7,46 @@
 
     <div class="inputsGroup">
       <div class="group1">
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ بداية الإجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_startdate" formControlName="startdate" [formControl]="startdate"
-            (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)">
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_startdate></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ انتهاء الإجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate"
-            (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)">
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_enddate></mat-datepicker>
-        </mat-form-field>
+        <div class="date">
+          <span>تاريخ بداية الإجازة:</span>
+          <div class="dateContent">
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>اليوم</mat-label>
+              <input matInput placeholder="ex: 21" (change)="startDateChange('day')" [(ngModel)]='startDateDay' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>الشهر</mat-label>
+              <input matInput placeholder="ex: 1" (change)="startDateChange('month')" [(ngModel)]='startDateMonth' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>السنة</mat-label>
+              <input matInput placeholder="ex: 2022"  (change)="startDateChange('year')" [(ngModel)]='startDateYear' [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          </div>
+        </div>
+
+        <div class="date">
+          <span>تاريخ انتهاء الإجازة:</span>
+          <div class="dateContent">
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>اليوم</mat-label>
+              <input matInput placeholder="ex: 21" (change)="endDateChange('day')" [(ngModel)]='endDateDay' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>الشهر</mat-label>
+              <input matInput placeholder="ex: 1" (change)="endDateChange('month')" [(ngModel)]='endDateMonth' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>السنة</mat-label>
+              <input matInput placeholder="ex: 2022"  (change)="endDateChange('year')" [(ngModel)]='endDateYear' [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          </div>
+        </div>
+
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدة</mat-label>
           <input matInput type="number" [formControl]="duration"
@@ -76,14 +102,25 @@
             formControlName="document_number">
 
         </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ المستند</mat-label>
-          <input matInput [matDatepicker]="Datepicker_documentdate" formControlName="documentdate"
-            [formControl]="documentdate" (dateInput)="addEventDocumentDate('input', $event)"
-            (dateChange)="addEventDocumentDate('change', $event)">
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_documentdate></mat-datepicker>
-        </mat-form-field>
+        <div class="date">
+          <span>تاريخ المستند:</span>
+          <div class="dateContent">
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>اليوم</mat-label>
+              <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>الشهر</mat-label>
+              <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>السنة</mat-label>
+              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+          </div>
+      </div>
       </div>
     </div>
 

@@ -23,13 +23,13 @@ export class TblshamelclassService {
   list() :Observable<ITBLShamelClass[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get<ITBLShamelClass[]>(this.RestUrl +"TBLShamelClass/list/",options) as Observable<ITBLShamelClass[]>;  
+    return this.httpClient.get<ITBLShamelClass[]>(this.RestUrl +"TBLShamelClass/",options) as Observable<ITBLShamelClass[]>;  
     
   }
   fill()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-     this.httpClient.get<ITBLShamelClass[]>(this.RestUrl +"TBLShamelClass/list/",options).subscribe
+     this.httpClient.get<ITBLShamelClass[]>(this.RestUrl +"TBLShamelClass/",options).subscribe
      (
       data=>
       {
@@ -43,7 +43,7 @@ export class TblshamelclassService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelClass/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelClass/"+id,options);  
   }
 
   add(obj : ITBLShamelClass )  {

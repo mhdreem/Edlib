@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IPaging } from '../../models/employees_department/ipaging';
 import { ITBLShamelJobName } from '../../models/employees_department/ITBLShamelJobName';
 import { ITBLShamelUpgradeJobState } from '../../models/employees_department/itblshamelUpgradeJobState';
 import { AddUpgradeToAllEmployeeRequest } from '../../models/employees_department/tblshamelupgrade_help/add-upgrade-to-all-employee-request';
@@ -29,12 +30,12 @@ export class TBLShamelUpgradeService {
   }
 
 
-  list(obj:any)  {
+  list(obj:any): Observable<IPaging>  {
     console.log(obj);
     
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/List",obj,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/List",obj,options) as Observable<IPaging>;      
   }
 
 

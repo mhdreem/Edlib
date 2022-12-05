@@ -3,7 +3,7 @@
 </div>
 <div>
   للإضافة على الجدول انقر على اضافة
-  <button accessControl FormName="ManageSCJobStateFrame1" CheckedPrivilige="10000" mat-raised-button color="primary" (click)="Add()" [disabled]="Selected_Emp?.id== null">اضافة</button>
+  <button class="add" mat-raised-button color="primary" (click)="Add()" [disabled]="Selected_Emp?.id== null">اضافة</button>
 </div>
 
 <div class="col-md-12">
@@ -60,10 +60,10 @@
         </tr>
         <tr>
           <td mat-cell *matCellDef="let element" >
-            <button  accessControl FormName="{{formname}}" CheckedPrivilige="00001" mat-icon-button color="warn" (click)="Delete(element)" title="View Contact">
+            <button mat-icon-button color="warn" (click)="Delete(element)" title="View Contact">
               <mat-icon>delete</mat-icon>
             </button>
-            <button accessControl FormName="{{formname}}" CheckedPrivilige="01000" mat-icon-button color="primary" (click)="Update(element)" title="Edit Contact">
+            <button mat-icon-button color="primary" (click)="Update(element)" title="Edit Contact">
               <mat-icon>edit</mat-icon>
             </button>
           </td>

@@ -3,11 +3,11 @@
         <fieldset>
             <legend>البطاقة الذاتية</legend>
             <div class="con">
-                <mat-checkbox color="primary" (change)="change1($event)" formControlName="fcl_allDataCheckbox">جميع بيانات البطاقة الذاتية</mat-checkbox>
+                <mat-checkbox color="primary" (change)="change1($event)" formControlName="allDataCheckbox" [disabled]="true" >جميع بيانات البطاقة الذاتية</mat-checkbox>
             </div>
     
-            <button mat-raised-button color="primary" (click)="printCard()" >طباعة البطاقة</button>
-            <button  mat-raised-button color="primary" (click)="printInterface()" >طباعة الواجهة</button>
+            <button mat-raised-button color="primary" [disabled]="!Selected_Emp.id" printSectionId="print-card-section" ngxPrint>طباعة البطاقة</button>
+            <!-- <button  mat-raised-button color="primary" (click)="printInterface()" >طباعة الواجهة</button> -->
         </fieldset>
     </div>
     
@@ -15,13 +15,21 @@
         <fieldset>
             <legend>بيانات العامل الإضافية</legend>
             <div class="con1">
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="fcl_punishmentsCheckbox">العقوبات</mat-checkbox>
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="fcl_rewardsCheckbox">المكافئات</mat-checkbox>
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="fcl_holidaiesCheckbox">إجازات خاصة بلا أجر</mat-checkbox>
+                <mat-checkbox color="primary" (change)="change2($event)" formControlName="punishmentsCheckbox">العقوبات</mat-checkbox>
+                <mat-checkbox color="primary" (change)="change2($event)" formControlName="bonusCheckbox">المكافئات</mat-checkbox>
+                <mat-checkbox color="primary" (change)="change2($event)" formControlName="holidaiesCheckbox">إجازات خاصة بلا أجر</mat-checkbox>
             </div>
     
-            <button mat-raised-button color="primary" (click)="print()" >طباعة</button>
-            <button  mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
+            <button mat-raised-button color="primary"  [disabled]="!Selected_Emp.id" printSectionId="print-section" ngxPrint>طباعة</button>
+            <button  mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!Selected_Emp.id">معايرة تذييل الطباعة</button>
         </fieldset>
     </div>
 </form>
+
+<div id="print-section">
+    <app-print [data]="printInput"></app-print>
+</div>
+
+<div id="print-card-section">
+    <app-print-card ></app-print-card>
+</div>

@@ -167,13 +167,11 @@ export class FormValidationHelpersService {
 
         // console.log("o[i]", o[i])
 
-        console.log('777',o + ' 666 '+ i );
         return o.controls[i]
         },
         form
       )
 
-      console.log('555', nestedFormValue);
 
       return nestedFormValue;
 
@@ -264,7 +262,6 @@ export class FormValidationHelpersService {
 
 
       const nestedFormValue = this.caclFormFieldNestedName(form, field);
-      console.log('444', nestedFormValue);
       const errors = nestedFormValue?.errors;
 
 

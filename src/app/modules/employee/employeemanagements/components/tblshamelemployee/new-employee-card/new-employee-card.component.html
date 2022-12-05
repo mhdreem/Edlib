@@ -213,22 +213,53 @@
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field appearance="fill" class="date-picker-field">
-        <mat-label #BirthDate>تاريخ الولادة</mat-label>
-        <input matInput [matDatepicker]="picker_BIRTHDATE" formControlName="BirthDate" (keyup.enter)="keytab($event)">
-        <mat-hint>DD/MM/YYYY</mat-hint>
-        <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
-          {{
-            autoPrintFirstErrorMessage(
-              Form,
-              "BirthDate",
-              BirthDate.innerHTML
-            )
-          }}
-        </mat-error>
-        <mat-datepicker-toggle matSuffix [for]="picker_BIRTHDATE"></mat-datepicker-toggle>
-        <mat-datepicker #picker_BIRTHDATE (keyup.enter)="keytab($event)"></mat-datepicker>
-      </mat-form-field>
+      <div class="date">
+        <span>تاريخ الولادة:</span>
+        <div class="dateContent">
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label #birthdateDay>اليوم</mat-label>
+            <input matInput (change)="birthdayChange('day')" [(ngModel)]='birthdayDay' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
+              {{
+                autoPrintFirstErrorMessage(
+                  Form,
+                  "BirthDate",
+                  birthdateDay.innerHTML
+                )
+              }}
+            </mat-error>
+          </mat-form-field>
+        
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label #birthdateMonth>الشهر</mat-label>
+            <input matInput (change)="birthdayChange('month')" [(ngModel)]='birthdayMonth' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
+              {{
+                autoPrintFirstErrorMessage(
+                  Form,
+                  "BirthDate",
+                  birthdateMonth.innerHTML
+                )
+              }}
+            </mat-error>
+          </mat-form-field>
+        
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label #birthdateYear>السنة</mat-label>
+            <input matInput  (change)="birthdayChange('year')" [(ngModel)]='birthdayYear' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
+              {{
+                autoPrintFirstErrorMessage(
+                  Form,
+                  "BirthDate",
+                  birthdateYear.innerHTML
+                )
+              }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+      </div>
     </div>
 
     <div>
@@ -503,24 +534,56 @@
 
 
         <div>
-          <mat-form-field appearance="fill" class="date-picker-field">
-            <mat-label #QararDate>تاريخ التأشيرة</mat-label>
-            <input matInput [matDatepicker]="picker_QARARDATE" formControlName="QararDate">
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker_QARARDATE"></mat-datepicker-toggle>
-            <mat-datepicker #picker_QARARDATE></mat-datepicker>
-            <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
-              {{
-                autoPrintFirstErrorMessage(
-                  Form,
-                  "QararDate",
-                  QararDate.innerHTML
-                )
-              }}
-            </mat-error>
-          </mat-form-field>
+          <div class="date">
+            <span>تاريخ التأشيرة:</span>
+            <div class="dateContent">
+              <mat-form-field class="example-full-width small-width" appearance="fill" >
+                <mat-label #qararDateDay>اليوم</mat-label>
+                <input matInput (change)="qararChange('day')" [(ngModel)]='qararDay' (keyup.enter)="keytab($event)">
+                <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
+                  {{
+                    autoPrintFirstErrorMessage(
+                      Form,
+                      "QararDate",
+                      qararDateDay.innerHTML
+                    )
+                  }}
+                </mat-error>
+              </mat-form-field>
+            
+              <mat-form-field class="example-full-width small-width" appearance="fill" >
+                <mat-label #qararDateMonth>الشهر</mat-label>
+                <input matInput (change)="qararChange('month')" [(ngModel)]='qararMonth' (keyup.enter)="keytab($event)">
+                <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
+                  {{
+                    autoPrintFirstErrorMessage(
+                      Form,
+                      "QararDate",
+                      qararDateMonth.innerHTML
+                    )
+                  }}
+                </mat-error>
+              </mat-form-field>
+            
+              <mat-form-field class="example-full-width small-width" appearance="fill" >
+                <mat-label #qararDateYear>السنة</mat-label>
+                <input matInput  (change)="qararChange('year')" [(ngModel)]='qararYear' (keyup.enter)="keytab($event)">
+                <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
+                  {{
+                    autoPrintFirstErrorMessage(
+                      Form,
+                      "QararDate",
+                      qararDateYear.innerHTML
+                    )
+                  }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            
+          </div>
         </div>
-      </div>
+        </div>
+      
 
 
     </mat-card-content>

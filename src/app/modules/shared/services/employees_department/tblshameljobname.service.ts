@@ -45,7 +45,7 @@ export class TblshameljobnameService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelJobName/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelJobName/"+id,options);  
   }
 
   add(obj : ITBLShamelJobName )  {

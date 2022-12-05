@@ -132,7 +132,7 @@ export class Stats2Component implements OnInit, OnDestroy {
   //for pagination
   totalRows = 0;
   pageSize = 5;
-  currentPage = 0;
+  currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   pageChanged(event: PageEvent) {
@@ -533,7 +533,7 @@ export class Stats2Component implements OnInit, OnDestroy {
 
   //#region  Display Display Member
   public displayDocumentTypeProperty(value: string): string {
-    if (value && this.JobKind_List) {
+    if (value && this.DocumentType_List) {
       let cer: any = this.DocumentType_List.find(cer => cer.documenttype_id.toString() == value);
       if (cer)
         return cer.documenttype_name;
@@ -676,14 +676,10 @@ export class Stats2Component implements OnInit, OnDestroy {
     }
     this.EmployeeStatsService.Stats2(SearchRequest).subscribe
     (
-      data=>
+      (data: any)=>
       {
-        console.log('data1', data);
-        if (data!= null ){
-          this.dataSource.data = (data as any[]);
-        }
-        else 
-          this.dataSource.data = [];
+          this.dataSource.data = data.Item1;
+          this.totalRows= data.Item2;
       }
     )
   }

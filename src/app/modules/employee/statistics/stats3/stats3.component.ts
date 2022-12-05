@@ -1,9 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeStatsService } from 'src/app/modules/shared/services/employees_department/employee-stats.service';
+import { JobServiceDataAdjustPrintDialogComponent } from '../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { Stats3PrintComponent } from '../print/stats3-print/stats3-print.component';
 
 @Component({
   selector: 'app-stats3',
@@ -28,7 +31,9 @@ export class Stats3Component implements OnInit {
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  constructor(public EmployeeStatsService :EmployeeStatsService, private _liveAnnouncer: LiveAnnouncer,) { 
+  constructor(public EmployeeStatsService :EmployeeStatsService,
+    private _liveAnnouncer: LiveAnnouncer,
+    public dialog: MatDialog,) { 
     this.dataSource = new MatTableDataSource<any>([]);
   }
 
@@ -153,4 +158,53 @@ export class Stats3Component implements OnInit {
     else this.rowClicked = idx;
   }
 
+  adjustPrintFooter(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+  print(){
+    const malesInClass1 = document.getElementById('malesInClass1');
+    const malesInClass2 = document.getElementById('malesInClass2');
+    const malesInClass3 = document.getElementById('malesInClass3');
+    const malesInClass4 = document.getElementById('malesInClass4');
+    const malesInClass5 = document.getElementById('malesInClass5');
+    const maleTotal = document.getElementById('maleTotal');
+
+    const femalesInClass1 = document.getElementById('femalesInClass1');
+    const femalesInClass2 = document.getElementById('femalesInClass2');
+    const femalesInClass3 = document.getElementById('femalesInClass3');
+    const femalesInClass4 = document.getElementById('femalesInClass4');
+    const femalesInClass5 = document.getElementById('femalesInClass5');
+    const femaleTotal = document.getElementById('femaleTotal');
+
+    const totalOfClass1 = document.getElementById('totalOfClass1');
+    const totalOfClass2 = document.getElementById('totalOfClass2');
+    const totalOfClass3 = document.getElementById('totalOfClass3');
+    const totalOfClass4 = document.getElementById('totalOfClass4');
+    const totalOfClass5 = document.getElementById('totalOfClass5');
+    const Total = document.getElementById('Total');
+
+    const dialogRef = this.dialog.open(Stats3PrintComponent, {
+      width: '1150px',
+      data: [this.dataSource.data, [
+        [malesInClass1.textContent, femalesInClass1.textContent, totalOfClass1.textContent],
+        [malesInClass2.textContent, femalesInClass2.textContent, totalOfClass2.textContent],
+        [malesInClass3.textContent, femalesInClass3.textContent, totalOfClass3.textContent],
+        [malesInClass4.textContent, femalesInClass4.textContent, totalOfClass4.textContent],
+        [malesInClass5.textContent, femalesInClass5.textContent, totalOfClass5.textContent],
+        [maleTotal.textContent, femaleTotal.textContent, Total.textContent]
+      ]],
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
 }

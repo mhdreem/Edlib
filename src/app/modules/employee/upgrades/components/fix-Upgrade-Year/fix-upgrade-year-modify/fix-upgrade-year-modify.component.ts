@@ -24,6 +24,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   endDay: FormControl<number | null>;
   endMonth: FormControl<number | null>;
   endYear: FormControl<number | null>;
+  fix: FormControl<number | null>;
 
   selected_upgrade_year: TblShamelUpgradeYear;
 
@@ -34,7 +35,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   isEndMonthSelected: boolean= false;
   isEndYearSelected: boolean= false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelUpgradeYear },
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelUpgradeYear, action: string },
   private fb: UntypedFormBuilder,
   private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
   public dialog: MatDialog,) { 
@@ -58,6 +59,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
           'endDay: : ': this.endDay = new FormControl<number | null>(null, [Validators.required]),
           'endMonth: : ': this.endMonth = new FormControl<number | null>(null, [Validators.required]),
           'endYear: : ': this.endYear = new FormControl<number | null>(null, [Validators.required]),
+          'fix: : ': this.fix = new FormControl<number | null>(null, []),
         },
         Uniqe(this.tblShamelUpgradeYearService)
       );
@@ -73,6 +75,9 @@ export class FixUpgradeYearModifyComponent implements OnInit {
 
       if (this.selected_upgrade_year != null && this.selected_upgrade_year.YEAR_ID != null)
         this.upgradeYear.setValue(this.selected_upgrade_year?.YEAR_ID);
+        
+      if (this.selected_upgrade_year != null && this.selected_upgrade_year.YEAR_ID != null)
+        this.fix.setValue(this.selected_upgrade_year?.fixed);
 
       if (this.selected_upgrade_year != null && this.selected_upgrade_year.UpgradeStart != null){
         this.upgradeYearStart.setValue(this.selected_upgrade_year?.UpgradeStart);
@@ -110,9 +115,24 @@ export class FixUpgradeYearModifyComponent implements OnInit {
       this.selected_upgrade_year.YEAR_ID != null) {
 
 
-      // comment when using real data service
+      if (this.data.action == 'add')
       this.tblShamelUpgradeYearService.add(this.selected_upgrade_year).subscribe(
         data => {
+          console.log('data', data);
+
+          if (data > 0) // Succeess 
+          {
+            console.log('data', data);
+            this.dialog.closeAll();
+          }
+
+        }
+      )
+
+      else if (this.data.action == 'update')
+      this.tblShamelUpgradeYearService.update(this.selected_upgrade_year).subscribe(
+        data => {
+          console.log('data', data);
           if (data > 0) // Succeess 
           {
             console.log('data', data);

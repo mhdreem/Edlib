@@ -1,5 +1,7 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IPaging } from '../../models/employees_department/ipaging';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +16,16 @@ export class EmployeeStatsService {
  
   constructor(private httpClient : HttpClient) { }
 
-  Stats1(request:any)  {
+  Stats1(request:any): Observable<IPaging>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats1",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats1",request,options) as Observable<IPaging>;      
   }
 
-  Stats2(request:any)  {
+  Stats2(request:any): Observable<IPaging>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats2",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats2",request,options) as Observable<IPaging>;      
   }
 
   Stats3()  {
@@ -32,10 +34,10 @@ export class EmployeeStatsService {
     return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats3",options);      
   }
 
-  Stats4(request:any)  {
+  Stats4(request:any): Observable<IPaging>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats4",request,options);      
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats4",request,options) as Observable<IPaging>;      
   }
   
 }

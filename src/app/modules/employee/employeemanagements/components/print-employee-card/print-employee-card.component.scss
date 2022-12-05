@@ -11,6 +11,7 @@ fieldset{
 
 form{
     display: flex;
+    margin-top: 10px;
 }
 
 .con1{
@@ -23,4 +24,8 @@ form{
 
 mat-checkbox{
     margin-bottom: 5px;
+}
+
+app-print, app-print-card{
+    display: none;
 }

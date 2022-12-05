@@ -111,6 +111,9 @@
 </form>
 
 <button class="view" mat-raised-button color="primary" (click)="View()">عرض</button>
+<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
+<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint>طباعة درجة الكفاءة</button>
+<!-- <button class="view" mat-raised-button color="primary" (click)="printUpgradeData()" [disabled]="!dataSource.data[0]">طباعة بيانات الترفيع للتدقيق</button> -->
 
 <div class="table-wrap">
 
@@ -255,7 +258,12 @@
     (click)="changeTableRowColor(idx)"></tr>
 </table>
 
-<mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+<mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+[pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
 
 
+</div>
+
+<div id="rank-section">
+    <app-print-rank [data]="rankInput"></app-print-rank>
 </div>

@@ -18,8 +18,7 @@ import { TblshamelscfreeholidaymodifyComponent } from '../tblshamelscfreeholiday
   styleUrls: ['./tblshamelscfreeholidaylist.component.scss']
 })
 export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewInit  {
-  
-  formname:string = 'ManageSCFreeHolidayFrame1';
+
    //Join Variable   
    Selected_Emp: TBLShamelEmployee = {};
    @ViewChild('paginator') paginator: MatPaginator;
@@ -141,7 +140,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
   
       const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
         height: '60%',
-        width: '35%',
+        width: '45%',
         data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
       });
      
@@ -208,7 +207,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
   
         const dialogRef = this.dialog.open(TblshamelscfreeholidaymodifyComponent, {
           height: '60%',
-          width: '35%',
+          width: '45%',
           data: {obj: this.selected_employee_freeHoliday,id:this.Selected_Emp.id}
         });
     

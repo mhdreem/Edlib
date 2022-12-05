@@ -8,5 +8,7 @@ export interface TblShamelUpgradeGovReportSearch {
     "first_qarar_num"?: number,
     "last_qarar_num"?: number,
     "first_qarar_date"?: Date,
-    "last_qarar_date"?: Date
+    "last_qarar_date"?: Date,
+    'pageSize'?: number,        
+    'pageNumber'?: number
 }

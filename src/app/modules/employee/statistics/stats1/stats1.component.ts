@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ITBLShamelAccounter } from '../../../shared/models/employees_department/TBLShamelAccounter';
@@ -24,16 +24,20 @@ import { EmployeeStatsService } from '../../../shared/services/employees_departm
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-
+import { tap} from 'rxjs';
+import { ITBLShamelStats1 } from 'src/app/modules/shared/models/employees_department/itblshamelStats1';
+import { MatDialog } from '@angular/material/dialog';
+import { PrintComponent } from '../../employeemanagements/components/print/print/print.component';
+import { PrintCardComponent } from '../../employeemanagements/components/print/print-card/print-card.component';
 @Component({
   selector: 'app-stats1',
   templateUrl: './stats1.component.html',
   styleUrls: ['./stats1.component.scss']
 })
-export class Stats1Component implements OnInit, OnDestroy {
+export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   _Subscription: Subscription;
 
@@ -91,7 +95,7 @@ export class Stats1Component implements OnInit, OnDestroy {
   ChangeReason_List: ITBLShamelChangeReason[] = [];
   filteredChangeReasonOptions: Observable<ITBLShamelChangeReason[]>;
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<ITBLShamelStats1>();
   displayedColumns: string[] = [
     'ID', 'COMPUTER_ID', 'GLOBAL_ID', 'INSURANCE_ID', 'PAYROL_ID', 'FNAME', 'LNAME', 'FATHER', 'MOTHER',
     'ACCOUNTER_NAME', 
@@ -102,10 +106,11 @@ export class Stats1Component implements OnInit, OnDestroy {
   //for pagination
   totalRows = 0;
   pageSize = 5;
-  currentPage = 0;
+  currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   pageChanged(event: PageEvent) {
+    
     console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
@@ -124,7 +129,8 @@ export class Stats1Component implements OnInit, OnDestroy {
     public EmployeeStatsService :EmployeeStatsService,
     private fb: UntypedFormBuilder,
     private ngZone: NgZone,
-    private _liveAnnouncer: LiveAnnouncer,) {
+    private _liveAnnouncer: LiveAnnouncer,
+    public dialog: MatDialog) {
 
       this.dataSource = new MatTableDataSource<any>([]);
 
@@ -134,9 +140,8 @@ export class Stats1Component implements OnInit, OnDestroy {
     }
 
     ngAfterViewInit() {
-
-      this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
 
     announceSortChange(sortState: any) {
@@ -477,9 +482,8 @@ export class Stats1Component implements OnInit, OnDestroy {
     }
     return '';
   }
-
+  allData: any[]= [];
   //#endregion
-
   ExcuteSearch ()
   {
     let SearchRequest =
@@ -506,21 +510,26 @@ export class Stats1Component implements OnInit, OnDestroy {
 
       'AccounterSerail_From': (this.ID.value!= null?this.AccounterSerail_From.value:null ),            
       'AccounterSerail_To': (this.ID.value!= null?this.AccounterSerail_To.value:null ), 
-      'pageSize': (this.pageSize ),            
-      'pageNumber': (this.currentPage),            
+      'pageSize': this.pageSize-1,            
+      'pageNumber': this.currentPage+1,            
 
     }
+    console.log('searchRequest', SearchRequest);
+    
     this.EmployeeStatsService.Stats1(SearchRequest).subscribe
     (
-      data=>
+      (data: any) =>
       {
-        console.log('data1', data);
-        if (data!= null )
-          this.dataSource.data = (data as any[]);
-        else 
-          this.dataSource.data = [];
+        console.log('data.Item1', data.Item1);
+        console.log('data.Item2', data.Item2);
+        this.dataSource.paginator= this.paginator;
+        this.allData.push(...data.Item1);
+        this.dataSource.data = this.allData;
+        this.totalRows= data.Item2;
+        this.dataSource._updatePaginator(this.totalRows);
       }
-    )
+        
+    );
   }
 
   rowClicked: number;
@@ -532,4 +541,5 @@ export class Stats1Component implements OnInit, OnDestroy {
   clearForm(){
     this.Form.reset();
   }
+
 }

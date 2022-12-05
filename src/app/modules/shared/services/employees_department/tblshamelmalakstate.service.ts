@@ -24,14 +24,14 @@ export class TblshamelmalakstateService {
   list()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TBLShamelMalakState/list",options) as Observable<ITBLShamelMalakState[]>;  
+    return this.httpClient.get(this.RestUrl +"TBLShamelMalakState/listAll",options) as Observable<ITBLShamelMalakState[]>;  
     
   }
 
   fill()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-     this.httpClient.get<ITBLShamelMalakState[]>(this.RestUrl +"TBLShamelMalakState/list",options).subscribe(
+     this.httpClient.get<ITBLShamelMalakState[]>(this.RestUrl +"TBLShamelMalakState/listAll",options).subscribe(
       data=>
       {
         this.list_ITBLShamelMalakState = data;
