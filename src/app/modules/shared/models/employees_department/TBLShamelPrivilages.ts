@@ -6,8 +6,15 @@ export interface  TBLShamelPrivilages {
       formname?:string ;
       nodetext?:string;
       privilage?:string;
+      TBLShamelUser?:TBLShamelUser;
 
-     TBLShamelUser?:TBLShamelUser;
+      Addition_permit?:boolean;
+      Modification_permit?:boolean;
+      entry_permit?:boolean;
+      Print_permit?:boolean;      
+      Deletion_permit?:boolean;
+      
+    
 
   
        

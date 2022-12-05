@@ -15,33 +15,26 @@ import { IGlobalEmployeeList } from './modules/shared/services/employees_departm
 })
 export class AppComponent {
   title = 'منظومة الشامل الإدارية و المالية';
-
     navItems: INavData[] = [
-
     {
       name: 'منظومة الشامل',
       url: '/',
-      iconComponent: { name: 'cil-speedometer' },
-      badge: {
-        color: 'info',
-        text: 'NEW'
-      }
-    ,
+      formname:'',
+      iconComponent: { name: 'cil-speedometer' }         
     },
     {
-      name: 'الشؤون الإدارية و ادارة الموارد البشرية' ,
+      name: 'مديرية الشؤون الادارية' ,
       url: 'employees',
+      formname:'مديرية الشؤون الادارية',
       iconComponent: { name: 'cil-pencil' },
-  
-    },
-   
+    },   
     {
-      name: 'الشؤون المالية' ,
+      name: 'مديرية الشؤون المالية' ,
       url: 'finace',
+      formname:'مديرية الشؤون المالية',
       iconComponent: { name: 'cil-pencil' },
     }
-   
-    
+       
   ];
   
   constructor(
@@ -54,16 +47,15 @@ export class AppComponent {
     titleService.setTitle(this.title);
     // iconSet singleton
     iconSetService.icons = { ...iconSubset };
-    
-  }
-
-  ngOnInit(): void {
-    this.navService.navItems_Subject.next(this.navItems);
+   
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
       }
     });
+  }
+
+  ngOnInit(): void {  
   }
 }
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import {
-  AuthGuardServiceService as AuthGuard
+  AuthGuardServiceService as AuthGuard, AuthGuardServiceService
 } from './Global/auth-guard-service.service'
 
 
@@ -36,7 +36,7 @@ const routes: Routes = [
         data: {
           title: 'شؤون العاملين'
         },
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuardServiceService],
         loadChildren: () => import("./modules/employee/employee.module").then(m => m.EmployeeModule)
       },
       {

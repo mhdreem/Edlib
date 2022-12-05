@@ -35,6 +35,7 @@ const moment = _moment;
 })
 export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
+  formname:string = 'ManageEmployeeDataCardFrame1';
 
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {

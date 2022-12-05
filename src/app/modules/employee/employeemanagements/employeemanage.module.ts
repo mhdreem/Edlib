@@ -164,6 +164,9 @@ import { PrintEmployeeCardComponent } from './components/print-employee-card/pri
 import { JobServiceDataComponent } from './components/service-data/job-service-data/job-service-data.component';
 import { JobServiceDataAdjustPrintDialogComponent } from './components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { DisplayNamesSimilarityComponent } from './components/display-names-similarity/display-names-similarity.component';
+import { AppModule } from 'src/app/app.module';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
+
 
 
 
@@ -282,7 +285,9 @@ export const MY_FORMATS = {
     DisplayNamesSimilarityComponent
   ],
   imports: [  
+   
     CommonModule,
+    CommonmoduleModule,
     RouterModule,
     
     MatCardModule,
@@ -347,7 +352,7 @@ export const MY_FORMATS = {
  EmployeemanageRoutingModule
   ],
   exports:[
-   
+    
   ],
   providers: [
 

@@ -19,7 +19,8 @@ import { FormValidationHelpersService } from "src/app/modules/shared/services/he
   styleUrls: ['./tblshamelscbonuslist.component.scss']
 })
 export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'ManageSCBonusFrame1';
+  
   //Join Variable
   Selected_Emp: TBLShamelEmployee = {};
 

@@ -28,7 +28,8 @@ const moment = _moment;
 })
 export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewInit {
 
-
+  formname:string = 'ManageSCFreeHolidayFrame1';
+  
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
   _Selected_Employee_SCFreeHoliday: ITBLShamelSCFreeHoliday

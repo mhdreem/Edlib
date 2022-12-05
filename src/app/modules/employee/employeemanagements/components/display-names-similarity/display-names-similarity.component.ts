@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./display-names-similarity.component.scss']
 })
 export class DisplayNamesSimilarityComponent implements OnInit {
-
+  formname:string = 'ManageEmployeeDuplicatedFrame1';
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

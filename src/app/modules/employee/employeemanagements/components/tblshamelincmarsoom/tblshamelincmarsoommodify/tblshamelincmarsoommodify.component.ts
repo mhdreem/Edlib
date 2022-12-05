@@ -25,7 +25,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit, OnDestroy {
 
-
+  formname:string = 'ManageSCIncMarsoomFrame1';
+  
   _Selected_IncMarsoom: ITBLShamelIncMarsoom;
   @Input() set Selected_IncMarsoom(obj: ITBLShamelIncMarsoom) {
     this._Selected_IncMarsoom = obj;

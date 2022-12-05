@@ -15,6 +15,8 @@ import { EmployeePageService } from '../../employee-page-service';
   styleUrls: ['./deleteemployee.component.scss']
 })
 export class DeleteemployeeComponent implements OnInit {
+  formname:string = 'ManageEmployeeDeleteIDFrame1';
+
   Result:string ;
   _Selected_Emp: TBLShamelEmployee = {};
   @Input() set Selected_Emp(obj: TBLShamelEmployee) {

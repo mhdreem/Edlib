@@ -15,6 +15,8 @@ import { EmployeePageService } from '../../employee-page-service';
   styleUrls: ['./employeechangeid.component.scss']
 })
 export class EmployeechangeidComponent implements OnInit {
+  formname:string = 'ManageEmployeeChangeIDFrame1';
+  
   Selected_Emp: TBLShamelEmployee = {};
 
 

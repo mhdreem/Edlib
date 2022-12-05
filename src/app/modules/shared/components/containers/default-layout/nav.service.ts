@@ -12,27 +12,26 @@ export class NavService {
     {
       name: 'منظومة الشامل',
       url: '/',
+      formname:'',
       iconComponent: { name: 'cil-speedometer' },
       badge: {
         color: 'info',
         text: 'NEW'
-      }
-    ,
+      }    
     },
     {
-      name: 'الشؤون الإدارية و ادارة الموارد البشرية' ,
+      name: 'مديرية الشؤون الادارية' ,
       url: 'employees',
+      formname:'مديرية الشؤون الادارية',
       iconComponent: { name: 'cil-pencil' },
-  
-    },
-   
+
+    },   
     {
-      name: 'الشؤون المالية' ,
+      name: 'مديرية الشؤون المالية' ,
       url: 'finace',
+      formname:'مديرية الشؤون المالية',
       iconComponent: { name: 'cil-pencil' },
-    }
-   
-    
+    }     
   ];
 
   public navItems_Subject : BehaviorSubject< INavData[]>= new BehaviorSubject< INavData[]>(this.navItems);

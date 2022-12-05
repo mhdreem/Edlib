@@ -20,5 +20,6 @@ export interface TBLShamelUser {
      senabled  ?:string;
      TBLShamelDaera?:TBLShamelDaera;
      TBLShamelPrivilages?:TBLShamelPrivilages[];
+     
 
 }

@@ -17,6 +17,7 @@ import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/empl
 })
 export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  {
   //Join Variable   
+  formname:string = 'ManageSCIncMarsoomFrame1';
 
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

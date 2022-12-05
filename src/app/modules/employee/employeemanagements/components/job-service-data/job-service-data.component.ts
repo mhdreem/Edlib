@@ -13,6 +13,7 @@ import { JobServiceDataAdjustPrintDialogComponent } from '../job-service-data-ad
   styleUrls: ['./job-service-data.component.scss']
 })
 export class JobServiceDataComponent implements OnInit {
+  formname:string = 'ManageM1EmpServiceFrame1';
 
   Selected_Emp: TBLShamelEmployee = {};
 

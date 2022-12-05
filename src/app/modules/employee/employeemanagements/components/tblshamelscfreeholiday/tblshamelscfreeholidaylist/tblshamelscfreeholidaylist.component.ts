@@ -18,7 +18,8 @@ import { TblshamelscfreeholidaymodifyComponent } from '../tblshamelscfreeholiday
   styleUrls: ['./tblshamelscfreeholidaylist.component.scss']
 })
 export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewInit  {
-
+  
+  formname:string = 'ManageSCFreeHolidayFrame1';
    //Join Variable   
    Selected_Emp: TBLShamelEmployee = {};
    @ViewChild('paginator') paginator: MatPaginator;

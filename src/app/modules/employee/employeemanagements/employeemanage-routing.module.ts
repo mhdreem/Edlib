@@ -35,6 +35,7 @@ import { TblShamelPunishmentListComponent } from './encodingtable/TblShamelPunis
 import { TblShamelPunishmentReasonListComponent } from './encodingtable/TblShamelPunishmentReason/tbl-shamel-punishment-reason-list/tbl-shamel-punishment-reason-list.component';
 import { TblShamelRankListComponent } from './encodingtable/TblShamelRank/tbl-shamel-rank-list/tbl-shamel-rank-list.component';
 import { TblShamelSpecificationListComponent } from './encodingtable/TblShamelSpecification/tbl-shamel-specification-list/tbl-shamel-specification-list.component';
+import { AuthGuardServiceService } from 'src/app/Global/auth-guard-service.service';
 
 
 const routes: Routes = [
@@ -46,7 +47,7 @@ const routes: Routes = [
  
   {
     path: 'Cards',
-    component: EmployeeCardComponent,
+    component: EmployeeCardComponent,  canActivate: [AuthGuardServiceService],
   
     children:[
       {

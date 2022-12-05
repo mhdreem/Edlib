@@ -26,6 +26,8 @@ import { EditEmployeeCardComponent } from '../edit-employee-card/edit-employee-c
   styleUrls: ['./emp-show-data.component.scss']
 })
 export class EmpShowDataComponent implements OnInit {
+  formname:string = 'ManageEmployeeDataCardFrame1';
+  
   @Input() SelectedEmp : TBLShamelEmployee;
   @Input() SelectedViewEmp : ViewTBLShamelEmployee;
 

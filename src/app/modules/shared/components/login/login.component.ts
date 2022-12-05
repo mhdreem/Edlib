@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { subscribeOn, Subscription } from 'rxjs';
 import { TBLShamelUser } from '../../models/employees_department/TBLShamelUser';
 import { TBLShamelPrivilageServiceService } from '../../services/employees_department/tblshamel-privilage-service.service';
 import { TBLShamelUserService } from '../../services/employees_department/tblshamel-user.service';
@@ -15,7 +16,7 @@ import { TBLShamelUserService } from '../../services/employees_department/tblsha
 })
 export class LoginComponent implements OnInit {
   loginForm: UntypedFormGroup;
-
+  _Subscription:Subscription = new Subscription();
   UserName = '';
 
   password = '';
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
   LoginResultState: string = '';
 
   constructor(private formBuilder: UntypedFormBuilder,
-    private router: Router, public ShemlUserService: TBLShamelUserService,
+    private router: Router,
+     public ShemlUserService: TBLShamelUserService,
     public shamelPrivilige: TBLShamelPrivilageServiceService) {
     this.loginForm = this.formBuilder.group({});
     this.frm_password = new FormControl<string | undefined>(null, Validators.required);
@@ -53,8 +55,8 @@ export class LoginComponent implements OnInit {
     user.username= this.loginForm.controls["username"].value;
     user.password = this.loginForm.controls["password"].value;
     this.isLoadingResults = true;
-
-    this.ShemlUserService.login(user)
+    this._Subscription.add(
+      this.ShemlUserService.login(user)
 
       .subscribe((res: any) => {
 
@@ -68,7 +70,7 @@ export class LoginComponent implements OnInit {
 
         } else if (res. token != null && res.User!= null) {
 
-
+          this.ShemlUserService.Login_User = res.User;
           this.ShemlUserService.Login_User_BehavourSubject.next(res.User);
 
           localStorage.setItem('token', res.token);
@@ -87,8 +89,10 @@ export class LoginComponent implements OnInit {
         this.LoginResultState = 'حدث خطأ اثناء تسجيل الدخول ';
         console.log(err);
         this.isLoadingResults = false;
-      });
+      })
 
+    );
+    
   }
 
 

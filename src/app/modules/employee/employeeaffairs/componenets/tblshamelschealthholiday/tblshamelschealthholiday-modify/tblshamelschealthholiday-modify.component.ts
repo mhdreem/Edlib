@@ -1,4 +1,5 @@
 
+import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, Input, Inject, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -85,6 +86,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
 
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -532,5 +534,11 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
     else return;
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 
 }

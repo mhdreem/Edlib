@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { INavData } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { NavService } from '../../shared/components/containers/default-layout/nav.service';
+import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 
 
 @Component({
@@ -130,9 +131,20 @@ export class UpgradeComponent implements OnInit {
   ];
     
   
-    constructor(private navService:NavService) {
+  constructor(private navService:NavService,
+    private router: Router) {
       this.navService.navItems_Subject.next(this.navItems);
-    }
+      this.router.events
+        .subscribe(
+          (event: NavigationEvent) => {
+            if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.navService.navItems_Subject.next(this.navItems);
+        }
+                
+            }
+          });
+  }
   
   ngOnInit(): void {
     

@@ -8,7 +8,8 @@ import { TBLShamelEmployee } from "src/app/modules/shared/models/employees_depar
   styleUrls: ['./data-entry-dialog.component.scss']
 })
 export class DataEntryDialogComponent implements OnInit {
-
+  formname:string = 'ManageEmployeeDataCardFrame1';
+  
   @Input() SelectedEmp : TBLShamelEmployee;
 
   constructor() {  
