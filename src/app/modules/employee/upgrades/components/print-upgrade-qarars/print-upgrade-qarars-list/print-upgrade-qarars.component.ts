@@ -15,6 +15,7 @@ import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_depar
 import { PrintUpgradeQararsModifyComponent } from '../print-upgrade-qarars-modify/print-upgrade-qarars-modify.component';
 import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employee/employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { PrintQararsComponent } from '../../print/print-qarars/print-qarars.component';
+import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 
 @Component({
   selector: 'app-print-upgrade-qarars',
@@ -66,6 +67,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
   filteredJobNameOptions: Observable<ITBLShamelJobName[]>;
 
 
+  fixedYear: string;
   
   constructor(
     private tblShamelUpgradeQararHFService: TblShamelUpgradeQararHFService,
@@ -75,6 +77,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private fb: UntypedFormBuilder,
+    private tblShamelYearService: TBLShamelYearService
     
     ) {
 
@@ -273,6 +276,13 @@ export class PrintUpgradeQararsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.Load_Text();
+
+    this.tblShamelYearService.GetYearFixed().subscribe(
+      res => {
+        this.fixedYear = res.year_name;
+        this.UpgradeYear.setValue(this.fixedYear);
+      }
+    );
   }
 
   addHeader(){

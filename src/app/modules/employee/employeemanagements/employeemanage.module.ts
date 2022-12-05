@@ -175,7 +175,7 @@ import { ServiceDataPrintComponent } from './components/service-data/service-dat
 import { EmployeeStateDataPrintComponent } from './components/service-data/employee-state-data-print/employee-state-data-print.component';
 import { ExperienceCertificatePrintComponent } from './components/service-data/experience-certificate-print/experience-certificate-print.component';
 import { TblShamelFooterh2AddComponent } from './encodingtable/TblShamelFooterh2/tbl-shamel-footerh2-add/tbl-shamel-footerh2-add.component';
-
+import {NgxPrintModule} from 'ngx-print';
 
 
 
@@ -366,7 +366,8 @@ export const MY_FORMATS = {
  TabsModule,
  UtilitiesModule,
  IconModule,
- EmployeemanageRoutingModule
+ EmployeemanageRoutingModule,
+ NgxPrintModule
   ],
   exports:[
    

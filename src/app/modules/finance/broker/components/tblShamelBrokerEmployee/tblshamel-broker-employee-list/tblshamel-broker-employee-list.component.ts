@@ -237,9 +237,7 @@ OnSearch()
       if (result) {
         this.FillTable();
         this.dataSource.paginator = this.paginator;
-        this.snackBar.open('تمت الإضافة', '', {
-          duration: 2000,
-        });
+        
       }
     });
   }
@@ -302,10 +300,10 @@ OnSearch()
       dialogRef.afterClosed().toPromise().then(result => {
         this.FillTable();
 
-        if (result)
-          this.snackBar.open('تم التعديل', '', {
-            duration: 2000,
-          });
+        if (result){
+          
+        }
+          
       });
 
     }

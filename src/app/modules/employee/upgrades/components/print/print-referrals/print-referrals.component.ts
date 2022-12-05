@@ -25,9 +25,9 @@ export class PrintReferralsComponent implements OnInit {
   title3: string;
   title4: string;
   title5: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ITBLShamelUpgrade[],
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private tblShamelUserService: TBLShamelUserService,
-  private tblshamelPrintFooterService: TblshamelPrintFooterService) { 
+  private tblshamelPrintFooterService: TblshamelPrintFooterService,) { 
     this.todayDate= new Date();
     console.log('data123', data);
 

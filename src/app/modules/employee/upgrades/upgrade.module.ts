@@ -112,6 +112,7 @@ import { PrintRankComponent } from './components/print/print-rank/print-rank.com
 import { PrintReferralsComponent } from './components/print/print-referrals/print-referrals.component';
 import { PrintQararsComponent } from './components/print/print-qarars/print-qarars.component';
 
+import {NgxPrintModule} from 'ngx-print';
 /////////////////////////////
 
 
@@ -217,7 +218,8 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  UpgradeRoutingModule,
- MatProgressBarModule
+ MatProgressBarModule,
+ NgxPrintModule
   ],
   exports:[
   

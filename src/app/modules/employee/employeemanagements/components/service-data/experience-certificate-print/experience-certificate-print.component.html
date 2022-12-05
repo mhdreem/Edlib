@@ -1,5 +1,5 @@
 <mat-dialog-content class="mat-typography">
-<div class=WordSection1>
+<div class=WordSection1 *ngIf="data[0]!= null && data[0].id != null &&  data[0].id>0">
 
     <div align=center>
     
@@ -32,7 +32,7 @@
         text-align:center;line-height:normal;direction:rtl;unicode-bidi:embed'><span
         lang=AR-SA style='font-family:"Arial",sans-serif'>رقم الإضبارة: {{data[0].id}}</span></p>
         </td>
-        <td width=150 style='width:112.8pt;padding:0in 5.4pt 0in 5.4pt'>
+        <td width=150 style='width:127.5pt;padding:0in 5.4pt 0in 5.4pt'>
         <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;
         text-align:center;line-height:normal;direction:rtl;unicode-bidi:embed'><span
         lang=AR-SA style='font-family:"Arial",sans-serif'>رقم الحاسوب: {{data[0].Computer_ID}}</span></p>
@@ -44,7 +44,7 @@
         text-align:center;line-height:normal;direction:rtl;unicode-bidi:embed'><span
         lang=AR-SA style='font-family:"Arial",sans-serif'>الرقم الذاتي: {{data[0].Global_ID}}</span></p>
         </td>
-        <td width=150 style='width:112.8pt;padding:0in 5.4pt 0in 5.4pt'>
+        <td width=150 style='width:127.5pt;padding:0in 5.4pt 0in 5.4pt'>
         <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;
         text-align:center;line-height:normal;direction:rtl;unicode-bidi:embed'><span
         lang=AR-SA style='font-family:"Arial",sans-serif'>الرقم التأميني: {{data[0].Insurance_ID}}</span></p>
@@ -247,8 +247,8 @@
       none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>عين السيد {{data[0].FName}} {{data[0].LName}} بوظيفة مدرس
-      من الفئة الأولى</span></p>
+      style='font-family:"Arial",sans-serif'>عين السيد {{data[0].FName}} {{data[0].LName}} بوظيفة {{data[0]?.TBLShamelSCJobStates[0]?.TBLShamelJobName?.jobname_name}}
+      من الفئة {{data[0]?.TBLShamelSCJobStates[0]?.TBLShamelClass?.class_name}}</span></p>
       </td>
      </tr>
      <tr>
@@ -256,8 +256,8 @@
       none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>بموجب تثبيت رقم 443 تاريخ تاريخ</span><span
-      lang=AR-SY style='font-family:"Arial",sans-serif'> وقد باشر بالعمل بتاريخ تاريخ</span></p>
+      style='font-family:"Arial",sans-serif'>بموجب تثبيت رقم {{data[0]?.TBLShamelSCJobStates[0]?.doc_number}} تاريخ {{data[0]?.TBLShamelSCJobStates[0]?.doc_date | date:'yyyy/MM/dd'}}</span><span
+      lang=AR-SY style='font-family:"Arial",sans-serif'> وقد باشر بالعمل بتاريخ {{data[0]?.TBLShamelSCJobStates[0]?.begindate | date:'yyyy/MM/dd'}}</span></p>
       </td>
      </tr>
     </table>
@@ -267,15 +267,15 @@
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
     
-    <div align=center>
+    <div align=center *ngIf="data[1].radioButtonsGroup != 2">
     
-    <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
+    <table  *ngFor="let calculatedJobState of calculatedJobStates" class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
      style='border-collapse:collapse;border:none'>
      <tr>
       <td width=623 colspan=3 style='width:467.5pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>وقد بلغ مجموع خدماته بوظيفة: مدرس</span></p>
+      style='font-family:"Arial",sans-serif'>وقد بلغ مجموع خدماته بوظيفة: {{calculatedJobState.jobName}}</span></p>
       </td>
      </tr>
      <tr>
@@ -299,17 +299,17 @@
       <td width=208 style='width:155.8pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>18</span></p>
+      style='font-family:"Arial",sans-serif'>{{calculatedJobState.totalyears}}</span></p>
       </td>
       <td width=208 style='width:155.85pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>8</span></p>
+      style='font-family:"Arial",sans-serif'>{{calculatedJobState.totalMonths}}</span></p>
       </td>
       <td width=208 style='width:155.85pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>0</span></p>
+      style='font-family:"Arial",sans-serif'>{{calculatedJobState.totalDays}}</span></p>
       </td>
      </tr>
      <tr>
@@ -332,6 +332,9 @@
       style='font-family:"Arial",sans-serif'>صفر</span></p>
       </td>
      </tr>
+     <br>
+     <br>
+     <br>
     </table>
     
     </div>
@@ -339,7 +342,7 @@
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
     
-    <div align=center>
+    <div align=center *ngIf="data[1].radioButtonsGroup != 1">
     
     <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
      style='border-collapse:collapse;border:none'>
@@ -371,17 +374,17 @@
       <td width=208 style='width:155.8pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>23</span></p>
+      style='font-family:"Arial",sans-serif'>{{totalServicesYears}}</span></p>
       </td>
       <td width=208 style='width:155.85pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>7</span></p>
+      style='font-family:"Arial",sans-serif'>{{totalServicesMonths}}</span></p>
       </td>
       <td width=208 style='width:155.85pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
       <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
       center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>12</span></p>
+      style='font-family:"Arial",sans-serif'>{{totalServicesDays}}</span></p>
       </td>
      </tr>
      <tr>
@@ -481,40 +484,6 @@
     
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
-    
-    <div align=center>
-    
-    <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
-     style='border-collapse:collapse;border:none'>
-     <tr>
-      <td width=156 style='width:116.85pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>شركة نور</span></p>
-      </td>
-      <td width=156 style='width:116.85pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>{{todayDate | date:'shortTime':'+0200'}}</span></p>
-      </td>
-      <td width=156 style='width:116.9pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
-      style='font-family:"Arial",sans-serif'>{{todayDate | date:'yyyy/MM/dd'}}</span></p>
-      </td>
-      <td width=156 style='width:116.9pt;border:none;border-top:solid windowtext 1.0pt;
-      padding:0in 5.4pt 0in 5.4pt'>
-      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SY
-      style='font-family:"Arial",sans-serif'>صفحة 1</span></p>
-      </td>
-     </tr>
-    </table>
-    
-    </div>
     
     <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
     rtl;unicode-bidi:embed'><span dir=ltr>&nbsp;</span></p>

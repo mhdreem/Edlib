@@ -23,7 +23,7 @@ export class JobServiceDataComponent implements OnInit {
   Selected_Emp: TBLShamelEmployee = {};
 
   Form: UntypedFormGroup;
-  checkBoxGroup: FormControl;
+  radioButtonsGroup: FormControl;
   jobName: FormControl;
   employeeDataCheckbox: FormControl;
   certificateCheckbox: FormControl;
@@ -36,6 +36,18 @@ export class JobServiceDataComponent implements OnInit {
   JobName_List: ITBLShamelJobName[] = [];
   filteredJobNameOptions: Observable<ITBLShamelJobName[]>;
 
+  serviceDataInput: TBLShamelEmployee;
+  employeeStateDataInput: [TBLShamelEmployee,{employeeDataCheckbox: number,
+    certificateCheckbox: number,
+    bonusCheckbox: number,
+    punishmentCheckbox: number,
+    freeHolidaysCheckbox: number,
+    mergeServiceCheckbox: number,
+    jobStateCheckbox: number} ];
+    jobNameInput: [
+      TBLShamelEmployee,
+      {radioButtonsGroup: number, jobName: string}
+    ];
 
   constructor(public dialog: MatDialog,
     private tblshameljobnameService: TblshameljobnameService,
@@ -44,9 +56,35 @@ export class JobServiceDataComponent implements OnInit {
       this.BuildForm();
     this.Load_Data();
 
+    this.Form.get('jobName').disable();
+    this.employeeDataCheckbox.setValue(1);
+    this.certificateCheckbox.setValue(1);
+    this.bonusCheckbox.setValue(1);
+    this.punishmentCheckbox.setValue(1);
+    this.freeHolidaysCheckbox.setValue(1);
+    this.mergeServiceCheckbox.setValue(1);
+    this.jobStateCheckbox.setValue(1);
+
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
           this.Selected_Emp = data;
+
+          this.serviceDataInput= this.Selected_Emp;
+          this.employeeStateDataInput= [this.Selected_Emp,
+            {
+              employeeDataCheckbox: this.employeeDataCheckbox.value,
+              certificateCheckbox: this.certificateCheckbox.value,
+              bonusCheckbox: this.bonusCheckbox.value,
+              punishmentCheckbox: this.punishmentCheckbox.value,
+              freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
+              mergeServiceCheckbox: this.mergeServiceCheckbox.value,
+              jobStateCheckbox: this.jobStateCheckbox.value
+            }];
+
+            this.jobNameInput= [
+              this.Selected_Emp,
+              {radioButtonsGroup: this.radioButtonsGroup.value, jobName: this.JobName_List.filter(JobName=> JobName.jobname_id == this.jobName.value)[0]?.jobname_name }
+            ];
         }
       );
 
@@ -54,8 +92,8 @@ export class JobServiceDataComponent implements OnInit {
 
   BuildForm() {
     this.Form = new FormGroup({
-      'checkBoxGroup': this.checkBoxGroup = new FormControl<number | null>(null, [Validators.required],),
-      'jobName': this.jobName = new FormControl<number | null>(null),
+      'radioButtonsGroup': this.radioButtonsGroup = new FormControl<number | null>(null, [Validators.required],),
+      'jobName': this.jobName = new FormControl<string | null>(null),
       'employeeDataCheckbox': this.employeeDataCheckbox = new FormControl<number | null>(null),
       'certificateCheckbox': this.certificateCheckbox = new FormControl<number | null>(null),
       'bonusCheckbox': this.bonusCheckbox = new FormControl<number | null>(null),
@@ -107,8 +145,8 @@ export class JobServiceDataComponent implements OnInit {
 
       private _filterJobName(value: string): ITBLShamelJobName[] {
         const filterValue = value.toLowerCase();
-    
-        return this.JobName_List.filter(option => option.jobname_name.toLowerCase().includes(filterValue));
+        return this.JobName_List.filter(option => option.jobname_name?.toLowerCase().includes(filterValue));
+
       }
 
       public displayJobNameProperty(value: string): string {
@@ -121,14 +159,7 @@ export class JobServiceDataComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    this.Form.get('jobName').disable();
-    this.employeeDataCheckbox.setValue(1);
-    this.certificateCheckbox.setValue(1);
-    this.bonusCheckbox.setValue(1);
-    this.punishmentCheckbox.setValue(1);
-    this.freeHolidaysCheckbox.setValue(1);
-    this.mergeServiceCheckbox.setValue(1);
-    this.jobStateCheckbox.setValue(1);
+    
   }
 
   jobNameChecked(){
@@ -183,48 +214,25 @@ export class JobServiceDataComponent implements OnInit {
     });
   }
 
-  serviceDataPrint(){
-    const dialogRef = this.dialog.open(ServiceDataPrintComponent, {
-      height: '70%',
-      width: '60%',
-      data: this.Selected_Emp,
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
+  onCheckBoxChange(){
+    this.employeeStateDataInput= [this.Selected_Emp,
+      {
+        employeeDataCheckbox: this.employeeDataCheckbox.value,
+        certificateCheckbox: this.certificateCheckbox.value,
+        bonusCheckbox: this.bonusCheckbox.value,
+        punishmentCheckbox: this.punishmentCheckbox.value,
+        freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
+        mergeServiceCheckbox: this.mergeServiceCheckbox.value,
+        jobStateCheckbox: this.jobStateCheckbox.value
+      }]
   }
 
-  certificatePrint(){
-    const dialogRef = this.dialog.open(ExperienceCertificatePrintComponent, {
-      height: '70%',
-      width: '60%',
-      data: [this.Selected_Emp, {checkBoxGroup: this.checkBoxGroup.value, jobName: this.jobName.value}],
-    });
+  onJobNameChange(){
+    this.jobNameInput= [
+      this.Selected_Emp,
+      {radioButtonsGroup: this.radioButtonsGroup.value, jobName: this.JobName_List.filter(JobName=> JobName.jobname_id == this.jobName.value)[0]?.jobname_name }
+    ];console.log('this.jobName.value', this.jobName.value);
 
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
-  }
-
-  employeeStateDataPrint(){
-    const dialogRef = this.dialog.open(EmployeeStateDataPrintComponent, {
-      height: '70%',
-      width: '60%',
-      data: [this.Selected_Emp,
-        {
-          employeeDataCheckbox: this.employeeDataCheckbox.value,
-          certificateCheckbox: this.certificateCheckbox.value,
-          bonusCheckbox: this.bonusCheckbox.value,
-          punishmentCheckbox: this.punishmentCheckbox.value,
-          freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
-          mergeServiceCheckbox: this.mergeServiceCheckbox.value,
-          jobStateCheckbox: this.jobStateCheckbox.value
-        }],
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
   }
 }

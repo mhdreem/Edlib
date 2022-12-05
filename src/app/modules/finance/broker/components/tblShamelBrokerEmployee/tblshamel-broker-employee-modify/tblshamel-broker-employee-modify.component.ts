@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { forkJoin, map, Observable, of, startWith } from 'rxjs';
 import { TBLShamelSex } from 'src/app/modules/shared/models/employees_department/TBLShamelSex';
@@ -28,13 +29,16 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
   submitted = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelBrokerEmployee },
+  constructor(public dialogRef: MatDialogRef<TblshamelBrokerEmployeeModifyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelBrokerEmployee },
   public tblShamelBrokerEmployeeService: TblShamelBrokerEmployeeService,
   private ShamelSexService: TBLShamelSexService,
-  public frmBuild: FormBuilder) {
+  public frmBuild: FormBuilder,
+  private snackBar: MatSnackBar) {
     this.selected_broker_employee = data.obj;
     this.BuildForm();
     this.LoadData();
+    
    }
 
    Load_Sex(): Observable<TBLShamelSex[]> {
@@ -52,25 +56,13 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
     ).subscribe(res => {
       this.List_SEX_NAME = res[0];
       this.List_SEX_NAME_Filter = of(res[0]);
-
-
       if (this.Form != null) {
-
-
-
-
-      
-
         this.List_SEX_NAME_Filter = this.Form.controls['sex_name'].valueChanges
           .pipe(
             startWith(''),
             map(value => value && typeof value === 'string' ? this._Filtered_SEX_NAME(value) : this.List_SEX_NAME.slice())
           );
-
-
-
       }
-
       this.SetValue();
     },
       (error) => console.log(error));
@@ -116,9 +108,8 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         birthdateDay: new FormControl<number | null>(null, [Validators.required]),
         birthdateMonth: new FormControl<number | null>(null, [Validators.required]),
         birthdateYear: new FormControl<number | null>(null, [Validators.required]),
-
       }, Uniqe(this.tblShamelBrokerEmployeeService));
-
+      
     } catch (Exception: any) {
       console.log(Exception);
     }
@@ -263,9 +254,14 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
       // comment when using real data service
       this.tblShamelBrokerEmployeeService.add(this.selected_broker_employee).subscribe(
         data => {
+          console.log('this.selected_broker_employee',this.selected_broker_employee);
           if (data > 0) // Succeess 
           {
-            this.ClearForm();
+            console.log('data456', data);
+            this.snackBar.open('تمت الإضافة بنجاح', '', {
+              duration: 3000,
+            });
+            this.dialogRef.close();
           }
 
         }
@@ -282,7 +278,11 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         data => {
           if (data > 0) // Succeess 
           {
-            this.ClearForm();
+            console.log('data456', data);
+            this.snackBar.open('تم التعديل بنجاح', '', {
+              duration: 3000,
+            });
+            this.dialogRef.close();
           }
         }
       )

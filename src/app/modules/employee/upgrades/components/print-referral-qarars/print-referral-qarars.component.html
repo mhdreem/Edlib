@@ -73,7 +73,7 @@
   </mat-accordion>
   
   <button class="view" mat-raised-button color="primary" (click)="list()">عرض السجلات</button>
-<button mat-raised-button color="primary" (click)="print()" >طباعة الإحالات</button>
+<button mat-raised-button color="primary" (click)="print()" printSectionId="print-section" ngxPrint>طباعة الإحالات</button>
 <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
 
 <div class="table-wrap">

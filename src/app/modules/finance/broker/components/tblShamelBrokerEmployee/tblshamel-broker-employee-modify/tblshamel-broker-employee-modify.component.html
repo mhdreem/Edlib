@@ -4,22 +4,22 @@
         
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>الأسم</mat-label>
-            <input matInput type="text" value="" formControlName="fname" required>
+            <input matInput type="text" value="" formControlName="fname" >
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>الكنية</mat-label>
-            <input matInput type="text" value="" formControlName="lname" required>
+            <input matInput type="text" value="" formControlName="lname" >
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>الأب</mat-label>
-            <input matInput type="text" value="" formControlName="father" required>
+            <input matInput type="text" value="" formControlName="father" >
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>الأم</mat-label>
-            <input matInput type="text" value="" formControlName="mother" required>
+            <input matInput type="text" value="" formControlName="mother" >
         </mat-form-field>
 
         <div class="date">
@@ -53,23 +53,9 @@
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>أيام الخدمة</mat-label>
 
-            <input matInput type="number" value="" formControlName="servicedayes" required>
+            <input matInput type="number" value="" formControlName="servicedayes">
 
         </mat-form-field>
-
-
-       
-
-       
-
-      
-
-      
-
-      
-
-
-
 
     </form>
 </mat-dialog-content>
@@ -87,7 +73,7 @@
     </button>
 
     <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
-        [disabled]="Form.invalid   ">
+        [disabled]="Form.invalid">
         <mat-icon class="mat-icon-rtl-mirror">save
         </mat-icon>
         حفظ
