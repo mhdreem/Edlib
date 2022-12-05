@@ -49,3 +49,7 @@ mat-radio-group{
     flex-direction: column;
     justify-content: space-between;
 }
+
+app-service-data-print, app-employee-state-data-print, app-experience-certificate-print{
+    display: none;
+}

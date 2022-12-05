@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ITBLShamelPrintFooter } from '../../models/employees_department/ITBLShamelPrintFooter';
+import { AdjustPrintDialog } from '../../models/employees_department/adjust-print-dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,10 @@ export class TblshamelPrintFooterService {
 
   constructor(private httpClient : HttpClient) { }
 
-  list(id: number)  {
+  list(id: number): Observable<AdjustPrintDialog[]>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TblShamelNewPrintFooter/list_by_user_id/"+id,options);  
+    return this.httpClient.get(this.RestUrl +"TblShamelNewPrintFooter/list_by_user_id/"+id,options) as Observable<AdjustPrintDialog[]>;  
     
   }
 

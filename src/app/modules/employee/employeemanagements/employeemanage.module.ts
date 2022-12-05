@@ -163,11 +163,19 @@ import { EmployeeCardComponent } from './employee-card.component';
 import { PrintEmployeeCardComponent } from './components/print-employee-card/print-employee-card.component';
 import { JobServiceDataComponent } from './components/service-data/job-service-data/job-service-data.component';
 import { JobServiceDataAdjustPrintDialogComponent } from './components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
-import { DisplayNamesSimilarityComponent } from './components/display-names-similarity/display-names-similarity.component';
-import { AppModule } from 'src/app/app.module';
-import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
-
-
+import { DisplayEmployeeSimilarityNameComponent } from './components/display-employee-similarity-name/display-employee-similarity-name.component';
+import { TblShamelClassListComponent } from './encodingtable/TblShamelClass/tbl-shamel-class-list/tbl-shamel-class-list.component';
+import { TblShamelClassAddComponent } from './encodingtable/TblShamelClass/tbl-shamel-class-add/tbl-shamel-class-add.component';
+import { TblShamelDocumentTypeAddComponent } from './encodingtable/TblShamelDocumentType/tbl-shamel-document-type-add/tbl-shamel-document-type-add.component';
+import { TblShamelJobNameAddComponent } from './encodingtable/TblShamelJobName/tbl-shamel-job-name-add/tbl-shamel-job-name-add.component';
+import { TblShamelFooterh1AddComponent } from './encodingtable/TblShamelFooterh1/tbl-shamel-footerh1-add/tbl-shamel-footerh1-add.component';
+import { PrintCardComponent } from './components/print/print-card/print-card.component';
+import { PrintComponent } from './components/print/print/print.component';
+import { ServiceDataPrintComponent } from './components/service-data/service-data-print/service-data-print.component';
+import { EmployeeStateDataPrintComponent } from './components/service-data/employee-state-data-print/employee-state-data-print.component';
+import { ExperienceCertificatePrintComponent } from './components/service-data/experience-certificate-print/experience-certificate-print.component';
+import { TblShamelFooterh2AddComponent } from './encodingtable/TblShamelFooterh2/tbl-shamel-footerh2-add/tbl-shamel-footerh2-add.component';
+import {NgxPrintModule} from 'ngx-print';
 
 
 
@@ -282,12 +290,21 @@ export const MY_FORMATS = {
     PrintEmployeeCardComponent,
     JobServiceDataComponent,
     JobServiceDataAdjustPrintDialogComponent,
-    DisplayNamesSimilarityComponent
+    DisplayEmployeeSimilarityNameComponent,
+    TblShamelClassListComponent,
+    TblShamelClassAddComponent,
+    TblShamelDocumentTypeAddComponent,
+    TblShamelJobNameAddComponent,
+    TblShamelFooterh1AddComponent,
+    PrintCardComponent,
+    PrintComponent,
+    ServiceDataPrintComponent,
+    EmployeeStateDataPrintComponent,
+    ExperienceCertificatePrintComponent,
+    TblShamelFooterh2AddComponent,
   ],
   imports: [  
-   
     CommonModule,
-    CommonmoduleModule,
     RouterModule,
     
     MatCardModule,
@@ -349,10 +366,11 @@ export const MY_FORMATS = {
  TabsModule,
  UtilitiesModule,
  IconModule,
- EmployeemanageRoutingModule
+ EmployeemanageRoutingModule,
+ NgxPrintModule
   ],
   exports:[
-    
+   
   ],
   providers: [
 

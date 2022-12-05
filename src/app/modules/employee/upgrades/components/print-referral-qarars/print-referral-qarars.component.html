@@ -73,7 +73,7 @@
   </mat-accordion>
   
   <button class="view" mat-raised-button color="primary" (click)="list()">عرض السجلات</button>
-<button mat-raised-button color="primary" (click)="print()" >طباعة الإحالات</button>
+<button mat-raised-button color="primary" (click)="print()" printSectionId="print-section" ngxPrint>طباعة الإحالات</button>
 <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
 
 <div class="table-wrap">
@@ -133,7 +133,8 @@
         (click)="changeTableRowColor(idx)"></tr>
     </table>
   
-    <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
+    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
   
   
   </div>

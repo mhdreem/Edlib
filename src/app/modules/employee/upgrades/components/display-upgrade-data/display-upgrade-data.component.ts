@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,6 +23,8 @@ import { TblshamelclassService } from 'src/app/modules/shared/services/employees
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { TblshamelrankService } from 'src/app/modules/shared/services/employees_department/tblshamelrank.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { JobServiceDataAdjustPrintDialogComponent } from '../../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { PrintRankComponent } from '../print/print-rank/print-rank.component';
 
 @Component({
   selector: 'app-display-upgrade-data',
@@ -69,6 +72,20 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   filteredEmployeeNameList: ViewTBLShamelEmployee[] = [];
   isLoading = false;
 
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.View();
+  }
+
+  rankInput: ITBLShamelUpgrade[];
+
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private tblshamelclassService: TblshamelclassService,
     private tblshameljobnameService: TblshameljobnameService,
@@ -79,9 +96,12 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
     private shamelrankService: TblshamelrankService,
     private tblShamelAccounterService: TBLShamelAccounterService,
-    public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,) {
+    public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
+    public dialog: MatDialog,) {
       this.BuildForm();
       this.Load_Data();
+
+      this.rankInput= this.dataSource.data;
      }
 
      public BuildForm() {
@@ -359,12 +379,39 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
       "id_start": this.idStart.value,
       "id_end": this.idEnd.value,
       "type_display_Option": this.TypeDisplay.value,
+      'pageSize': this.pageSize,            
+      'pageNumber': this.currentPage,
     };
     this.tblShamelUpgradeService.list(request).subscribe(
       (res: any) =>{
         this.dataSource.data= res.Item1;
-        console.log('data', res);
+        this.totalRows= res.Item2;
       }
     );
   }
+
+  adjustPrintFooter(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: 'PrintUpgradeQualityGrade',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+
+  printUpgradeData(){
+    // const dialogRef = this.dialog.open(ServiceDataPrintComponent, {
+    //   height: '70%',
+    //   width: '60%',
+    //   data: this.Selected_Emp,
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+      
+    // });
+  }
+
 }

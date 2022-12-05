@@ -28,7 +28,7 @@ import { FormValidationHelpersService } from 'src/app/modules/shared/services/he
   styleUrls: ['./tblshamelscbonusmodify.component.scss']
 })
 export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
-  formname:string = 'ManageSCBonusFrame1';
+
   x: Subscription;
 
   //Link To Employee
@@ -77,6 +77,14 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
 
   submitted = false;
   loading: boolean = false;
+
+  docDateDay: string= '';
+  docDateMonth: string= '';
+  docDateYear: string= '';
+
+  docDateDayIsFilled: boolean= false;
+  docDateMonthIsFilled: boolean= false;
+  docDateYearIsFilled: boolean= false;
 
   //#region Constuctor
   constructor(
@@ -502,13 +510,8 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
   }
 
 
-  addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
-
-    console.log("gg", event.value)
-
-    this.Selected_Employee_SCBouns.documentdate = moment(event.value).toDate();
-
-    console.log("gg2", moment(event.value).toDate())
+  addEventDocumentDate(date: Date) {
+    this.Selected_Employee_SCBouns.documentdate = date;
 
   }
 
@@ -518,6 +521,19 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
     this.x.unsubscribe();
   }
 
+  docDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.docDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.docDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.docDateYearIsFilled= true;
+
+    if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.addEventDocumentDate(this.documentdate.value);
+    }
+   }
 
 }
 

@@ -97,7 +97,6 @@ import { PrintReferralQararsComponent } from './components/print-referral-qarars
 import { PrintUpgradeQararsComponent } from './components/print-upgrade-qarars/print-upgrade-qarars-list/print-upgrade-qarars.component';
 import { ReplaceQararNumbersComponent } from './components/replace-qarar-numbers/replace-qarar-numbers.component';
 import { UpgradePromotionQararsComponent } from './components/upgrade-promotion-qarars/upgrade-promotion-qarars.component';
-import { UpgradeQararsAdjustPrintDialogComponent } from './components/upgrade-qarars-adjust-print-dialog/upgrade-qarars-adjust-print-dialog.component';
 import { PrepareUpgradesFileComponent } from './components/prepare-upgrades-file/prepare-upgrades-file.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { RefreshAccounterMalakComponent } from './components/refresh-accounter-malak/refresh-accounter-malak.component';
@@ -109,7 +108,11 @@ import { DisplayUpgradeDataComponent } from './components/display-upgrade-data/d
 import { RefreshEmployeeCartComponent } from './components/refresh-employee-cart/refresh-employee-cart.component';
 import { IncreaseSalaryMarsoomComponent } from './components/increase-salary-marsoom/increase-salary-marsoom.component';
 import { PrintUpgradeQararsModifyComponent } from './components/print-upgrade-qarars/print-upgrade-qarars-modify/print-upgrade-qarars-modify.component';
+import { PrintRankComponent } from './components/print/print-rank/print-rank.component';
+import { PrintReferralsComponent } from './components/print/print-referrals/print-referrals.component';
+import { PrintQararsComponent } from './components/print/print-qarars/print-qarars.component';
 
+import {NgxPrintModule} from 'ngx-print';
 /////////////////////////////
 
 
@@ -137,7 +140,6 @@ export const MY_FORMATS = {
     PrintUpgradeQararsComponent,
     ReplaceQararNumbersComponent,
     UpgradePromotionQararsComponent,
-    UpgradeQararsAdjustPrintDialogComponent,
     PrepareUpgradesFileComponent,
     RefreshAccounterMalakComponent,
     ClearUpgradesFileComponent,
@@ -148,6 +150,9 @@ export const MY_FORMATS = {
     RefreshEmployeeCartComponent,
     IncreaseSalaryMarsoomComponent,
     PrintUpgradeQararsModifyComponent,
+    PrintRankComponent,
+    PrintReferralsComponent,
+    PrintQararsComponent,
   ],
   imports: [  
     CommonModule,
@@ -213,7 +218,8 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  UpgradeRoutingModule,
- MatProgressBarModule
+ MatProgressBarModule,
+ NgxPrintModule
   ],
   exports:[
   

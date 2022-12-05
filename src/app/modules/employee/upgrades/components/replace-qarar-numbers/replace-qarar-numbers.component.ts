@@ -78,8 +78,8 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
     this.request.new_Qara_Num= +this.NewQararNumber.value;
     this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).toDate();
     this.tblshamelScJobStateService.ListQarar(this.request).subscribe(
-      res => {
-        this.dataSource.data= res as any;
+      (res: any) => {
+        this.dataSource.data= res.Result;
         console.log('res', res);
         console.log('req', this.request);
       }

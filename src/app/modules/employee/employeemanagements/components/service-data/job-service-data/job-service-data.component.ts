@@ -6,7 +6,10 @@ import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_depar
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { EmployeePageService } from '../../employee-page-service';
+import { EmployeeStateDataPrintComponent } from '../employee-state-data-print/employee-state-data-print.component';
+import { ExperienceCertificatePrintComponent } from '../experience-certificate-print/experience-certificate-print.component';
 import { JobServiceDataAdjustPrintDialogComponent } from '../job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
+import { ServiceDataPrintComponent } from '../service-data-print/service-data-print.component';
 
 @Component({
   selector: 'app-job-service-data',
@@ -20,19 +23,31 @@ export class JobServiceDataComponent implements OnInit {
   Selected_Emp: TBLShamelEmployee = {};
 
   Form: UntypedFormGroup;
-  checkBoxGroup: FormControl;
+  radioButtonsGroup: FormControl;
   jobName: FormControl;
-  oneCheckbox: FormControl;
-  twoCheckbox: FormControl;
-  threeCheckbox: FormControl;
-  fourCheckbox: FormControl;
-  fiveCheckbox: FormControl;
-  sixCheckbox: FormControl;
-  sevenCheckbox: FormControl;
+  employeeDataCheckbox: FormControl;
+  certificateCheckbox: FormControl;
+  bonusCheckbox: FormControl;
+  punishmentCheckbox: FormControl;
+  freeHolidaysCheckbox: FormControl;
+  mergeServiceCheckbox: FormControl;
+  jobStateCheckbox: FormControl;
 
   JobName_List: ITBLShamelJobName[] = [];
   filteredJobNameOptions: Observable<ITBLShamelJobName[]>;
 
+  serviceDataInput: TBLShamelEmployee;
+  employeeStateDataInput: [TBLShamelEmployee,{employeeDataCheckbox: number,
+    certificateCheckbox: number,
+    bonusCheckbox: number,
+    punishmentCheckbox: number,
+    freeHolidaysCheckbox: number,
+    mergeServiceCheckbox: number,
+    jobStateCheckbox: number} ];
+    jobNameInput: [
+      TBLShamelEmployee,
+      {radioButtonsGroup: number, jobName: string}
+    ];
 
   constructor(public dialog: MatDialog,
     private tblshameljobnameService: TblshameljobnameService,
@@ -41,9 +56,35 @@ export class JobServiceDataComponent implements OnInit {
       this.BuildForm();
     this.Load_Data();
 
+    this.Form.get('jobName').disable();
+    this.employeeDataCheckbox.setValue(1);
+    this.certificateCheckbox.setValue(1);
+    this.bonusCheckbox.setValue(1);
+    this.punishmentCheckbox.setValue(1);
+    this.freeHolidaysCheckbox.setValue(1);
+    this.mergeServiceCheckbox.setValue(1);
+    this.jobStateCheckbox.setValue(1);
+
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
           this.Selected_Emp = data;
+
+          this.serviceDataInput= this.Selected_Emp;
+          this.employeeStateDataInput= [this.Selected_Emp,
+            {
+              employeeDataCheckbox: this.employeeDataCheckbox.value,
+              certificateCheckbox: this.certificateCheckbox.value,
+              bonusCheckbox: this.bonusCheckbox.value,
+              punishmentCheckbox: this.punishmentCheckbox.value,
+              freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
+              mergeServiceCheckbox: this.mergeServiceCheckbox.value,
+              jobStateCheckbox: this.jobStateCheckbox.value
+            }];
+
+            this.jobNameInput= [
+              this.Selected_Emp,
+              {radioButtonsGroup: this.radioButtonsGroup.value, jobName: this.JobName_List.filter(JobName=> JobName.jobname_id == this.jobName.value)[0]?.jobname_name }
+            ];
         }
       );
 
@@ -51,15 +92,15 @@ export class JobServiceDataComponent implements OnInit {
 
   BuildForm() {
     this.Form = new FormGroup({
-      'checkBoxGroup': this.checkBoxGroup = new FormControl<number | null>(null, [Validators.required],),
-      'jobName': this.jobName = new FormControl<number | null>(null),
-      'oneCheckbox': this.oneCheckbox = new FormControl<number | null>(null),
-      'twoCheckbox': this.twoCheckbox = new FormControl<number | null>(null),
-      'threeCheckbox': this.threeCheckbox = new FormControl<number | null>(null),
-      'fourCheckbox': this.fourCheckbox = new FormControl<number | null>(null),
-      'fiveCheckbox': this.fiveCheckbox = new FormControl<number | null>(null),
-      'sixCheckbox': this.sixCheckbox = new FormControl<number | null>(null),
-      'sevenCheckbox': this.sevenCheckbox = new FormControl<number | null>(null),
+      'radioButtonsGroup': this.radioButtonsGroup = new FormControl<number | null>(null, [Validators.required],),
+      'jobName': this.jobName = new FormControl<string | null>(null),
+      'employeeDataCheckbox': this.employeeDataCheckbox = new FormControl<number | null>(null),
+      'certificateCheckbox': this.certificateCheckbox = new FormControl<number | null>(null),
+      'bonusCheckbox': this.bonusCheckbox = new FormControl<number | null>(null),
+      'punishmentCheckbox': this.punishmentCheckbox = new FormControl<number | null>(null),
+      'freeHolidaysCheckbox': this.freeHolidaysCheckbox = new FormControl<number | null>(null),
+      'mergeServiceCheckbox': this.mergeServiceCheckbox = new FormControl<number | null>(null),
+      'jobStateCheckbox': this.jobStateCheckbox = new FormControl<number | null>(null),
 
       });
 
@@ -104,8 +145,8 @@ export class JobServiceDataComponent implements OnInit {
 
       private _filterJobName(value: string): ITBLShamelJobName[] {
         const filterValue = value.toLowerCase();
-    
-        return this.JobName_List.filter(option => option.jobname_name.toLowerCase().includes(filterValue));
+        return this.JobName_List.filter(option => option.jobname_name?.toLowerCase().includes(filterValue));
+
       }
 
       public displayJobNameProperty(value: string): string {
@@ -118,14 +159,7 @@ export class JobServiceDataComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    this.Form.get('jobName').disable();
-    this.oneCheckbox.setValue(1);
-    this.twoCheckbox.setValue(1);
-    this.threeCheckbox.setValue(1);
-    this.fourCheckbox.setValue(1);
-    this.fiveCheckbox.setValue(1);
-    this.sixCheckbox.setValue(1);
-    this.sevenCheckbox.setValue(1);
+    
   }
 
   jobNameChecked(){
@@ -146,14 +180,11 @@ export class JobServiceDataComponent implements OnInit {
     this.Form.get('jobName').disable();
   }
 
-  change4(event: any){
 
-  }
-
-  adjustPrintFooter(){
+  adjustPrintFooter1(){
     const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
       width: '1150px',
-      data: {},
+      data: 'PrintEmpExperience',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -161,8 +192,47 @@ export class JobServiceDataComponent implements OnInit {
     });
   }
 
-  print(){
-    
+  adjustPrintFooter2(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: 'PrintEmpState',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
+  adjustPrintFooter3(){
+    const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
+      width: '1150px',
+      data: 'PrintEmpService',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+
+  onCheckBoxChange(){
+    this.employeeStateDataInput= [this.Selected_Emp,
+      {
+        employeeDataCheckbox: this.employeeDataCheckbox.value,
+        certificateCheckbox: this.certificateCheckbox.value,
+        bonusCheckbox: this.bonusCheckbox.value,
+        punishmentCheckbox: this.punishmentCheckbox.value,
+        freeHolidaysCheckbox: this.freeHolidaysCheckbox.value,
+        mergeServiceCheckbox: this.mergeServiceCheckbox.value,
+        jobStateCheckbox: this.jobStateCheckbox.value
+      }]
+  }
+
+  onJobNameChange(){
+    this.jobNameInput= [
+      this.Selected_Emp,
+      {radioButtonsGroup: this.radioButtonsGroup.value, jobName: this.JobName_List.filter(JobName=> JobName.jobname_id == this.jobName.value)[0]?.jobname_name }
+    ];console.log('this.jobName.value', this.jobName.value);
+
+  }
 }

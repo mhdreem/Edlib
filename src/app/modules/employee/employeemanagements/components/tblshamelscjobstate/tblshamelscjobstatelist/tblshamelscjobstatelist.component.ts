@@ -17,9 +17,6 @@ import { TblshamelscjobstatemodifyComponent } from "../tblshamelscjobstatemodify
   styleUrls: ['./tblshamelscjobstatelist.component.scss']
 })
 export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, OnChanges {
-
-  formname:string = 'ManageSCJobStateFrame1';
-
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   //Join Variable   
@@ -149,7 +146,7 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
 
     const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
       height: '60%',
-      width: '35%',
+      width: '45%',
       data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
     });
 
@@ -218,7 +215,7 @@ if (element.serial!= null)
 
       const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
         height: '60%',
-        width: '35%',
+        width: '45%',
         data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
       });
 

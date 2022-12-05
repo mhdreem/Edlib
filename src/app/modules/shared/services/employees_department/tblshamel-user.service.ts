@@ -9,7 +9,7 @@ import { TBLShamelUser } from '../../models/employees_department/TBLShamelUser';
 export class TBLShamelUserService {
 
   Login_User_BehavourSubject: BehaviorSubject<TBLShamelUser> = new BehaviorSubject<TBLShamelUser>({});
-  Login_User: TBLShamelUser ;
+
 
 
   private RestUrl = 'https://localhost:44335/api/';

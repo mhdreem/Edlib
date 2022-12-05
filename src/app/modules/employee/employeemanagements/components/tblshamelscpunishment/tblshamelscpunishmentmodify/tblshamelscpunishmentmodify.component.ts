@@ -31,8 +31,7 @@ const moment = _moment;
   styleUrls: ['./tblshamelscpunishmentmodify.component.scss']
 })
 export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewInit,OnDestroy {
-  formname:string = 'ManageSCPunishmentFrame1';
-  
+
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
 
@@ -86,6 +85,13 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
   submitted = false;
   loading: boolean = false;
 
+  docDateDay: string= '';
+  docDateMonth: string= '';
+  docDateYear: string= '';
+
+  docDateDayIsFilled: boolean= false;
+  docDateMonthIsFilled: boolean= false;
+  docDateYearIsFilled: boolean= false;
   //#region Constuctor 
   constructor(
 
@@ -551,13 +557,12 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
 
 
-  addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  addEventDocumentDate(date: Date) {
 
     console.log('addEventDocumentDate');
-    console.log(event.value);
-    if (event.value != null &&
-      event.value != undefined)
-      this.Selected_Employee_SCPunishment.documentdate = moment(event.value).toDate();
+    if (date != null &&
+      date != undefined)
+      this.Selected_Employee_SCPunishment.documentdate = date;
     console.log('addEventDocumentDate');
 
   }
@@ -572,6 +577,18 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
    }  
 
+   docDateChange(changeSource: string){
+    if (changeSource == 'day')
+      this.docDateDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.docDateMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.docDateYearIsFilled= true;
 
+    if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.addEventDocumentDate(this.documentdate.value);
+    }
+   }
 
 }

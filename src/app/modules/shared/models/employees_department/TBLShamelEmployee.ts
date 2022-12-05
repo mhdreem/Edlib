@@ -82,7 +82,7 @@ export interface TBLShamelEmployee {
 
       
 
-
+      TBLShamelSCJobStatesCard?: any[],
       TBLShamelSCPunishments?:ITBLShamelSCPunishment[];
       TBLShamelSCJobStates?:ITBLShamelSCJobState[];
       TBLShamelSCFreeHolidays?:ITBLShamelSCFreeHoliday[];

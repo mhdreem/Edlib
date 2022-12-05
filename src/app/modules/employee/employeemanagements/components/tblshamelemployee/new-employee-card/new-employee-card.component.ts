@@ -35,7 +35,6 @@ const moment = _moment;
 })
 export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
-  formname:string = 'ManageEmployeeDataCardFrame1';
 
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {
@@ -111,6 +110,19 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   QararDate: FormControl;
   Emp_IN_Military_Service: FormControl;
 
+  birthdayDay: string= '';
+  birthdayMonth: string= '';
+  birthdayYear: string= '';
+  qararDay: string= '';
+  qararMonth: string= '';
+  qararYear: string= '';
+
+  birthdayDayIsFilled: boolean= false;
+  birthdayMonthIsFilled: boolean= false;
+  birthdayYearIsFilled: boolean= false;
+  qararDayIsFilled: boolean= false;
+  qararMonthIsFilled: boolean= false;
+  qararYearIsFilled: boolean= false;
   
   constructor(
     private pageEmployee: EmployeePageService,
@@ -172,7 +184,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
       'Birth_Place': this.Birth_Place = new FormControl<number | null>(null,
         [Validators.required, Validators.maxLength(35)]),
 
-      'BirthDate': this.BirthDate = new FormControl<number | null>(null),
+      'BirthDate': this.BirthDate = new FormControl<Date | null>(null),
 
       'Kayd_Place': this.Kayd_Place = new FormControl<number | null>(null,
         [Validators.required, Validators.maxLength(35)]),
@@ -182,7 +194,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
       'Qarar_Num': this.Qarar_Num = new FormControl<number | null>(null, [Validators.required]),
 
-      'QararDate': this.QararDate = new FormControl<number | null>(null, [Validators.required]),
+      'QararDate': this.QararDate = new FormControl<Date | null>(null, [Validators.required]),
 
       'Nationality_ID': this.Nationality_ID = new FormControl<number | null>(null, [Validators.required]),
       'City_ID': this.City_ID = new FormControl<number | null>(null, [Validators.required]),
@@ -790,7 +802,32 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   }
 
 
+  birthdayChange(changeSource: string){
+    if (changeSource == 'day')
+      this.birthdayDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.birthdayMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.birthdayYearIsFilled= true;
 
+    if (this.birthdayDayIsFilled && this.birthdayMonthIsFilled && this.birthdayYearIsFilled){
+      this.BirthDate.setValue(moment(this.birthdayMonth+'/'+this.birthdayDay+'/'+this.birthdayYear).toDate());
 
+    }
+   }
+
+   qararChange(changeSource: string){
+    if (changeSource == 'day')
+      this.qararDayIsFilled= true;
+    else if (changeSource == 'month')
+      this.qararMonthIsFilled= true;
+    else if (changeSource == 'year')
+      this.qararYearIsFilled= true;
+
+    if (this.qararDayIsFilled && this.qararMonthIsFilled && this.qararYearIsFilled){
+      this.QararDate.setValue(moment(this.qararMonth+'/'+this.qararDay+'/'+this.qararYear).toDate());
+
+    }
+   }
 
 }

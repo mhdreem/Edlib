@@ -4,6 +4,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParamsOptions, HttpParams } from
   '@angular/common/http';
 import { TBLShamelEmployee } from '../../models/employees_department/TBLShamelEmployee';
+import { IPaging } from '../../models/employees_department/ipaging';
 
 
 
@@ -225,6 +226,17 @@ Check_FullName(employee: TBLShamelEmployee,id:number|undefined): Observable<TBLS
     const options = { headers: headers };
 
     return this.httpClient.get(this.RestUrl + "TBLShamelEmployee/UnSetEmployeeAccounter/"+ id, options);
+
+  }
+
+  Display_Employee_Similarity_Name(pageNumber: number, pageSize: number): Observable<IPaging> {
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+
+    const options = { headers: headers };
+
+    return this.httpClient.get(this.RestUrl + "TBLShamelEmployee/Display_Employee_Similarity_Name/" + pageNumber + "/" + pageSize, options) as Observable<IPaging>;
 
   }
 

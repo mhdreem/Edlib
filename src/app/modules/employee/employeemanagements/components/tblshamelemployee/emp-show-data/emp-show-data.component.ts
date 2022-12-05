@@ -26,8 +26,6 @@ import { EditEmployeeCardComponent } from '../edit-employee-card/edit-employee-c
   styleUrls: ['./emp-show-data.component.scss']
 })
 export class EmpShowDataComponent implements OnInit {
-  formname:string = 'ManageEmployeeDataCardFrame1';
-  
   @Input() SelectedEmp : TBLShamelEmployee;
   @Input() SelectedViewEmp : ViewTBLShamelEmployee;
 
@@ -154,5 +152,18 @@ console.log(this.SelectedEmp );
     });
   }
 
+  insertionEmployee(){
+    if (this.SelectedEmp?.id!= null){
+      const dialogRef = this.dialog.open(DataEntryDialogComponent, {
+        width: '350px',
+        data: ""
+      });
+   
+      dialogRef.afterClosed().subscribe(result => {
+  
+      })
+    }
+    
+  }
 
 }

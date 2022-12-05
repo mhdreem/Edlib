@@ -71,7 +71,7 @@ export class UpgradePromotionQararsComponent implements OnInit {
         {
           'UpgradeYear: ': this.UpgradeYear = new FormControl<number | null>(null, [Validators.required]),
           'Class: : ': this.Class = new FormControl<string | null>(null, [Validators.required]),
-          'JobName: ': this.JobName = new FormControl<string | null>(null, [Validators.required]),
+          'JobName: ': this.JobName = new FormControl<string | null>(null, []),
           'MaxQararNum: ': this.MaxQararNum = new FormControl<number | null>(null, [Validators.required]),
           'day: ': this.day = new FormControl<number | null>(null, [Validators.required]),
           'month: ': this.month = new FormControl<number | null>(null, [Validators.required]),
@@ -236,11 +236,12 @@ export class UpgradePromotionQararsComponent implements OnInit {
     this.tblShamelUpgradeGovReportService.GenerateUpgradeRreport({
       list_tblshameljobName: this.addedJobNames,
       year_id: +this.UpgradeYear.value,
-      class_id: +this.Class.value,
+      tblShamelClass: this.Class_List.filter(classItem => classItem.class_id== +this.Class.value)[0],
       blocked: this.blocked,
       qarar_num: +this.MaxQararNum.value,
       qarar_date: moment(this.month.value+'/'+this.day.value+'/'+this.year.value).toDate()}).subscribe(res =>{
         if (res != null)
+        console.log('res123', res);
         this.snackBar.open('تم توليد أرقام القرارات', '', {
           duration: 3000,
         });

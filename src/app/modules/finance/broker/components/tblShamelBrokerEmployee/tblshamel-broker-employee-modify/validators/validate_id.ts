@@ -23,7 +23,8 @@ export function  Validate_ID( tblShamelBrokerEmployeeService:TblShamelBrokerEmpl
         pipe(map(
           (data:any ) => 
           {           
-            return (data && data.length > 0) ? null : { 'uniq1': true }  ;
+            // return (data && data.length > 0) ? null : { 'uniq1': true }  ;
+            return (data && data.serial == 0) ? null : { 'uniq1': true }  ;
           }
         ));
    

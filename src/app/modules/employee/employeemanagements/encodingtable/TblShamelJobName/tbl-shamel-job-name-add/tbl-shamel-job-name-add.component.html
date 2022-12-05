@@ -1,0 +1,33 @@
+
+<form [formGroup]="myform" >
+
+    <h1 mat-dialog-title> :: <strong>{{action}}</strong>   صفة وظيفية  </h1>
+  
+     <div mat-dialog-content>
+  
+      <div class="col-12" *ngIf="action != 'حذف'; else elseTemplate">
+        <div class="col-12 row">
+        <div class="col-6">
+          <mat-form-field >
+            <input placeholder="اسم الصفة الوظيفية " matInput
+                  formControlName="jobname_name">
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-checkbox color="primary" [formControl]="frm_jobname_fixed" [(ngModel)]="local_data!.Fixed"> هل هو مثبت         </mat-checkbox>
+        </div>
+  
+  
+      </div>
+    </div>
+  
+      <ng-template #elseTemplate>
+          هل أنت متأكد من حذف  دراسة/دورة  <b>{{local_data.jobname_name}}</b>؟
+      </ng-template>
+     </div>
+     <div mat-dialog-actions>
+      <button mat-button (click)="doAction()">{{action}}</button>
+      <button mat-button (click)="closeDialog()" mat-flat-button color="warn">إلغاء</button>
+     </div>
+    </form>
+  
