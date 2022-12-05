@@ -1,4 +1,5 @@
 
+import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, AfterViewInit, Input, Inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -32,7 +33,7 @@ const moment = _moment;
   styleUrls: ['./tblshamelsccoursemodify.component.scss']
 })
 export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'ManageSCCourseFrame1';
   //ملئ القيم بالكائن الذي نريد التعامل معه 
   @Input() employee_id: number;
   Selected_Emp: TBLShamelEmployee = {};
@@ -89,20 +90,6 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   //يظهر عند تحميل البيانات
   loading: boolean = false;
 
-  startDateDay: string= '';
-  startDateMonth: string= '';
-  startDateYear: string= '';
-  endDateDay: string= '';
-  endDateMonth: string= '';
-  endDateYear: string= '';
-
-  startDateDayIsFilled: boolean= false;
-  startDateMonthIsFilled: boolean= false;
-  startDateYearIsFilled: boolean= false;
-  endDateDayIsFilled: boolean= false;
-  endDateMonthIsFilled: boolean= false;
-  endDateYearIsFilled: boolean= false;
-
   //#region Constuctor 
   constructor(
     private frmBuilder: FormBuilder,
@@ -113,6 +100,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     public countryService: TblshamelcountryService,
     public stateService: TblshamelstateService,
     public tblshameluserservice: TBLShamelUserService,
+    @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCCourse, id: number }
   ) {
 
@@ -632,9 +620,10 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
 
 
-  addEventStartDate(date: Date) {
-    if (date != null) {
-      this.Selected_Employee_Course.startdate = date;
+  addEventStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    if (event != null && event.value != null) {
+      this.Selected_Employee_Course.startdate = moment(event.value).toDate();
+      console.log('date');
       if (this.Selected_Employee_Course != null &&
         this.Selected_Employee_Course.startdate != null &&
         this.Selected_Employee_Course.enddate != null
@@ -647,9 +636,11 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addEventEndDate(date: Date) {
-    if (date != null ) {
-      this.Selected_Employee_Course.enddate = date;
+  addEventEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    if (event != null && event.value != null) {
+
+      this.Selected_Employee_Course.enddate = moment(event.value).toDate();
+
       if (this.Selected_Employee_Course != null &&
         this.Selected_Employee_Course.startdate != null &&
         this.Selected_Employee_Course.enddate != null
@@ -663,33 +654,12 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
   }
 
-  startDateChange(changeSource: string){
-    if (changeSource == 'day')
-      this.startDateDayIsFilled= true;
-    else if (changeSource == 'month')
-      this.startDateMonthIsFilled= true;
-    else if (changeSource == 'year')
-      this.startDateYearIsFilled= true;
-
-    if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
-      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).toDate());
-      this.addEventStartDate(this.startdate.value);
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
     }
-   }
-
-   endDateChange(changeSource: string){
-    if (changeSource == 'day')
-      this.endDateDayIsFilled= true;
-    else if (changeSource == 'month')
-      this.endDateMonthIsFilled= true;
-    else if (changeSource == 'year')
-      this.endDateYearIsFilled= true;
-
-    if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
-      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).toDate());
-      this.addEventEndDate(this.enddate.value);
-    }
-   }
+  }
 
 }
 

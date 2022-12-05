@@ -87,6 +87,7 @@ import { ConfirmationdialogComponent } from './modules/shared/components/confirm
 
 @NgModule({
   declarations: [
+    
     AppComponent   ,
     LoginComponent,
     DefaultFooterComponent,
@@ -183,6 +184,7 @@ IconModule,
     multi: true
   }
   ],
+  exports:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

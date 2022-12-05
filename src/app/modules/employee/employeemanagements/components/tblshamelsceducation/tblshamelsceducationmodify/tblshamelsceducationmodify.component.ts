@@ -31,7 +31,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./tblshamelsceducationmodify.component.scss']
 })
 export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  formname:string = 'ManageSCEducationFrame1';
+  
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
   _Selected_Employee_Education: ITBLShamelSCEducation;

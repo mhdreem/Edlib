@@ -31,6 +31,9 @@ const moment = _moment;
   styleUrls: ['./edit-employee-card.component.scss']
 })
 export class EditEmployeeCardComponent implements OnInit {
+
+  formname:string = 'ManageEmployeeDataCardFrame1';
+  
        @Input() SelectedEmp : TBLShamelEmployee;
 
        // Access To Element in Form

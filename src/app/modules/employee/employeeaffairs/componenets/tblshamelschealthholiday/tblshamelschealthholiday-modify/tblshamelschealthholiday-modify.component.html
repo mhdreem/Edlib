@@ -14,7 +14,7 @@
         <mat-form-field appearance="fill">
           <mat-label>تاريخ بداية الإجازة</mat-label>
           <input matInput [matDatepicker]="Datepicker_startdate" formControlName="startdate" [formControl]="startdate"
-            (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)">
+            (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)" id="startdate">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_startdate></mat-datepicker>
         </mat-form-field>
@@ -24,7 +24,7 @@
         <mat-form-field appearance="fill">
           <mat-label>تاريخ انتهاء الإجازة</mat-label>
           <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate"
-            (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)">
+            (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)" id="enddate">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_enddate></mat-datepicker>
         </mat-form-field>
@@ -34,7 +34,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدة</mat-label>
           <input matInput type="number" placeholder="المدة" value="" [formControl]="duration"
-            formControlName="duration">
+            formControlName="duration" id="duration">
         </mat-form-field>
 
 
@@ -48,7 +48,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>السبب</mat-label>
           <input matInput type="text" placeholder="المرض" value="" [formControl]="sick"
-            formControlName="sick">
+            formControlName="sick" id="sick">
         </mat-form-field>
 
       </div>
@@ -57,8 +57,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الطبيب</mat-label>
-          <input type="text" matInput [formControl]="doctor_id" formControlName="doctor_id"
-            [matAutocomplete]="auto_doctor_id">
+          <input type="text" matInput [formControl]="doctor_id" formControlName="doctor_id" id="doctor_id"
+            [matAutocomplete]="auto_doctor_id" >
           <mat-error *ngIf="errorHandling('doctor_id', 'required')">
             اختر الطبيب
           </mat-error>
@@ -70,7 +70,7 @@
             </mat-hint>
 
           <mat-autocomplete #auto_doctor_id="matAutocomplete" [displayWith]="displayDoctorProperty.bind(this)"
-            (optionSelected)="OnSelectDoctorChange($event)">
+            (optionSelected)="OnSelectDoctorChange($event)"  >
             <mat-option *ngFor="let option of filteredDoctorOptions | async" [value]="option.doctor_id">
               {{option.doctor_name}}
             </mat-option>
@@ -91,7 +91,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
-            [matAutocomplete]="auto_documenttype_id">
+            [matAutocomplete]="auto_documenttype_id" id="documenttype_id">
           <mat-autocomplete #auto_documenttype_id="matAutocomplete"
             [displayWith]="displayDocumentTypeProperty.bind(this)"
             (optionSelected)="OnSelectDocumentTypeChange($event)">
@@ -107,7 +107,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>
           <input matInput type="number" placeholder="" value="" [formControl]="document_number"
-            formControlName="document_number">
+            formControlName="document_number" id="document_number">
 
         </mat-form-field>
 
@@ -118,7 +118,7 @@
           <mat-label>تاريخ المستند</mat-label>
           <input matInput [matDatepicker]="Datepicker_documentdate" formControlName="documentdate"
             [formControl]="documentdate" (dateInput)="addEventDocumentDate('input', $event)"
-            (dateChange)="addEventDocumentDate('change', $event)">
+            (dateChange)="addEventDocumentDate('change', $event)" id="documentdate">
           <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
           <mat-datepicker #Datepicker_documentdate></mat-datepicker>
         </mat-form-field>

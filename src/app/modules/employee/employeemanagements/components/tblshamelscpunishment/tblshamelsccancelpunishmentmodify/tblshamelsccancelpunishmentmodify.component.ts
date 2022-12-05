@@ -27,6 +27,9 @@ const moment = _moment;
   styleUrls: ['./tblshamelsccancelpunishmentmodify.component.scss']
 })
 export class TblshamelsccancelpunishmentmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  formname:string = 'ManageSCPunishmentFrame1';
+
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
 

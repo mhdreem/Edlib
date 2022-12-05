@@ -22,7 +22,7 @@ import { EmployeePageService } from '../../employee-page-service';
 })
 export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  {
 
-
+  formname:string = 'ManageSCCourseFrame1';
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

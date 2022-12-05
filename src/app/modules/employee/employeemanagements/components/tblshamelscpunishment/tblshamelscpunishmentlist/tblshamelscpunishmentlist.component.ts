@@ -18,7 +18,7 @@ import { TblshamelscpunishmentmodifyComponent } from "../tblshamelscpunishmentmo
   styleUrls: ['./tblshamelscpunishmentlist.component.scss']
 })
 export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit  {
-
+  formname:string = 'ManageSCPunishmentFrame1';
     //Join Variable   
     Selected_Emp: TBLShamelEmployee = {};
     @ViewChild('paginator') paginator: MatPaginator;

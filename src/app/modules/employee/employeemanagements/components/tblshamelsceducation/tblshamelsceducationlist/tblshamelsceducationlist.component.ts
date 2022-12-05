@@ -17,6 +17,10 @@ import { TblshamelsceducationmodifyComponent } from "../tblshamelsceducationmodi
   styleUrls: ['./tblshamelsceducationlist.component.scss']
 })
 export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit {
+
+  formname:string = 'ManageSCEducationFrame1';
+  
+
   //Join Variable   
   Selected_Emp: TBLShamelEmployee = {};
   @ViewChild('paginator') paginator: MatPaginator;

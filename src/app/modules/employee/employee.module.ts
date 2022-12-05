@@ -1,8 +1,7 @@
 import {  NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {MatSnackBarModule} from '@angular/material/snack-bar'; 
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';  
 import { MatMomentDateModule, MomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '../shared/models/employees_department/MY_DATE_FORMATS';
@@ -92,6 +91,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 import { NavService } from '../shared/components/containers/default-layout/nav.service';
+import { CommonmoduleModule } from '../commonmodule/commonmodule.module';
 
 /////////////////////////////
 
@@ -120,6 +120,7 @@ export const MY_FORMATS = {
   imports: [  
     CommonModule,
     RouterModule,
+CommonmoduleModule,
     
     MatCardModule,
     MatAutocompleteModule,

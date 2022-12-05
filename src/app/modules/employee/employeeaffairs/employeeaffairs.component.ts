@@ -3,11 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { INavData } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { NavService } from '../../shared/components/containers/default-layout/nav.service';
+import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 
 @Component({
   selector: 'app-employeeaffairs',
-  templateUrl: './employeeaffairs.component.html',
-  
+  templateUrl: './employeeaffairs.component.html', 
 })
 export class EmployeeaffairsComponent implements OnInit {
 
@@ -23,6 +23,7 @@ export class EmployeeaffairsComponent implements OnInit {
       name: 'الإجازات الصحية',
       url: 'employees/module/employeeaffairs/manage/schealthholiday',
       iconComponent: { name: 'cil-pencil' },
+      
     }
     ,
   
@@ -65,13 +66,24 @@ export class EmployeeaffairsComponent implements OnInit {
   ];
 
  
-
-  constructor(private navService:NavService) {
-    this.navService.navItems_Subject.next(this.navItems);
+  constructor(private navService:NavService,
+    private router: Router) {
+      this.navService.navItems_Subject.next(this.navItems);
+      this.router.events
+        .subscribe(
+          (event: NavigationEvent) => {
+            if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.navService.navItems_Subject.next(this.navItems);
+        }
+                
+            }
+          });
   }
+  
 
   ngOnInit(): void {
-    this.navService.navItems_Subject.next(this.navItems);
+  
   }
   
 

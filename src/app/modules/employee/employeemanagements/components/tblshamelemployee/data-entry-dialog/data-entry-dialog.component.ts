@@ -10,7 +10,8 @@ import { EmployeePageService } from "../../employee-page-service";
   styleUrls: ['./data-entry-dialog.component.scss']
 })
 export class DataEntryDialogComponent implements OnInit {
-
+  formname:string = 'ManageEmployeeDataCardFrame1';
+  
   @Input() SelectedEmp : TBLShamelEmployee;
 
   constructor(public dialogRef: MatDialogRef<DataEntryDialogComponent>,
