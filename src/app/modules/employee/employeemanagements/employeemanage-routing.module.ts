@@ -37,6 +37,7 @@ import { TblShamelRankListComponent } from './encodingtable/TblShamelRank/tbl-sh
 import { TblShamelSpecificationListComponent } from './encodingtable/TblShamelSpecification/tbl-shamel-specification-list/tbl-shamel-specification-list.component';
 import { DisplayEmployeeSimilarityNameComponent } from './components/display-employee-similarity-name/display-employee-similarity-name.component';
 import { TblShamelClassListComponent } from './encodingtable/TblShamelClass/tbl-shamel-class-list/tbl-shamel-class-list.component';
+import { AuthGuardServiceService } from 'src/app/Global/auth-guard-service.service';
 
 
 const routes: Routes = [
@@ -49,7 +50,7 @@ const routes: Routes = [
   {
     path: 'Cards',
     component: EmployeeCardComponent,
-  
+    canActivate:[AuthGuardServiceService],  
     children:[
       {
         path: 'NewEmployeeCard', component: NewEmployeeCardComponent, data:

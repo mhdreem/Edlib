@@ -28,7 +28,7 @@ import { FormValidationHelpersService } from 'src/app/modules/shared/services/he
   styleUrls: ['./tblshamelscbonusmodify.component.scss']
 })
 export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  formname:string = 'ManageSCIncMarsoomFrame1';
   x: Subscription;
 
   //Link To Employee

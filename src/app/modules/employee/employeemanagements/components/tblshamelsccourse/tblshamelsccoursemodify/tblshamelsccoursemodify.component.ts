@@ -33,6 +33,9 @@ const moment = _moment;
 })
 export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
+
+  formname:string = '';
+
   //ملئ القيم بالكائن الذي نريد التعامل معه 
   @Input() employee_id: number;
   Selected_Emp: TBLShamelEmployee = {};

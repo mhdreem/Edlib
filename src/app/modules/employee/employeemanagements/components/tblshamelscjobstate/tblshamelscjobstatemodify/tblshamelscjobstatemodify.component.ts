@@ -35,6 +35,8 @@ const moment = _moment;
   styleUrls: ['./tblshamelscjobstatemodify.component.scss']
 })
 export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  formname:string = 'ManageSCIncMarsoomFrame1';
   //Link To Employee 
   id_employee: number;
   Selected_Emp: ITBLShamelSCJobState = {};

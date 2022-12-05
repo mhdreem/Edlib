@@ -27,7 +27,7 @@ const moment = _moment;
   styleUrls: ['./tblshamelscfreeholidaymodify.component.scss']
 })
 export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'ManageSCIncMarsoomFrame1';
 
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};

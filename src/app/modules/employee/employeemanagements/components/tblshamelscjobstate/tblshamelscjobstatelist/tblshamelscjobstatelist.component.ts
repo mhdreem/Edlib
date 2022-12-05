@@ -17,6 +17,9 @@ import { TblshamelscjobstatemodifyComponent } from "../tblshamelscjobstatemodify
   styleUrls: ['./tblshamelscjobstatelist.component.scss']
 })
 export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, OnChanges {
+
+  formname:string = 'ManageSCIncMarsoomFrame1';
+  
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   //Join Variable   
