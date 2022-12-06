@@ -73,6 +73,8 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     this.dataSource.sort = this.sort;
   }
 
+  referralInput: any[];
+
 
   constructor(
     private upgradeYear: TblShamelUpgradeYearService,
@@ -265,8 +267,22 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
       (res: any)=>{
         this.dataSource.data= res.Item1;
         this.totalRows= res.Item2;
+        this.referralInput= this.dataSource.data;
         console.log('res', res);
         console.log('req', this.request);
+
+        let request= {
+          year_id: +this.UpgradeYear.value,
+          class_name:  this.Class.value,
+          jobname_name: this.JobName.value,
+          first_qarar_num: +this.FirstQararNum.value,
+          last_qarar_num: +this.LastQararNum.value,
+          };
+
+        this.tblShamelUpgradeGovReportService.Search(request).subscribe(
+          (res: any)=>{
+            this.referralInput= res.Item1;
+          });
       }
     );
     
@@ -277,6 +293,7 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
       (res: any)=>{
         console.log('res', res);
         this.dataSource.data= res.Item1;
+        this.referralInput= this.dataSource.data;
       }
     );
   }

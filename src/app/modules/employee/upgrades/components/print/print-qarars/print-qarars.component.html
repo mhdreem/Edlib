@@ -1,1 +1,260 @@
-<p>print-qarars works!</p>
+<button mat-raised-button color="primary" (click)="print();" >طباعة</button>
+<button id="hidden"  mat-raised-button color="primary" printSectionId="2" ngxPrint #printButton>طباعة</button>
+<div id="printQarars-section">
+    <div class=WordSection1 >
+
+        <div *ngFor="let partialDatum of partialData; let i=index">
+            <div id="{{i}}" >
+                <div align=center>
+            
+                    <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;border:none'>
+                     <tr>
+                      <td width=208 style='width:155.8pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SY
+                      style='font-family:"Arial",sans-serif'>الجمهورية العربية السورية<br>
+                      محافظة ادلب</span></p>
+                      </td>
+                      <td width=208 style='width:155.85pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>قرار رقم (          )</span></p>
+                      </td>
+                      <td width=208 style='width:155.85pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    
+                    </div>
+                    
+                    <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
+                    rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                    
+                    <div align=center>
+                    
+                    <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;border:none'>
+                     <tr>
+                      <td width=623 style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal dir=rtl style='margin-bottom:0in;text-align:right;
+                      line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>{{data[1]}}</span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    
+                    </div>
+                    
+                    <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
+                    rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                    
+                    <div align=center>
+                    
+                    <table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;border:none'>
+                     <tr>
+                      <td width=666 colspan=11 style='width:499.4pt;border:solid windowtext 1.0pt;
+                      padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>يقرر ما يلي:</span></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td width=666 colspan=11 style='width:499.4pt;border:solid windowtext 1.0pt;
+                      border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal dir=rtl style='margin-bottom:0in;text-align:right;
+                      line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>مادة 1- يمنح العاملون في مديرية
+                      التربية بادلب من الفئة الأولى والمبينة أسماؤهم أدناه علاوة ترفيع 9% وفق ما
+                      يلي:</span></p>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td width=44 style='width:33.05pt;border:solid windowtext 1.0pt;border-top:
+                      none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>تسلسل</span></p>
+                      </td>
+                      <td width=56 style='width:42.1pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>رقم الإضبارة</span></p>
+                      </td>
+                      <td width=56 style='width:42.2pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>رقم الحاسوب</span></p>
+                      </td>
+                      <td width=60 style='width:44.65pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>الرقم الذاتي</span></p>
+                      </td>
+                      <td width=102 style='width:76.8pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>الاسم الثلاثي</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>الوظيفة</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>الأجر الحالي</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>درجة الكفاءة</span></p>
+                      </td>
+                      <td width=60 style='width:45.3pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>مقدار العلاوة</span></p>
+                      </td>
+                      <td width=60 style='width:45.3pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>مدة الاستحقاق</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>الأجر الجديد</span></p>
+                      </td>
+                     </tr>
+                     <tr *ngFor="let datum of partialDatum">
+                      <td width=44 style='width:33.05pt;border:solid windowtext 1.0pt;border-top:
+                      none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                      </td>
+                      <td width=56 style='width:42.1pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>4825</span></p>
+                      </td>
+                      <td width=56 style='width:42.2pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>176076</span></p>
+                      </td>
+                      <td width=60 style='width:44.65pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>79277</span></p>
+                      </td>
+                      <td width=102 style='width:76.8pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>فهد جابر ابن محمد</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>مدرس</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>156470</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>جيد</span></p>
+                      </td>
+                      <td width=60 style='width:45.3pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>587</span></p>
+                      </td>
+                      <td width=60 style='width:45.3pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>30</span></p>
+                      </td>
+                      <td width=57 style='width:42.5pt;border-top:none;border-left:solid windowtext 1.0pt;
+                      border-bottom:solid windowtext 1.0pt;border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                      center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>156483</span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    
+                    </div>
+                    
+                    <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
+                    rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                    
+                    <div align=center>
+                    
+                    <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;border:none'>
+                     <tr>
+                      <td width=660 style='width:494.7pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal dir=rtl style='margin-bottom:0in;text-align:right;
+                      line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>{{data[2]}}</span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    
+                    </div>
+                    
+                    <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
+                    rtl;unicode-bidi:embed'><span lang=AR-SA style='font-family:"Arial",sans-serif'>&nbsp;</span></p>
+                    
+                    <div align=center>
+                    
+                    <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+                     style='border-collapse:collapse;border:none'>
+                     <tr>
+                      <td width=623 style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+                      <p class=MsoNormal dir=rtl style='margin-bottom:0in;text-align:right;
+                      line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+                      style='font-family:"Arial",sans-serif'>{{data[3]}}</span></p>
+                      </td>
+                     </tr>
+                    </table>
+                    
+                    </div>
+                    
+                    <p class=MsoNormal align=center dir=rtl style='text-align:center;direction:
+                    rtl;unicode-bidi:embed'><span dir=ltr>&nbsp;</span></p>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>

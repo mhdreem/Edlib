@@ -19,6 +19,7 @@ export class DefaultLayoutComponent implements OnInit {
     this._navItems = arr;
     let items2Remove : INavData[] = [];
 
+    /*
     if (this._navItems!= null &&
         this._navItems.length >0 &&
         this.SelectedUser!= null &&
@@ -65,7 +66,7 @@ export class DefaultLayoutComponent implements OnInit {
 
 
     }
-
+*/
     items2Remove.forEach(element => {
       var index = this._navItems.indexOf(element);
       if (index>=0)

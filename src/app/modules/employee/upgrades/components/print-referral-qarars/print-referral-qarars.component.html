@@ -73,8 +73,8 @@
   </mat-accordion>
   
   <button class="view" mat-raised-button color="primary" (click)="list()">عرض السجلات</button>
-<button mat-raised-button color="primary" (click)="print()" printSectionId="print-section" ngxPrint>طباعة الإحالات</button>
-<button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
+<button mat-raised-button color="primary" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]">طباعة الإحالات</button>
+<button mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
 
 <div class="table-wrap">
 
@@ -137,4 +137,8 @@
     [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
   
   
+  </div>
+  
+  <div id="printReferral-section">
+    <app-print-referrals [data]="referralInput"></app-print-referrals>
   </div>

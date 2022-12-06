@@ -66,4 +66,10 @@ export class TBLShamelUpgradeService {
     const options = {  headers: headers };  
     return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/Upgrade_JobState/"+blocked+'/'+yearId, Reuest,options);      
   }
+
+  Prepare_PrintUpgradeQararV(obj:any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/Prepare_Print_UpgradeQararV",obj,options);      
+  }
 }

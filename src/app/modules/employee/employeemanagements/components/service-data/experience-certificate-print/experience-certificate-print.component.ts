@@ -2,11 +2,19 @@ import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@ang
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
+import { NumberToWordService } from 'src/app/modules/shared/services/employees_department/number-to-word.service';
 import { TblshamelPrintFooterService } from 'src/app/modules/shared/services/employees_department/tblshamel-print-footer.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 
 type jobState={jobName?: string, begindate?: Date};
-type calculatedJobState={jobName?: string, totalDays?: number, totalMonths?: number, totalyears?: number,};
+type calculatedJobState={
+  jobName?: string,
+  totalDays?: number,
+  totalMonths?: number,
+  totalyears?: number,
+  totalDaysWritten?: string,
+  totalMonthsWritten?: string,
+  totalyearsWritten?: string};
 @Component({
   selector: 'app-experience-certificate-print',
   templateUrl: './experience-certificate-print.component.html',
@@ -38,9 +46,13 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
   totalServicesDays: number;
   totalServicesMonths: number;
   totalServicesYears: number;
+  totalServicesDaysWritten: string;
+  totalServicesMonthsWritten: string;
+  totalServicesYearsWritten: string;
   constructor(
   private tblShamelUserService: TBLShamelUserService,
-  private tblshamelPrintFooterService: TblshamelPrintFooterService) { 
+  private tblshamelPrintFooterService: TblshamelPrintFooterService,
+  private numberToWordService: NumberToWordService) { 
     this.todayDate= new Date();
     console.log('data123', this.data);
 
@@ -108,7 +120,17 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
           this.calculatedJobStates[i].totalMonths-= Math.floor(this.calculatedJobStates[i].totalMonths/12)*12;
           this.calculatedJobStates[i].totalMonths+= Math.floor(this.calculatedJobStates[i].totalDays/30);
           this.calculatedJobStates[i].totalDays-= Math.floor(this.calculatedJobStates[i].totalDays/30)*30;
-  
+        }
+        for (let i=0; i<this.calculatedJobStates.length; i++){
+          this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalyears).subscribe(res =>{
+            this.calculatedJobStates[i].totalyearsWritten = res as string;
+          });
+          this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalMonths).subscribe(res =>{
+            this.calculatedJobStates[i].totalMonthsWritten = res as string;
+          });
+          this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalDays).subscribe(res =>{
+            this.calculatedJobStates[i].totalDaysWritten = res as string;
+          });
         }
         let calculatedInDays: number= 0;
         this.calculatedJobStates.forEach(
@@ -126,6 +148,17 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
         console.log('calculatedInDays3', calculatedInDays);
   
         this.totalServicesDays= calculatedInDays;
+
+        this.totalServicesDays= calculatedInDays;
+      this.numberToWordService.getWrittenNumber(this.totalServicesDays).subscribe(res =>{
+        this.totalServicesDaysWritten = res as string;
+      });
+      this.numberToWordService.getWrittenNumber(this.totalServicesMonths).subscribe(res =>{
+        this.totalServicesMonthsWritten = res as string;
+      });
+      this.numberToWordService.getWrittenNumber(this.totalServicesYears).subscribe(res =>{
+        this.totalServicesYearsWritten = res as string;
+      });
   
         if (this.data[1].radioButtonsGroup == 1)
         this.calculatedJobStates = this.calculatedJobStates.filter(calculatedJobState => calculatedJobState.jobName == this.data[1].jobName);
@@ -173,6 +206,17 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
         this.calculatedJobStates[i].totalDays-= Math.floor(this.calculatedJobStates[i].totalDays/30)*30;
 
       }
+      for (let i=0; i<this.calculatedJobStates.length; i++){
+        this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalyears).subscribe(res =>{
+          this.calculatedJobStates[i].totalyearsWritten = res as string;
+        });
+        this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalMonths).subscribe(res =>{
+          this.calculatedJobStates[i].totalMonthsWritten = res as string;
+        });
+        this.numberToWordService.getWrittenNumber(this.calculatedJobStates[i].totalDays).subscribe(res =>{
+          this.calculatedJobStates[i].totalDaysWritten = res as string;
+        });
+      }
       let calculatedInDays: number= 0;
       this.calculatedJobStates.forEach(
         calculatedJobState =>{
@@ -189,7 +233,16 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
       console.log('calculatedInDays3', calculatedInDays);
 
       this.totalServicesDays= calculatedInDays;
-
+      this.numberToWordService.getWrittenNumber(this.totalServicesDays).subscribe(res =>{
+        this.totalServicesDaysWritten = res as string;
+      });
+      this.numberToWordService.getWrittenNumber(this.totalServicesMonths).subscribe(res =>{
+        this.totalServicesMonthsWritten = res as string;
+      });
+      this.numberToWordService.getWrittenNumber(this.totalServicesYears).subscribe(res =>{
+        this.totalServicesYearsWritten = res as string;
+      });
+       
       if (this.data[1].radioButtonsGroup == 1)
       this.calculatedJobStates = this.calculatedJobStates.filter(calculatedJobState => calculatedJobState.jobName == this.data[1].jobName);
       console.log('this.data[1].jobName', this.data[1].jobName);

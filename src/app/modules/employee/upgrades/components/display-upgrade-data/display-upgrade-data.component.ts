@@ -388,6 +388,24 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
         this.totalRows= res.Item2;
       }
     );
+
+    let printRequest= {
+      "year_id": this.UpgradeYear.value,
+      "class_id": this.Class.value,
+      "jobname_id": this.JobName.value,
+      "accounter_id": this.Accounter.value,
+      "qualitygrade": this.Rank.value,
+      "id_start": this.idStart.value,
+      "id_end": this.idEnd.value,
+      "type_display_Option": this.TypeDisplay.value,
+    };
+    this.tblShamelUpgradeService.list(printRequest).subscribe(
+      (res: any) =>{
+        console.log('printRequest', printRequest);
+        this.rankInput= res.Item1;
+        console.log('this.rankInput', this.rankInput);
+      }
+    );
   }
 
   adjustPrintFooter(){
@@ -402,16 +420,5 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   }
 
 
-  printUpgradeData(){
-    // const dialogRef = this.dialog.open(ServiceDataPrintComponent, {
-    //   height: '70%',
-    //   width: '60%',
-    //   data: this.Selected_Emp,
-    // });
-
-    // dialogRef.afterClosed().subscribe(result => {
-      
-    // });
-  }
 
 }

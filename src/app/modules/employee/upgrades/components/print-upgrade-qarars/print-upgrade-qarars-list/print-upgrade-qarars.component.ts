@@ -16,6 +16,8 @@ import { PrintUpgradeQararsModifyComponent } from '../print-upgrade-qarars-modif
 import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employee/employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { PrintQararsComponent } from '../../print/print-qarars/print-qarars.component';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
+import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
+import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
 
 @Component({
   selector: 'app-print-upgrade-qarars',
@@ -77,7 +79,9 @@ export class PrintUpgradeQararsComponent implements OnInit {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private fb: UntypedFormBuilder,
-    private tblShamelYearService: TBLShamelYearService
+    private tblShamelYearService: TBLShamelYearService,
+    private tblShamelUserService: TBLShamelUserService,
+    private tblShamelUpgradeService: TBLShamelUpgradeService
     
     ) {
 
@@ -192,17 +196,17 @@ export class PrintUpgradeQararsComponent implements OnInit {
   private _filterUpgradeYear(value: string): TblShamelUpgradeYear[] {
     const filterValue = value.toLowerCase();
 
-    return this.UpgradeYear_List.filter(option => option.YEAR_ID == +filterValue);
+    return this.UpgradeYear_List.filter(option => option?.YEAR_ID == +filterValue);
   }
   private _filterClass(value: string): ITBLShamelClass[] {
     const filterValue = value.toLowerCase();
 
-    return this.Class_List.filter(option => option.class_name.toLowerCase().includes(filterValue));
+    return this.Class_List.filter(option => option?.class_name?.toLowerCase().includes(filterValue));
   }
   private _filterJobName(value: string): ITBLShamelJobName[] {
     const filterValue = value.toLowerCase();
 
-    return this.JobName_List.filter(option => option.jobname_name.toLowerCase().includes(filterValue));
+    return this.JobName_List.filter(option => option?.jobname_name?.toLowerCase().includes(filterValue));
   }
 
   public displayUpgradeYearProperty(value: string): string {
@@ -275,6 +279,13 @@ export class PrintUpgradeQararsComponent implements OnInit {
       );
   }
   ngOnInit(): void {
+    this.tblShamelYearService.GetYearFixed().subscribe(
+      res => {
+        this.fixedYear = res.year_name;
+        this.UpgradeYear.setValue(this.fixedYear);
+      }
+    );
+
     this.Load_Text();
 
     this.tblShamelYearService.GetYearFixed().subscribe(
@@ -484,21 +495,41 @@ export class PrintUpgradeQararsComponent implements OnInit {
   }
 
   print(){
-    if(this.Form.get('UpgradeYear').value == null || this.Form.get('Class').value == null || this.Form.get('JobName').value == null || this.Form.get('FirstQararNum').value == null || this.Form.get('LastQararNum').value == null)
+    if( this.UpgradeYear.value != null && ((this.Class.value != null && this.JobName.value != null) || (this.Form.get('FirstQararNum').value != null && this.Form.get('LastQararNum').value != null))){
+      this.generatePrintFiles();
+    }
+    else
       this._snackBar.open('يجب اختيار الفئة والصفة الوظيفية أو رقم القرار', '', {
         duration: 4000
       });
-    else{
-      const dialogRef = this.dialog.open(PrintQararsComponent, {
-        height: '70%',
-        width: '60%',
-        data: ""
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        
-      });
-    }
     
+  }
+
+  userId: number;
+  disablePrintButton: boolean= true;
+
+  generatePrintFiles(){
+      this.disablePrintButton= false;
+      this.userId= this.tblShamelUserService.Login_User.user_id
+
+      this.tblShamelUpgradeService.Prepare_PrintUpgradeQararV({
+        tblshameluser: {user_id: this.userId},
+        year_id: this.UpgradeYear.value,
+        class_id: this.Class.value,
+        jobname_id: this.JobName.value,
+        first_qarar_num: this.FirstQararNum.value,
+        last_qarar_num: this.LastQararNum.value
+      }).subscribe((res: any) =>{
+        console.log('res', res);
+        const dialogRef = this.dialog.open(PrintQararsComponent, {
+          height: '70%',
+          width: '60%',
+          data: [res.Result.Item1, this.List_Header[this.headerCurrentIndex]?.strtextinside, this.List_Footer1[this.footer1CurrentIndex]?.strtextinside, this.List_Footer2[this.footer2CurrentIndex]?.strtextinside]
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          
+        });
+      })
   }
 }

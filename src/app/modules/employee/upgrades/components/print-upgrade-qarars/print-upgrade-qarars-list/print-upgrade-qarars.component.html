@@ -35,7 +35,8 @@
                     [matAutocomplete]="autoUpgradeYear"
                     >
             <mat-autocomplete #autoUpgradeYear="matAutocomplete"
-            [displayWith]="displayUpgradeYearProperty.bind(this)">
+            [displayWith]="displayUpgradeYearProperty.bind(this)"
+            >
               <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
                 {{option.YEAR_ID}}
               </mat-option>
@@ -50,7 +51,8 @@
                       [matAutocomplete]="autoClass"
                       >
               <mat-autocomplete #autoClass="matAutocomplete"
-              [displayWith]="displayClassProperty.bind(this)">
+              [displayWith]="displayClassProperty.bind(this)"
+              >
                 <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
                   {{option.class_name}}
                 </mat-option>
@@ -65,7 +67,8 @@
                       [matAutocomplete]="autoJobName"
                       >
               <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value)'
-              [displayWith]="displayJobNameProperty.bind(this)">
+              [displayWith]="displayJobNameProperty.bind(this)"
+              >
                 <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
                   {{option.jobname_name}}
                 </mat-option>
@@ -74,15 +77,15 @@
     
             <mat-form-field class="example-full-width fitContent" appearance="fill">
                 <mat-label>من رقم قرار</mat-label>
-                <input matInput type="number" value="" [formControl]="FirstQararNum">
+                <input matInput type="number" value="" [formControl]="FirstQararNum" >
                 </mat-form-field>
     
                 <mat-form-field class="example-full-width fitContent" appearance="fill">
                 <mat-label>الى رقم قرار</mat-label>
-                <input matInput type="number" value="" [formControl]="LastQararNum">
+                <input matInput type="number" value="" [formControl]="LastQararNum" >
                 </mat-form-field>
                 
-                <mat-checkbox [formControl]="DoNotPrint">عدم طباعة رقم القرار على القرار</mat-checkbox>
+                <!-- <mat-checkbox [formControl]="DoNotPrint">عدم طباعة رقم القرار على القرار</mat-checkbox> -->
     </form>
     
     <p>يحب استخدام ورق قياس LEGAL بطول 33 سم ومعايرة الطابعة على هذا القياس</p>
@@ -144,11 +147,12 @@
 
 <div id="print">
     <form class="example-form" [formGroup]="Form1">
-        <mat-checkbox [formControl]="showWord">إظهار كلمة رئيس المكتب التنفيذي</mat-checkbox>
+        <!-- <mat-checkbox [formControl]="showWord">إظهار كلمة رئيس المكتب التنفيذي</mat-checkbox> -->
     </form>
-    <button mat-raised-button color="primary" (click)="print()" [disabled]="!Form.valid">طباعة</button>
+    <button mat-raised-button color="primary" (click)="print()" >طباعة</button>
     <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
     
 
 
 </div>
+

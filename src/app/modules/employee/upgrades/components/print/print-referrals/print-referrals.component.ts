@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelUpgrade } from 'src/app/modules/shared/models/employees_department/ITBLShamelUpgrade';
 import { TblshamelPrintFooterService } from 'src/app/modules/shared/services/employees_department/tblshamel-print-footer.service';
@@ -10,6 +10,7 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
   styleUrls: ['./print-referrals.component.scss']
 })
 export class PrintReferralsComponent implements OnInit {
+  @Input() data!: any[];
 
   todayDate: Date;
   userId: number;
@@ -25,11 +26,11 @@ export class PrintReferralsComponent implements OnInit {
   title3: string;
   title4: string;
   title5: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(
   private tblShamelUserService: TBLShamelUserService,
   private tblshamelPrintFooterService: TblshamelPrintFooterService,) { 
     this.todayDate= new Date();
-    console.log('data123', data);
+    console.log('data123', this.data);
 
     this.tblShamelUserService.Login_User_BehavourSubject.subscribe(
       userId =>{

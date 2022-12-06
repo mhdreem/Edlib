@@ -41,7 +41,7 @@
                 border-top:none;padding:0in 5.4pt 0in 5.4pt'>
                 <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;
                 text-align:center;line-height:normal;direction:rtl;unicode-bidi:embed'><span
-                lang=AR-SA style='font-family:"Arial",sans-serif'>{{todayDate | date:'shortTime':'+0200'}}: وقت</span></p>
+                lang=AR-SA style='font-family:"Arial",sans-serif'> التوقيت: {{todayDate | date:'shortTime':'+0200'}}</span></p>
                 </td>
                 </tr>
                 </table>
@@ -142,72 +142,72 @@
                 </td>
                 </tr>
                 <tr *ngFor="let datum of partialDatum">
-                <td width=63 style='width:47.15pt;border:solid windowtext 1.0pt;border-top:
+                <td *ngIf="datum" width=63 style='width:47.15pt;border:solid windowtext 1.0pt;border-top:
                 none;padding:0in 5.4pt 0in 5.4pt'>
                 <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
                 style='font-size:9.0pt'>&nbsp;</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
+                style='font-size:9.0pt'>&nbsp;</span></p>
+                </td>
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
                 <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
                 style='font-size:9.0pt'>&nbsp;</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
                 style='font-size:9.0pt'>&nbsp;</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
-                solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
-                center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
-                style='font-size:9.0pt'>&nbsp;</span></p>
-                </td>
-                <td width=65 style='width:48.8pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=65 style='width:48.8pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
                 <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
                 style='font-size:9.0pt;font-family:"Arial",sans-serif'>يستحق {{datum?.GradePercent}}%</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
                 style='font-size:9.0pt;font-family:"Arial",sans-serif'>{{datum?.QualityGrade}}</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=rtl></span><span
                 lang=AR-SA style='font-size:9.0pt;font-family:"Arial",sans-serif'><span
                 dir=rtl></span>{{datum?.SalaryBefore}}</span></p>
                 </td>
-                <td width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=57 style='width:42.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
                 style='font-size:9.0pt;font-family:"Arial",sans-serif'>{{datum?.TBLShamelJobName?.jobname_name}}</span></p>
                 </td>
-                <td width=120 style='width:89.75pt;border-top:none;border-left:none;
+                <td *ngIf="datum" width=120 style='width:89.75pt;border-top:none;border-left:none;
                 border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
                 padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span lang=AR-SY
                 style='font-size:9.0pt;font-family:"Arial",sans-serif'>{{datum?.TBLShamelEmployee?.FName}} {{datum?.TBLShamelEmployee?.LName}} ابن {{datum?.TBLShamelEmployee?.Father}}
                 و{{datum?.TBLShamelEmployee?.Mother}}</span></p>
                 </td>
-                <td width=18 style='width:13.5pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=18 style='width:13.5pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
                 style='font-size:9.0pt'>{{datum?.TBLShamelEmployee?.Computer_ID}}</span></p>
                 </td>
-                <td width=56 style='width:42.1pt;border-top:none;border-left:none;border-bottom:
+                <td *ngIf="datum" width=56 style='width:42.1pt;border-top:none;border-left:none;border-bottom:
                 solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt'>
-                <p class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
+                <p *ngIf="datum" class=MsoNormal align=center dir=rtl style='margin-bottom:0in;text-align:
                 center;line-height:normal;direction:rtl;unicode-bidi:embed'><span dir=ltr
                 style='font-size:9.0pt'>{{datum?.ID}}</span></p>
                 </td>
