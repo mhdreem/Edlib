@@ -79,16 +79,16 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
 
   Add(name: string): void {
     // Init selected_upgrade_year
-    this.selected_upgrade_year = {
-      YEAR_ID: 0,
-      UpgradeStart: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
-      UpgradeEnd: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
-    };
+    // this.selected_upgrade_year = {
+    //   YEAR_ID: 0,
+    //   UpgradeStart: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
+    //   UpgradeEnd: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
+    // };
 
     const dialogRef = this.dialog.open(FixUpgradeYearModifyComponent, {
       height: '60%',
       width: '30%',
-      data: { obj: this.selected_upgrade_year, action: 'add' }
+      data: { obj: null, action: 'add' }
     });
 
     dialogRef.afterClosed().toPromise().then(result => {
@@ -96,9 +96,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
       if (result) {
         this.FillTable();
         this.dataSource.paginator = this.paginator;
-        this.snackBar.open('تمت الإضافة', '', {
-          duration: 3000,
-        });
+        
       }
     });
   }
@@ -162,9 +160,8 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
         this.FillTable();
 
         if (result)
-          this.snackBar.open('تم التعديل', '', {
-            duration: 3000,
-          });
+          
+          this.FillTable();
       });
 
     }

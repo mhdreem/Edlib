@@ -10,7 +10,7 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
   styleUrls: ['./print-qarars.component.scss']
 })
 export class PrintQararsComponent implements OnInit {
-  @ViewChild("printButton") printButton!: ElementRef;
+  @ViewChild("printButton", { read: ElementRef }) printButton: ElementRef;
 
   todayDate: Date;
   userId: number;
@@ -28,7 +28,7 @@ export class PrintQararsComponent implements OnInit {
   title4: string;
   title5: string;
   partialData: ITBLShamelUpgrade[][]= [];
-  indexOfPage: number;
+  indexOfPage: string= 'd1';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: [ITBLShamelUpgrade[], string, string, string],
   private tblShamelUserService: TBLShamelUserService,
@@ -77,14 +77,31 @@ export class PrintQararsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   print(){
-    let element = document.getElementById('hidden') as HTMLButtonElement;
     for(let i=0; i<this.partialData.length; i++){
-      this.indexOfPage= i;
-      // this.printButton.nativeElement.click();
-      element.click();
+    //   let ele= document.createElement('button');
+      let ele= document.getElementById('hidden');
+    //   let att= document.createAttribute('class');
+    //   att.value= i+'';
+    //   ele.setAttributeNode(att);
+    //   let att2= document.createAttribute('id');
+    //   att2.value= i+'';
+    //   ele.setAttributeNode(att2);
+    //   let att1= document.createAttribute('ngxPrint');
+    //   ele.setAttributeNode(att1);
+      let att3= document.createAttribute('printSectionId');
+      att3.value= 'd'+i;
+      ele.setAttributeNode(att3);
+    //   document.body.appendChild(ele);
+    }
+    for(let i=0; i<1; i++){
+      // let element = document.getElementById(i+'') as HTMLElement;
+      this.indexOfPage= i+'';
+      this.printButton. nativeElement.click();
+      // element.click();
       console.log('click');
     }
   }

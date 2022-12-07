@@ -57,7 +57,7 @@ export class TBLShamelUpgradeService {
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };  
-    return this.httpClient.post<CountEmployeeAndQararResponse>(this.RestUrl +"TBLShamelUpgrade/CountEmployeeAndQarar", Reuest,options);      
+    return this.httpClient.post<CountEmployeeAndQararResponse>(this.RestUrl +"TBLShamelUpgrade/AddUpgradeToAllEmployee", Reuest,options);      
   }
 
   UpgradeJobState(Reuest:ITBLShamelUpgradeJobState, blocked: number, yearId: number)  {

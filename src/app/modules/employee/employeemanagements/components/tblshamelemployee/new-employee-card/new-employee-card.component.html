@@ -216,9 +216,9 @@
       <div class="date">
         <span>تاريخ الولادة:</span>
         <div class="dateContent">
-          <mat-form-field class="example-full-width small-width" appearance="fill" >
+          <mat-form-field class="example-full-width small-width" appearance="fill"  (keyup.enter)="keytab($event)">
             <mat-label #birthdateDay>اليوم</mat-label>
-            <input matInput (change)="birthdayChange('day')" [(ngModel)]='birthdayDay' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <input matInput (change)="birthdayChange('day')" [(ngModel)]='birthdayDay' [ngModelOptions]="{standalone: true}">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(
@@ -230,9 +230,9 @@
             </mat-error>
           </mat-form-field>
         
-          <mat-form-field class="example-full-width small-width" appearance="fill" >
+          <mat-form-field class="example-full-width small-width" appearance="fill" (keyup.enter)="keytab($event)">
             <mat-label #birthdateMonth>الشهر</mat-label>
-            <input matInput (change)="birthdayChange('month')" [(ngModel)]='birthdayMonth' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <input matInput (change)="birthdayChange('month')" [(ngModel)]='birthdayMonth' [ngModelOptions]="{standalone: true}">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(
@@ -244,9 +244,9 @@
             </mat-error>
           </mat-form-field>
         
-          <mat-form-field class="example-full-width small-width" appearance="fill" >
+          <mat-form-field class="example-full-width small-width" appearance="fill" (keyup.enter)="keytab($event)">
             <mat-label #birthdateYear>السنة</mat-label>
-            <input matInput  (change)="birthdayChange('year')" [(ngModel)]='birthdayYear' (keyup.enter)="keytab($event)" [ngModelOptions]="{standalone: true}">
+            <input matInput  (change)="birthdayChange('year')" [(ngModel)]='birthdayYear' [ngModelOptions]="{standalone: true}">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(

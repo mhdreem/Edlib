@@ -3,7 +3,7 @@
         
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>دورة الترفيع</mat-label>
-            <input matInput type="number" value="" [formControl]="upgradeYear" required>
+            <input matInput type="number" value="" [formControl]="upgradeYear">
         </mat-form-field>
 
         <div class="date">
@@ -24,13 +24,6 @@
             </div>
           </div>
 
-        <mat-form-field appearance="fill" class="hideDate">
-            <mat-label>بداية دورة الترفيع</mat-label>
-            <input matInput [matDatepicker]="Datepicker_upgradeYearStart" [formControl]="upgradeYearStart" required>
-            <mat-datepicker-toggle matSuffix [for]="Datepicker_upgradeYearStart"></mat-datepicker-toggle>
-            <mat-datepicker #Datepicker_upgradeYearStart></mat-datepicker>
-        </mat-form-field>
-
         <div class="date">
             <span>نهاية دورة الترفيع:</span>
             <div class="content">
@@ -48,13 +41,6 @@
               </mat-form-field>
             </div>
           </div>
-
-        <mat-form-field appearance="fill" class="hideDate">
-            <mat-label>نهاية دورة الترفيع</mat-label>
-            <input matInput [matDatepicker]="Datepicker_upgradeYearEnd" [formControl]="upgradeYearEnd" required>
-            <mat-datepicker-toggle matSuffix [for]="Datepicker_upgradeYearEnd"></mat-datepicker-toggle>
-            <mat-datepicker #Datepicker_upgradeYearEnd></mat-datepicker>
-        </mat-form-field>
 
         <mat-checkbox color="primary" [formControl]="fix">تثبيت دورة الترفيع</mat-checkbox>
     </form>

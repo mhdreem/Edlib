@@ -15,7 +15,7 @@
                        matInput
                        [formControl]="autoOptions"
                        [matAutocomplete]="auto1" >
-                <mat-error *ngIf="fieldHasErrors(Form, 'autoOptions')">
+                <!-- <mat-error *ngIf="fieldHasErrors(Form, 'autoOptions')">
                 {{
                   autoPrintFirstErrorMessage(
                     Form,
@@ -23,7 +23,7 @@
                     Auto.innerHTML
                   )
                 }}
-              </mat-error>
+              </mat-error> -->
                 <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayRankProperty.bind(this)">
                   <mat-option *ngFor="let option of filteredAutoOptions | async" [value]="option.rank_id">
                     {{option.rank_name}}
@@ -56,7 +56,9 @@
 <button mat-raised-button color="primary" (click)="prepareFile()">تجهيز الملف</button>
 <span>رقم الإضبارة</span>
 <output id="id"></output>
+<span class="state">{{taskCurrentState}}</span>
 <div class="progressBox">
-    <mat-progress-bar mode="determinate" value="progressBarValue"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
     <span>{{progressBarValue}}%</span>
 </div>
+<span class="state">{{taskFinished}}</span>

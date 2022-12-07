@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
@@ -38,7 +39,8 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelUpgradeYear, action: string },
   private fb: UntypedFormBuilder,
   private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
-  public dialog: MatDialog,) { 
+  public dialog: MatDialog,
+  private snackBar: MatSnackBar,) { 
     this.selected_upgrade_year= data.obj;
 
     this.BuildForm();
@@ -101,33 +103,44 @@ export class FixUpgradeYearModifyComponent implements OnInit {
 
   }
 
+  getValue(){
+    this.selected_upgrade_year={}
+    this.selected_upgrade_year.YEAR_ID= this.upgradeYear.value;
+    this.selected_upgrade_year.fixed= this.fix.value;
+    this.selected_upgrade_year.UpgradeStart= this.upgradeYearStart.value;
+    this.selected_upgrade_year.UpgradeEnd= this.upgradeYearEnd.value;
+  }
+
   public async Save() {
 
 
 
     //Form Not Valid Then return
     if (!this.Form.valid == true) {
+      console.log('notValid');
       return;
     }
 
+      if (this.data.action == 'add'){
+         this.getValue();
+         console.log('this.selected_upgrade_year',this.selected_upgrade_year);
+          this.tblShamelUpgradeYearService.add(this.selected_upgrade_year).subscribe(
+            data => {
+              console.log('data', data);
 
-    if (this.selected_upgrade_year &&
-      this.selected_upgrade_year.YEAR_ID != null) {
+              if (data > 0) // Succeess 
+              {
+                console.log('data', data);
+                this.dialog.closeAll();
+                this.snackBar.open('تمت الإضافة', '', {
+                  duration: 3000,
+                });
+              }
 
+            }
+          )
+    }
 
-      if (this.data.action == 'add')
-      this.tblShamelUpgradeYearService.add(this.selected_upgrade_year).subscribe(
-        data => {
-          console.log('data', data);
-
-          if (data > 0) // Succeess 
-          {
-            console.log('data', data);
-            this.dialog.closeAll();
-          }
-
-        }
-      )
 
       else if (this.data.action == 'update')
       this.tblShamelUpgradeYearService.update(this.selected_upgrade_year).subscribe(
@@ -137,12 +150,14 @@ export class FixUpgradeYearModifyComponent implements OnInit {
           {
             console.log('data', data);
             this.dialog.closeAll();
+            this.snackBar.open('تم التعديل', '', {
+              duration: 3000,
+            });
           }
 
         }
       )
 
-    }
   }
   ngOnInit(): void {
   }
@@ -178,7 +193,8 @@ export class FixUpgradeYearModifyComponent implements OnInit {
 
   generateStartDate(){
     if (this.isStartDaySelected && this.isStartMonthSelected && this.isStartYearSelected){
-      this.upgradeYearStart.setValue(new Date(this.StartDay.value+'/'+this.StartMonth.value+'/'+this.StartYear.value));
+      this.upgradeYearStart.setValue(moment(this.StartMonth.value+'/'+this.StartDay.value+'/'+this.StartYear.value+ ' '+ '04:00','MM/DD/YYYY HH:mm').toDate());
+
     }
   }
 
@@ -202,7 +218,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
 
   generateEndDate(){
     if (this.isEndDaySelected && this.isEndMonthSelected && this.isEndYearSelected){
-      this.upgradeYearEnd.setValue(new Date(this.endMonth.value+'/'+this.endDay.value+'/'+this.endYear.value));
+      this.upgradeYearEnd.setValue(moment(this.endMonth.value+'/'+this.endDay.value+'/'+this.endYear.value+ ' '+ '04:00', 'MM/DD/YYYY HH:mm').toDate());
     }
   }
 }

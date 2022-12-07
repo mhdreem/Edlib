@@ -3,7 +3,9 @@ import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular
 import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
 import { ITBLShamelRank } from 'src/app/modules/shared/models/employees_department/ITBLShamelRank';
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
+import { TblshamelTaskService } from 'src/app/modules/shared/services/employees_department/tblshamel-task.service';
 import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
+import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TblshamelrankService } from 'src/app/modules/shared/services/employees_department/tblshamelrank.service';
 import { FormValidationHelpersService } from 'src/app/modules/shared/services/helpers/form-validation-helpers.service';
@@ -20,6 +22,8 @@ export class PrepareUpgradesFileComponent implements OnInit {
   fixedYear: string;
 
   progressBarValue: number= 0;
+  taskCurrentState: string= '';
+  taskFinished: string= '';
 
   Form: FormGroup;
   inputType: FormControl<number | null>; // 0 is manual, 1 is auto
@@ -33,12 +37,15 @@ export class PrepareUpgradesFileComponent implements OnInit {
   manual_List: ITBLShamelRank[] = [];
   filteredManualOptions: Observable<ITBLShamelRank[]>;
 
+  userId: number;
   constructor(private tblShamelMonthService: TBLShamelMonthService,
     private tblShamelYearService: TBLShamelYearService,
     private fb: UntypedFormBuilder,
     private tblShamelUpgradeService: TBLShamelUpgradeService,
     private shamelrankService: TblshamelrankService,
-    public formValidatorsService: FormValidationHelpersService,) {
+    public formValidatorsService: FormValidationHelpersService,
+    private tblshamelTaskService: TblshamelTaskService,
+    private tblShamelUserService: TBLShamelUserService,) {
     this.BuildForm();
     this.Load_Data();
 
@@ -141,6 +148,16 @@ export class PrepareUpgradesFileComponent implements OnInit {
       }
     );
 
+    this.userId= this.tblShamelUserService.Login_User.user_id;
+    setInterval(()=>{
+      this.tblshamelTaskService.getStatus(this.userId).subscribe((res: any)=>{
+        console.log('res', res);
+        this.progressBarValue=res[0].VALUE;
+        this.taskCurrentState=res[0].TBLSHAMELTASK_OPERATION;
+        this.taskFinished= res[0].TBLSHAMELTASK_STATE
+      });
+    },30000);
+
   }
 
   onInputTypeChange(){
@@ -157,16 +174,21 @@ export class PrepareUpgradesFileComponent implements OnInit {
   }
 
   prepareFile(){
+    console.log('request', {auto: +this.inputType.value,
+      duaration: +this.duration.value,
+      year:+this.fixedYear,
+      rank: (this.inputType.value==0)? this.getRankFromManual(): this.getRankFromAuto(),
+      user_FK: this.userId
+    });
     this.tblShamelUpgradeService.AddUpgradeToAllEmployee(
       {auto: +this.inputType.value,
         duaration: +this.duration.value,
         year:+this.fixedYear,
-        rank: (this.inputType.value==0)? this.getRankFromManual(): this.getRankFromAuto()
+        rank: (this.inputType.value==0)? this.getRankFromManual(): this.getRankFromAuto(),
+        user_FK: this.userId
       }).subscribe(
         res =>{
-          if (res == 1){
-            
-          }
+          
         }
       );
   }

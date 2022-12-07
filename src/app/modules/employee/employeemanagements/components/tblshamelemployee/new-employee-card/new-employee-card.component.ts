@@ -35,6 +35,8 @@ const moment = _moment;
 })
 export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
+  
+
 
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {
@@ -765,12 +767,16 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
   keytab(event: any) {
     console.log('enter press');
-    let element = event.srcElement.nextElementSibling; // get the sibling element
-
-    if (element == null)  // check if its null
-      return;
-    else
-      element.focus();   // focus if not null
+    // window.addEventListener("keydown", (event) => {
+    //   if (event.code == 'Enter')
+    //   window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'tab'}));
+    // });
+    // let element = event.target.nextElementSibling; // get the sibling element
+    // console.log('element', element);
+    // if (element == null)  // check if its null
+    //   return;
+    // else
+    //   element.focus();   // focus if not null
   }
 
   public fieldHasErrors(form: any, field: string) {

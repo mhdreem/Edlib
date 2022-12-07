@@ -1,10 +1,10 @@
 <button mat-raised-button color="primary" (click)="print();" >طباعة</button>
-<button id="hidden"  mat-raised-button color="primary" printSectionId="2" ngxPrint #printButton>طباعة</button>
+<button id="hidden" class="hidden"  mat-raised-button color="primary" printSectionId="d{{indexOfPage}}" ngxPrint #printButton>طباعة</button>
 <div id="printQarars-section">
     <div class=WordSection1 >
 
         <div *ngFor="let partialDatum of partialData; let i=index">
-            <div id="{{i}}" >
+            <div id="d{{i}}" >
                 <div align=center>
             
                     <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
