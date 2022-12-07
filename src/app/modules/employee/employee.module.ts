@@ -113,14 +113,12 @@ export const MY_FORMATS = {
 
 
 @NgModule({
-  declarations: [
-   
+  declarations: [   
     EmployeeComponent,  
   ],
   imports: [  
     CommonModule,
     RouterModule,
-CommonmoduleModule,
     
     MatCardModule,
     MatAutocompleteModule,
@@ -181,7 +179,8 @@ CommonmoduleModule,
  TabsModule,
  UtilitiesModule,
  IconModule,
- EmployeeRoutingModule
+ EmployeeRoutingModule,
+ CommonmoduleModule
   ],
   exports:[
     

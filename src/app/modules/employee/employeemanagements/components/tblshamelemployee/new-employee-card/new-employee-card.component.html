@@ -19,7 +19,7 @@
           <div>
             <mat-form-field appearance="fill">
                 <mat-label #id>رقم الاضبارة</mat-label>
-                <input type="text" matInput formControlName="id" >
+                <input  type="text" matInput formControlName="id" onReturn >
 
                 <mat-error *ngIf="fieldHasErrors(Form, 'id')">
                   {{
@@ -68,7 +68,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #Global_ID>الرقم الذاتي السجل العام بالدولة</mat-label>
-                <input type="text" matInput formControlName="Global_ID">
+                <input type="text" matInput formControlName="Global_ID" onReturn>
                 <mat-error *ngIf="fieldHasErrors(Form, 'Global_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -83,7 +83,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #Insurance_ID>الرقم التاميني</mat-label>
-                <input type="text" matInput formControlName="Insurance_ID">
+                <input type="text" matInput formControlName="Insurance_ID" onReturn>
                 <mat-error *ngIf="fieldHasErrors(Form, 'Insurance_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -100,7 +100,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #id_number>رقم الهوية الشخصية</mat-label>
-                <input matInput formControlName="id_number">
+                <input matInput formControlName="id_number" onReturn>
                 <mat-hint>رقم الهوية الشخصية</mat-hint>
                 <mat-error *ngIf="fieldHasErrors(Form, 'id_number')">
                   {{
@@ -133,7 +133,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label #FName>الاسم</mat-label>
-          <input type="text" placeholder="الاسم" matInput formControlName="FName">
+          <input type="text" placeholder="الاسم" matInput formControlName="FName" onReturn id="FName" (keyup.enter)="focusNext('LName')">
           <mat-error *ngIf="fieldHasErrors(Form, 'FName')">
             {{
               autoPrintFirstErrorMessage(
@@ -148,7 +148,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label #LName>الكنية</mat-label>
-          <input type="text" placeholder="الكنية" matInput formControlName="LName">
+          <input type="text" placeholder="الكنية" matInput formControlName="LName" id="LName">
           <mat-error *ngIf="fieldHasErrors(Form, 'LName')">
             {{
               autoPrintFirstErrorMessage(

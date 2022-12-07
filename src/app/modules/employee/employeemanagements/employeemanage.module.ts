@@ -176,6 +176,7 @@ import { EmployeeStateDataPrintComponent } from './components/service-data/emplo
 import { ExperienceCertificatePrintComponent } from './components/service-data/experience-certificate-print/experience-certificate-print.component';
 import { TblShamelFooterh2AddComponent } from './encodingtable/TblShamelFooterh2/tbl-shamel-footerh2-add/tbl-shamel-footerh2-add.component';
 import {NgxPrintModule} from 'ngx-print';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 
 
@@ -306,7 +307,7 @@ export const MY_FORMATS = {
   imports: [  
     CommonModule,
     RouterModule,
-    
+    CommonmoduleModule,
     MatCardModule,
     MatAutocompleteModule,
     MatRadioModule,

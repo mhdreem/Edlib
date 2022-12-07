@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -74,7 +75,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   filtered_STREETORVILLAGE: Observable<TBLShamelStreetOrVillage[]>;
 
 
-  Form: UntypedFormGroup;
+  Form: FormGroup;
   id: FormControl;
   Payrol_ID: FormControl;
   Computer_ID: FormControl;
@@ -119,6 +120,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   qararMonth: string= '';
   qararYear: string= '';
 
+  
   birthdayDayIsFilled: boolean= false;
   birthdayMonthIsFilled: boolean= false;
   birthdayYearIsFilled: boolean= false;
@@ -128,6 +130,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   
   constructor(
     private pageEmployee: EmployeePageService,
+    @Inject(DOCUMENT) private _document: Document,
     public formValidatorsService: FormValidationHelpersService,
     private empService: EmployeeServiceService,
     private TblMartialService: TBLShamelMartialStateService,
@@ -150,7 +153,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
   BuildForm() {
     this.Form = new FormGroup({
-      id: this.id = new FormControl<number | null>(null, [Validators.required],),
+      'id': this.id = new FormControl<number | null>(null, [Validators.required],),
 
       'Payrol_ID': this.Payrol_ID = new FormControl<number | null>(null,
         [Validators.required, Validators.maxLength(10)],
@@ -173,14 +176,14 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
 
       'LName': this.LName = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
+        [Validators.required, Validators.maxLength(35)],[] ),
 
 
       'Father': this.Father = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
+        [Validators.required, Validators.maxLength(35)], []),
 
       'Mother': this.Mother = new FormControl<number | null>(null,
-        [Validators.required, Validators.maxLength(35)], [Validator_FullName(this.empService, this.Form?.value)]),
+        [Validators.required, Validators.maxLength(35)], []),
 
 
       'Birth_Place': this.Birth_Place = new FormControl<number | null>(null,
@@ -218,7 +221,12 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
       'Rem2': this.Rem2 = new FormControl<number | null>(null, []),
       'Rem3': this.Rem3 = new FormControl<number | null>(null, []),
       'Emp_IN_Military_Service': this.Emp_IN_Military_Service = new FormControl<number | null>(null, []),
-    });
+    },
+    {
+      asyncValidators:[Validator_FullName(this.empService, this.Form?.value)],
+      updateOn:'change'
+    }
+    );
 
   }
 
@@ -835,5 +843,14 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
     }
    }
+
+
+
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 
 }
