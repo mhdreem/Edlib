@@ -197,7 +197,7 @@ export const MY_FORMATS = {
   }
 };
 
-
+import {HotkeyModule} from 'angular2-hotkeys';
 
 @NgModule({
   declarations: [
@@ -368,7 +368,8 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  EmployeemanageRoutingModule,
- NgxPrintModule
+ NgxPrintModule,
+ HotkeyModule.forRoot()
   ],
   exports:[
    

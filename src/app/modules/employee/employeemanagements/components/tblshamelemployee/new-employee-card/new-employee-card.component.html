@@ -19,7 +19,7 @@
           <div>
             <mat-form-field appearance="fill">
                 <mat-label #id>رقم الاضبارة</mat-label>
-                <input  type="text" matInput formControlName="id" onReturn >
+                <input  type="text" matInput formControlName="id" onReturn id="id" (keyup.enter)="focusNext('Payrol_ID')">
 
                 <mat-error *ngIf="fieldHasErrors(Form, 'id')">
                   {{
@@ -38,7 +38,7 @@
 
               <mat-form-field appearance="fill">
                 <mat-label #Payrol_ID>رقم الشطب</mat-label>
-                <input type="text" matInput formControlName="Payrol_ID">
+                <input type="text" matInput formControlName="Payrol_ID" id="Payrol_ID" (keyup.enter)="focusNext('Payrol_ID')">
                 <mat-error *ngIf="fieldHasErrors(Form, 'Payrol_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -53,7 +53,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #Computer_ID>رقم الحاسوب</mat-label>
-                <input type="text" matInput formControlName="Computer_ID">
+                <input type="text" matInput formControlName="Computer_ID" id="Computer_ID"  (keyup.enter)="focusNext('Global_ID')">
                 <mat-error *ngIf="fieldHasErrors(Form, 'Computer_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -68,7 +68,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #Global_ID>الرقم الذاتي السجل العام بالدولة</mat-label>
-                <input type="text" matInput formControlName="Global_ID" onReturn>
+                <input type="text" matInput formControlName="Global_ID"  id="Global_ID" (keyup.enter)="focusNext('Insurance_ID')" onReturn>
                 <mat-error *ngIf="fieldHasErrors(Form, 'Global_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -83,7 +83,7 @@
             <div>
               <mat-form-field appearance="fill">
                 <mat-label #Insurance_ID>الرقم التاميني</mat-label>
-                <input type="text" matInput formControlName="Insurance_ID" onReturn>
+                <input type="text" matInput formControlName="Insurance_ID" id="Insurance_ID" (keyup.enter)="focusNext('id_number')" onReturn>
                 <mat-error *ngIf="fieldHasErrors(Form, 'Insurance_ID')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -148,7 +148,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label #LName>الكنية</mat-label>
-          <input type="text" placeholder="الكنية" matInput formControlName="LName" id="LName">
+          <input type="text" placeholder="الكنية" matInput formControlName="LName" id="LName" (keyup.enter)="focusNext('Father')">
           <mat-error *ngIf="fieldHasErrors(Form, 'LName')">
             {{
               autoPrintFirstErrorMessage(
@@ -167,7 +167,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label #Father>الاب</mat-label>
-          <input type="text" placeholder="الاب" matInput formControlName="Father">
+          <input type="text" placeholder="الاب" matInput formControlName="Father" id="Father" (keyup.enter)="focusNext('Mother')">
           <mat-error *ngIf="fieldHasErrors(Form, 'Father')">
             {{
               autoPrintFirstErrorMessage(
@@ -182,7 +182,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label #Mother>الام</mat-label>
-          <input type="text" placeholder="الام" matInput formControlName="Mother">
+          <input type="text" placeholder="الام" matInput formControlName="Mother" id="Mother" (keyup.enter)="focusNext('Birth_Place')">
           <mat-error *ngIf="fieldHasErrors(Form, 'Mother')">
             {{
               autoPrintFirstErrorMessage(
@@ -200,7 +200,7 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label #Birth_Place>مكان الولادة</mat-label>
-        <input type="text" matInput formControlName="Birth_Place">
+        <input type="text" matInput formControlName="Birth_Place" id="Birth_Place" (keyup.enter)="focusNext('birthdayDay')">
         <mat-error *ngIf="fieldHasErrors(Form, 'Birth_Place')">
           {{
             autoPrintFirstErrorMessage(
@@ -216,9 +216,9 @@
       <div class="date">
         <span>تاريخ الولادة:</span>
         <div class="dateContent">
-          <mat-form-field class="example-full-width small-width" appearance="fill"  (keyup.enter)="keytab($event)">
+          <mat-form-field class="example-full-width small-width" appearance="fill"  >
             <mat-label #birthdateDay>اليوم</mat-label>
-            <input matInput (change)="birthdayChange('day')" [(ngModel)]='birthdayDay' [ngModelOptions]="{standalone: true}">
+            <input matInput (change)="birthdayChange('day')" [(ngModel)]='birthdayDay' [ngModelOptions]="{standalone: true}" id="birthdayDay" (keyup.enter)="focusNext('birthdayMonth')">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(
@@ -230,9 +230,9 @@
             </mat-error>
           </mat-form-field>
         
-          <mat-form-field class="example-full-width small-width" appearance="fill" (keyup.enter)="keytab($event)">
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label #birthdateMonth>الشهر</mat-label>
-            <input matInput (change)="birthdayChange('month')" [(ngModel)]='birthdayMonth' [ngModelOptions]="{standalone: true}">
+            <input matInput (change)="birthdayChange('month')" [(ngModel)]='birthdayMonth' [ngModelOptions]="{standalone: true}" id="birthdayMonth" (keyup.enter)="focusNext('birthdayYear')">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(
@@ -244,9 +244,9 @@
             </mat-error>
           </mat-form-field>
         
-          <mat-form-field class="example-full-width small-width" appearance="fill" (keyup.enter)="keytab($event)">
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label #birthdateYear>السنة</mat-label>
-            <input matInput  (change)="birthdayChange('year')" [(ngModel)]='birthdayYear' [ngModelOptions]="{standalone: true}">
+            <input matInput  (change)="birthdayChange('year')" [(ngModel)]='birthdayYear' [ngModelOptions]="{standalone: true}" id="birthdayYear" (keyup.enter)="focusNext('Kayd_Place')">
             <mat-error *ngIf="fieldHasErrors(Form, 'BirthDate')">
               {{
                 autoPrintFirstErrorMessage(
@@ -265,7 +265,7 @@
     <div>
       <mat-form-field appearance="fill">
         <mat-label #kayd_place>محل ورقم القيد</mat-label>
-        <input type="text" matInput formControlName="Kayd_Place">
+        <input type="text" matInput formControlName="Kayd_Place" id="Kayd_Place" (keyup.enter)="focusNext('Sex_Name')">
         <mat-error *ngIf="fieldHasErrors(Form, 'Kayd_Place')">محل ورقم القيد مطلوب</mat-error>
       </mat-form-field>
     </div>
@@ -291,7 +291,7 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label #Sex_Name>الجنس</mat-label>
-      <input matInput placeholder="اختر الجنس" formControlName="Sex_Name" [matAutocomplete]="auto_SEX_NAME" (keyup.enter)="keytab($event)">
+      <input matInput placeholder="اختر الجنس" formControlName="Sex_Name" [matAutocomplete]="auto_SEX_NAME" id="Sex_Name" (keyup.enter)="focusNext('Nationality_ID')">
 
       <mat-autocomplete #auto_SEX_NAME="matAutocomplete" [displayWith]="Display_SEX_Property"
         (optionSelected)="OnSelect_SEX_Change($event)">
@@ -317,7 +317,7 @@
     <mat-form-field appearance="fill">
       <mat-label #Nationality_ID>الجنسية</mat-label>
       <input matInput placeholder="اختر الجنسية" formControlName="Nationality_ID"
-        [matAutocomplete]="auto_NATIONALITY_ID">
+        [matAutocomplete]="auto_NATIONALITY_ID" id="Nationality_ID" (keyup.enter)="focusNext('MartialState_Name')">
         <mat-error *ngIf="fieldHasErrors(Form, 'Nationality_ID')">
           {{
             autoPrintFirstErrorMessage(
@@ -343,7 +343,7 @@
     <mat-form-field appearance="fill">
       <mat-label #MartialState_Name>الحالة الاجتماعية</mat-label>
       <input matInput placeholder="اختر الحالة الاجتماعية" formControlName="MartialState_Name"
-        [matAutocomplete]="auto_MARTIALSTATE">
+        [matAutocomplete]="auto_MARTIALSTATE" id="MartialState_Name" (keyup.enter)="focusNext('Emp_IN_Military_Service')">
         <mat-error *ngIf="fieldHasErrors(Form, 'MartialState_Name')">
           {{
             autoPrintFirstErrorMessage(
@@ -355,7 +355,7 @@
           }}
         </mat-error>
       <mat-autocomplete #auto_MARTIALSTATE="matAutocomplete" [displayWith]="Display_MARTIALSTATE_Property"
-        (optionSelected)="OnSelect_MARTIALSTATE_Change($event)">
+        (optionSelected)="OnSelect_MARTIALSTATE_Change($event)" >
         <mat-option *ngFor="let option of filtered_TBLSHAMELMARTIALSTATE | async" [value]="option">
           {{option.MartialState_Name}}
         </mat-option>
@@ -368,7 +368,7 @@
     color="primary"
     required value="first-value"
     aria-label="هل هو احتياط"
-    formControlName="Emp_IN_Military_Service" class="mb-3" >
+    formControlName="Emp_IN_Military_Service" class="mb-3" id="Emp_IN_Military_Service" (keyup.enter)="focusNext('Area_ID')">
     هل هو احتياط
   </mat-checkbox>
 
@@ -376,7 +376,7 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label #PhoneNum>أرقام الهواتف</mat-label>
-      <input matInput formControlName="PhoneNum">
+      <input matInput formControlName="PhoneNum" id="PhoneNum" (keyup.enter)="focusNext('LName')">
       <mat-hint>أرقام الهواتف</mat-hint>
       <mat-error *ngIf="fieldHasErrors(Form, 'PhoneNum')">
         {{
@@ -418,7 +418,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #Area_ID>المنطقة</mat-label>
-            <input matInput placeholder="اختر المنطقة" formControlName="Area_ID" [matAutocomplete]="auto_AREA_ID">
+            <input matInput placeholder="اختر المنطقة" formControlName="Area_ID" [matAutocomplete]="auto_AREA_ID" id="Area_ID" (keyup.enter)="focusNext('MiniArea_ID')">
             <mat-error *ngIf="fieldHasErrors(Form, 'Area_ID')">
               {{
                 autoPrintFirstErrorMessage(
@@ -440,8 +440,8 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #MiniArea_ID>اختر الناحية</mat-label>
-            <input matInput placeholder="اختر الناحية" formControlName="MiniArea_ID"
-              [matAutocomplete]="auto_MINIAREA_ID">
+            <input matInput placeholder="اختر الناحية" formControlName="MiniArea_ID" id="MiniArea_ID" 
+              [matAutocomplete]="auto_MINIAREA_ID" (keyup.enter)="focusNext('StreetOrVillage_ID')">
               <mat-error *ngIf="fieldHasErrors(Form, 'MINIAREA_ID')">
                 {{
                   autoPrintFirstErrorMessage(
@@ -465,8 +465,8 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #StreetOrVillage_ID> الشارع أو القرية</mat-label>
-            <input matInput placeholder="اختر الشارع أو القرية" formControlName="StreetOrVillage_ID"
-              [matAutocomplete]="auto_STREETORVILLAGE_ID">
+            <input matInput placeholder="اختر الشارع أو القرية" formControlName="StreetOrVillage_ID" id="StreetOrVillage_ID"
+              [matAutocomplete]="auto_STREETORVILLAGE_ID" (keyup.enter)="focusNext('Qarar_Num')">
               <mat-error *ngIf="fieldHasErrors(Form, 'STREETORVILLAGE_ID')">
                 {{
                   autoPrintFirstErrorMessage(
@@ -519,7 +519,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #Qarar_Num>رقم تأشيرة الجهاز المركزي</mat-label>
-            <input matInput formControlName="Qarar_Num">
+            <input matInput formControlName="Qarar_Num" id="Qarar_Num" (keyup.enter)="focusNext('qararDay')">
             <mat-error *ngIf="fieldHasErrors(Form, 'Qarar_Num')">
               {{
                 autoPrintFirstErrorMessage(
@@ -539,7 +539,7 @@
             <div class="dateContent">
               <mat-form-field class="example-full-width small-width" appearance="fill" >
                 <mat-label #qararDateDay>اليوم</mat-label>
-                <input matInput (change)="qararChange('day')" [(ngModel)]='qararDay' (keyup.enter)="keytab($event)">
+                <input matInput (change)="qararChange('day')" [(ngModel)]='qararDay' [ngModelOptions]="{standalone: true}" id="qararDay" (keyup.enter)="focusNext('qararMonth')">
                 <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -553,7 +553,7 @@
             
               <mat-form-field class="example-full-width small-width" appearance="fill" >
                 <mat-label #qararDateMonth>الشهر</mat-label>
-                <input matInput (change)="qararChange('month')" [(ngModel)]='qararMonth' (keyup.enter)="keytab($event)">
+                <input matInput (change)="qararChange('month')" [(ngModel)]='qararMonth' [ngModelOptions]="{standalone: true}" id="qararMonth" (keyup.enter)="focusNext('qararYear')">
                 <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -567,7 +567,7 @@
             
               <mat-form-field class="example-full-width small-width" appearance="fill" >
                 <mat-label #qararDateYear>السنة</mat-label>
-                <input matInput  (change)="qararChange('year')" [(ngModel)]='qararYear' (keyup.enter)="keytab($event)">
+                <input matInput  (change)="qararChange('year')" [(ngModel)]='qararYear' [ngModelOptions]="{standalone: true}" id="qararYear"  (keyup.enter)="focusNext('Rem1')">
                 <mat-error *ngIf="fieldHasErrors(Form, 'QararDate')">
                   {{
                     autoPrintFirstErrorMessage(
@@ -615,7 +615,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #Rem1>ملاحظة رقم 1</mat-label>
-            <textarea matInput formControlName="Rem1"></textarea>
+            <textarea matInput formControlName="Rem1" id="Rem1"  (keyup.enter)="focusNext('Rem2')"></textarea>
             <mat-hint></mat-hint>
             <mat-error *ngIf="fieldHasErrors(Form, 'Rem1')">
               {{
@@ -633,7 +633,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #Rem2>ملاحظة رقم 2</mat-label>
-            <textarea matInput formControlName="Rem2"></textarea>
+            <textarea matInput formControlName="Rem2"  id="Rem2"  (keyup.enter)="focusNext('Rem3')"></textarea>
             <mat-hint></mat-hint>
             <mat-error *ngIf="fieldHasErrors(Form, 'Rem2')">
               {{
@@ -651,7 +651,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label #Rem3>ملاحظة رقم 3</mat-label>
-            <textarea matInput formControlName="Rem3"></textarea>
+            <textarea matInput formControlName="Rem3"  id="Rem3" (keyup.enter)="focusNext('LName')"></textarea>
             <mat-hint></mat-hint>
             <mat-error *ngIf="fieldHasErrors(Form, 'Rem3')">
               {{

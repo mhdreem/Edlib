@@ -1,8 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import * as _moment from 'moment';
 import { Observable, startWith, map, of, combineLatest, forkJoin, Subscription } from 'rxjs';
 import { TBLShamelArea } from 'src/app/modules/shared/models/employees_department/TBLShamelArea';
@@ -120,7 +121,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   qararMonth: string= '';
   qararYear: string= '';
 
-  
+
   birthdayDayIsFilled: boolean= false;
   birthdayMonthIsFilled: boolean= false;
   birthdayYearIsFilled: boolean= false;
@@ -139,13 +140,14 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
     private TblMinAreaService: TBLShamelMiniAreaService,
     private TblStreetService: TBLShamelStreetOrVillageService,
     private TblNationalityService: TBLShamelNationalityService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    
   ) {
     this.BuildForm();
     this.Load_Data();
-
-
+    
   }
+  
   ngOnDestroy(): void {
     this._Subscription.unsubscribe();
   }
@@ -852,5 +854,12 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
       element.focus();
     }
   }
-
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
 }
