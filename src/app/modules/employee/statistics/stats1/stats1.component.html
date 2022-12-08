@@ -1,3 +1,7 @@
+<c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <div class="col-md-12 text-center ">
     <h2>البحث المبسط</h2>
 </div>
@@ -414,3 +418,4 @@
         [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
 
     </div>
+</ngx-hover-opacity>

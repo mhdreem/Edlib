@@ -1,5 +1,8 @@
 <h2 mat-dialog-title>الإجازات الخاصة</h2>
-
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <mat-dialog-content class="mat-typography">
 
 
@@ -180,3 +183,4 @@
   </button>
 
 </mat-dialog-actions>
+</ngx-hover-opacity>

@@ -39,6 +39,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./stats2.component.scss']
 })
 export class Stats2Component implements OnInit, OnDestroy {
+  LoadingFinish : boolean;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -162,6 +163,7 @@ export class Stats2Component implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: Document) {
 
       this.dataSource = new MatTableDataSource<any>([]);
+      this.LoadingFinish = true;
 
       this.BuildForm();
       this.Load_Data();
@@ -234,6 +236,7 @@ export class Stats2Component implements OnInit, OnDestroy {
   }
 
   Load_Data() {
+    this.LoadingFinish = false;
     
     this._Subscription = forkJoin(
       this.Load_TBLShamelMalakState(),
@@ -298,6 +301,8 @@ export class Stats2Component implements OnInit, OnDestroy {
         this.specificationService.list_TBLShamelSpecification = this.Specification_List;
         this.specificationService.List_TBLShamelSpecification_BehaviorSubject.next(this.Specification_List);
         this.Init_AutoComplete();
+        this.LoadingFinish = true;
+
       }
       
     )

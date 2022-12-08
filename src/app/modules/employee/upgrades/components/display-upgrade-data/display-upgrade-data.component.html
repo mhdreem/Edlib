@@ -1,3 +1,7 @@
+<c-row>
+<mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <form class="example-form" [formGroup]="Form" #form="ngForm">
     <mat-form-field class="example-full-width fitContent" appearance="fill">
     <mat-label>عام الترفيع</mat-label>
@@ -275,3 +279,4 @@
 <div id="rank-section">
     <app-print-rank [data]="rankInput"></app-print-rank>
 </div>
+  </ngx-hover-opacity>

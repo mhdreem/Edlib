@@ -1,3 +1,7 @@
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <form [formGroup]="Form">
     <div class="right">
         <div class="date">
@@ -141,3 +145,4 @@
     <mat-progress-bar mode="determinate" value="progressBarValue2"></mat-progress-bar>
     <span>{{progressBarValue2}}%</span>
 </div>
+</ngx-hover-opacity>

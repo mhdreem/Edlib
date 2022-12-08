@@ -96,7 +96,8 @@ import { Stats2Component } from './stats2/stats2.component';
 import { Stats3Component } from './stats3/stats3.component';
 import { Stats3PrintComponent } from './print/stats3-print/stats3-print.component';
 
-
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 /////////////////////////////
 
 
@@ -189,7 +190,9 @@ export const MY_FORMATS = {
  TabsModule,
  UtilitiesModule,
  IconModule,
- StatisticsRoutingModule
+ StatisticsRoutingModule,
+ MatProgressBarModule,
+ NgxHoverOpacityModule
   ],
   exports:[
    

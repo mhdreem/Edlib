@@ -23,6 +23,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./refresh-employee-cart.component.scss']
 })
 export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
+  LoadingFinish : boolean;
 
   _Subscription: Subscription;
 
@@ -66,6 +67,8 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     private tblShamelUserService: TBLShamelUserService,
     private tblshamelTaskService: TblshamelTaskService,
     @Inject(DOCUMENT) private _document: Document,) { 
+    this.LoadingFinish = true;
+
       this.BuildForm();
       this.Load_Data();
     }
@@ -95,6 +98,7 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     }
 
     Load_Data() {
+      this.LoadingFinish = false;
     
       this._Subscription = forkJoin(
         this.Load_TBLShamelChangeReason(),
@@ -124,6 +128,8 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
           this.tblshameljobkindService.List_ITBLShamelJobKind_BehaviorSubject.next(this.JobKind_List);
   
           this.Init_AutoComplete();
+        this.LoadingFinish = true;
+
         }
         
       )

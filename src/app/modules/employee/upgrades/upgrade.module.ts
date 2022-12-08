@@ -115,7 +115,7 @@ import { PrintQararsComponent } from './components/print/print-qarars/print-qara
 import {NgxPrintModule} from 'ngx-print';
 /////////////////////////////
 
-
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 
 
 export const MY_FORMATS = {
@@ -219,7 +219,8 @@ export const MY_FORMATS = {
  IconModule,
  UpgradeRoutingModule,
  MatProgressBarModule,
- NgxPrintModule
+ NgxPrintModule,
+ NgxHoverOpacityModule
   ],
   exports:[
   

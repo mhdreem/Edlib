@@ -32,6 +32,8 @@ const moment = _moment;
   styleUrls: ['./tblshamelscpunishmentmodify.component.scss']
 })
 export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewInit,OnDestroy {
+  LoadingFinish : boolean;
+
   formname:string = 'ManageSCIncMarsoomFrame1';
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
@@ -111,6 +113,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.id_employee = data.id;
       this.Selected_Employee_SCPunishment = data.obj;
     }
+    this.LoadingFinish = true;
+
     this.BuildForm();
     this.Load_Data();
   }
@@ -183,6 +187,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
 
   Load_Data() {
+    this.LoadingFinish = false;
+
     combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
       (
         res => {
@@ -213,6 +219,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
               this.filteredPunishmentReasonOptions = of(this.TBLShamelPunishmentReason_List);
 
               this.FillArrayUsingService();
+              this.LoadingFinish = true;
+
             }
           )
         }

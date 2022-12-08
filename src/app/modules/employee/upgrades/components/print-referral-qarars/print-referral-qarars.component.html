@@ -1,3 +1,7 @@
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -142,3 +146,4 @@
   <div id="printReferral-section">
     <app-print-referrals [data]="referralInput"></app-print-referrals>
   </div>
+</ngx-hover-opacity>

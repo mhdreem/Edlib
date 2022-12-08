@@ -18,6 +18,7 @@ import { TblshameljobkindService } from 'src/app/modules/shared/services/employe
   styleUrls: ['./increase-salary-marsoom.component.scss']
 })
 export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
+  LoadingFinish : boolean;
 
   _Subscription: Subscription;
 
@@ -54,6 +55,8 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
     private tblshameljobkindService: TblshameljobkindService,
     private tblshamelScJobStateService: TblshamelScJobStateService,
     @Inject(DOCUMENT) private _document: Document) { 
+    this.LoadingFinish = true;
+
       this.BuildForm();
       this.Load_Data();
     }
@@ -88,6 +91,7 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
       }
   
       Load_Data() {
+        this.LoadingFinish = false;
       
         this._Subscription = forkJoin(
           this.Load_TBLShamelChangeReason(),
@@ -117,6 +121,8 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
             this.tblshameljobkindService.List_ITBLShamelJobKind_BehaviorSubject.next(this.JobKind_List);
     
             this.Init_AutoComplete();
+        this.LoadingFinish = true;
+
           }
           
         )

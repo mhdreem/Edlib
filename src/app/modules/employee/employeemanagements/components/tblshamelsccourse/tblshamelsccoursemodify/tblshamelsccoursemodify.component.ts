@@ -34,6 +34,7 @@ const moment = _moment;
 })
 export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
 
+  LoadingFinish : boolean;
 
   formname:string = '';
 
@@ -127,7 +128,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
       this.Selected_Employee_Course = data.obj;
     }
 
-
+    this.LoadingFinish = true;
     this.BuildForm();
     this.Load_Data();
 
@@ -181,7 +182,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   }
 
   Load_Data() {
-
+    this.LoadingFinish = false;
     this.loading = true;
 
     combineLatest
@@ -232,6 +233,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
               this.Init_AutoComplete_FormControl();
 
               this.SetValue();
+              this.LoadingFinish = true;
 
             }, (error: any) => {
               console.log(error)

@@ -33,6 +33,7 @@ import { PrintRankComponent } from '../print/print-rank/print-rank.component';
   styleUrls: ['./display-upgrade-data.component.scss']
 })
 export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
+  LoadingFinish : boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -100,6 +101,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     public dialog: MatDialog,
     @Inject(DOCUMENT) private _document: Document,) {
+    this.LoadingFinish = true;
+
       this.BuildForm();
       this.Load_Data();
 
@@ -130,6 +133,7 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     }
   
     Load_Data() {
+    this.LoadingFinish = false;
       
       this._Subscription = forkJoin(
         this.Load_TBLShamelUpgradeYear(),
@@ -167,6 +171,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
           this.Init_AutoComplete();
   
           this.setDefaultUpgradeYear();
+          this.LoadingFinish = true;
+
           
         }
         

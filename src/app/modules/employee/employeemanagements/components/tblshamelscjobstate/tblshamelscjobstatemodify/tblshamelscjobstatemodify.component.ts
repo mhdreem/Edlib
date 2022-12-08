@@ -36,6 +36,7 @@ const moment = _moment;
   styleUrls: ['./tblshamelscjobstatemodify.component.scss']
 })
 export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit, OnDestroy {
+  LoadingFinish : boolean;
 
   formname:string = 'ManageSCIncMarsoomFrame1';
   //Link To Employee 
@@ -152,6 +153,8 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.id_employee = data.id;
       this.Selected_Employee_JobState = data.obj;
     }
+    this.LoadingFinish = true;
+
     this.BuildForm();
     this.Load_Data();
 
@@ -235,6 +238,8 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
 
   Load_Data() {
+    this.LoadingFinish = false;
+
     combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
       (
         res => {
@@ -297,6 +302,8 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
               this.FillArrayUsingService();
 
               this.SetValue();
+              this.LoadingFinish = true;
+
             }
           )
         }

@@ -21,6 +21,7 @@ import {ITBLShamelJobName} from '../../../../../modules/shared/models/employees_
   styleUrls: ['./upgrade-promotion-qarars.component.scss']
 })
 export class UpgradePromotionQararsComponent implements OnInit {
+  LoadingFinish : boolean;
 
   fixedYear: string;
 
@@ -58,6 +59,7 @@ export class UpgradePromotionQararsComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
     private snackBar: MatSnackBar,) {
+      this.LoadingFinish = true;
 
       this.BuildForm();
       this.Load_Data();
@@ -85,6 +87,7 @@ export class UpgradePromotionQararsComponent implements OnInit {
   }
 
   Load_Data() {
+    this.LoadingFinish = false;
     
     this._Subscription = forkJoin(
       this.Load_TBLShamelUpgradeYear(),
@@ -110,6 +113,7 @@ export class UpgradePromotionQararsComponent implements OnInit {
         this.Init_AutoComplete();
 
         this.setDefaultUpgradeYear();
+        this.LoadingFinish = true;
         
       }
       

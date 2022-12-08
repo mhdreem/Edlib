@@ -28,6 +28,7 @@ import { PrintReferralsComponent } from '../print/print-referrals/print-referral
   styleUrls: ['./print-referral-qarars.component.scss']
 })
 export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDestroy {
+  LoadingFinish : boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -86,6 +87,8 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
   ) {
+    this.LoadingFinish = true;
+
     this.BuildForm();
     this.Load_Data();
 
@@ -110,6 +113,7 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   }
 
   Load_Data() {
+    this.LoadingFinish = false;
     
     this._Subscription = forkJoin(
       this.Load_TBLShamelUpgradeYear(),
@@ -134,6 +138,8 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
         this.tblshameljobnameService.List_ITBLShamelJobName_BehaviorSubject.next(this.JobName_List);
 
         this.Init_AutoComplete();
+        this.LoadingFinish = true;
+
       }
       
     )

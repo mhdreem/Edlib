@@ -28,6 +28,8 @@ const moment = _moment;
   styleUrls: ['./tblshamelscfreeholidaymodify.component.scss']
 })
 export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewInit {
+  LoadingFinish : boolean;
+
   formname:string = 'ManageSCIncMarsoomFrame1';
 
   id_employee: number;
@@ -112,6 +114,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.id_employee = data.id;
       this.Selected_Employee_SCFreeHoliday = data.obj;
     }
+    this.LoadingFinish = true;
 
     this.BuildForm();
     this.Load_Data();
@@ -160,6 +163,8 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
 
 
   Load_Data() {
+    this.LoadingFinish = false;
+
     combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
       (
         res => {
@@ -184,6 +189,8 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
               this.FillArrayUsingService();
 
               this.SetValue();
+              this.LoadingFinish = true;
+
             }
           )
         }

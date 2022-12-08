@@ -31,6 +31,7 @@ import { DOCUMENT } from '@angular/common';
 export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
   formname:string = 'ManageSCIncMarsoomFrame1';
   x: Subscription;
+  LoadingFinish : boolean;
 
   //Link To Employee
   id: number;
@@ -125,10 +126,12 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
       this.ShamelBonusService.List_TBLShamelBonus.length == 0)
       this.ShamelBonusService.fill();
 
+      this.LoadingFinish = true;
 
     this.BuildForm();
     this.FillArrayUsingService();
 
+    this.LoadingFinish = false;
 
   this.x = combineLatest([
     this.ShamelBonusReasonService.List_TBLShamelBonusReason_BehaviorSubject,
@@ -157,6 +160,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
 
   })
 
+  this.LoadingFinish = true;
 
   }
 

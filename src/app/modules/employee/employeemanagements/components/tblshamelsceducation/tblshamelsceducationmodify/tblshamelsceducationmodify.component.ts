@@ -34,6 +34,8 @@ import { DOCUMENT } from '@angular/common';
 export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewInit, OnDestroy {
   formname:string = 'ManageSCEducationFrame1';
   
+  LoadingFinish : boolean;
+
   id_employee: number;
   Selected_Emp: TBLShamelEmployee = {};
   _Selected_Employee_Education: ITBLShamelSCEducation;
@@ -112,7 +114,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
         this.id_employee = this.Selected_Emp.id;
       }
     )
-
+    this.LoadingFinish = true;
     this.BuildForm();
     this.Load_Data();
   }
@@ -166,6 +168,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
   }
 
   Load_Data() {
+    this.LoadingFinish = false;
     combineLatest([this.PageService.Subject_Selected_TBLShamelEmployee]).subscribe
       (
         res => {
@@ -209,6 +212,8 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
               this.FillArrayUsingService();
 
               this.SetValue();
+              this.LoadingFinish = true;
+
             }
           )
         }
