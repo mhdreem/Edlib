@@ -5,15 +5,18 @@
         <div class="content">
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>اليوم</mat-label>
-            <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21">
+            <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21"
+            id="ChangeDateDay" (keyup.enter)="focusNext('ChangeDateMonth')">
           </mat-form-field>
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>الشهر</mat-label>
-            <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1">
+            <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1"
+            id="ChangeDateMonth" (keyup.enter)="focusNext('ChangeDateYear')">
           </mat-form-field>
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>العام</mat-label>
-            <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023">
+            <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023"
+            id="ChangeDateYear" (keyup.enter)="focusNext('ChangeReason')">
           </mat-form-field>
         </div>
       </div>
@@ -25,6 +28,7 @@
                matInput
                [formControl]="ChangeReason"
                [matAutocomplete]="ChangeReason_auto" 
+               id="ChangeReason" (keyup.enter)="focusNext('DocumentType')"
                >
         <mat-autocomplete #ChangeReason_auto="matAutocomplete"
         [displayWith]="displayChangeReasonProperty.bind(this)">
@@ -40,6 +44,7 @@
                matInput
                [formControl]="DocumentType"
                [matAutocomplete]="autoDocumentType" 
+               id="DocumentType" (keyup.enter)="focusNext('Department')"
                >
         <mat-autocomplete #autoDocumentType="matAutocomplete"
         [displayWith]="displayDocumentTypeProperty.bind(this)">
@@ -54,7 +59,8 @@
         <input type="text"
                matInput
                [formControl]="Department"
-               [matAutocomplete]="autoDepartment" 
+               [matAutocomplete]="autoDepartment"
+               id="Department" (keyup.enter)="focusNext('JobKind')"
                >
         <mat-autocomplete #autoDepartment="matAutocomplete"
         [displayWith]="displayDepartmentProperty.bind(this)">
@@ -70,6 +76,7 @@
                matInput
                [formControl]="JobKind"
                [matAutocomplete]="autoJobKind" 
+               id="JobKind" (keyup.enter)="focusNext('ChangeDateDay')"
                >
         <mat-autocomplete #autoJobKind="matAutocomplete"
         [displayWith]="displayJobKindProperty.bind(this)">
@@ -86,9 +93,9 @@
 </form>
 
 <button mat-raised-button color="primary" (click)="updateJobState()"[disabled]="!Form.valid">تحديث الوضع الوظيفي</button>
-<span>رقم الإضبارة</span>
-<output id="id"></output>
+<span class="state">{{taskCurrentState}}</span>
 <div class="progressBox">
-    <mat-progress-bar mode="determinate" value="progressBarValue"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
     <span>{{progressBarValue}}%</span>
 </div>
+<span class="state">{{taskFinished}}</span>

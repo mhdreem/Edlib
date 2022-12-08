@@ -23,14 +23,16 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم الإضبارة</mat-label>
-                                <input matInput [formControl]="ID">
+                                <input matInput [formControl]="ID" 
+                                id="ID" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label> رقم الشطب</mat-label>
-                                <input matInput [formControl]="PAYROL_ID">
+                                <input matInput [formControl]="PAYROL_ID"
+                                id="PAYROL_ID" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
@@ -38,40 +40,47 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم التأميني</mat-label>
-                                <input matInput [formControl]="INSURANCE_ID">
+                                <input matInput [formControl]="INSURANCE_ID"
+                                id="INSURANCE_ID" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم الحاسب</mat-label>
-                                <input matInput [formControl]="COMPUTER_ID">
+                                <input matInput [formControl]="COMPUTER_ID"
+                                id="COMPUTER_ID" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم الوطني</mat-label>
-                                <input matInput [formControl]="ID_NUMBER">
+                                <input matInput [formControl]="ID_NUMBER"
+                                id="ID_NUMBER" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم الذاتي</mat-label>
-                                <input matInput [formControl]="GLOBAL_ID">
+                                <input matInput [formControl]="GLOBAL_ID"
+                                id="GLOBAL_ID" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>رقم الهاتف</mat-label>
-                                <input matInput [formControl]="phonenum">
+                                <input matInput [formControl]="phonenum"
+                                id="phonenum" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الشهادة</mat-label>
-                                <input type="text" matInput [formControl]="educationId" [matAutocomplete]="auto_education">
+                                <input type="text" matInput [formControl]="educationId"
+                                [matAutocomplete]="auto_education"
+                                id="educationId" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_education="matAutocomplete"
                                     [displayWith]="displayCertificateProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredCertificateOptions | async"
@@ -85,7 +94,9 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الاختصاص</mat-label>
-                                <input type="text" matInput [formControl]="specificationId" [matAutocomplete]="auto_specification">
+                                <input type="text" matInput [formControl]="specificationId"
+                                [matAutocomplete]="auto_specification"
+                                id="specificationId" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_specification="matAutocomplete"
                                     [displayWith]="displaySpecificationProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredSpecificationOptions | async"
@@ -103,7 +114,9 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> اسم الوظيفة</mat-label>
-                                <input type="text" matInput [formControl]="JobName" [matAutocomplete]="auto_jobname_id">
+                                <input type="text" matInput [formControl]="JobName"
+                                [matAutocomplete]="auto_jobname_id"
+                                id="JobName" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_jobname_id="matAutocomplete"
                                     [displayWith]="displayJobNameProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredJobNameOptions | async"
@@ -117,7 +130,9 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الفئة </mat-label>
-                                <input type="text" matInput [formControl]="Class" [matAutocomplete]="auto_class_id">
+                                <input type="text" matInput [formControl]="Class"
+                                [matAutocomplete]="auto_class_id"
+                                id="Class" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_class_id="matAutocomplete"
                                     [displayWith]="displayClassProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredClassOptions  | async"
@@ -132,7 +147,9 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> المركز الوظيفي </mat-label>
-                                <input type="text" matInput [formControl]="JobKind" [matAutocomplete]="auto_jobkind_id">
+                                <input type="text" matInput [formControl]="JobKind"
+                                [matAutocomplete]="auto_jobkind_id"
+                                id="JobKind" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_jobkind_id="matAutocomplete"
                                     [displayWith]="displayJobKindProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredJobKindOptions  | async"
@@ -147,7 +164,8 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> مركز الوظيفة </mat-label>
                                 <input type="text" matInput [formControl]="Department"
-                                    [matAutocomplete]="auto_department_id">
+                                    [matAutocomplete]="auto_department_id"
+                                    id="Department" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_department_id="matAutocomplete"
                                     [displayWith]="displayDeparmentProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredDepartmentOptions | async"
@@ -162,7 +180,8 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> سبب التبدل</mat-label>
                                 <input type="text" matInput [formControl]="changereason"
-                                    [matAutocomplete]="auto_changereason_id">
+                                    [matAutocomplete]="auto_changereason_id"
+                                    id="changereason" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_changereason_id="matAutocomplete"
                                     [displayWith]="displayChangeReasonProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredChangeReasonOptions | async"
@@ -176,7 +195,9 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الجنس </mat-label>
-                                <input type="text" matInput [formControl]="SexName" [matAutocomplete]="auto_sex_name">
+                                <input type="text" matInput [formControl]="SexName"
+                                [matAutocomplete]="auto_sex_name"
+                                id="SexName" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_sex_name="matAutocomplete">
                                     <mat-option [value]="'ذكر'">
                                         ذكر
@@ -192,7 +213,8 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الجنسية</mat-label>
                                 <input type="text" matInput [formControl]="nationalityId"
-                                    [matAutocomplete]="auto_nationality_id">
+                                    [matAutocomplete]="auto_nationality_id"
+                                    id="nationalityId" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_nationality_id="matAutocomplete"
                                     [displayWith]="displayNationalityProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredNationalityOptions | async"
@@ -211,14 +233,16 @@
                                 <div class="form-group col-sm-12">
                                     <mat-form-field appearance="fill">
                                         <mat-label>الاسم</mat-label>
-                                        <input matInput [formControl]="FNAME">
+                                        <input matInput [formControl]="FNAME"
+                                        id="FNAME" (keyup.enter)="focusNext('PAYROL_ID')">
                                     </mat-form-field>
                                 </div>
             
                                 <div class="form-group col-sm-12">
                                     <mat-form-field appearance="fill">
                                         <mat-label> الكنية</mat-label>
-                                        <input matInput [formControl]="LNAME">
+                                        <input matInput [formControl]="LNAME"
+                                        id="LNAME" (keyup.enter)="focusNext('PAYROL_ID')">
                                     </mat-form-field>
                                 </div>
             
@@ -226,14 +250,16 @@
                                 <div class="form-group col-sm-12">
                                     <mat-form-field appearance="fill">
                                         <mat-label>الأب</mat-label>
-                                        <input matInput [formControl]="FATHER">
+                                        <input matInput [formControl]="FATHER"
+                                        id="FATHER" (keyup.enter)="focusNext('PAYROL_ID')">
                                     </mat-form-field>
                                 </div>
             
                                 <div class="form-group col-sm-12">
                                     <mat-form-field appearance="fill">
                                         <mat-label> الأم</mat-label>
-                                        <input matInput [formControl]="MOTHER">
+                                        <input matInput [formControl]="MOTHER"
+                                        id="MOTHER" (keyup.enter)="focusNext('PAYROL_ID')">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -241,7 +267,7 @@
                             <div class="form-group col-sm-12">
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>نوع البحث</mat-label>
-                                    <mat-select [formControl]="searchNameType">
+                                    <mat-select [formControl]="searchNameType" id="searchNameType" (keyup.enter)="focusNext('PAYROL_ID')">
                                         <mat-option value="=">بحث مطابق</mat-option>
                                         <mat-option value="like">بحث مشابه</mat-option>
                                     </mat-select>
@@ -253,7 +279,7 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field appearance="fill">
                                 <mat-label>الراتب المقطوع</mat-label>
-                                <input matInput [formControl]="Salary">
+                                <input matInput [formControl]="Salary" id="Salary" (keyup.enter)="focusNext('PAYROL_ID')">
                             </mat-form-field>
                         </div>
     
@@ -261,13 +287,13 @@
                             <div class="form-group col-sm-6">
                                 <mat-form-field appearance="fill">
                                     <mat-label>التسلسل من </mat-label>
-                                    <input matInput [formControl]="AccounterSerail_From">
+                                    <input matInput [formControl]="AccounterSerail_From" id="AccounterSerail_From" (keyup.enter)="focusNext('PAYROL_ID')">
                                 </mat-form-field>
                             </div>
                             <div class="form-group col-sm-6">
                                 <mat-form-field appearance="fill">
                                     <mat-label>التسلسل إلى </mat-label>
-                                    <input matInput [formControl]="AccounterSerail_To">
+                                    <input matInput [formControl]="AccounterSerail_To" id="AccounterSerail_To" (keyup.enter)="focusNext('PAYROL_ID')">
                                 </mat-form-field>
                             </div>
     
@@ -277,7 +303,8 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> المعتمد</mat-label>
                                 <input type="text" matInput [formControl]="ACCOUNTER_ID"
-                                    [matAutocomplete]="auto_ACCOUNTER_ID">
+                                    [matAutocomplete]="auto_ACCOUNTER_ID"
+                                    id="ACCOUNTER_ID" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_ACCOUNTER_ID="matAutocomplete"
                                     [displayWith]="displayAccounterProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredAccounterOptions | async"
@@ -294,7 +321,7 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الاشتراك</mat-label>
-                                <mat-select>
+                                <mat-select id="select" (keyup.enter)="focusNext('PAYROL_ID')">
                                     <mat-option value="1">جميع العاملين</mat-option>
                                     <mat-option value="3">مشترك بالتأمينات الاجتماعية</mat-option>
                                     <mat-option value="2">مشترك بالتأمين والمعاشات</mat-option>
@@ -308,7 +335,8 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label> الوضع ضمن الملاك</mat-label>
                                 <input type="text" matInput [formControl]="MalakState"
-                                    [matAutocomplete]="auto_MalakState">
+                                    [matAutocomplete]="auto_MalakState"
+                                    id="MalakState" (keyup.enter)="focusNext('PAYROL_ID')">
                                 <mat-autocomplete #auto_MalakState="matAutocomplete"
                                     [displayWith]="displayMalakStateProperty.bind(this)">
                                     <mat-option *ngFor="let option of filteredMalakStateOptions | async"
@@ -327,15 +355,18 @@
                                 <div class="content">
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>اليوم</mat-label>
-                                    <input type="number" matInput [formControl]="birthDateDay" placeholder="ex: 21">
+                                    <input type="number" matInput [formControl]="birthDateDay" placeholder="ex: 21"
+                                    id="birthDateDay" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>الشهر</mat-label>
-                                    <input type="number" matInput [formControl]="birthDateMonth" placeholder="ex: 1">
+                                    <input type="number" matInput [formControl]="birthDateMonth" placeholder="ex: 1"
+                                    id="birthDateMonth" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>العام</mat-label>
-                                    <input type="number" matInput [formControl]="birthDateYear" placeholder="ex: 2023">
+                                    <input type="number" matInput [formControl]="birthDateYear" placeholder="ex: 2023"
+                                    id="birthDateYear" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                 </div>
                               </div>
@@ -344,7 +375,8 @@
                         <div class="form-group col-sm-4">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>نوع تاريخ الولادة</mat-label>
-                                <mat-select [formControl]="searchBirthDateType">
+                                <mat-select [formControl]="searchBirthDateType"
+                                id="searchBirthDateType" (keyup.enter)="focusNext('PAYROL_ID')">
                                     <mat-option value="=">يساوي</mat-option>
                                     <mat-option value=">">أكبر</mat-option>
                                     <mat-option value=">=">أكبر أو يساوي</mat-option>
@@ -360,15 +392,18 @@
                                 <div class="content">
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>اليوم</mat-label>
-                                    <input type="number" matInput [formControl]="qararDateDay" placeholder="ex: 21">
+                                    <input type="number" matInput [formControl]="qararDateDay" placeholder="ex: 21"
+                                    id="qararDateDay" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>الشهر</mat-label>
-                                    <input type="number" matInput [formControl]="qararDateMonth" placeholder="ex: 1">
+                                    <input type="number" matInput [formControl]="qararDateMonth" placeholder="ex: 1"
+                                    id="qararDateMonth" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                   <mat-form-field class="example-full-width small-width" appearance="fill">
                                     <mat-label>العام</mat-label>
-                                    <input type="number" matInput [formControl]="qararDateYear" placeholder="ex: 2023">
+                                    <input type="number" matInput [formControl]="qararDateYear" placeholder="ex: 2023"
+                                    id="qararDateYear" (keyup.enter)="focusNext('PAYROL_ID')">
                                   </mat-form-field>
                                 </div>
                               </div>
@@ -377,7 +412,7 @@
                         <div class="form-group col-sm-12">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>نوع تاريخ المباشرة</mat-label>
-                                <mat-select [formControl]="qararDateType">
+                                <mat-select [formControl]="qararDateType" id="qararDateType" (keyup.enter)="focusNext('PAYROL_ID')">
                                     <mat-option value="=">يساوي</mat-option>
                                     <mat-option value=">">أكبر</mat-option>
                                     <mat-option value=">=">أكبر أو يساوي</mat-option>

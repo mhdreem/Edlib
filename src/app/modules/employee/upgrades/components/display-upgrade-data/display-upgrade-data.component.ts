@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -97,7 +98,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     private shamelrankService: TblshamelrankService,
     private tblShamelAccounterService: TBLShamelAccounterService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
-    public dialog: MatDialog,) {
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private _document: Document,) {
       this.BuildForm();
       this.Load_Data();
 
@@ -419,6 +421,11 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
 }

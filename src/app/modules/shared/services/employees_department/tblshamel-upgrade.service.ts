@@ -72,4 +72,10 @@ export class TBLShamelUpgradeService {
     const options = {  headers: headers };  
     return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/Prepare_Print_UpgradeQararV",obj,options);      
   }
+
+  TBLShamelUpgrade_Delete_Data(){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelUpgrade/TBLShamelUpgrade_Delete_Data",options);      
+  }
 }

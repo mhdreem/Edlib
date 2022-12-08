@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, HostListener, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
@@ -54,7 +55,8 @@ export class DeleteemployeeComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder,
     public restApi:EmployeeServiceService,
     public PageService: EmployeePageService,
-    public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService
+    public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
+    @Inject(DOCUMENT) private _document: Document,
     ) {
 
       this.BuildSeachForm();
@@ -223,5 +225,20 @@ export class DeleteemployeeComponent implements OnInit {
     }
 
    }
+
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.delete_employee();
+          event.preventDefault();
+      }
+  }
    
 }

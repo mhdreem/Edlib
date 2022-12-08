@@ -4,15 +4,18 @@
         <div class="content">
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>اليوم</mat-label>
-            <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21">
+            <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21"
+            id="QararDateDay" (keyup.enter)="focusNext('QararDateMonth')">
           </mat-form-field>
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>الشهر</mat-label>
-            <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1">
+            <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1"
+            id="QararDateMonth" (keyup.enter)="focusNext('QararDateYear')">
           </mat-form-field>
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>العام</mat-label>
-            <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023">
+            <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023"
+            id="QararDateYear" (keyup.enter)="focusNext('QararDateDay')">
           </mat-form-field>
         </div>
       </div>

@@ -6,13 +6,12 @@
     <mat-label>اسم الموظف</mat-label>
 
     <input type="text" 
-           placeholder="اسم الموظف"
            aria-label="اسم الموظف"
            matInput                         
            [formControl]="autocomplete_EmployeeName"
            formControlName="autocomplete_EmployeeName"
            [matAutocomplete]="auto"           
-           >
+           id="autocomplete_EmployeeName" (keyup.enter)="focusNext('input_Employee_ID')">
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="OnSelectEmpFullNameChange($event)">
             <cdk-virtual-scroll-viewport class="autocomplete-test-viewport" 
             [ngStyle]="{'height': height}"
@@ -37,32 +36,37 @@
 
   <mat-form-field appearance="fill">            
     <mat-label>رقم الإضبارة </mat-label>
-    <input matInput  placeholder="input_Employee_ID" value="" [formControl]="input_Employee_ID" >            
+    <input matInput  value="" [formControl]="input_Employee_ID" 
+    id="input_Employee_ID" (keyup.enter)="focusNext('Payrol_ID')">            
   </mat-form-field>
 
 
   
   <mat-form-field appearance="fill">            
     <mat-label>رقم الشطب </mat-label>
-    <input matInput  placeholder="Payrol_ID" value="" [formControl]="Payrol_ID" >            
+    <input matInput  value="" [formControl]="Payrol_ID" 
+    id="Payrol_ID" (keyup.enter)="focusNext('Computer_ID')">            
   </mat-form-field>
 
 
   <mat-form-field appearance="fill">            
     <mat-label>رقم الحاسوب </mat-label>
-    <input matInput  placeholder="Computer_ID" value="" [formControl]="Computer_ID" >            
+    <input matInput  value="" [formControl]="Computer_ID"
+    id="Computer_ID" (keyup.enter)="focusNext('Global_ID')">            
   </mat-form-field>
 
 
   <mat-form-field appearance="fill">            
     <mat-label>الرقم الذاتي </mat-label>
-    <input matInput  placeholder="Global_ID" value="" [formControl]="Global_ID" >            
+    <input matInput value="" [formControl]="Global_ID"
+    id="Global_ID" (keyup.enter)="focusNext('Insurance_ID')">            
   </mat-form-field>
 
 
   <mat-form-field appearance="fill">            
     <mat-label>رقم التأميني </mat-label>
-    <input matInput  placeholder="Insurance_ID" value="" [formControl]="Insurance_ID" >            
+    <input matInput  value="" [formControl]="Insurance_ID" 
+    id="Insurance_ID" (keyup.enter)="focusNext('autocomplete_EmployeeName')">            
   </mat-form-field>
 
 

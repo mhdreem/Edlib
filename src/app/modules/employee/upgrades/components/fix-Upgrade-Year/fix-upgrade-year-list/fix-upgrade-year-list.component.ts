@@ -25,7 +25,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<TblShamelUpgradeYear>();
   displayedColumns: string[] = [
-    'YEAR_ID','UpgradeStart','UpgradeEnd', 'action'];
+    'YEAR_ID','UpgradeStart','UpgradeEnd', 'fixed', 'action'];
 
   selected_upgrade_year: TblShamelUpgradeYear;
 
@@ -67,6 +67,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
       this.tblShamelUpgradeYearService.fill();
     this.tblShamelUpgradeYearService.List_TblShamelUpgradeYear_BehaviorSubject.subscribe(
       res =>{
+        console.log('this.dataSource.data', this.dataSource.data);
         this.dataSource.data= res;
       }
     );
@@ -122,21 +123,16 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
             this.tblShamelUpgradeYearService.delete(element?.YEAR_ID).subscribe
               (
                 data => {
-                  this.FillTable();
+                  if (data == 1){
+                    this.FillTable();
+                    this.dataSource.paginator = this.paginator;
+                    this.snackBar.open('تم الحذف', '', {
+                      duration: 3000,
+                    });
+                  }
                 }
 
               )
-
-
-
-
-          this.dataSource.paginator = this.paginator;
-          this.snackBar.open('تم الحذف', '', {
-            duration: 3000,
-          });
-
-
-
         }
       });
     } catch (ex: any) {

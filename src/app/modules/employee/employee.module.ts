@@ -55,7 +55,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -93,10 +92,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 import { NavService } from '../shared/components/containers/default-layout/nav.service';
 import { CommonmoduleModule } from '../commonmodule/commonmodule.module';
-
+import { ChartjsModule } from '@coreui/angular-chartjs';
+import { ChartComponentComponent } from './components/chart-component/chart-component.component';
 /////////////////////////////
 
-import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+
 
 
 export const MY_FORMATS = {
@@ -114,12 +114,15 @@ export const MY_FORMATS = {
 
 
 @NgModule({
-  declarations: [   
-    EmployeeComponent,  
+  declarations: [
+   
+    EmployeeComponent,
+         ChartComponentComponent,  
   ],
   imports: [  
     CommonModule,
     RouterModule,
+CommonmoduleModule,
     
     MatCardModule,
     MatAutocompleteModule,
@@ -181,9 +184,7 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  EmployeeRoutingModule,
- CommonmoduleModule,
-  NgxHoverOpacityModule ,
- MatProgressBarModule
+ ChartjsModule
   ],
   exports:[
     

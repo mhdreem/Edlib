@@ -123,7 +123,7 @@ export class EmployeeCardComponent implements OnInit {
     {
       name: 'عرض تشابه الاسماء',
       iconComponent: { name: 'cil-pencil' },
-      url: 'employees/module/employeecards/Cards/manage/changeid',
+      url: 'employees/module/employeecards/Cards/manage/DisplayEmployeeSimilarityName',
       formname:'ManageEmployeeDuplicatedFrame1'
     },    
     {

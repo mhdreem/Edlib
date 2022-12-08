@@ -10,7 +10,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المرسوم</mat-label>
           <input type="text" matInput [formControl]="incmarsoom_id" formControlName="incmarsoom_id"
-            [matAutocomplete]="auto_incmarsoom_id">
+            [matAutocomplete]="auto_incmarsoom_id"
+            id="incmarsoom_id" (keyup.enter)="focusNext('changeDateDay')">
           <mat-error *ngIf="errorHandling('incmarsoom_id', 'required')">
             اختر المرسوم
           </mat-error>
@@ -36,17 +37,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="changeDateChange('day')" [(ngModel)]='changeDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="changeDateChange('day')"
+              [(ngModel)]='changeDateDay' [ngModelOptions]="{standalone: true}"
+              id="changeDateDay" (keyup.enter)="focusNext('changeDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="changeDateChange('month')" [(ngModel)]='changeDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="changeDateChange('month')"
+              [(ngModel)]='changeDateMonth' [ngModelOptions]="{standalone: true}"
+              id="changeDateMonth" (keyup.enter)="focusNext('changeDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="changeDateChange('year')" [(ngModel)]='changeDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="changeDateChange('year')"
+              [(ngModel)]='changeDateYear' [ngModelOptions]="{standalone: true}"
+              id="changeDateYear" (keyup.enter)="focusNext('changereason_id')">
           </mat-form-field>
           </div>
         </div>
@@ -55,7 +62,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> سبب التبدل</mat-label>
-          <input type="text" matInput [formControl]="changereason_id" [matAutocomplete]="auto_changereason_id">
+          <input type="text" matInput [formControl]="changereason_id" [matAutocomplete]="auto_changereason_id"
+          id="changereason_id" (keyup.enter)="focusNext('department_id')">
           <mat-autocomplete #auto_changereason_id="matAutocomplete"
             [displayWith]="displayChangeReasonProperty.bind(this)"
             (optionSelected)="OnSelectChangeReasonChange($event)">
@@ -71,7 +79,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> القسم </mat-label>
-          <input type="text" matInput [formControl]="department_id" [matAutocomplete]="auto_department_id">
+          <input type="text" matInput [formControl]="department_id" [matAutocomplete]="auto_department_id"
+          id="department_id" (keyup.enter)="focusNext('jobname_id')">
           <mat-autocomplete #auto_department_id="matAutocomplete" [displayWith]="displayDeparmentProperty.bind(this)"
             (optionSelected)="OnSelectDepartmentChange($event)">
             <mat-option *ngFor="let option of filteredDepartmentOptions | async" [value]="option.department_id">
@@ -85,7 +94,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> اسم الوظيفة</mat-label>
-          <input type="text" matInput [formControl]="jobname_id" [matAutocomplete]="auto_jobname_id">
+          <input type="text" matInput [formControl]="jobname_id" [matAutocomplete]="auto_jobname_id"
+          id="jobname_id" (keyup.enter)="focusNext('jobkind_id')">
           <mat-autocomplete #auto_jobname_id="matAutocomplete" [displayWith]="displayJobNameProperty.bind(this)"
             (optionSelected)="OnSelectJobNameChange($event)">
             <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
@@ -97,7 +107,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> المركز الوظيفي </mat-label>
-          <input type="text" matInput [formControl]="jobkind_id" [matAutocomplete]="auto_jobkind_id">
+          <input type="text" matInput [formControl]="jobkind_id" [matAutocomplete]="auto_jobkind_id"
+          id="jobkind_id" (keyup.enter)="focusNext('class_id')">
           <mat-autocomplete #auto_jobkind_id="matAutocomplete" [displayWith]="displayJobKindProperty.bind(this)"
             (optionSelected)="OnSelectJobKindChange($event)">
             <mat-option *ngFor="let option of filteredJobKindOptions  | async" [value]="option.jobkind_id">
@@ -115,7 +126,8 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> الفئة </mat-label>
-          <input type="text" matInput [formControl]="class_id" [matAutocomplete]="auto_class_id">
+          <input type="text" matInput [formControl]="class_id" [matAutocomplete]="auto_class_id"
+          id="class_id" (keyup.enter)="focusNext('salary')">
           <mat-autocomplete #auto_class_id="matAutocomplete" [displayWith]="displayClassProperty.bind(this)"
             (optionSelected)="OnSelectClassChange($event)">
             <mat-option *ngFor="let option of filteredClassOptions  | async" [value]="option.class_id">
@@ -131,7 +143,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الراتب</mat-label>
           <input matInput type="number" [formControl]="salary"
-            [(ngModel)]="Selected_Employee_JobState.salary">
+            [(ngModel)]="Selected_Employee_JobState.salary"
+            id="salary" (keyup.enter)="focusNext('beginDateDay')">
         </mat-form-field>
       </div>
 
@@ -141,17 +154,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="beginDateChange('day')" [(ngModel)]='beginDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="beginDateChange('day')"
+              [(ngModel)]='beginDateDay' [ngModelOptions]="{standalone: true}"
+              id="beginDateDay" (keyup.enter)="focusNext('beginDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="beginDateChange('month')" [(ngModel)]='beginDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="beginDateChange('month')"
+              [(ngModel)]='beginDateMonth' [ngModelOptions]="{standalone: true}"
+              id="beginDateMonth" (keyup.enter)="focusNext('beginDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="beginDateChange('year')" [(ngModel)]='beginDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="beginDateChange('year')"
+              [(ngModel)]='beginDateYear' [ngModelOptions]="{standalone: true}"
+              id="beginDateYear" (keyup.enter)="focusNext('documenttype_id')">
           </mat-form-field>
           </div>
         </div>
@@ -169,7 +188,8 @@
       <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> المستند</mat-label>
-          <input type="text" matInput [formControl]="documenttype_id" [matAutocomplete]="auto_documenttype_id">
+          <input type="text" matInput [formControl]="documenttype_id" [matAutocomplete]="auto_documenttype_id"
+          id="documenttype_id" (keyup.enter)="focusNext('doc_number')">
           <mat-autocomplete #auto_documenttype_id="matAutocomplete"
             [displayWith]="displayDocumentTypeProperty.bind(this)"
             (optionSelected)="OnSelectDocumentTypeChange($event)">
@@ -183,7 +203,8 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>
-          <input matInput type="number" [formControl]="doc_number">
+          <input matInput type="number" [formControl]="doc_number"
+          id="doc_number" (keyup.enter)="focusNext('docDateDay')">
         </mat-form-field>
       </div>
         <div class="date">
@@ -191,17 +212,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="docDateChange('day')"
+              [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}"
+              id="docDateDay" (keyup.enter)="focusNext('docDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="docDateChange('month')"
+              [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}"
+              id="docDateMonth" (keyup.enter)="focusNext('docDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')"
+              [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}"
+              id="docDateYear" (keyup.enter)="focusNext('incmarsoom_id')">
           </mat-form-field>
           </div>
       </div>

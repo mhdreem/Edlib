@@ -39,5 +39,24 @@ export class EmployeeStatsService {
     const options = {  headers: headers };  
     return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/Stats4",request,options) as Observable<IPaging>;      
   }
+
+  NumEmployeeDependenceOnMalak() {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/NumEmployeeDependenceOnMalak",options);      
+  }
+
+  NumEmployeeDependenceOnClass() {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/NumEmployeeDependenceOnClass",options);      
+  }
+
+  NumEmployeeDependenceOnGender() {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {  headers: headers };  
+    return this.httpClient.post(this.RestUrl +"TBLShamelEmployeeStats/NumEmployeeDependenceOnGender",options);      
+  }
+
   
 }

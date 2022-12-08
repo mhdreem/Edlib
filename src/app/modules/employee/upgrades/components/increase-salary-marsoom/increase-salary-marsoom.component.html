@@ -5,15 +5,18 @@
             <div class="content">
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21">
+                <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21"
+                id="ChangeDateDay" (keyup.enter)="focusNext('ChangeDateMonth')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1">
+                <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1"
+                id="ChangeDateMonth" (keyup.enter)="focusNext('ChangeDateYear')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023">
+                <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023"
+                id="ChangeDateYear" (keyup.enter)="focusNext('ChangeReason')">
               </mat-form-field>
             </div>
           </div>
@@ -24,6 +27,7 @@
                    matInput
                    [formControl]="ChangeReason"
                    [matAutocomplete]="ChangeReason_auto" 
+                   id="ChangeReason" (keyup.enter)="focusNext('DocumentType')"
                    >
             <mat-autocomplete #ChangeReason_auto="matAutocomplete"
             [displayWith]="displayChangeReasonProperty.bind(this)">
@@ -39,6 +43,7 @@
                    matInput
                    [formControl]="DocumentType"
                    [matAutocomplete]="autoDocumentType" 
+                   id="DocumentType" (keyup.enter)="focusNext('DocumentId')"
                    >
             <mat-autocomplete #autoDocumentType="matAutocomplete"
             [displayWith]="displayDocumentTypeProperty.bind(this)">
@@ -50,7 +55,8 @@
     
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>رقم النستند</mat-label>
-            <input matInput [formControl]="DocumentId">
+            <input matInput [formControl]="DocumentId"
+            id="DocumentId" (keyup.enter)="focusNext('DocumentDateDay')">
           </mat-form-field>
     
           <div class="date">
@@ -58,15 +64,18 @@
             <div class="content">
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateDay" placeholder="ex: 21">
+                <input type="number" matInput [formControl]="DocumentDateDay" placeholder="ex: 21"
+                id="DocumentDateDay" (keyup.enter)="focusNext('DocumentDateMonth')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateMonth" placeholder="ex: 1">
+                <input type="number" matInput [formControl]="DocumentDateMonth" placeholder="ex: 1"
+                id="DocumentDateMonth" (keyup.enter)="focusNext('DocumentDateYear')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateYear" placeholder="ex: 2023">
+                <input type="number" matInput [formControl]="DocumentDateYear" placeholder="ex: 2023"
+                id="DocumentDateYear" (keyup.enter)="focusNext('Department')">
               </mat-form-field>
             </div>
           </div>
@@ -77,6 +86,7 @@
                    matInput
                    [formControl]="Department"
                    [matAutocomplete]="autoDepartment" 
+                   id="Department" (keyup.enter)="focusNext('JobKind')"
                    >
             <mat-autocomplete #autoDepartment="matAutocomplete"
             [displayWith]="displayDepartmentProperty.bind(this)">
@@ -92,6 +102,7 @@
                    matInput
                    [formControl]="JobKind"
                    [matAutocomplete]="autoJobKind" 
+                   id="JobKind" (keyup.enter)="focusNext('textArea')"
                    >
             <mat-autocomplete #autoJobKind="matAutocomplete"
             [displayWith]="displayJobKindProperty.bind(this)">
@@ -104,7 +115,7 @@
     </div>
 
     <div class="left">
-        <textarea [formControl]="textArea" name="" id="" cols="60" rows="15"></textarea>
+        <textarea [formControl]="textArea" name="" id="textArea" (keyup.enter)="focusNext('ChangeDateDay')" cols="60" rows="15"></textarea>
     </div>
 </form>
 

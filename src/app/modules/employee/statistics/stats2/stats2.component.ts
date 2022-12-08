@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ITBLShamelAccounter } from '../../../shared/models/employees_department/TBLShamelAccounter';
@@ -31,6 +31,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-stats2',
@@ -157,7 +158,8 @@ export class Stats2Component implements OnInit, OnDestroy {
     public specificationService :TblshamelspecificationService,
     private fb: UntypedFormBuilder,
     private ngZone: NgZone,
-    private _liveAnnouncer: LiveAnnouncer,) {
+    private _liveAnnouncer: LiveAnnouncer,
+    @Inject(DOCUMENT) private _document: Document) {
 
       this.dataSource = new MatTableDataSource<any>([]);
 
@@ -693,5 +695,10 @@ export class Stats2Component implements OnInit, OnDestroy {
     this.Form.reset();
   }
 
-  
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

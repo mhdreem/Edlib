@@ -77,12 +77,14 @@
     
             <mat-form-field class="example-full-width fitContent" appearance="fill">
                 <mat-label>من رقم قرار</mat-label>
-                <input matInput type="number" value="" [formControl]="FirstQararNum" >
+                <input matInput type="number" value="" [formControl]="FirstQararNum" 
+                (keyup.enter)="focusNext('LastQararNum')">
                 </mat-form-field>
     
                 <mat-form-field class="example-full-width fitContent" appearance="fill">
                 <mat-label>الى رقم قرار</mat-label>
-                <input matInput type="number" value="" [formControl]="LastQararNum" >
+                <input matInput type="number" value="" [formControl]="LastQararNum"
+                id="LastQararNum"  >
                 </mat-form-field>
                 
                 <!-- <mat-checkbox [formControl]="DoNotPrint">عدم طباعة رقم القرار على القرار</mat-checkbox> -->

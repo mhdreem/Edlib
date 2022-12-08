@@ -46,7 +46,7 @@ export class TblShamelUpgradeYearService {
   delete(id:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TblShamelUpgradeYear/delete/"+id,options);  
+    return this.httpClient.delete(this.RestUrl +"TblShamelUpgradeYear/"+id,options);  
   }
 
   add(obj : TblShamelUpgradeYear )  {

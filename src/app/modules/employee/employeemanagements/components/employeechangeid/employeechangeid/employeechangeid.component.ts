@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_depar
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { EmployeePageService } from '../../employee-page-service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-employeechangeid',
@@ -32,6 +33,7 @@ export class EmployeechangeidComponent implements OnInit {
 
 
   constructor(
+    @Inject(DOCUMENT) private _document: Document,
     public PageService: EmployeePageService,
     private fb: UntypedFormBuilder,
     public restApi:EmployeeServiceService,
@@ -109,6 +111,20 @@ public change_employee_id()
 
 }
 
+public focusNext(id: string) {
+  let element = this._document.getElementById(id);
+  if (element) {
+    element.focus();
+  }
+}
+
+@HostListener('window:keydown', ['$event'])
+onKeyDown(event: KeyboardEvent) {
+    if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+        this.change_employee_id();
+        event.preventDefault();
+    }
+}
 
 
 }

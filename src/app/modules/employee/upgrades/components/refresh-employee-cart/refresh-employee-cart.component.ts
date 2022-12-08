@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
 import { ITBLShamelChangeReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelChangeReason';
@@ -13,6 +13,9 @@ import { ITBLShamelJobKind } from 'src/app/modules/shared/models/employees_depar
 import { TblshamelScJobStateService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-job-state.service';
 import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
 import * as moment from 'moment';
+import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
+import { TblshamelTaskService } from 'src/app/modules/shared/services/employees_department/tblshamel-task.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-refresh-employee-cart',
@@ -46,6 +49,10 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
   JobKind_Filter: Observable<ITBLShamelJobKind[]>;
 
   progressBarValue: number= 0;
+  taskCurrentState: string= '';
+  taskFinished: string= '';
+
+  userId: number;
 
 
   constructor(private tblShamelYearService: TBLShamelYearService,
@@ -55,7 +62,10 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     private tblshameldepartmentService: TblshameldepartmentService,
     private tblshameljobkindService: TblshameljobkindService,
     private tblshamelScJobStateService: TblshamelScJobStateService,
-    private tblShamelUpgradeService: TBLShamelUpgradeService) { 
+    private tblShamelUpgradeService: TBLShamelUpgradeService,
+    private tblShamelUserService: TBLShamelUserService,
+    private tblshamelTaskService: TblshamelTaskService,
+    @Inject(DOCUMENT) private _document: Document,) { 
       this.BuildForm();
       this.Load_Data();
     }
@@ -254,6 +264,8 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
         this.fixedYear = res.year_name;
       }
     );
+
+    
   }
 
 
@@ -265,7 +277,7 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
       department_id: this.Department.value,
       jobkind_id: this.JobKind.value,
     }).subscribe(res =>{
-
+      console.log('res1', res);
     });
 
     this.tblShamelUpgradeService.UpgradeJobState({
@@ -275,8 +287,28 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
       department_id: this.Department.value,
       jobkind_id: this.JobKind.value
     }, this.blocked.value, +this.fixedYear).subscribe(res =>{
-
+      console.log('res2', res);
     });
 
+    this.userId= this.tblShamelUserService.Login_User.user_id;
+    setInterval(()=>{
+      this.tblshamelTaskService.getStatus(this.userId).subscribe((res: any)=>{
+        console.log('res', res);
+        if (res != null){
+          let filteredResult= res.filter( (res: any)=> res.TBLSHAMELTASK_NAME== 'تحديث البطاقة الذاتية')[0];
+          this.progressBarValue=filteredResult?.VALUE;
+          this.taskCurrentState=filteredResult?.TBLSHAMELTASK_OPERATION;
+          this.taskFinished= filteredResult?.TBLSHAMELTASK_STATE;
+        }
+      });
+    },30000);
+
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 }

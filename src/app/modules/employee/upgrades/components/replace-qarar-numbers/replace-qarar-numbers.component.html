@@ -2,7 +2,7 @@
   
   <mat-form-field class="example-full-width fitContent" appearance="fill">
     <mat-label>رقم الإضبارة</mat-label>
-    <input matInput type="number" value="" [formControl]="Id">
+    <input matInput type="number" value="" [formControl]="Id" id="Id" (keyup.enter)="focusNext('QararDateDay')">
   </mat-form-field>
 
   <div class="date">
@@ -10,15 +10,18 @@
     <div class="content">
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>اليوم</mat-label>
-        <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21">
+        <input type="number" matInput [formControl]="QararDateDay" placeholder="ex: 21"
+        id="QararDateDay" (keyup.enter)="focusNext('QararDateMonth')">
       </mat-form-field>
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>الشهر</mat-label>
-        <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1">
+        <input type="number" matInput [formControl]="QararDateMonth" placeholder="ex: 1"
+        id="QararDateMonth" (keyup.enter)="focusNext('QararDateYear')">
       </mat-form-field>
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>العام</mat-label>
-        <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023">
+        <input type="number" matInput [formControl]="QararDateYear" placeholder="ex: 2023"
+        id="QararDateYear" (keyup.enter)="focusNext('NewQararNumber')">
       </mat-form-field>
     </div>
   </div>
@@ -27,7 +30,8 @@
 
   <mat-form-field class="example-full-width fitContent" appearance="fill">
       <mat-label>رقم القرار الجديد</mat-label>
-      <input matInput type="number" value="" [formControl]="NewQararNumber">
+      <input matInput type="number" value="" [formControl]="NewQararNumber"
+      id="NewQararNumber" (keyup.enter)="focusNext('NewQararDateDay')">
   </mat-form-field>
   
   <div class="date">
@@ -35,15 +39,18 @@
     <div class="content">
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>اليوم</mat-label>
-        <input type="number" matInput [formControl]="NewQararDateDay" placeholder="ex: 21">
+        <input type="number" matInput [formControl]="NewQararDateDay" placeholder="ex: 21"
+        id="NewQararDateDay" (keyup.enter)="focusNext('NewQararDateMonth')">
       </mat-form-field>
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>الشهر</mat-label>
-        <input type="number" matInput [formControl]="NewQararDateMonth" placeholder="ex: 1">
+        <input type="number" matInput [formControl]="NewQararDateMonth" placeholder="ex: 1"
+        id="NewQararDateMonth" (keyup.enter)="focusNext('NewQararDateYear')">
       </mat-form-field>
       <mat-form-field class="example-full-width small-width" appearance="fill">
         <mat-label>العام</mat-label>
-        <input type="number" matInput [formControl]="NewQararDateYear" placeholder="ex: 2023">
+        <input type="number" matInput [formControl]="NewQararDateYear" placeholder="ex: 2023"
+        id="NewQararDateYear" (keyup.enter)="focusNext('Id')">
       </mat-form-field>
     </div>
   </div>

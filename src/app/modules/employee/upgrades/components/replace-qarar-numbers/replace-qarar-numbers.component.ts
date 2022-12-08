@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -38,7 +39,8 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
 
   constructor(private tblshamelScJobStateService: TblshamelScJobStateService,
     private fb: UntypedFormBuilder,
-    private _liveAnnouncer: LiveAnnouncer,) {
+    private _liveAnnouncer: LiveAnnouncer,
+    @Inject(DOCUMENT) private _document: Document) {
     
     this.BuildForm();
    }
@@ -116,6 +118,12 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }
 
 

@@ -3,7 +3,8 @@
         
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>دورة الترفيع</mat-label>
-            <input matInput type="number" value="" [formControl]="upgradeYear">
+            <input matInput type="number" value="" [formControl]="upgradeYear"
+            id="upgradeYear" (keyup.enter)="focusNext('StartDay')">
         </mat-form-field>
 
         <div class="date">
@@ -11,15 +12,21 @@
             <div class="content">
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="StartDay" (change)="onStartDayChange()" placeholder="ex: 21">
+                <input type="number" matInput [formControl]="StartDay" (change)="onStartDayChange()"
+                placeholder="ex: 21"
+                id="StartDay" (keyup.enter)="focusNext('StartMonth')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="StartMonth" (change)="onStartMonthChange()" placeholder="ex: 1">
+                <input type="number" matInput [formControl]="StartMonth" (change)="onStartMonthChange()"
+                placeholder="ex: 1"
+                id="StartMonth" (keyup.enter)="focusNext('StartYear')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="StartYear" (change)="onStartYearChange()" placeholder="ex: 2023">
+                <input type="number" matInput [formControl]="StartYear" (change)="onStartYearChange()"
+                placeholder="ex: 2023"
+                id="StartYear" (keyup.enter)="focusNext('endDay')">
               </mat-form-field>
             </div>
           </div>
@@ -29,15 +36,21 @@
             <div class="content">
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="endDay" (change)="onEndDayChange()" placeholder="ex: 21">
+                <input type="number" matInput [formControl]="endDay" (change)="onEndDayChange()"
+                placeholder="ex: 21"
+                id="endDay" (keyup.enter)="focusNext('endMonth')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="endMonth" (change)="onEndMonthChange()" placeholder="ex: 1">
+                <input type="number" matInput [formControl]="endMonth" (change)="onEndMonthChange()"
+                placeholder="ex: 1"
+                id="endMonth" (keyup.enter)="focusNext('endYear')">
               </mat-form-field>
               <mat-form-field class="example-full-width small-width" appearance="fill">
                 <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="endYear" (change)="onEndYearChange()" placeholder="ex: 2023">
+                <input type="number" matInput [formControl]="endYear" (change)="onEndYearChange()"
+                placeholder="ex: 2023"
+                id="endYear" (keyup.enter)="focusNext('upgradeYear')">
               </mat-form-field>
             </div>
           </div>

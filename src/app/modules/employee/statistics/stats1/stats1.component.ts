@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ITBLShamelAccounter } from '../../../shared/models/employees_department/TBLShamelAccounter';
@@ -29,6 +29,7 @@ import { ITBLShamelStats1 } from 'src/app/modules/shared/models/employees_depart
 import { MatDialog } from '@angular/material/dialog';
 import { PrintComponent } from '../../employeemanagements/components/print/print/print.component';
 import { PrintCardComponent } from '../../employeemanagements/components/print/print-card/print-card.component';
+import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-stats1',
   templateUrl: './stats1.component.html',
@@ -130,7 +131,8 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     private fb: UntypedFormBuilder,
     private ngZone: NgZone,
     private _liveAnnouncer: LiveAnnouncer,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private _document: Document) {
 
       this.dataSource = new MatTableDataSource<any>([]);
 
@@ -542,4 +544,10 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     this.Form.reset();
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

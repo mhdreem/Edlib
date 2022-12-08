@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -40,7 +41,8 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   private fb: UntypedFormBuilder,
   private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
   public dialog: MatDialog,
-  private snackBar: MatSnackBar,) { 
+  private snackBar: MatSnackBar,
+  @Inject(DOCUMENT) private _document: Document) { 
     this.selected_upgrade_year= data.obj;
 
     this.BuildForm();
@@ -78,8 +80,10 @@ export class FixUpgradeYearModifyComponent implements OnInit {
       if (this.selected_upgrade_year != null && this.selected_upgrade_year.YEAR_ID != null)
         this.upgradeYear.setValue(this.selected_upgrade_year?.YEAR_ID);
         
-      if (this.selected_upgrade_year != null && this.selected_upgrade_year.YEAR_ID != null)
-        this.fix.setValue(this.selected_upgrade_year?.fixed);
+      if (this.selected_upgrade_year != null && this.selected_upgrade_year.YEAR_ID != null){
+        this.selected_upgrade_year.fixed= this.selected_upgrade_year?.FIXED;
+        this.fix.setValue(this.selected_upgrade_year?.FIXED);
+      }
 
       if (this.selected_upgrade_year != null && this.selected_upgrade_year.UpgradeStart != null){
         this.upgradeYearStart.setValue(this.selected_upgrade_year?.UpgradeStart);
@@ -106,7 +110,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   getValue(){
     this.selected_upgrade_year={}
     this.selected_upgrade_year.YEAR_ID= this.upgradeYear.value;
-    this.selected_upgrade_year.fixed= this.fix.value;
+    this.selected_upgrade_year.fixed= +this.fix.value;
     this.selected_upgrade_year.UpgradeStart= this.upgradeYearStart.value;
     this.selected_upgrade_year.UpgradeEnd= this.upgradeYearEnd.value;
   }
@@ -142,7 +146,8 @@ export class FixUpgradeYearModifyComponent implements OnInit {
     }
 
 
-      else if (this.data.action == 'update')
+      else if (this.data.action == 'update'){
+        this.getValue();
       this.tblShamelUpgradeYearService.update(this.selected_upgrade_year).subscribe(
         data => {
           console.log('data', data);
@@ -157,7 +162,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
 
         }
       )
-
+    }
   }
   ngOnInit(): void {
   }
@@ -219,6 +224,13 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   generateEndDate(){
     if (this.isEndDaySelected && this.isEndMonthSelected && this.isEndYearSelected){
       this.upgradeYearEnd.setValue(moment(this.endMonth.value+'/'+this.endDay.value+'/'+this.endYear.value+ ' '+ '04:00', 'MM/DD/YYYY HH:mm').toDate());
+    }
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
     }
   }
 }

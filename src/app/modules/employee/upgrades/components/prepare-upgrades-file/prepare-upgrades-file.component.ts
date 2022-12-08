@@ -148,15 +148,7 @@ export class PrepareUpgradesFileComponent implements OnInit {
       }
     );
 
-    this.userId= this.tblShamelUserService.Login_User.user_id;
-    setInterval(()=>{
-      this.tblshamelTaskService.getStatus(this.userId).subscribe((res: any)=>{
-        console.log('res', res);
-        this.progressBarValue=res[0].VALUE;
-        this.taskCurrentState=res[0].TBLSHAMELTASK_OPERATION;
-        this.taskFinished= res[0].TBLSHAMELTASK_STATE
-      });
-    },30000);
+    
 
   }
 
@@ -191,6 +183,19 @@ export class PrepareUpgradesFileComponent implements OnInit {
           
         }
       );
+
+      this.userId= this.tblShamelUserService.Login_User.user_id;
+    setInterval(()=>{
+      this.tblshamelTaskService.getStatus(this.userId).subscribe((res: any)=>{
+        console.log('res', res);
+        if (res != null){
+          let filteredResult= res.filter( (res: any)=> res.TBLSHAMELTASK_NAME== 'تجهيز الترفيعات')[0];
+          this.progressBarValue=filteredResult?.VALUE;
+          this.taskCurrentState=filteredResult?.TBLSHAMELTASK_OPERATION;
+          this.taskFinished= filteredResult?.TBLSHAMELTASK_STATE;
+        }
+      });
+    },30000);
   }
 
   getRankFromManual(){

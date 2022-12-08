@@ -10,7 +10,8 @@
       <div class="form-group col-sm-6 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>العقوبة</mat-label>
-          <input type="text" matInput [formControl]="punishment_id" [formControl]="punishment_id"
+          <input type="text" matInput [formControl]="punishment_id"
+          id="punishment_id" (keyup.enter)="focusNext('reason_id')"
             [matAutocomplete]="auto_punishment_id" [(ngModel)]="Selected_Employee_SCPunishment!.punishment_id">
           <mat-error *ngIf="errorHandling('punishment_id', 'required')">
             اختر العقوبة
@@ -40,7 +41,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>السبب</mat-label>
           <input type="text" matInput [formControl]="reason_id" formControlName="reason_id"
-            [matAutocomplete]="auto_reason_id">
+            [matAutocomplete]="auto_reason_id"
+            id="reason_id" (keyup.enter)="focusNext('documenttype_id')">
           <mat-error *ngIf="errorHandling('reason_id', 'required')">
             اختر السبب
           </mat-error>
@@ -73,7 +75,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
-            [matAutocomplete]="auto_documenttype_id">
+            [matAutocomplete]="auto_documenttype_id"
+            id="documenttype_id" (keyup.enter)="focusNext('document_number')">
           <mat-autocomplete #auto_documenttype_id="matAutocomplete"
             [displayWith]="displayDocumentTypeProperty.bind(this)"
             (optionSelected)="OnSelectDocumentTypeChange($event)">
@@ -87,7 +90,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>
           <input matInput type="number" placeholder="رقم المستند" value="Sushi" [formControl]="document_number"
-            formControlName="document_number">
+            formControlName="document_number"
+            id="document_number" (keyup.enter)="focusNext('docDateDay')">
         </mat-form-field>
       </div>
 
@@ -97,17 +101,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="docDateChange('day')"
+              [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}"
+              id="docDateDay" (keyup.enter)="focusNext('docDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="docDateChange('month')"
+              [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}"
+              id="docDateMonth" (keyup.enter)="focusNext('docDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')"
+              [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}"
+              id="docDateYear" (keyup.enter)="focusNext('punishment_id')">
           </mat-form-field>
           </div>
       </div>

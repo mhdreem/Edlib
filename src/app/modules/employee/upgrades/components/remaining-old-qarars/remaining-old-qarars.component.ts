@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -28,7 +29,8 @@ export class RemainingOldQararsComponent implements OnInit {
 
   constructor(private fb: UntypedFormBuilder,
     private _liveAnnouncer: LiveAnnouncer,
-    private tblshamelScJobStateService: TblshamelScJobStateService,) {
+    private tblshamelScJobStateService: TblshamelScJobStateService,
+    @Inject(DOCUMENT) private _document: Document) {
       this.BuildForm();
      }
 
@@ -79,4 +81,10 @@ export class RemainingOldQararsComponent implements OnInit {
     );
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

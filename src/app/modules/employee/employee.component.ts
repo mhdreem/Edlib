@@ -4,6 +4,9 @@ import { NavService } from "../shared/components/containers/default-layout/nav.s
 import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 import { PlatformLocation } from "@angular/common";
 import { DOCUMENT } from '@angular/common';
+import { EmployeeStatsService } from "../shared/services/employees_department/employee-stats.service";
+import { forkJoin, Subscription } from "rxjs";
+import { style } from "@angular/animations";
 
 
 
@@ -11,7 +14,8 @@ import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-employee',
-  templateUrl: './employee.component.html'
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.scss']
   /*
   host:{
     'document:visibilitychange':'visibilitychange()'
@@ -20,6 +24,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class EmployeeComponent implements OnInit , OnDestroy {
   
+
+
   private unlistener: () => void;
   navItems: INavData[] = [
 
@@ -59,17 +65,24 @@ export class EmployeeComponent implements OnInit , OnDestroy {
     }
   ];
   
+
+  
   
 
   constructor(private navService:NavService,
     private router: Router,
     private location: PlatformLocation,    
-    private renderer2: Renderer2) {
+    private renderer2: Renderer2,
+    ) {
       this.navService.navItems_Subject.next(this.navItems);
+      
   }
 
   ngOnInit(): void {    
   }
+
+  
+
 /*
   @HostListener('document:visibilitychange', ['$event'])
           visibilitychange() {

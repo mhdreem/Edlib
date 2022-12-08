@@ -10,7 +10,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الدورة</mat-label>
           <input type="text" matInput formControlName="course_id" 
-            [matAutocomplete]="auto_course_id">
+            [matAutocomplete]="auto_course_id"
+            id="course_id" (keyup.enter)="focusNext('specification_id')">
           <mat-error *ngIf="errorHandling('course_id', 'required')"> يجب ادخال الدورة<strong>name</strong> </mat-error>
           <mat-error *ngIf="((course_id.invalid || course_id.errors)  && (course_id.dirty || course_id.touched) )">
             sdfsdf
@@ -31,7 +32,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الاختصاص</mat-label>
           <input type="text" matInput formControlName="specification_id"
-            [matAutocomplete]="auto_specification_id">
+            [matAutocomplete]="auto_specification_id"
+            id="specification_id" (keyup.enter)="focusNext('country_id')">
           <mat-autocomplete #auto_specification_id="matAutocomplete"
             [displayWith]="displaySpecificationProperty.bind(this)"
             (optionSelected)="OnSelectSpecificationChange($event)">
@@ -47,7 +49,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الدولة أو البلد</mat-label>
           <input type="text" matInput formControlName="country_id"
-            [matAutocomplete]="auto_country_id">
+            [matAutocomplete]="auto_country_id"
+            id="country_id" (keyup.enter)="focusNext('city_id')">
           <mat-autocomplete #auto_country_id="matAutocomplete" [displayWith]="displayCountryProperty.bind(this)"
             (optionSelected)="OnSelectCountryChange($event)">
             <mat-option *ngFor="let option of filteredCountryOptions | async" [value]="option.country_id">
@@ -61,7 +64,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدينة</mat-label>
           <input type="text" matInput  formControlName="city_id"
-            [matAutocomplete]="auto_city_id">
+            [matAutocomplete]="auto_city_id"
+            id="city_id" (keyup.enter)="focusNext('startDateDay')">
           <mat-autocomplete #auto_city_id="matAutocomplete" [displayWith]="displayStateProperty.bind(this)"
             (optionSelected)="OnSelectStateChange($event)">
             <mat-option *ngFor="let option of filteredStateOptions | async" [value]="option.state_id">
@@ -76,17 +80,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="startDateChange('day')" [(ngModel)]='startDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="startDateChange('day')"
+              [(ngModel)]='startDateDay' [ngModelOptions]="{standalone: true}"
+              id="startDateDay" (keyup.enter)="focusNext('startDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="startDateChange('month')" [(ngModel)]='startDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="startDateChange('month')"
+              [(ngModel)]='startDateMonth' [ngModelOptions]="{standalone: true}"
+              id="startDateMonth" (keyup.enter)="focusNext('startDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="startDateChange('year')" [(ngModel)]='startDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="startDateChange('year')"
+              [(ngModel)]='startDateYear' [ngModelOptions]="{standalone: true}"
+              id="startDateYear" (keyup.enter)="focusNext('endDateDay')">
           </mat-form-field>
           </div>
         </div>
@@ -96,17 +106,23 @@
           <div class="dateContent">
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>اليوم</mat-label>
-              <input matInput placeholder="ex: 21" (change)="endDateChange('day')" [(ngModel)]='endDateDay' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 21" (change)="endDateChange('day')"
+              [(ngModel)]='endDateDay' [ngModelOptions]="{standalone: true}"
+              id="endDateDay" (keyup.enter)="focusNext('endDateMonth')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>الشهر</mat-label>
-              <input matInput placeholder="ex: 1" (change)="endDateChange('month')" [(ngModel)]='endDateMonth' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 1" (change)="endDateChange('month')"
+              [(ngModel)]='endDateMonth' [ngModelOptions]="{standalone: true}"
+              id="endDateMonth" (keyup.enter)="focusNext('endDateYear')">
             </mat-form-field>
 
             <mat-form-field class="example-full-width small-width" appearance="fill" >
               <mat-label>السنة</mat-label>
-              <input matInput placeholder="ex: 2022"  (change)="endDateChange('year')" [(ngModel)]='endDateYear' [ngModelOptions]="{standalone: true}">
+              <input matInput placeholder="ex: 2022"  (change)="endDateChange('year')"
+              [(ngModel)]='endDateYear' [ngModelOptions]="{standalone: true}"
+              id="endDateYear" (keyup.enter)="focusNext('studyduration')">
           </mat-form-field>
           </div>
         </div>
@@ -114,7 +130,8 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>مدة الدورة</mat-label>
 
-          <input matInput placeholder="مدة الدورة" formControlName="studyduration">
+          <input matInput placeholder="مدة الدورة" formControlName="studyduration"
+          id="studyduration" (keyup.enter)="focusNext('course_id')">
 
         </mat-form-field>
       </div>

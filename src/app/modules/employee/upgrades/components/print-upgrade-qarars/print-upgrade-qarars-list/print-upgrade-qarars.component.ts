@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { TblShamelUpgradeQararHF } from 'src/app/modules/shared/models/employees_department/tbl-shamel-upgrade-qarar-hf';
@@ -18,6 +18,7 @@ import { PrintQararsComponent } from '../../print/print-qarars/print-qarars.comp
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-print-upgrade-qarars',
@@ -81,8 +82,8 @@ export class PrintUpgradeQararsComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
     private tblShamelUserService: TBLShamelUserService,
-    private tblShamelUpgradeService: TBLShamelUpgradeService
-    
+    private tblShamelUpgradeService: TBLShamelUpgradeService,
+    @Inject(DOCUMENT) private _document: Document,
     ) {
 
       this.BuildForm();
@@ -531,5 +532,12 @@ export class PrintUpgradeQararsComponent implements OnInit {
           
         });
       })
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 }

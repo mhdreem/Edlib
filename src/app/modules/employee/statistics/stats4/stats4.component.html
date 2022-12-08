@@ -16,15 +16,18 @@
           <div class="content">
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>اليوم</mat-label>
-              <input type="number" matInput [formControl]="FirstDateDay" placeholder="ex: 21">
+              <input type="number" matInput [formControl]="FirstDateDay" placeholder="ex: 21"
+              id="FirstDateDay" (keyup.enter)="focusNext('FirstDateMonth')">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>الشهر</mat-label>
-              <input type="number" matInput [formControl]="FirstDateMonth" placeholder="ex: 1">
+              <input type="number" matInput [formControl]="FirstDateMonth" placeholder="ex: 1"
+              id="FirstDateMonth" (keyup.enter)="focusNext('FirstDateYear')">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>العام</mat-label>
-              <input type="number" matInput [formControl]="FirstDateYear" placeholder="ex: 2023">
+              <input type="number" matInput [formControl]="FirstDateYear" placeholder="ex: 2023"
+              id="FirstDateYear" (keyup.enter)="focusNext('EndDateDay')">
             </mat-form-field>
           </div>
         </div>
@@ -34,15 +37,18 @@
           <div class="content">
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>اليوم</mat-label>
-              <input type="number" matInput [formControl]="EndDateDay" placeholder="ex: 21">
+              <input type="number" matInput [formControl]="EndDateDay" placeholder="ex: 21"
+              id="EndDateDay" (keyup.enter)="focusNext('EndDateMonth')">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>الشهر</mat-label>
-              <input type="number" matInput [formControl]="EndDateMonth" placeholder="ex: 1">
+              <input type="number" matInput [formControl]="EndDateMonth" placeholder="ex: 1"
+              id="EndDateMonth" (keyup.enter)="focusNext('EndDateYear')">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>العام</mat-label>
-              <input type="number" matInput [formControl]="EndDateYear" placeholder="ex: 2023">
+              <input type="number" matInput [formControl]="EndDateYear" placeholder="ex: 2023"
+              id="EndDateYear" (keyup.enter)="focusNext('MalakState')">
             </mat-form-field>
           </div>
         </div>
@@ -52,7 +58,8 @@
           <input type="text"
                 matInput
                 [matAutocomplete]="autoMalakState"
-                [formControl]="MalakState">
+                [formControl]="MalakState"
+                id="MalakState" (keyup.enter)="focusNext('FirstDateDay')">
           <mat-autocomplete #autoMalakState="matAutocomplete"
           [displayWith]="displayMalakStateProperty.bind(this)">
             <mat-option *ngFor="let option of filteredMalakStateOptions | async" [value]="option.malakstate_id">

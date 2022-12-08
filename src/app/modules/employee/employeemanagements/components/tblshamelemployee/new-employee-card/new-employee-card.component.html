@@ -60,7 +60,7 @@
                         <mat-form-field appearance="fill">
                           <mat-label #Payrol_ID>رقم الشطب</mat-label>
                           <input type="text" matInput formControlName="Payrol_ID" id="Payrol_ID"
-                            (keyup.enter)="focusNext('Payrol_ID')">
+                            (keyup.enter)="focusNext('Computer_ID')">
                           <mat-error *ngIf="fieldHasErrors(Form, 'Payrol_ID')">
                             {{
                             autoPrintFirstErrorMessage(
@@ -133,7 +133,7 @@
                       <div>
                         <mat-form-field appearance="fill">
                           <mat-label #id_number>رقم الهوية الشخصية</mat-label>
-                          <input matInput formControlName="id_number" onReturn>
+                          <input matInput formControlName="id_number" onReturn id="id_number">
                           <mat-hint>رقم الهوية الشخصية</mat-hint>
                           <mat-error *ngIf="fieldHasErrors(Form, 'id_number')">
                             {{
@@ -439,7 +439,7 @@
 
                       <mat-checkbox color="primary" required value="first-value" aria-label="هل هو احتياط"
                         formControlName="Emp_IN_Military_Service" class="mb-3" id="Emp_IN_Military_Service"
-                        (keyup.enter)="focusNext('Area_ID')">
+                        (keyup.enter)="focusNext('PhoneNum')">
                         هل هو احتياط
                       </mat-checkbox>
 
@@ -447,7 +447,7 @@
                       <div>
                         <mat-form-field appearance="fill">
                           <mat-label #PhoneNum>أرقام الهواتف</mat-label>
-                          <input matInput formControlName="PhoneNum" id="PhoneNum" (keyup.enter)="focusNext('LName')">
+                          <input matInput formControlName="PhoneNum" id="PhoneNum" (keyup.enter)="focusNext('Area_ID')">
                           <mat-hint>أرقام الهواتف</mat-hint>
                           <mat-error *ngIf="fieldHasErrors(Form, 'PhoneNum')">
                             {{

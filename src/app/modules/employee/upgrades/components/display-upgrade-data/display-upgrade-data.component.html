@@ -5,6 +5,7 @@
             matInput
             [formControl]="UpgradeYear"
             [matAutocomplete]="autoUpgradeYear"
+            id="UpgradeYear" (keyup.enter)="focusNext('Class')"
             >
     <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
     [displayWith]="displayUpgradeYearProperty.bind(this)">
@@ -20,6 +21,7 @@
                 matInput
                 [formControl]="Class"
                 [matAutocomplete]="autoClass"
+                id="Class" (keyup.enter)="focusNext('JobName')"
                 >
         <mat-autocomplete #autoClass="matAutocomplete"
         [displayWith]="displayClassProperty.bind(this)">
@@ -35,6 +37,7 @@
                 matInput
                 [formControl]="JobName"
                 [matAutocomplete]="autoJobName"
+                id="JobName" (keyup.enter)="focusNext('Rank')"
                 >
         <mat-autocomplete #autoJobName="matAutocomplete"
         [displayWith]="displayJobNameProperty.bind(this)">
@@ -50,6 +53,7 @@
                 matInput
                 [formControl]="Rank"
                 [matAutocomplete]="autoRank"
+                id="Rank" (keyup.enter)="focusNext('Accounter')"
                 >
         <mat-autocomplete #autoRank="matAutocomplete"
         [displayWith]="displayRankProperty.bind(this)">
@@ -64,7 +68,8 @@
         <input type="text"
                matInput
                [formControl]="Accounter"
-               [matAutocomplete]="auto1" >
+               [matAutocomplete]="auto1" 
+               id="Accounter" (keyup.enter)="focusNext('Autocomplete_EmployeeName_Ctrl')">
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayAccounterNameProperty.bind(this)">
           <mat-option *ngFor="let option of filteredAccounterOptions | async" [value]="option.accounter_id">
             {{option.accounter_name}}
@@ -76,7 +81,8 @@
         <mat-label>اسم الموظف</mat-label>
         <input matInput 
         [matAutocomplete]="auto" 
-        [formControl]='Autocomplete_EmployeeName_Ctrl'>
+        [formControl]='Autocomplete_EmployeeName_Ctrl'
+        id="Autocomplete_EmployeeName_Ctrl" (keyup.enter)="focusNext('idStart')">
       </mat-form-field>
       <mat-autocomplete
        #auto="matAutocomplete"
@@ -93,12 +99,14 @@
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>من إضبارة</mat-label>
-        <input matInput [formControl]="idStart">
+        <input matInput [formControl]="idStart"
+        id="idStart" (keyup.enter)="focusNext('idEnd')">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>الى إضبارة</mat-label>
-        <input matInput [formControl]="idEnd">
+        <input matInput [formControl]="idEnd"
+        id="idEnd" (keyup.enter)="focusNext('UpgradeYear')">
       </mat-form-field>
 
       <mat-radio-group [formControl]="TypeDisplay">

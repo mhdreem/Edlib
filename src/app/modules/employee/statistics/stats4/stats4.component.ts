@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest, forkJoin, Observable, of, Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import * as moment from 'moment';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort } from '@angular/material/sort';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-stats4',
@@ -87,7 +88,8 @@ export class stats4 implements OnInit, OnDestroy {
     private tblshamelchangereasonService:TblshamelchangereasonService,
     private fb: UntypedFormBuilder,
     private snackBar: MatSnackBar,
-    private _liveAnnouncer: LiveAnnouncer,) {
+    private _liveAnnouncer: LiveAnnouncer,
+    @Inject(DOCUMENT) private _document: Document) {
 
 
       this.BuildForm();
@@ -394,4 +396,10 @@ export class stats4 implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

@@ -4,4 +4,5 @@ export interface TblShamelUpgradeYear
     UpgradeStart?:Date;
     UpgradeEnd ?:Date;
     fixed?: number,
+    FIXED?: number,
 }

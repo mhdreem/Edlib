@@ -3,14 +3,14 @@
 <mat-dialog-content class="mat-typography">
 
 
-  <form [formGroup]="Form">
+  <form [formGroup]="Form" (keydown.enter)="$event.preventDefault()">
 
     <div class="inputsGroup">
       <div class="group1">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الشهادة</mat-label>
-          <input type="text" matInput [formControl]="certificate_id" formControlName="certificate_id"
-            [matAutocomplete]="auto_certificate_id">
+          <input type="text" matInput [formControl]="certificate_id" formControlName="certificate_id" id="certificate_id"
+            [matAutocomplete]="auto_certificate_id" (keyup.enter)="focusNext('specification_id')">
           <mat-error *ngIf="errorHandling('certificate_id', 'required')">
             اختر الشهادة
           </mat-error>
@@ -31,7 +31,8 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الاختصاص </mat-label>
-          <input type="text" matInput [formControl]="specification_id" [matAutocomplete]="auto_specification_id">
+          <input type="text" matInput [formControl]="specification_id" id="specification_id"
+          (keyup.enter)="focusNext('graduationyear')" [matAutocomplete]="auto_specification_id">
           <mat-autocomplete #auto_specification_id="matAutocomplete"
             [displayWith]="displaySpecificationProperty.bind(this)"
             (optionSelected)="OnSelectSpecificationChange($event)">
@@ -43,13 +44,15 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>سنة تخرج</mat-label>
-          <input matInput type="number" [formControl]="graduationyear"
+          <input matInput type="number" [formControl]="graduationyear" id="graduationyear"
+           (keyup.enter)="focusNext('studyduration')"
             [(ngModel)]="Selected_Employee_Education.graduationyear">
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>مدة الدراسة</mat-label>
-          <input matInput type="number" [formControl]="studyduration"
+          <input matInput type="number" [formControl]="studyduration" id="studyduration"
+          (keyup.enter)="focusNext('rank_id')"
             [(ngModel)]="Selected_Employee_Education.studyduration">
         </mat-form-field>
       </div>
@@ -64,7 +67,8 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>التقيم</mat-label>
-          <input type="text" matInput [formControl]="rank_id" [matAutocomplete]="auto_rank_id">
+          <input type="text" matInput [formControl]="rank_id" [matAutocomplete]="auto_rank_id" id="rank_id"
+          (keyup.enter)="focusNext('country_id')">
           <mat-autocomplete #auto_rank_id="matAutocomplete" [displayWith]="displayRankProperty.bind(this)"
             (optionSelected)="OnSelectRankChange($event)">
             <mat-option *ngFor="let option of filteredRankOptions | async" [value]="option.rank_id">
@@ -79,7 +83,8 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الدولة</mat-label>
-          <input type="text" matInput [formControl]="country_id" [matAutocomplete]="auto_country_id">
+          <input type="text" matInput [formControl]="country_id" [matAutocomplete]="auto_country_id" id="country_id"
+          (keyup.enter)="focusNext('city_id')">
           <mat-autocomplete #auto_country_id="matAutocomplete" [displayWith]="displayCountryProperty.bind(this)"
             (optionSelected)="OnSelectCountryChange($event)">
             <mat-option *ngFor="let option of filteredCountryOptions | async" [value]="option.country_id">
@@ -91,7 +96,8 @@
       <div class="form-group col-sm-6 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدينة</mat-label>
-          <input type="text" matInput [formControl]="city_id" [matAutocomplete]="auto_city_id">
+          <input type="text" matInput [formControl]="city_id" [matAutocomplete]="auto_city_id" id="city_id"
+          (keyup.enter)="focusNext('certificate_id')">
           <mat-autocomplete #auto_city_id="matAutocomplete" [displayWith]="displayStateProperty.bind(this)"
             (optionSelected)="OnSelectStateChange($event)">
             <mat-option *ngFor="let option of filteredStateOptions | async" [value]="option.state_id">

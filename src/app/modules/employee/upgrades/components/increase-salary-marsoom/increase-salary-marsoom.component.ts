@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
 import { ITBLShamelChangeReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelChangeReason';
@@ -51,7 +52,8 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
     private tblshameldocumenttypeService: TblshameldocumenttypeService,
     private tblshameldepartmentService: TblshameldepartmentService,
     private tblshameljobkindService: TblshameljobkindService,
-    private tblshamelScJobStateService: TblshamelScJobStateService,) { 
+    private tblshamelScJobStateService: TblshamelScJobStateService,
+    @Inject(DOCUMENT) private _document: Document) { 
       this.BuildForm();
       this.Load_Data();
     }
@@ -250,6 +252,13 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
       }
 
   ngOnInit(): void {
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 
 }
