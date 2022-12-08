@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, Inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -10,6 +10,7 @@ import { TblshamelsceducationService } from "src/app/modules/shared/services/emp
 import { EmployeePageService } from "../../employee-page-service";
 import { ConfirmationdialogComponent } from "../../common/confirmationdialog/confirmationdialog.component";
 import { TblshamelsceducationmodifyComponent } from "../tblshamelsceducationmodify/tblshamelsceducationmodify.component";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'app-tblshamelsceducationlist',
@@ -41,7 +42,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
     public PageService: EmployeePageService,
     public educationService: TblshamelsceducationService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document,) {
 
     this.employee_education_List = [];
 

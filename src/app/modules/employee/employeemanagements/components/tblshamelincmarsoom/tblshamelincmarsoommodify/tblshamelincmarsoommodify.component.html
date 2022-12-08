@@ -1,3 +1,13 @@
+<c-container fluid>
+
+  <c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+  </c-row>
+
+  <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+
+
+
 <h2 mat-dialog-title>مراسيم الزيادة</h2>
 
 <mat-dialog-content class="mat-typography">
@@ -12,7 +22,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>سبب التبدل</mat-label>
           <input type="text" matInput [formControl]="changereason_id" formControlName="changereason_id"
-            [matAutocomplete]="auto_changereason_id">
+            [matAutocomplete]="auto_changereason_id" id="changereason_id"  (keyup.enter)="focusNext('changeDateDay')" >
           <mat-error *ngIf="errorHandling('changereason_id', 'required')">
           </mat-error>
 
@@ -42,17 +52,17 @@
         <div class="dateContent">
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>اليوم</mat-label>
-            <input matInput placeholder="ex: 21" (change)="changeDateChange('day')" [(ngModel)]='changeDateDay' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 21" (change)="changeDateChange('day')" [(ngModel)]='changeDateDay' [ngModelOptions]="{standalone: true}" id="changeDateDay"  (keyup.enter)="focusNext('changeDateMonth')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>الشهر</mat-label>
-            <input matInput placeholder="ex: 1" (change)="changeDateChange('month')" [(ngModel)]='changeDateMonth' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 1" (change)="changeDateChange('month')" [(ngModel)]='changeDateMonth' [ngModelOptions]="{standalone: true}" id="changeDateMonth"  (keyup.enter)="focusNext('changeDateYear')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>السنة</mat-label>
-            <input matInput placeholder="ex: 2022"  (change)="changeDateChange('year')" [(ngModel)]='changeDateYear' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 2022"  (change)="changeDateChange('year')" [(ngModel)]='changeDateYear' [ngModelOptions]="{standalone: true}" id="changeDateYear"  (keyup.enter)="focusNext('beginDateDay')">
         </mat-form-field>
         </div>
       </div>
@@ -62,17 +72,17 @@
         <div class="dateContent">
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>اليوم</mat-label>
-            <input matInput placeholder="ex: 21" (change)="beginDateChange('day')" [(ngModel)]='beginDateDay' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 21" (change)="beginDateChange('day')" [(ngModel)]='beginDateDay' [ngModelOptions]="{standalone: true}" id="beginDateDay"  (keyup.enter)="focusNext('beginDateMonth')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>الشهر</mat-label>
-            <input matInput placeholder="ex: 1" (change)="beginDateChange('month')" [(ngModel)]='beginDateMonth' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 1" (change)="beginDateChange('month')" [(ngModel)]='beginDateMonth' [ngModelOptions]="{standalone: true}" id="beginDateMonth"  (keyup.enter)="focusNext('beginDateYear')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>السنة</mat-label>
-            <input matInput placeholder="ex: 2022"  (change)="beginDateChange('year')" [(ngModel)]='beginDateYear' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 2022"  (change)="beginDateChange('year')" [(ngModel)]='beginDateYear' [ngModelOptions]="{standalone: true}" id="beginDateYear"  (keyup.enter)="focusNext('documenttype_id')">
         </mat-form-field>
         </div>
       </div>
@@ -86,7 +96,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
-            [matAutocomplete]="auto_documenttype_id">
+            [matAutocomplete]="auto_documenttype_id" id="documenttype_id"  (keyup.enter)="focusNext('document_number')">
           <mat-autocomplete #auto_documenttype_id="matAutocomplete"
             [displayWith]="displayDocumentTypeProperty.bind(this)"
             (optionSelected)="OnSelectDocumentTypeChange($event)">
@@ -101,7 +111,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>
           <input matInput type="number" placeholder="" value="" [formControl]="document_number"
-            formControlName="document_number">
+            formControlName="document_number" id="document_number"  (keyup.enter)="focusNext('docDateDay')">
         </mat-form-field>
       </div>
 
@@ -110,17 +120,17 @@
         <div class="dateContent">
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>اليوم</mat-label>
-            <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 21" (change)="docDateChange('day')" [(ngModel)]='docDateDay' [ngModelOptions]="{standalone: true}" id="docDateDay"  (keyup.enter)="focusNext('docDateMonth')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>الشهر</mat-label>
-            <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 1" (change)="docDateChange('month')" [(ngModel)]='docDateMonth' [ngModelOptions]="{standalone: true}" id="docDateMonth"  (keyup.enter)="focusNext('docDateYear')">
           </mat-form-field>
 
           <mat-form-field class="example-full-width small-width" appearance="fill" >
             <mat-label>السنة</mat-label>
-            <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}">
+            <input matInput placeholder="ex: 2022"  (change)="docDateChange('year')" [(ngModel)]='docDateYear' [ngModelOptions]="{standalone: true}" id="docDateYear"  (keyup.enter)="focusNext('additionalvalue')">
         </mat-form-field>
         </div>
     </div>
@@ -134,7 +144,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المبلغ الإضافي</mat-label>
           <input matInput type="number" placeholder="" value="" [formControl]="additionalvalue"
-            formControlName="additionalvalue">
+            formControlName="additionalvalue" id="additionalvalue"  (keyup.enter)="focusNext('incpercentage')">
         </mat-form-field>
       </div>
 
@@ -142,7 +152,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>نسبة الزيادة</mat-label>
           <input matInput type="number" placeholder="" value="" [formControl]="incpercentage"
-            formControlName="incpercentage">
+            formControlName="incpercentage" id="incpercentage"  (keyup.enter)="focusNext('Save')">
         </mat-form-field>
       </div>
 
@@ -168,10 +178,13 @@
   </button>
 
 
-  <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()">
+  <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" id="Save">
     <mat-icon class="mat-icon-rtl-mirror">save
     </mat-icon>
     حفظ
   </button>
 
 </mat-dialog-actions>
+
+</ngx-hover-opacity>
+</c-container>

@@ -1,4 +1,5 @@
 
+import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy } from '@angular/core';
 import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -107,7 +108,8 @@ export class TblshamelsccancelpunishmentmodifyComponent implements OnInit, After
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: FormBuilder,
     private _snaker: MatSnackBar,
-    public PageService: EmployeePageService
+    public PageService: EmployeePageService,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
 
     if (data && data.obj && data.id > 0) {

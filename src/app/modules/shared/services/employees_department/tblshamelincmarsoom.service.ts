@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ITBLShamelIncMarsoom } from '../../models/employees_department/ITBLShamelIncMarsoom';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class TblshamelincmarsoomService {
  
   constructor(private httpClient : HttpClient) { }
 
-  list()  {
+  list() :Observable<ITBLShamelIncMarsoom[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
     console.log(this.RestUrl +"TBLShamelIncMarsoom");
@@ -26,6 +26,7 @@ export class TblshamelincmarsoomService {
   }
 
   fill()  {
+
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
     console.log(this.RestUrl +"TBLShamelIncMarsoom");
@@ -39,6 +40,9 @@ export class TblshamelincmarsoomService {
         console.log(this.List_ITBLShamelIncMarsoom );
       
       
+      },error =>
+      {
+        
       }
 
     )

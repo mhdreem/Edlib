@@ -2,7 +2,7 @@
 import * as _moment from 'moment';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
-import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -21,6 +21,7 @@ import { ITBLShamelSCCancelPunishment } from 'src/app/modules/shared/models/empl
 import { TBLShamelSCCancelPunishmentService } from 'src/app/modules/shared/services/employees_department/tblshamel-sccancel-punishment.service';
 import { TBLShamelSCPunishmentService } from 'src/app/modules/shared/services/employees_department/tblshamel-scpunishment.service';
 import { Validator_Punishment } from './Validator_Punishment';
+import { DOCUMENT } from '@angular/common';
 
 
 const moment = _moment;
@@ -94,7 +95,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
   docDateYearIsFilled: boolean= false;
   //#region Constuctor 
   constructor(
-
+    @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { Parent: ITBLShamelSCPunishment, obj: ITBLShamelSCCancelPunishment, id: number },
     public GlobalList: IGlobalEmployeeList,
     public dialogRef: MatDialogRef<TblshamelscpunishmentmodifyComponent>,
@@ -590,5 +591,18 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.addEventDocumentDate(this.documentdate.value);
     }
    }
-
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
 }

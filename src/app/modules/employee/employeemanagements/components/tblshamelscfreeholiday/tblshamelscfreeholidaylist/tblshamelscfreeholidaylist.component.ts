@@ -1,5 +1,6 @@
 
-import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -49,7 +50,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
   
     constructor(
            public PageService: EmployeePageService,
-
+           @Inject(DOCUMENT) private _document: Document,
       public ShamelSCFreeHolidayService : TBLShamelSCFreeHolidayService,
       public dialog: MatDialog,
       private snackBar: MatSnackBar) {

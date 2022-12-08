@@ -55,6 +55,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -95,7 +96,7 @@ import { CommonmoduleModule } from '../commonmodule/commonmodule.module';
 
 /////////////////////////////
 
-
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 
 
 export const MY_FORMATS = {
@@ -180,7 +181,9 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  EmployeeRoutingModule,
- CommonmoduleModule
+ CommonmoduleModule,
+  NgxHoverOpacityModule ,
+ MatProgressBarModule
   ],
   exports:[
     

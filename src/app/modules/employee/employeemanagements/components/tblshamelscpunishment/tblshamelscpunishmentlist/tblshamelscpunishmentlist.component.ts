@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Input } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -11,6 +11,8 @@ import { TBLShamelSCPunishmentService } from "src/app/modules/shared/services/em
 import { EmployeePageService } from "../../employee-page-service";
 import { ConfirmationdialogComponent } from "../../common/confirmationdialog/confirmationdialog.component";
 import { TblshamelscpunishmentmodifyComponent } from "../tblshamelscpunishmentmodify/tblshamelscpunishmentmodify.component";
+import { Subscription } from "rxjs";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'app-tblshamelscpunishmentlist',
@@ -38,14 +40,18 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
   // Select Object
   selected_employee_Punishment_Rows = new Set<ITBLShamelSCPunishment>();                              
  
+  _Subscription:Subscription   = new Subscription();
+  LoadingFinish:Boolean;
 
-
+  
   constructor(
+    @Inject(DOCUMENT) private _document: Document,
     public PageService: EmployeePageService,
     public ShamelSCPunishmentService : TBLShamelSCPunishmentService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
-
+    private snackBar: MatSnackBar,
+   
+    ) {
 
       this.employee_Punishment_List =[];
 
@@ -90,15 +96,25 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
     public async FillTable()
     {
      try{
+      this.LoadingFinish = false;
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) 
       {
 
-        this.ShamelSCPunishmentService.list(this.id).toPromise().then(
+        this._Subscription.add(
+
+        
+        this.ShamelSCPunishmentService.list(this.id).subscribe(
           (data:any)=>
-          {      
+          {    
+            this.LoadingFinish = true;  
             this.employee_Punishment_List=data;   
                 
+          },error=>
+          {
+            this.LoadingFinish = true;  
+            this.snackBar.open('حدث خطأ اثناء التحميل','موافق');
           }
+        )
         );
        }
 

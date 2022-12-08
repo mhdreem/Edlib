@@ -5,7 +5,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { EmployeePageService } from '../../employee-page-service';
-import { Component, OnInit, AfterViewInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Inject, HostListener } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, of, startWith, map, combineLatest, forkJoin, Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { TBLShamelFreeHolidayReasonService } from 'src/app/modules/shared/servic
 import { TBLShamelSCFreeHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-scfree-holiday.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DOCUMENT } from '@angular/common';
 
 const moment = _moment;
 
@@ -103,7 +104,9 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: FormBuilder,
     public PageService: EmployeePageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document,
+
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
       this.id_employee = data.id;
@@ -576,4 +579,20 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.addEventDocumentDate(this.documentdate.value);
     }
    }
+
+
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
 }

@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Inject, OnDestroy, HostListener } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -20,6 +20,7 @@ import { TBLShamelSCBonusService } from 'src/app/modules/shared/services/employe
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { FormValidationHelpersService } from 'src/app/modules/shared/services/helpers/form-validation-helpers.service';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -88,6 +89,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
 
   //#region Constuctor
   constructor(
+    @Inject(DOCUMENT) private _document: Document,
     public dialogRef: MatDialogRef<TblshamelscbonusmodifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCBonus, id: number },
     public GlobalList: IGlobalEmployeeList,
@@ -534,7 +536,20 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
       this.addEventDocumentDate(this.documentdate.value);
     }
    }
-
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
 }
 
 

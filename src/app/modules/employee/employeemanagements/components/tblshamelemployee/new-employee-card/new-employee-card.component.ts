@@ -37,9 +37,6 @@ const moment = _moment;
 })
 export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
-  
-
-
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {
     this._Selected_Employee = passFromParent;
@@ -50,6 +47,8 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   get Selected_Employee(): TBLShamelEmployee {
     return this._Selected_Employee;
   }
+
+  LoadingFinish : boolean;
 
   _Subscription: Subscription;
 
@@ -143,6 +142,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     
   ) {
+    this.LoadingFinish = true;
     this.BuildForm();
     this.Load_Data();
     
@@ -290,7 +290,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
 
 
   Load_Data() {
-
+    this.LoadingFinish = false;
     this._Subscription = forkJoin(
       this.Load_BLShamelMartialState(),
       this.Load_TBLShamelSex(),
@@ -340,8 +340,14 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
         this.FillArrayUsingService();
 
         this.SetValue();
+
+        this.LoadingFinish = true;
+      },error=>
+      {
+        this.LoadingFinish = true;
+        this._snackBar.open('حدث خطأ اثناء تحميل البيانات','موافق');
       }
-    )
+    );
 
 
   }

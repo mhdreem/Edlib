@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { combineLatest, forkJoin, Observable, of, Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { TblshamelchangereasonService } from 'src/app/modules/shared/services/em
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/employees_department/tblshamelincmarsoom.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-tblshamelincmarsoommodify',
@@ -67,7 +68,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
   incpercentage: FormControl<number | null>;
   additionalvalue: FormControl<number | null>;
 
-  _Subscription: Subscription;
+  _Subscription: Subscription = new Subscription();
 
   //Local Var
 
@@ -94,9 +95,12 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
   docDateMonthIsFilled: boolean= false;
   docDateYearIsFilled: boolean= false;
 
+  LoadingFinish:boolean;
+
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelincmarsoommodifyComponent>,
+    @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelIncMarsoom },
     public incmarsoomService: TblshamelincmarsoomService,
     public changereasonService: TblshamelchangereasonService,
@@ -143,15 +147,21 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
 
 
   Load_Data() {
+    this.LoadingFinish = false;
 
 
-    this._Subscription = forkJoin(
+
+    this._Subscription .add(
+       forkJoin(
+
       this.Load_TBLShamelChangeReason(),
       this.Load_TBLShamelDocumentType()
 
 
     ).subscribe(
       res => {
+
+        this.LoadingFinish = true;
 
         this.ChangeReason_List = res[0];
         this.filteredChangeReasonOptions = of(this.ChangeReason_List);
@@ -164,8 +174,13 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
         this.FillArrayUsingService();
 
         this.SetValue();
+      },error=>
+      {
+        this.LoadingFinish = true ;
+        this.snackBar.open('حدث خطأ اثناء تحميل البيانات','موافق');
       }
     )
+    );
 
   }
 
@@ -178,7 +193,20 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
 
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
 
   public async FillArrayUsingService() {
     try {

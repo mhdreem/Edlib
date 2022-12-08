@@ -198,6 +198,8 @@ export const MY_FORMATS = {
 };
 
 import {HotkeyModule} from 'angular2-hotkeys';
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -369,6 +371,8 @@ import {HotkeyModule} from 'angular2-hotkeys';
  IconModule,
  EmployeemanageRoutingModule,
  NgxPrintModule,
+  NgxHoverOpacityModule ,
+ MatProgressBarModule,
  HotkeyModule.forRoot()
   ],
   exports:[

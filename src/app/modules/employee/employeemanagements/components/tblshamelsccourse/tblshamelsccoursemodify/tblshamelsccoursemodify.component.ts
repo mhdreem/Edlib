@@ -1,5 +1,6 @@
 
-import { Component, OnInit, AfterViewInit, Input, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, AfterViewInit, Input, Inject, HostListener } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -116,6 +117,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     public countryService: TblshamelcountryService,
     public stateService: TblshamelstateService,
     public tblshameluserservice: TBLShamelUserService,
+    @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCCourse, id: number }
   ) {
 
@@ -694,5 +696,21 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     }
    }
 
+
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
+  
 }
 

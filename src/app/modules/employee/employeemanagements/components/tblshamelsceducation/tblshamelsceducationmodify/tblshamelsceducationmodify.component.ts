@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { combineLatest, forkJoin, Observable, of, Subscription } from 'rxjs';
@@ -24,6 +24,7 @@ import { TblshamelspecificationService } from 'src/app/modules/shared/services/e
 import { EmployeePageService } from '../../employee-page-service';
 import { Validator_Education } from './Validator_Education';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-tblshamelsceducationmodify',
@@ -97,7 +98,8 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
     public specificationService: TblshamelspecificationService,
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
       this.id_employee = data.id;
@@ -594,5 +596,20 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
   /* Handle form errors in Angular 8 */
   public errorHandling = (control: string, error: string) => {
     return this.Form.controls[control]?.hasError(error);
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
   }
 }

@@ -1,3 +1,11 @@
+<c-container fluid>
+
+  <c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+  </c-row>
+
+  <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+
 <div class="col-md-12 text-center ">
   <h2>مراسيم الزيادة</h2>
 </div>
@@ -103,3 +111,5 @@
 
   </div>
 </div>
+</ngx-hover-opacity>
+</c-container>

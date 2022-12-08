@@ -1,5 +1,6 @@
 
-import { Component, OnInit, AfterViewInit, Input, Inject, NgZone, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, AfterViewInit, Input, Inject, NgZone, OnDestroy, HostListener } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -143,7 +144,8 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
     public changereasonService: TblshamelchangereasonService,
     private fb: FormBuilder,
     private ngZone: NgZone,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
 
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -956,4 +958,20 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
     }
    }
 
+
+   public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
+  
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+          this.Save();
+          event.preventDefault();
+      }
+  }
+  
 }

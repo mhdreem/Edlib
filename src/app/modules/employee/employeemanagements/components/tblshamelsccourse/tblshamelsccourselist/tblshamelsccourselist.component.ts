@@ -1,5 +1,5 @@
 
-import { AfterContentInit, AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Inject, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,6 +13,7 @@ import { ConfirmationdialogComponent } from '../../common/confirmationdialog/con
 import { ITBLShamelSCCourse } from 'src/app/modules/shared/models/employees_department/ITBLShamelSCCourse';
 import { TblshamelsccourseService } from 'src/app/modules/shared/services/employees_department/tblshamelsccourse.service';
 import { EmployeePageService } from '../../employee-page-service';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -44,7 +45,8 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
     public PageService:EmployeePageService,
     public courseService : TblshamelsccourseService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document,) {
 
       this.dataSource = new MatTableDataSource([]);
      

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationdialogComponent } from '../../common/confirmationdialog/confirmationdialog.component';
@@ -9,16 +9,18 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelIncMarsoom } from 'src/app/modules/shared/models/employees_department/ITBLShamelIncMarsoom';
 import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_department/IGlobalEmployeeList';
 import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/employees_department/tblshamelincmarsoom.service';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tblshamelincmarsoomlist',
   templateUrl: './tblshamelincmarsoomlist.component.html',
   styleUrls: ['./tblshamelincmarsoomlist.component.scss']
 })
-export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  {
+export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit,OnDestroy  {
   //Join Variable   
   formname:string = 'ManageSCIncMarsoomFrame1';
-
+  LoadingFinish:boolean;
+_Subscription:Subscription =new Subscription();
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -38,33 +40,73 @@ export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  
     public IncMarsoomService : TblshamelincmarsoomService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public GlobalEmployeeList:IGlobalEmployeeList ) {
+    public GlobalEmployeeList:IGlobalEmployeeList,
+    private _snackBar: MatSnackBar ) {
 
       this.dataSource = new MatTableDataSource<ITBLShamelIncMarsoom>([]);
       this.IncMarsoom_List =[];
       this.dataSource.data = this.IncMarsoom_List;
+    
+this.Load_Data();
+      
+
+this.IncMarsoomService.List_ITBLShamelIncMarsoom_BehaviorSubject.subscribe(
+  data=>
+  {
+    this.dataSource.data = data;
+  }
+)
+     
+        
+     }
+
+  ngOnDestroy(): void {
+    this._Subscription.unsubscribe();
+  }
+    
+    Load_ITBLShamelIncMarsoom():Observable<ITBLShamelIncMarsoom[]>
+    {
 
       if (this.IncMarsoomService.List_ITBLShamelIncMarsoom == null||
         this.IncMarsoomService.List_ITBLShamelIncMarsoom.length ==0 )
-              this.IncMarsoomService.fill();          
-              this.IncMarsoomService.List_ITBLShamelIncMarsoom_BehaviorSubject.subscribe(
-                data=>
-                {
-                  this.IncMarsoom_List = data;
-                  this.dataSource.data = this.IncMarsoom_List ;
-                }
-              )
+          return    this.IncMarsoomService.list();  
 
-        this.FillTable();
-     }
-    
-    
+          return of(this.IncMarsoomService.List_ITBLShamelIncMarsoom);
+          
 
+    }
+
+    Load_Data()
+    {
+      this.LoadingFinish =false;
+
+      this._Subscription.add(
+      forkJoin(
+this.Load_ITBLShamelIncMarsoom()
+      ).subscribe(res=>
+        {
+          this.LoadingFinish =true;
+          this.IncMarsoomService.List_ITBLShamelIncMarsoom= res[0];
+          this.IncMarsoomService.List_ITBLShamelIncMarsoom_BehaviorSubject.next(res[0]) ;
+          this.dataSource.data =  res[0];
+
+
+        },
+        error=>
+        {
+          this.LoadingFinish =true;
+          this._snackBar.open('حدث خطأ','موافق');
+        }
+        )
+      );
+
+    }
  
  
    ngOnInit(): void {
      this.dataSource = new MatTableDataSource(this.IncMarsoom_List);
    }
+   
    ngAfterViewInit() {
      this.dataSource = new MatTableDataSource(this.IncMarsoom_List);
      this.dataSource.paginator = this.paginator;
@@ -74,9 +116,10 @@ export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  
  
  
  
-   public async FillTable() {
+   public async LoadFromServer() {
      try {
        
+     
       this.IncMarsoomService.fill();
  
  
@@ -111,7 +154,7 @@ export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit  
    
     dialogRef.afterClosed().toPromise().then(result => {
      
-      this.FillTable();
+      this.LoadFromServer();
       
     });
   }
@@ -150,7 +193,7 @@ try{
               this.snackBar.open('تم الحذف بنجاح', '', {
                 duration: 3000,
               });
-                this.FillTable();
+                this.LoadFromServer();
               }
 
             });
@@ -182,7 +225,7 @@ try{
       });
   
       dialogRef.afterClosed().toPromise().then(result => {
-        this.FillTable();        
+        this.LoadFromServer();        
       });
 
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, Inject } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -12,16 +12,20 @@ import { EmployeePageService } from "../../employee-page-service";
 import { ConfirmationdialogComponent } from "../../common/confirmationdialog/confirmationdialog.component";
 import { TblshamelscbonusmodifyComponent } from "../tblshamelscbonusmodify/tblshamelscbonusmodify.component";
 import { FormValidationHelpersService } from "src/app/modules/shared/services/helpers/form-validation-helpers.service";
+import { Subscription } from "rxjs";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'app-tblshamelscbonuslist',
   templateUrl: './tblshamelscbonuslist.component.html',
   styleUrls: ['./tblshamelscbonuslist.component.scss']
 })
-export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
+export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDestroy {
   formname:string = 'ManageSCIncMarsoomFrame1';
   //Join Variable
   Selected_Emp: TBLShamelEmployee = {};
+  LoadingFinish:Boolean;
+  _Subscription:Subscription = new Subscription ();
 
 
   @ViewChild('paginator') paginator: MatPaginator;
@@ -43,10 +47,14 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
 
   constructor(
     public PageService: EmployeePageService,
+    @Inject(DOCUMENT) private _document: Document,
     public ShamelSCBonusService: TBLShamelSCBonusService,
     public dialog: MatDialog,
     public formValidatorsService: FormValidationHelpersService,
     private snackBar: MatSnackBar) {
+
+      this.LoadingFinish =true;
+
     this.dataSource = new MatTableDataSource([]);
     this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
       data => {
@@ -68,6 +76,9 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
 
 
   }
+  ngOnDestroy(): void {
+    this._Subscription.unsubscribe();
+  }
 
 
 
@@ -85,13 +96,21 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit {
 
   public async FillTable() {
     try {
+      this.LoadingFinish = false;
+
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
-        this.ShamelSCBonusService.list(this.Selected_Emp.id).toPromise().then(
+        this._Subscription.add(
+        this.ShamelSCBonusService.list(this.Selected_Emp.id).subscribe(
           (data: any) => {
+            this.LoadingFinish = true;
             this.employee_Bonus_List = data;
             this.dataSource.data = this.employee_Bonus_List;
             this.PageService.Selected_TBLShamelEmployee.TBLShamelSCBonuss = this.employee_Bonus_List;
+          },error=>
+          {
+            this.LoadingFinish = true;
           }
+        )
         );
       }
 
