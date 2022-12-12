@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -34,6 +35,8 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  LoadingFinish : boolean;
 
   rowClicked: number;
 
@@ -69,6 +72,19 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     List_TBLShamelYear: TBLShamelYear[];
     List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
+    totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
+
+  pageChanged(event: PageEvent) {
+    console.log('event', event);
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.OnSearch();
+  }
+
     ngAfterViewInit() {
 
       this.dataSource.sort = this.sort;
@@ -84,9 +100,11 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     private tblShamelBrokerShatebService: TblShamelBrokerShatebService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,) { 
+    public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
+    @Inject(DOCUMENT) private _document: Document) { 
 
   this.dataSource = new MatTableDataSource<TblShamelBrokerShateb>(this.broker_shateb_List);
+      this.LoadingFinish = true;
 
   this.Form = this.frmBuilder.group({
 
@@ -96,8 +114,8 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     year_id: new FormControl<number | undefined | null>(null),
     month_id: new FormControl<number | undefined | null>(null),
     school_id: new FormControl<number | undefined | null>(null),
-    payrol_id_book: new FormControl<number | undefined | null>(null),
-    payrol_id_shateb: new FormControl<number | undefined | null>(null),
+    book: new FormControl<number | undefined | null>(null),
+    shateb: new FormControl<number | undefined | null>(null),
 
   });
 
@@ -145,6 +163,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     }
 
     LoadData() {
+      this.LoadingFinish = false;
 
       forkJoin(
         [this.Load_Area(),
@@ -235,6 +254,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
       },
         (error) => console.log(error));
+        this.LoadingFinish = true;
   
     }
 
@@ -297,7 +317,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
       if (value != null && this.List_TBLShamelMonth != null && this.List_TBLShamelMonth.length > 0) {
         let Month: any = this.List_TBLShamelMonth.find(crs => crs.month_id == value);
         if (Month != null)
-          return Month.documenttype_name;
+          return Month.month_name;
       }
       return '';
     }
@@ -337,17 +357,20 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
 
       try {
   
-        console.log(this.Form.value);
+        console.log('form', this.Form.value);
         // call Search
-        this.tblShamelBrokerShatebService.Search(this.Form.value, this.PageIndex).subscribe(
-          (data: TblShamelBrokerShateb[] )=> {
+        this.tblShamelBrokerShatebService.Search(this.Form.value, this.currentPage, this.pageSize).subscribe(
+          (data )=> {
   
            console.log('data', data);
             // if Success 
-            if (data != null && data .length >0) {
-              this.broker_shateb_List = this.broker_shateb_List.concat(data);
+            if (data.Item1!= null && data.Item1.length >0) {
+              this.dataSource.paginator= this.paginator;
+              this.allData.push(...data.Item1);
+              this.dataSource.data = this.allData;
+              this.totalRows= data.Item2;
+              this.dataSource._updatePaginator(this.totalRows);
             }
-            this.dataSource.data = this.broker_shateb_List;
   
           }
         )
@@ -355,15 +378,6 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
       } catch (ex: any) { }
   
   
-    }
-  
-    onScroll() {
-  
-      this.PageIndex = this.PageIndex + 1;
-  
-      this.broker_shateb_List = []; 
-  
-      this.FillTable();
     }
   
     Add() {
@@ -442,9 +456,6 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
     OnSearch()
     {
-      this.PageIndex =1;
-      this.broker_shateb_List = [];
-      this.dataSource.data = this.broker_shateb_List;
       this.FillTable();
     }
   
@@ -468,5 +479,14 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
     }
   
+    clearDataSource(){
+      this.allData= [];
+    }
 
+    public focusNext(id: string) {
+      let element = this._document.getElementById(id);
+      if (element) {
+        element.focus();
+      }
+    }
 }

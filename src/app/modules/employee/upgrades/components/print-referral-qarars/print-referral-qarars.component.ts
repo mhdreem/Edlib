@@ -61,6 +61,7 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
 
   pageChanged(event: PageEvent) {
     console.log({ event });
@@ -271,8 +272,12 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
 
     this.tblShamelUpgradeGovReportService.Search(this.request).subscribe(
       (res: any)=>{
-        this.dataSource.data= res.Item1;
+        this.dataSource.paginator= this.paginator;
+        this.allData.push(...res.Item1);
+        this.dataSource.data = this.allData;
         this.totalRows= res.Item2;
+        this.dataSource._updatePaginator(this.totalRows);
+
         this.referralInput= this.dataSource.data;
         console.log('res', res);
         console.log('req', this.request);
@@ -334,5 +339,9 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   changeTableRowColor(idx: any) { 
     if(this.rowClicked === idx) this.rowClicked = -1;
     else this.rowClicked = idx;
+  }
+
+  clearDataSource(){
+    this.allData= [];
   }
 }

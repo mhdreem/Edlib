@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TblShamelOvertimePrintTotals } from '../../../models/finance_department/broker/tbl-shamel-overtime-print-totals';
 import { TBLShamelOverTimeStatistics } from '../../../models/finance_department/broker/tblshamel-over-time-statistics';
 import { TBLShamelOverTimeShateb } from '../../../models/finance_department/broker/TBLShamelOverTimeShateb';
@@ -22,10 +23,10 @@ export class TBLShamelOverTimeShatebService {
       
     }
 
-    Search(searchRequest : any,PageIndex:number)  {
+    Search(searchRequest : any,PageIndex:number, pageSize: number)  {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       const options = {  headers: headers };  
-      return this.httpClient.post<TBLShamelOverTimeShateb[]>(this.RestUrl +`/Search/${PageIndex}`,searchRequest,this.httpOptions);  
+      return this.httpClient.post<{Item1: TBLShamelOverTimeShateb[], Item2: number}>(this.RestUrl +`/Search/`,{...searchRequest, pageNumber: PageIndex,pageSize: pageSize},this.httpOptions) as Observable<{Item1: TBLShamelOverTimeShateb[], Item2: number}>;  
       
     }
 

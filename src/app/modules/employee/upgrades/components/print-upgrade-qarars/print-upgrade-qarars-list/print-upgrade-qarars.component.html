@@ -1,3 +1,7 @@
+<c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <div class="qararHeader">
     <div class="right">
         <div class="top">
@@ -158,3 +162,4 @@
 
 </div>
 
+</ngx-hover-opacity>

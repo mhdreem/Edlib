@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,6 +27,8 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<TblShamelBrokerEmployee>;
   
+  LoadingFinish : boolean;
+
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -61,9 +64,11 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
     private snackBar: MatSnackBar,
     private _liveAnnouncer: LiveAnnouncer,
     private frmBuilder : FormBuilder,
-    private tblShamelSexService: TBLShamelSexService) { 
+    private tblShamelSexService: TBLShamelSexService,
+    @Inject(DOCUMENT) private _document: Document) { 
 
       this.dataSource = new MatTableDataSource<TblShamelBrokerEmployee>(this.broker_employee_List);
+      this.LoadingFinish = true;
 
 
       this.Form = this. frmBuilder.group({
@@ -106,6 +111,7 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
 }
 
 LoadData() {
+  this.LoadingFinish = false;
 
   forkJoin(
     [this.Load_Sex()]
@@ -129,6 +135,7 @@ LoadData() {
 
   },
     (error) => console.log(error));
+    this.LoadingFinish = true;
 
 }
 
@@ -311,5 +318,10 @@ OnSearch()
 
   }
 
-  
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

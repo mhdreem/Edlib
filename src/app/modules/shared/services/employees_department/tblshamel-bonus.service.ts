@@ -16,6 +16,7 @@ export class TBLShamelBonusService {
 
 
   private RestUrl = 'https://localhost:44335/api/';
+  // private RestUrl = 'http://localhost:8083/api/';
   private httpOptions = { 
     headers: new HttpHeaders( { 'Content-Type': 'application/json;charset=UTF-8' }) 
  };

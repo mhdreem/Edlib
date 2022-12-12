@@ -80,6 +80,8 @@ import { TblShamelBrokerShatebListComponent } from './components/tblShamelBroker
 import { TblShamelBrokerShatebModifyComponent } from './components/tblShamelBrokerShateb/tbl-shamel-broker-shateb-modify/tbl-shamel-broker-shateb-modify.component';
 import { TblShamelBrokerPrintTotalsListComponent } from './components/tblShamelBrokerPrintTotals/tbl-shamel-broker-print-totals-list/tbl-shamel-broker-print-totals-list.component';
 import {MatSortModule} from '@angular/material/sort';
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 /////////////////////////////
 
 //component 
@@ -215,7 +217,9 @@ UtilitiesModule,
 IconModule,
 BrokerRoutingModule,
 MatExpansionModule,
-MatSortModule
+MatSortModule,
+MatProgressBarModule,
+NgxHoverOpacityModule
 
   ]
 })

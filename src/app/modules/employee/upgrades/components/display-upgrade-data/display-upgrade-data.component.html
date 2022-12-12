@@ -12,7 +12,8 @@
             id="UpgradeYear" (keyup.enter)="focusNext('Class')"
             >
     <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
-    [displayWith]="displayUpgradeYearProperty.bind(this)">
+    [displayWith]="displayUpgradeYearProperty.bind(this)"
+    (optionSelected)="clearDataSource()">
         <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
         {{option.YEAR_ID}}
         </mat-option>
@@ -28,7 +29,8 @@
                 id="Class" (keyup.enter)="focusNext('JobName')"
                 >
         <mat-autocomplete #autoClass="matAutocomplete"
-        [displayWith]="displayClassProperty.bind(this)">
+        [displayWith]="displayClassProperty.bind(this)"
+        (optionSelected)="clearDataSource()">
         <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
             {{option.class_name}}
         </mat-option>
@@ -44,7 +46,8 @@
                 id="JobName" (keyup.enter)="focusNext('Rank')"
                 >
         <mat-autocomplete #autoJobName="matAutocomplete"
-        [displayWith]="displayJobNameProperty.bind(this)">
+        [displayWith]="displayJobNameProperty.bind(this)"
+        (optionSelected)="clearDataSource()">
         <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
             {{option.jobname_name}}
         </mat-option>
@@ -60,7 +63,8 @@
                 id="Rank" (keyup.enter)="focusNext('Accounter')"
                 >
         <mat-autocomplete #autoRank="matAutocomplete"
-        [displayWith]="displayRankProperty.bind(this)">
+        [displayWith]="displayRankProperty.bind(this)"
+        (optionSelected)="clearDataSource()">
         <mat-option *ngFor="let option of filteredRankOptions | async" [value]="option.rank_id">
             {{option.rank_name}}
         </mat-option>
@@ -74,7 +78,7 @@
                [formControl]="Accounter"
                [matAutocomplete]="auto1" 
                id="Accounter" (keyup.enter)="focusNext('Autocomplete_EmployeeName_Ctrl')">
-        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayAccounterNameProperty.bind(this)">
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayAccounterNameProperty.bind(this)" (optionSelected)="clearDataSource()">
           <mat-option *ngFor="let option of filteredAccounterOptions | async" [value]="option.accounter_id">
             {{option.accounter_name}}
           </mat-option>
@@ -90,7 +94,8 @@
       </mat-form-field>
       <mat-autocomplete
        #auto="matAutocomplete"
-       [displayWith]="displayFn">
+       [displayWith]="displayFn"
+       (optionSelected)="clearDataSource()">
         <mat-option *ngIf="isLoading" class="is-loading">
           <mat-spinner diameter="50"></mat-spinner>
       </mat-option>
@@ -104,16 +109,16 @@
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>من إضبارة</mat-label>
         <input matInput [formControl]="idStart"
-        id="idStart" (keyup.enter)="focusNext('idEnd')">
+        id="idStart" (keyup.enter)="focusNext('idEnd')" (change)="clearDataSource()">
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>الى إضبارة</mat-label>
         <input matInput [formControl]="idEnd"
-        id="idEnd" (keyup.enter)="focusNext('UpgradeYear')">
+        id="idEnd" (keyup.enter)="focusNext('UpgradeYear')" (change)="clearDataSource()">
       </mat-form-field>
 
-      <mat-radio-group [formControl]="TypeDisplay">
+      <mat-radio-group [formControl]="TypeDisplay" (change)="clearDataSource()">
         <mat-radio-button value="1">عرض جميع العاملين</mat-radio-button>
         <mat-radio-button value="2">عاملين ليس لديهم قرار ترفيع</mat-radio-button>
         <mat-radio-button value="3">عاملين لديهم قرار ترفيع</mat-radio-button>

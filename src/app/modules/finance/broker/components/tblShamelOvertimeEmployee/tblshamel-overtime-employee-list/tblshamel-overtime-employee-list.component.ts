@@ -1,5 +1,5 @@
 
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TBLShamelOvertimeEmployeeModifyComponent } from '../../tblShamelOvertimeEmployee/tblshamel-overtime-employee-modify/tblshamel-overtime-employee-modify.component';
@@ -16,6 +16,7 @@ import { FormBuilder, FormControl, FormGroup, UntypedFormControl, UntypedFormGro
 import { TBLShamelSex } from 'src/app/modules/shared/models/employees_department/TBLShamelSex';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-tblshamel-overtime-employee-list',
@@ -28,6 +29,8 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<TBLShamelOvertimeEmployee>;
   
+  LoadingFinish : boolean;
+
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -77,11 +80,13 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private _liveAnnouncer: LiveAnnouncer,
     private frmBuilder : FormBuilder,
-    private tblShamelSexService: TBLShamelSexService
+    private tblShamelSexService: TBLShamelSexService,
+    @Inject(DOCUMENT) private _document: Document
   ) {
 
     // Init dataSource
     this.dataSource = new MatTableDataSource<TBLShamelOvertimeEmployee>(this.overtime_employee_List);
+    this.LoadingFinish = true;
 
     this.Form = this. frmBuilder.group({
       serial: new FormControl<number|undefined|null>(null),
@@ -131,6 +136,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
 }
 
   LoadData() {
+    this.LoadingFinish = false;
 
     forkJoin(
       [this.Load_Sex()]
@@ -178,6 +184,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
     },
       (error) => console.log(error));
+      this.LoadingFinish = true;
 
   }
     
@@ -386,5 +393,10 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
   }
  
-  
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  } 
 }

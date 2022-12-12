@@ -15,6 +15,7 @@ import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_d
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
     public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
     private ShamelSexService: TBLShamelSexService,
     public frmBuild: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     this.selected_overtime_employee = data.obj;
     this.BuildForm();
@@ -348,5 +350,10 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
   }
 
 
-
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TblshamelBrokerStatistics } from '../../../models/finance_department/broker/tblshamel-broker-statistics';
 import { TblShamelBrokerEmployee } from '../../../models/finance_department/broker/TblShamelBrokerEmployee';
 import { TblShamelBrokerPrintTotals } from '../../../models/finance_department/broker/TblShamelBrokerPrintTotals';
@@ -22,10 +23,10 @@ export class TblShamelBrokerShatebService {
       
     }
 
-    Search(searchRequest : any,PageIndex:number)  {
+    Search(searchRequest : any,PageIndex:number, pageSize: number)  {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       const options = {  headers: headers };  
-      return this.httpClient.post<TblShamelBrokerShateb[]>(this.RestUrl +`/Search/${PageIndex}`,searchRequest,this.httpOptions);  
+      return this.httpClient.post<{Item1: TblShamelBrokerShateb[], Item2: number}>(this.RestUrl +`/Search/`,{...searchRequest, pageNumber: PageIndex,pageSize: pageSize},this.httpOptions) as Observable<{Item1: TblShamelBrokerShateb[], Item2: number}>;  
       
     }
 

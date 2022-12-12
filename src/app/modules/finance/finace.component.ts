@@ -24,12 +24,12 @@ export class FinaceComponent implements OnInit {
       }
     },
     {
-      name: 'الوكلاء' ,
+      name: 'الوكلاء و الساعات' ,
       url: 'finace/module/broker',
       iconComponent: { name: 'cil-pencil' },
   
     },
-   
+
     {
       name: 'الحسميات' ,
       url: 'finace/module/shatebtax',

@@ -1,3 +1,7 @@
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <div class="card mb-4">
   <div class="card-body p-4">
 
@@ -45,8 +49,8 @@
           <div class="filterGroup1">
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>المنطقة</mat-label>
-              <input type="text" matInput formControlName="area_id" [matAutocomplete]="auto_area_id">
-              <mat-autocomplete #auto_area_id="matAutocomplete" [displayWith]="Display_Area_Property.bind(this)">
+              <input type="text" matInput formControlName="area_id" id="area_id" (keyup.enter)="focusNext('year_id')" [matAutocomplete]="auto_area_id">
+              <mat-autocomplete #auto_area_id="matAutocomplete" [displayWith]="Display_Area_Property.bind(this)" (optionSelected)="clearDataSource()">
                 <mat-option *ngFor="let option of List_Area_Id_Filter | async" [value]="option.Area_ID">
                   {{option.Area_Name}}
                 </mat-option>
@@ -58,8 +62,8 @@
 
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>السنة</mat-label>
-              <input type="text" matInput formControlName="year_id" [matAutocomplete]="auto_year_id">
-              <mat-autocomplete #auto_year_id="matAutocomplete" [displayWith]="Display_Year_Property.bind(this)">
+              <input type="text" matInput formControlName="year_id" id="year_id" (keyup.enter)="focusNext('month_id')" [matAutocomplete]="auto_year_id">
+              <mat-autocomplete #auto_year_id="matAutocomplete" [displayWith]="Display_Year_Property.bind(this)" (optionSelected)="clearDataSource()">
                 <mat-option *ngFor="let option of List_TBLShamelYear_Filter | async" [value]="option.year_id">
                   {{option.year_name}}
                 </mat-option>
@@ -69,8 +73,8 @@
 
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>الشهر</mat-label>
-              <input type="text" matInput formControlName="month_id" [matAutocomplete]="auto_school_id">
-              <mat-autocomplete #auto_school_id="matAutocomplete" [displayWith]="Display_School_Property.bind(this)">
+              <input type="text" matInput formControlName="month_id" id="month_id" (keyup.enter)="focusNext('fullname')" [matAutocomplete]="auto_school_id">
+              <mat-autocomplete #auto_school_id="matAutocomplete" [displayWith]="Display_Month_Property.bind(this)" (optionSelected)="clearDataSource()">
                 <mat-option *ngFor="let option of List_TBLShamelMonth_Filter | async" [value]="option.month_id">
                   {{option.month_name}}
                 </mat-option>
@@ -84,11 +88,11 @@
             <div>
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>اسم الموظف</mat-label>
-                <input type="text" placeholder="اسم الموظف" aria-label="اسم الموظف" matInput formControlName="fullname"
+                <input type="text" placeholder="اسم الموظف" aria-label="اسم الموظف" matInput formControlName="fullname" id="fullname" (keyup.enter)="focusNext('school_id')"
                   [matAutocomplete]="auto_fullname" />
                 <mat-autocomplete #auto_fullname="matAutocomplete"
                   [displayWith]="Display_OverTimeEmployee_Fn.bind(this)"
-                  (optionSelected)="OnOverTimeEmployeeSelected($event)">
+                  (optionSelected)="OnOverTimeEmployeeSelected($event); clearDataSource();">
                   <mat-option *ngFor="let broker of List_Overtime_employee_Name_Filter | async" [value]="broker">
                     {{broker.fullname}}
                   </mat-option>
@@ -98,12 +102,12 @@
 
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>المدرسة</mat-label>
-                <input type="text" matInput formControlName="school_id" [matAutocomplete]="auto_School_id">
+                <input type="text" matInput formControlName="school_id" id="school_id" (keyup.enter)="focusNext('book')" [matAutocomplete]="auto_School_id">
 
 
 
                 <mat-autocomplete #auto_School_id="matAutocomplete" [displayWith]="Display_School_Property.bind(this)"
-                  (optionSelected)="OnSelectTblShamelMoneyM3PayDest($event)">
+                  (optionSelected)="OnSelectTblShamelMoneyM3PayDest($event); clearDataSource();">
                   <mat-option *ngFor="let option of List_ShamelMoneyM3PayDest_Filter  | async" [value]="option.serial">
                     {{option.paydest_name}}
                   </mat-option>
@@ -117,13 +121,13 @@
             <div class="filterGroup3">
               <mat-form-field class="filter" appearance="fill">
                 <mat-label>الدفتر</mat-label>
-                <input matInput formControlName="payrol_id_book" #input>
+                <input matInput formControlName="book" id="book" (keyup.enter)="focusNext('shateb')" #input (change)="clearDataSource()">
               </mat-form-field>
 
 
               <mat-form-field class="filter" appearance="fill">
                 <mat-label>رقم الشطب</mat-label>
-                <input matInput formControlName="payrol_id_shateb" #input>
+                <input matInput formControlName="shateb" id="shateb" (keyup.enter)="focusNext('area_id')" #input (change)="clearDataSource()">
               </mat-form-field>
             </div>
          
@@ -142,9 +146,6 @@
     <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
 
 
-      <div infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="1" [infiniteScrollThrottle]="100"
-      (scrolled)="onScroll()" [scrollWindow]="false" style="height: 70%; overflow-y: scroll;">
-  
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
           <!-- area_id cOLUMN -->
           <ng-container matColumnDef="area_id">
@@ -205,16 +206,14 @@
   
   
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns; sticky: true; let idx=index;"
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
           [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
   
   </div>
-
-
-
-
-  </div>
 </div>
+</div>
+</ngx-hover-opacity>

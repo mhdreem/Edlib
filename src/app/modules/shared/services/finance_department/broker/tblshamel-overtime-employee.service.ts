@@ -61,10 +61,12 @@ export class TBLShamelOvertimeEmployeeService {
     }
   
     add(obj : TBLShamelOvertimeEmployee )  {
+      console.log('add', obj);
       return this.httpClient.post<number>(this.RestUrl ,obj,this.httpOptions);  
     }
   
     update(obj : TBLShamelOvertimeEmployee )  {
+      console.log('update', obj);
       return this.httpClient.put<number>(this.RestUrl ,obj);  
     }
 

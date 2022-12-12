@@ -23,7 +23,8 @@
                   [matAutocomplete]="autoUpgradeYear"
                   >
           <mat-autocomplete #autoUpgradeYear="matAutocomplete"
-          [displayWith]="displayUpgradeYearProperty.bind(this)">
+          [displayWith]="displayUpgradeYearProperty.bind(this)"
+          (optionSelected)="clearDataSource()">
             <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
               {{option.YEAR_ID}}
             </mat-option>
@@ -38,7 +39,8 @@
                     [matAutocomplete]="autoClass"
                     >
             <mat-autocomplete #autoClass="matAutocomplete"
-            [displayWith]="displayClassProperty.bind(this)">
+            [displayWith]="displayClassProperty.bind(this)"
+            (optionSelected)="clearDataSource()">
               <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
                 {{option.class_name}}
               </mat-option>
@@ -52,7 +54,7 @@
                     [formControl]="JobName"
                     [matAutocomplete]="autoJobName"
                     >
-            <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value)'
+            <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value); clearDataSource();'
             [displayWith]="displayJobNameProperty.bind(this)">
               <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
                 {{option.jobname_name}}
@@ -62,12 +64,12 @@
         
       <mat-form-field class="example-full-width fitContent" appearance="fill">
           <mat-label>من رقم قرار</mat-label>
-          <input matInput type="number" value="" [formControl]="FirstQararNum">
+          <input matInput type="number" value="" [formControl]="FirstQararNum" (change)="clearDataSource()">
         </mat-form-field>
 
         <mat-form-field class="example-full-width fitContent" appearance="fill">
           <mat-label>الى رقم قرار</mat-label>
-          <input matInput type="number" value="" [formControl]="LastQararNum">
+          <input matInput type="number" value="" [formControl]="LastQararNum" (change)="clearDataSource()">
         </mat-form-field>
             
         <button id="view" mat-raised-button color="primary" (click)="Search()">بحث</button>

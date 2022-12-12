@@ -110,6 +110,7 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
 
   pageChanged(event: PageEvent) {
     
@@ -489,7 +490,6 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     }
     return '';
   }
-  allData: any[]= [];
   //#endregion
   ExcuteSearch ()
   {
@@ -554,5 +554,9 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     if (element) {
       element.focus();
     }
+  }
+
+  clearDataSource(){
+    this.allData= [];
   }
 }

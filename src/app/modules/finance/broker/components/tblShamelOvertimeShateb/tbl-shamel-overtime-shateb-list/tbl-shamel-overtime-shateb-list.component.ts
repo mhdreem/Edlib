@@ -1,9 +1,10 @@
 import { DataSource } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -35,6 +36,8 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  LoadingFinish : boolean;
+
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -46,9 +49,6 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   
   overtime_shateb_List: TBLShamelOverTimeShateb[] = [];
   selected_overtime_shateb: TBLShamelOverTimeShateb;
-
-  PageIndex: number = 1;
-  rowInPage = 100;
 
   dataSource = new MatTableDataSource<TBLShamelOverTimeShateb>(this.overtime_shateb_List);
 
@@ -73,6 +73,19 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   List_TBLShamelYear: TBLShamelYear[];
   List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
+
+  pageChanged(event: PageEvent) {
+    console.log('event', event);
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.OnSearch();
+  }
+
   constructor(private frmBuilder: FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
     public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
@@ -81,10 +94,12 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     public ShamelMoneyM3PayDestService: TblShamelMoneyM3PayDestService,
     private tblShamelOverTimeShatebService: TBLShamelOverTimeShatebService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog,) {
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private _document: Document) {
 
     this.dataSource = new MatTableDataSource<TBLShamelOverTimeShateb>(this.overtime_shateb_List);
 
+    this.LoadingFinish = true;
 
     this.Form = this.frmBuilder.group({
 
@@ -94,8 +109,8 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
       year_id: new FormControl<number | undefined | null>(null),
       month_id: new FormControl<number | undefined | null>(null),
       school_id: new FormControl<number | undefined | null>(null),
-      payrol_id_book: new FormControl<number | undefined | null>(null),
-      payrol_id_shateb: new FormControl<number | undefined | null>(null),
+      book: new FormControl<number | undefined | null>(null),
+      shateb: new FormControl<number | undefined | null>(null),
 
     });
 
@@ -144,6 +159,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
 
   LoadData() {
+    this.LoadingFinish = false;
 
     forkJoin(
       [this.Load_Area(),
@@ -233,6 +249,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
     },
       (error) => console.log(error));
+      this.LoadingFinish = true;
 
   }
 
@@ -296,7 +313,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     if (value != null && this.List_TBLShamelMonth != null && this.List_TBLShamelMonth.length > 0) {
       let Month: any = this.List_TBLShamelMonth.find(crs => crs.month_id == value);
       if (Month != null)
-        return Month.documenttype_name;
+        return Month.month_name;
     }
     return '';
   }
@@ -334,18 +351,20 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
     try {
 
-      console.log(this.Form.value);
+      console.log('form',this.Form.value);
       // call Search
-      this.tblShamelOverTimeShatebService.Search(this.Form.value, this.PageIndex).subscribe(
-        (data: TBLShamelOverTimeShateb[] )=> {
+      this.tblShamelOverTimeShatebService.Search(this.Form.value, this.currentPage, this.pageSize).subscribe(
+        (data)=> {
 
          
           // if Success 
-          if (data != null && data .length >0) {
-            this.overtime_shateb_List = this.overtime_shateb_List.concat(data);
+          if (data.Item1 != null && data.Item1.length >0) {
+            this.dataSource.paginator= this.paginator;
+            this.allData.push(...data.Item1);
+            this.dataSource.data = this.allData;
+            this.totalRows= data.Item2;
+            this.dataSource._updatePaginator(this.totalRows);
           }
-          this.dataSource.data = this.overtime_shateb_List;
-
         }
       )
 
@@ -354,14 +373,6 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
   }
 
-  onScroll() {
-
-    this.PageIndex = this.PageIndex + 1;
-
-    this.overtime_shateb_List = []; 
-
-    this.FillTable();
-  }
 
   Add() {
 
@@ -442,9 +453,6 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
   OnSearch()
   {
-    this.PageIndex =1;
-    this.overtime_shateb_List = [];
-    this.dataSource.data = this.overtime_shateb_List;
     this.FillTable();
   }
 
@@ -473,4 +481,15 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
+  clearDataSource(){
+    this.allData= [];
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  } 
 }

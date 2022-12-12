@@ -17,17 +17,17 @@
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>اليوم</mat-label>
               <input type="number" matInput [formControl]="FirstDateDay" placeholder="ex: 21"
-              id="FirstDateDay" (keyup.enter)="focusNext('FirstDateMonth')">
+              id="FirstDateDay" (keyup.enter)="focusNext('FirstDateMonth')" (change)="clearDataSource()">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>الشهر</mat-label>
               <input type="number" matInput [formControl]="FirstDateMonth" placeholder="ex: 1"
-              id="FirstDateMonth" (keyup.enter)="focusNext('FirstDateYear')">
+              id="FirstDateMonth" (keyup.enter)="focusNext('FirstDateYear')" (change)="clearDataSource()">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>العام</mat-label>
               <input type="number" matInput [formControl]="FirstDateYear" placeholder="ex: 2023"
-              id="FirstDateYear" (keyup.enter)="focusNext('EndDateDay')">
+              id="FirstDateYear" (keyup.enter)="focusNext('EndDateDay')" (change)="clearDataSource()">
             </mat-form-field>
           </div>
         </div>
@@ -38,17 +38,17 @@
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>اليوم</mat-label>
               <input type="number" matInput [formControl]="EndDateDay" placeholder="ex: 21"
-              id="EndDateDay" (keyup.enter)="focusNext('EndDateMonth')">
+              id="EndDateDay" (keyup.enter)="focusNext('EndDateMonth')" (change)="clearDataSource()">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>الشهر</mat-label>
               <input type="number" matInput [formControl]="EndDateMonth" placeholder="ex: 1"
-              id="EndDateMonth" (keyup.enter)="focusNext('EndDateYear')">
+              id="EndDateMonth" (keyup.enter)="focusNext('EndDateYear')" (change)="clearDataSource()">
             </mat-form-field>
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>العام</mat-label>
               <input type="number" matInput [formControl]="EndDateYear" placeholder="ex: 2023"
-              id="EndDateYear" (keyup.enter)="focusNext('MalakState')">
+              id="EndDateYear" (keyup.enter)="focusNext('MalakState')" (change)="clearDataSource()">
             </mat-form-field>
           </div>
         </div>
@@ -61,7 +61,8 @@
                 [formControl]="MalakState"
                 id="MalakState" (keyup.enter)="focusNext('FirstDateDay')">
           <mat-autocomplete #autoMalakState="matAutocomplete"
-          [displayWith]="displayMalakStateProperty.bind(this)">
+          [displayWith]="displayMalakStateProperty.bind(this)"
+          (optionSelected)="clearDataSource()">
             <mat-option *ngFor="let option of filteredMalakStateOptions | async" [value]="option.malakstate_id">
               {{option.malakstate_name}}
             </mat-option>
@@ -75,15 +76,15 @@
       <fieldset>
         <legend>الإحصاء</legend>
         <mat-radio-group color="primary" aria-label="Select an option">
-            <mat-radio-button value="1" (change)="birthdateChecked()">تاريخ الولادة</mat-radio-button>
-            <mat-radio-button value="2" (change)="firstJobDateChecked()">تاريخ المباشرة</mat-radio-button>
-            <mat-radio-button value="3" (change)="punishmentsChecked()">عقوبات</mat-radio-button>
-            <mat-radio-button value="4" (change)="bonusChecked()">مكافئات</mat-radio-button>
-            <mat-radio-button value="5" (change)="freeHolidayChecked()">خاصة بلا أجر</mat-radio-button>
-            <mat-radio-button value="6" (change)="legalHolidayChecked()">إجازات إدارية</mat-radio-button>
-            <mat-radio-button value="7" (change)="healthHolidayChecked()">إجازات صحية</mat-radio-button>
-            <mat-radio-button value="8" (change)="suddenHolidayChecked()">إجازات إضطرارية</mat-radio-button>
-            <mat-radio-button value="9"  (change)="changeReasonChecked()">سبب التبدل</mat-radio-button>
+            <mat-radio-button value="1" (change)="birthdateChecked();clearDataSource();">تاريخ الولادة</mat-radio-button>
+            <mat-radio-button value="2" (change)="firstJobDateChecked(); clearDataSource();">تاريخ المباشرة</mat-radio-button>
+            <mat-radio-button value="3" (change)="punishmentsChecked(); clearDataSource();">عقوبات</mat-radio-button>
+            <mat-radio-button value="4" (change)="bonusChecked(); clearDataSource();">مكافئات</mat-radio-button>
+            <mat-radio-button value="5" (change)="freeHolidayChecked(); clearDataSource();">خاصة بلا أجر</mat-radio-button>
+            <mat-radio-button value="6" (change)="legalHolidayChecked(); clearDataSource();">إجازات إدارية</mat-radio-button>
+            <mat-radio-button value="7" (change)="healthHolidayChecked(); clearDataSource();">إجازات صحية</mat-radio-button>
+            <mat-radio-button value="8" (change)="suddenHolidayChecked(); clearDataSource();">إجازات إضطرارية</mat-radio-button>
+            <mat-radio-button value="9"  (change)="changeReasonChecked(); clearDataSource();">سبب التبدل</mat-radio-button>
           </mat-radio-group>
 
 
@@ -94,7 +95,7 @@
                   [formControl]="SuddenHoliday"
                   [matAutocomplete]="autoSuddenHoliday"
                   (keyup)="suddenHolidayChanged()">
-            <mat-autocomplete #autoSuddenHoliday="matAutocomplete" (optionSelected)="suddenHolidayChanged()"
+            <mat-autocomplete #autoSuddenHoliday="matAutocomplete" (optionSelected)="suddenHolidayChanged(); clearDataSource();"
             [displayWith]="displaySuddenHolidayProperty.bind(this)">
               <mat-option *ngFor="let option of filteredSuddenHolidayOptions | async" [value]="option.suddenholiday_id">
                 {{option.suddenholiday_name}}
@@ -110,7 +111,7 @@
                   [formControl]="ChangeReason"
                   [matAutocomplete]="autoChangeReason"
                   (keyup)="changeReasonChanged()">
-            <mat-autocomplete #autoChangeReason="matAutocomplete" (optionSelected)="changeReasonChanged()"
+            <mat-autocomplete #autoChangeReason="matAutocomplete" (optionSelected)="changeReasonChanged(); clearDataSource();"
             [displayWith]="displayChangeReasonProperty.bind(this)">
               <mat-option *ngFor="let option of filteredChangeReasonOptions | async" [value]="option.changereason_id">
                 {{option.changereason_name}}

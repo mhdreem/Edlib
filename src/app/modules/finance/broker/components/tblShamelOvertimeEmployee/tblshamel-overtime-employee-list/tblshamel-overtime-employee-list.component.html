@@ -1,3 +1,7 @@
+<c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+  </c-row>
+  <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel >
         <mat-expansion-panel-header>
@@ -17,17 +21,17 @@
                 <div class="filterGroup1">
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>التسلسل</mat-label>
-                        <input matInput formControlName="serial" #input>
+                        <input matInput formControlName="serial" #input id="serial" (keyup.enter)="focusNext('fname')">
                     </mat-form-field>
         
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>الأسم</mat-label>
-                        <input matInput formControlName="fname" #input>
+                        <input matInput formControlName="fname" #input id="fname" (keyup.enter)="focusNext('lname')">
                     </mat-form-field>
         
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>الكنية</mat-label>
-                        <input matInput formControlName="lname" #input>
+                        <input matInput formControlName="lname" #input id="lname" (keyup.enter)="focusNext('father')">
                     </mat-form-field>
         
                 </div>
@@ -35,19 +39,19 @@
                 <div class="filterGroup2">
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>الأب</mat-label>
-                        <input matInput formControlName="father" #input>
+                        <input matInput formControlName="father" #input id="father" (keyup.enter)="focusNext('mother')">
                     </mat-form-field>
         
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>الأم</mat-label>
-                        <input matInput formControlName="mother" #input>
+                        <input matInput formControlName="mother" #input id="mother" (keyup.enter)="focusNext('sex_name')">
                     </mat-form-field>
         
                   
         
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>الجنس</mat-label>
-                        <input type="text" matInput formControlName="sex_name" [matAutocomplete]="auto_sexname">
+                        <input type="text" matInput formControlName="sex_name" [matAutocomplete]="auto_sexname" id="sex_name" (keyup.enter)="focusNext('birthdateDay')">
                         <mat-autocomplete #auto_sexname="matAutocomplete"
                           [displayWith]="displaySexNameProperty.bind(this)">
                           <mat-option *ngFor="let option of List_SEX_NAME_Filter | async" [value]="option.Sex_Name">
@@ -61,15 +65,15 @@
                         <div class="content">
                           <mat-form-field class="example-full-width small-width" appearance="fill">
                             <mat-label>اليوم</mat-label>
-                            <input type="number" matInput formControlName="birthdateDay" placeholder="ex: 21">
+                            <input type="number" matInput formControlName="birthdateDay" placeholder="ex: 21" id="birthdateDay" (keyup.enter)="focusNext('birthdateMonth')">
                           </mat-form-field>
                           <mat-form-field class="example-full-width small-width" appearance="fill">
                             <mat-label>الشهر</mat-label>
-                            <input type="number" matInput formControlName="birthdateMonth" placeholder="ex: 1">
+                            <input type="number" matInput formControlName="birthdateMonth" placeholder="ex: 1" id="birthdateMonth" (keyup.enter)="focusNext('birthdateYear')">
                           </mat-form-field>
                           <mat-form-field class="example-full-width small-width" appearance="fill">
                             <mat-label>العام</mat-label>
-                            <input type="number" matInput formControlName="birthdateYear" placeholder="ex: 2023">
+                            <input type="number" matInput formControlName="birthdateYear" placeholder="ex: 2023" id="birthdateYear" (keyup.enter)="focusNext('servicedayes')">
                           </mat-form-field>
                         </div>
                       </div>
@@ -79,7 +83,7 @@
                 <div class="filterGroup3">
                     <mat-form-field class="filter" appearance="fill">
                         <mat-label>ساعات الخدمة</mat-label>
-                        <input matInput formControlName="servicedayes" #input>
+                        <input matInput formControlName="servicedayes" #input id="servicedayes" (keyup.enter)="focusNext('servicedayes_operator')">
                     </mat-form-field>
         
         
@@ -88,7 +92,7 @@
                 <div>
                     <mat-form-field appearance="fill">
                         <mat-label>العملية</mat-label>
-                        <mat-select formControlName="servicedayes_operator">
+                        <mat-select formControlName="servicedayes_operator" id="servicedayes_operator" (keyup.enter)="focusNext('serial')">
                             <mat-option value="يساوي">يساوي</mat-option>
                             <mat-option value="أكبر أو يساوي">أكبر أو يساوي</mat-option>
                             <mat-option value="أصغر أو يساوي">أصغر أو يساوي</mat-option>
@@ -188,10 +192,11 @@
 
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; sticky: true; let idx=index;"
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
         [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
 </div>
+  </ngx-hover-opacity>

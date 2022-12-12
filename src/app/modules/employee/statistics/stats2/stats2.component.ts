@@ -136,6 +136,7 @@ export class Stats2Component implements OnInit, OnDestroy {
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
 
   pageChanged(event: PageEvent) {
     console.log({ event });
@@ -685,8 +686,11 @@ export class Stats2Component implements OnInit, OnDestroy {
     (
       (data: any)=>
       {
-          this.dataSource.data = data.Item1;
-          this.totalRows= data.Item2;
+        this.dataSource.paginator= this.paginator;
+        this.allData.push(...data.Item1);
+        this.dataSource.data = this.allData;
+        this.totalRows= data.Item2;
+        this.dataSource._updatePaginator(this.totalRows);
       }
     )
   }
@@ -705,5 +709,9 @@ export class Stats2Component implements OnInit, OnDestroy {
     if (element) {
       element.focus();
     }
+  }
+
+  clearDataSource(){
+    this.allData= [];
   }
 }

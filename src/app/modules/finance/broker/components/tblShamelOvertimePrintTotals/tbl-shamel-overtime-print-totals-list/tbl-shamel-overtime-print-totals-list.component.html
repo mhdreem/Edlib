@@ -1,12 +1,15 @@
 <!-- filtering -->
-
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
     <div class="filterGroup">
 
         <form [formGroup]="Form">
             <div class="filterGroup1">
                 <mat-form-field class="example-full-width" appearance="fill">
                     <mat-label>المنطقة</mat-label>
-                    <input type="text" matInput formControlName="area_name" [matAutocomplete]="auto_area">
+                    <input type="text" matInput formControlName="area_name" id="area_name" (keyup.enter)="focusNext('fname')" [matAutocomplete]="auto_area">
                     <mat-autocomplete #auto_area="matAutocomplete"
                       [displayWith]="displayAreaProperty.bind(this)">
                       <mat-option *ngFor="let option of List_AREA_Filter | async" [value]="option.Area_ID">
@@ -23,15 +26,15 @@
                     <div class="content">
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>اليوم</mat-label>
-                        <input type="number" matInput formControlName="startdateDay" placeholder="ex: 21">
+                        <input type="number" matInput formControlName="startdateDay" id="startdateDay" (keyup.enter)="focusNext('fname')" placeholder="ex: 21">
                       </mat-form-field>
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>الشهر</mat-label>
-                        <input type="number" matInput formControlName="startdateMonth" placeholder="ex: 1">
+                        <input type="number" matInput formControlName="startdateMonth" id="startdateMonth" (keyup.enter)="focusNext('fname')" placeholder="ex: 1">
                       </mat-form-field>
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>العام</mat-label>
-                        <input type="number" matInput formControlName="startdateYear" placeholder="ex: 2023">
+                        <input type="number" matInput formControlName="startdateYear" id="startdateYear" (keyup.enter)="focusNext('fname')" placeholder="ex: 2023">
                       </mat-form-field>
                     </div>
                   </div>
@@ -41,15 +44,15 @@
                     <div class="content">
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>اليوم</mat-label>
-                        <input type="number" matInput formControlName="enddateDay" placeholder="ex: 21">
+                        <input type="number" matInput formControlName="enddateDay" id="enddateDay" (keyup.enter)="focusNext('fname')" placeholder="ex: 21">
                       </mat-form-field>
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>الشهر</mat-label>
-                        <input type="number" matInput formControlName="enddateMonth" placeholder="ex: 1">
+                        <input type="number" matInput formControlName="enddateMonth" id="enddateMonth" (keyup.enter)="focusNext('fname')" placeholder="ex: 1">
                       </mat-form-field>
                       <mat-form-field class="example-full-width small-width" appearance="fill">
                         <mat-label>العام</mat-label>
-                        <input type="number" matInput formControlName="enddateYear" placeholder="ex: 2023">
+                        <input type="number" matInput formControlName="enddateYear" id="enddateYear" (keyup.enter)="focusNext('fname')" placeholder="ex: 2023">
                       </mat-form-field>
                     </div>
                   </div>
@@ -97,10 +100,11 @@
 
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; sticky: true; let idx=index;"
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
         [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
 <!-- </div> -->
+</ngx-hover-opacity>

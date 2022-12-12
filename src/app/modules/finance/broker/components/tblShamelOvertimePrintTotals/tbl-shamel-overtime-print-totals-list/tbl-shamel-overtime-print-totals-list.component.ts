@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,6 +23,8 @@ export class TblShamelOvertimePrintTotalsListComponent implements OnInit, AfterV
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
+  LoadingFinish : boolean;
+
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -53,9 +56,11 @@ export class TblShamelOvertimePrintTotalsListComponent implements OnInit, AfterV
     private tblShamelAreaService: TBLShamelAreaService,
     private tblShamelOvertimePrintTotalsService: TBLShamelOvertimePrintTotalsService,
     private tblShamelOverTimeShatebService: TBLShamelOverTimeShatebService,
-    private snackBar: MatSnackBar,) { 
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document) { 
 
       this.dataSource = new MatTableDataSource<TblShamelOvertimePrintTotals>(this.overtime_print_totals_List);
+      this.LoadingFinish = true;
   
 
     this.Form = this. frmBuilder.group({
@@ -82,6 +87,7 @@ export class TblShamelOvertimePrintTotalsListComponent implements OnInit, AfterV
 }
 
 LoadData() {
+  this.LoadingFinish = false;
 
   forkJoin(
     [this.Load_Area()]
@@ -105,6 +111,7 @@ LoadData() {
 
   },
     (error) => console.log(error));
+    this.LoadingFinish = true;
 
 }
 
@@ -180,4 +187,10 @@ OnSearch()
   ngOnInit(): void {
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  } 
 }

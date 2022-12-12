@@ -22,25 +22,6 @@ export class UpgradeComponent implements OnInit {
     },
   
     {
-      name: 'احصائية رقم 1',
-      url: 'manage/employeeinfo',
-      iconComponent: { name: 'cil-pencil' },
-    }
-    ,
-  
-    {
-      name: 'احصائية رقم 2',
-      url: 'manage/newemployee',
-      iconComponent: { name: 'cil-pencil' },
-    },
-    {
-      name: 'احصائية رقم 3',
-      iconComponent: { name: 'cil-pencil' },
-      url: 'manage/education',
-  
-    },
-
-    {
       name: 'تجهيز ملف الترفيعات',
       iconComponent: { name: 'cil-pencil' },
       url: 'employees/module/upgrades/upgrades/prepareUpgradesFile',

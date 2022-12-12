@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -34,7 +35,8 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
   public tblShamelBrokerEmployeeService: TblShamelBrokerEmployeeService,
   private ShamelSexService: TBLShamelSexService,
   public frmBuild: FormBuilder,
-  private snackBar: MatSnackBar) {
+  private snackBar: MatSnackBar,
+  @Inject(DOCUMENT) private _document: Document) {
     this.selected_broker_employee = data.obj;
     this.BuildForm();
     this.LoadData();
@@ -294,6 +296,13 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
   onReset() {
     this.Form.reset();
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 
 }

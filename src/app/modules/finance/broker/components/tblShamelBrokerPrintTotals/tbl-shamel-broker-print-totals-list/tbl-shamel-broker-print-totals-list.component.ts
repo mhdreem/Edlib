@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,6 +23,8 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
+  LoadingFinish : boolean;
+
   rowClicked: number;
 
   changeTableRowColor(idx: any) { 
@@ -52,7 +55,8 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
   constructor(private frmBuilder : FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
     private tblShamelBrokerShatebService: TblShamelBrokerShatebService,
-    private snackBar: MatSnackBar,) { 
+    private snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document) { 
 
       this.dataSource = new MatTableDataSource<TblShamelBrokerPrintTotals>(this.broker_print_totals_List);
 
@@ -65,6 +69,7 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
       enddateMonth: new FormControl<number|undefined|null>(null),
       enddateYear: new FormControl<number|undefined|null>(null)
       });
+      this.LoadingFinish = true;
   
       this.LoadData();
     }
@@ -80,6 +85,7 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 }
 
 LoadData() {
+  this.LoadingFinish = false;
 
   forkJoin(
     [this.Load_Area()]
@@ -103,6 +109,7 @@ LoadData() {
 
   },
     (error) => console.log(error));
+    this.LoadingFinish = true;
 
 }
 
@@ -178,4 +185,10 @@ OnSearch()
   ngOnInit(): void {
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  } 
 }
