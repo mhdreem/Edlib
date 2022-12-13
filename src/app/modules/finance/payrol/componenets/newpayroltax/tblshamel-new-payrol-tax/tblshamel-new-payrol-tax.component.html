@@ -3,13 +3,10 @@
 <c-container>
     <c-row>
         <c-col>
-            <button (click)="Add_Tawid()">اضافة تعويض</button>        
         </c-col>
         <c-col>
-            <button (click)="Add_Tax()">اضافة حسم</button>        
         </c-col>
         <c-col>
-            <button (click)="Add_Recurr()">اضافة حسم ئئ</button>        
         </c-col>
 
 
@@ -18,15 +15,16 @@
 <div class="boxes">
     <div class="right">
         <span class="title1">التعويضات الدائمة والمؤقتة</span>
+        <button mat-raised-button color="primary" (click)="Add_Tawid()">اضافة تعويض +</button>        
         <div class="spanBox spanBox1">
             <span> اسم التعويض على الطابعة</span>
             <span>اسم التعويض على الشاشة</span>
             <span>جبر الكسور</span>
+            <span>نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
+            <span>الترتيب</span>
             <span>هل التعويض يدخل في الضريبة؟</span>
             <span>هل التعويض يدخل في المجموع؟</span>
             <span>هل التعويض يدخل في التخصص؟</span>
-            <span>الترتيب</span>
-            <span>نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
         </div>
         <app-sub-tblshamel-new-payrol-tax 
          [index]="i" 
@@ -39,6 +37,7 @@
     </div>
     <div class="middle">
         <span class="title2">الحسميات الدائمة والمؤقتة</span>
+        <button mat-raised-button color="primary" (click)="Add_Tax()">إضافة حسمية دائمة أو مؤقتة +</button>        
         <div class="spanBox spanBox2">
             <span>اسم الحسمية على الطابعة</span>
             <span>اسم الحسمية على الشاشة</span>
@@ -53,6 +52,7 @@
     </div>
     <div class="left">
         <span class="title3">الحسميات ذات الأرصدة</span>
+        <button mat-raised-button color="primary" (click)="Add_Recurr()">إضافة حسمية ذات أرصدة +</button>        
         <div class="spanBox spanBox3">
             <span>اسم الحسمية على الطابعة</span>
             <span>اسم الحسمية على الشاشة</span>
@@ -72,10 +72,6 @@
     </div>
 </div>
 
-<div id="permanentBox"></div>
-<span id="permanent">تعويض أو حسم دائم</span>
-<div id="tempBox"></div>
-<span id="temp">تعويض أو حسم مؤقت</span>
 
 <button id="saveButton" mat-raised-button color="primary" (click)="save()">حفظ</button>
 

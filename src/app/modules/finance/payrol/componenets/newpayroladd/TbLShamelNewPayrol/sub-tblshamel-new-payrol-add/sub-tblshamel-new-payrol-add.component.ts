@@ -73,13 +73,13 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
           this.Form.controls['TblShamelNewPayrolTax'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax);
 
           if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-              this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='تعويض')              
+              this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='ta3weed')              
            this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_name);
            else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-            this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='حسميات')              
+            this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxtemp')              
          this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.taxtempp_name);
          else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-          this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='متغيرة')              
+          this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxRecurr')              
        this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.taxrecurr_name);
           
         }

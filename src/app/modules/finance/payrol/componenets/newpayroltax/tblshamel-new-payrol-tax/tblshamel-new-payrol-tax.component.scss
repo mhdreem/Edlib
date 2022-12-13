@@ -15,32 +15,11 @@
     width: fit-content;
 }
 
-#permanentBox{
-    width: 30px;
-    height: 30px;
-    background-color: rgb(236, 236, 146);
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
-    border-radius: 50%;
-
-}
-
-#tempBox{
-    width: 30px;
-    height: 30px;
-    background-color: rgb(153, 153, 120);
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
-    margin-right: 20px;
-    border-radius: 50%;
-}
-
 .spanBox{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 113px !important;
 
     span{
         margin-left: 10px;
@@ -50,47 +29,68 @@
 .spanBox1{
     width: 880px;
     span:first-child{
-        margin-right: 30px;
-        width: 255px;
+        width: 208px;;
     }
 
     span:nth-child(2){
-        margin-right: 30px;
-        width: 255px;
+        width: 200px;
     }
 
     span:nth-child(3){
-        margin-right: 20px;
+        width: 177px;
     }
 
-    span:nth-child(7){
-        margin-left: 20px;
+    span:nth-child(4){
+        width: 385px;
     }
+
+    span:nth-child(5){
+        width: 137px;
+    }
+
 }
 
 .spanBox2{
-    width: 680px;
+    width: 766px;
 
     span:first-child{
-        margin-right: 30px;
-        margin-left: 30px;
+        width: 918px
     }
 
-    span:nth-child(2), span:nth-child(3){
-        margin-left: 33px;
+    span:nth-child(2){
+        width: 888px;
+    }
+
+    span:nth-child(3){
+        width: 400px;
+    }
+
+    span:nth-child(4){
+        width: 369px;
+    }
+
+    span:nth-child(5){
+        width: 669px;
     }
 }
 
 .spanBox3{
-    width: 643px;
+    width: 696px;
 
     span:first-child{
-        margin-right: 30px;
-        margin-left: 30px;
+        width: 189px
+    }
+
+    span:nth-child(2){
+        width: 178px;
+    }
+
+    span:nth-child(3){
+        width: 71px;
     }
 
     span:nth-child(4){
-        margin-right: 20px;
+        width: 182px;
     }
 }
 
@@ -105,5 +105,6 @@
 }
 
 button{
+    display: block;
     margin-top: 30px;
 }

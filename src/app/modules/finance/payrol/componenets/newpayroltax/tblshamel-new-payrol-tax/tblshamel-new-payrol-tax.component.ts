@@ -55,8 +55,8 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
         if (this.List_TblShamelNewPayrolTax!= null && this.List_TblShamelNewPayrolTax.length>0)
         {
           this.tblShamelNewPayrolTaxService.List_ta3weed  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "ta3weed");          
-          this.tblShamelNewPayrolTaxService.List_taxtemp  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "tax");
-          this.tblShamelNewPayrolTaxService.List_recurr  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "taxRecurr");
+          this.tblShamelNewPayrolTaxService.List_taxtemp  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "taxtemp");
+          this.tblShamelNewPayrolTaxService.List_recurr  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "recurr");
 
 
      
@@ -71,32 +71,36 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
     var arr = [...this.tblShamelNewPayrolTaxService.List_ta3weed, ...this.tblShamelNewPayrolTaxService.List_taxtemp, ... this.tblShamelNewPayrolTaxService.List_recurr ];
     
     let newArr:any []=[];
-
+    console.log('arr', arr);
     arr.forEach(element => {
+      if (this.isNotNull(element)){
 
-      var newElement=
-      {
-        serial:element.serial,
-        salary_source_fk:element.salary_source_fk,
-        ta3weed_included_in_tax:      (element.ta3weed_included_in_tax?1:0),
-        ta3weed_included_in_sum:      (element.ta3weed_included_in_sum?1:0),
-        ta3weed_included_specialest:  (element.ta3weed_included_specialest?1:0),
-        ta3weed_name:element.ta3weed_name,
-        ta3weedp_name:element.ta3weedp_name,
-        ta3weed_round:element.ta3weed_round,
-        ta3weedp_order:element.ta3weedp_order,
-        taxtemp_name:element.taxtemp_name,
-        taxtempp_name:element.taxtempp_name,
-        taxtemp_round:element.taxtemp_round,
-        taxtemp_order:element.taxtemp_order,
-        taxrecurr_name:element.taxrecurr_name,
-        taxrecurrp_name:element.taxrecurrp_name,
-        taxrecurrp_order:element.taxrecurrp_order,
-        payroltaxtype:element.payroltaxtype,
-        payroltaxconstant:element.payroltaxconstant,
+        console.log('element', element);
+        var newElement=
+        {
+          serial:element.serial,
+          salary_source_fk:element.salary_source_fk,
+          ta3weed_included_in_tax:      (element.ta3weed_included_in_tax?1:0),
+          ta3weed_included_in_sum:      (element.ta3weed_included_in_sum?1:0),
+          ta3weed_included_specialest:  (element.ta3weed_included_specialest?1:0),
+          ta3weed_name:element.ta3weed_name,
+          ta3weedp_name:element.ta3weedp_name,
+          ta3weed_round:element.ta3weed_round,
+          ta3weedp_order:element.ta3weedp_order,
+          taxtemp_name:element.taxtemp_name,
+          taxtempp_name:element.taxtempp_name,
+          taxtemp_round:element.taxtemp_round,
+          taxtemp_order:element.taxtemp_order,
+          taxrecurr_name:element.taxrecurr_name,
+          taxrecurrp_name:element.taxrecurrp_name,
+          taxrecurrp_order:element.taxrecurrp_order,
+          payroltaxtype:element.payroltaxtype,
+          payroltaxconstant:element.payroltaxconstant,
 
+        }
+        newArr.push(newElement);
       }
-      newArr.push(newElement);
+
     });
     
 
@@ -110,6 +114,23 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
     )
 
 
+  }
+
+  isNotNull(element: any){
+    let isNotNull = false;
+    if (element.payroltaxtype == 'ta3weed'){
+      if (element.ta3weed_name != null && element.ta3weedp_name != null && element.ta3weed_round != null && element.ta3weedp_order != null)
+      isNotNull= true;
+    }
+    else if (element.payroltaxtype == 'taxtemp'){
+      if (element.taxtemp_name != null && element.taxtempp_name != null && element.taxtemp_round != null && element.taxtemp_order != null)
+      isNotNull= true;
+    }
+    else if (element.payroltaxtype == 'recurr'){
+      if (element.taxrecurr_name != null && element.taxrecurrp_name != null && element.taxrecurrp_order != null)
+      isNotNull= true;
+    }
+    return isNotNull;
   }
 
   ngOnInit(): void {  

@@ -86,10 +86,11 @@ output{
     border: 1px solid black;
     padding: 10px;
     margin-bottom: 40px;
-    display: flex;
-    display: flex;
-    justify-content: space-between;
+    
     width: 900px;
+    form{
+        display: flex;
+    }
     .right, .middle{
         >*{
             margin-bottom: 5px;
@@ -196,4 +197,10 @@ output{
 
 :host > button{
     margin-left: 10px;
+}
+
+.children{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

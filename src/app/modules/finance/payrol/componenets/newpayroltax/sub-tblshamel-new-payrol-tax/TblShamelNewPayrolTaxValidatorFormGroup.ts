@@ -43,7 +43,7 @@ import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/fi
                     if (arr!=null && arr.length>0)
                     {
                         formGroup.controls['ta3weed_name'].setErrors({ ta3weed_name_exist: true });
-                        return of ({  });
+                        return of ({ ta3weed_name_exist: true });
                     }
 
 

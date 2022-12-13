@@ -21,38 +21,40 @@
             </mat-form-field>
         </div>
 
-        <div >
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>الولد الأول</mat-label>
-                <input  matInput formControlName="FirstChild" (change)="calcFamilyRepayment()">
-            </mat-form-field>
+        
 
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>الولد الثاني</mat-label>
-                <input  matInput formControlName="SecondChild" (change)="calcFamilyRepayment()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>الولد الثالث</mat-label>
-                <input  matInput formControlName="ThirdChild" (change)="calcFamilyRepayment()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>الولد الرابع</mat-label>
-                <input  matInput formControlName="FourChild" (change)="calcFamilyRepayment()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>الولد الرابع</mat-label>
-                <input  matInput formControlName="RestChild" (change)="calcFamilyRepayment()">
-            </mat-form-field>
-        </div>
+        
+    </div>
+    <div class="children">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>الولد الأول</mat-label>
+            <input  matInput formControlName="FirstChild" (change)="calcFamilyRepayment()">
+        </mat-form-field>
 
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>الولد الثاني</mat-label>
+            <input  matInput formControlName="SecondChild" (change)="calcFamilyRepayment()">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>الولد الثالث</mat-label>
+            <input  matInput formControlName="ThirdChild" (change)="calcFamilyRepayment()">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>الولد الرابع</mat-label>
+            <input  matInput formControlName="FourChild" (change)="calcFamilyRepayment()">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>الولد الخامس</mat-label>
+            <input  matInput formControlName="RestChild" (change)="calcFamilyRepayment()">
+        </mat-form-field>
+    </div>
+    <div class="left">
         <div >
             <mat-form-field class="example-full-width" appearance="fill">
             <mat-label for="familyRepayment">التعويض العائلي</mat-label>
             <input  matInput formControlName="family_ta3weed" >          
             </mat-form-field>
         </div>
-    </div>
-    <div >
         <div >
             <mat-form-field class="example-full-width" appearance="fill">
             <mat-label for="cutSalary">الراتب المقطوع</mat-label>
@@ -74,8 +76,8 @@
         </mat-form-field>
 
         </div>
-    </div>
-    <div >
+
+        <div >
        
             <mat-form-field class="example-full-width" appearance="fill">
             <mat-select formControlName="insurance_kind">
@@ -85,6 +87,8 @@
         </mat-form-field>
        
     </div>
+    </div>
+    
 </form>
 </div>
 

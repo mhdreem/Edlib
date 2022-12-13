@@ -55,43 +55,46 @@ return {};
     private tblShamelNewPayrolTaxService : TblShamelNewPayrolTaxService) { 
     this.BuildForm();
   }
-
+//انشاء الفورم
   BuildForm()
   {
     this.Form = this.FrmBuilder.group({
       serial: new FormControl<number|null>(null),
       salary_source_fk: new FormControl<number|null>(null),      
-      ta3weed_included_in_tax: new FormControl<boolean|null>(null),
-      ta3weed_included_in_sum: new FormControl<boolean|null>(null),
-      ta3weed_included_specialest: new FormControl<boolean|null>(null),
-      ta3weed_name: new FormControl<string|null>(null),
-      ta3weedp_name: new FormControl<string|null>(null),
-      ta3weed_round: new FormControl<number|null>(null),
-      ta3weedp_order: new FormControl<number|null>(null),
-      taxtemp_name: new FormControl<string|null>(null),
-      taxtempp_name: new FormControl<string|null>(null),
-      taxtemp_round: new FormControl<number|null>(null),
-      taxtemp_order: new FormControl<number|null>(null),
-      taxrecurr_name: new FormControl<string|null>(null),
-      taxrecurrp_name: new FormControl<string|null>(null),
-      taxrecurrp_order: new FormControl<number|null>(null),
+      ta3weed_included_in_tax: new FormControl<boolean|null>(null, Validators.required),
+      ta3weed_included_in_sum: new FormControl<boolean|null>(null, Validators.required),
+      ta3weed_included_specialest: new FormControl<boolean|null>(null, Validators.required),
+      ta3weed_name: new FormControl<string|null>(null, Validators.required),
+      ta3weedp_name: new FormControl<string|null>(null, Validators.required),
+      ta3weed_round: new FormControl<number|null>(null, Validators.required),
+      ta3weedp_order: new FormControl<number|null>(null, Validators.required),
+      taxtemp_name: new FormControl<string|null>(null, Validators.required),
+      taxtempp_name: new FormControl<string|null>(null, Validators.required),
+      taxtemp_round: new FormControl<number|null>(null, Validators.required),
+      taxtemp_order: new FormControl<number|null>(null, Validators.required),
+      taxrecurr_name: new FormControl<string|null>(null, Validators.required),
+      taxrecurrp_name: new FormControl<string|null>(null, Validators.required),
+      taxrecurrp_order: new FormControl<number|null>(null, Validators.required),
       payroltaxtype: new FormControl<string|null>(null),
-      payroltaxconstant: new FormControl<string|null>(null)
+      payroltaxconstant: new FormControl<string|null>(null, Validators.required)
     }, 
     {asyncValidator: TblShamelNewPayrolTaxValidatorFormGroup.Validate(this.tblShamelNewPayrolTaxService).bind(this)}
     );
 
   }
   
-  
+  //اظهار
   BindValue()
   {
-      
+      console.log('this.tblShamelNewPayrolTax', this.tblShamelNewPayrolTax);
     if (this.tblShamelNewPayrolTax!= null &&   
         this.tblShamelNewPayrolTax!= undefined)
     { 
       if (this.tblShamelNewPayrolTax.payroltaxconstant!= null)
-        this.Form.controls['payroltaxconstant'].setValue(this.tblShamelNewPayrolTax.payroltaxconstant);
+        if (this.tblShamelNewPayrolTax.payroltaxconstant == 'perm')
+          this.Form.controls['payroltaxconstant'].setValue('دائم');
+        else if (this.tblShamelNewPayrolTax.payroltaxconstant == 'temp')
+        this.Form.controls['payroltaxconstant'].setValue('مؤقت');
 
         if (this.tblShamelNewPayrolTax.payroltaxtype!= null)
         this.Form.controls['payroltaxtype'].setValue(this.tblShamelNewPayrolTax.payroltaxtype);
@@ -157,7 +160,7 @@ return {};
 
   }
 
-
+  //تنفيذ ngmodel مخفية
   bindModelToForm(model: any, form: FormGroup) {
     if (model== null ||  form == null)
     return;
@@ -175,7 +178,7 @@ return {};
     });
 }
 
-
+//كود الربط و التهيئة
   ngOnChanges(changes: SimpleChanges){
    
     if ( changes!= null && changes['index']!=null)
@@ -192,6 +195,7 @@ return {};
 
   }
 
+  
   BtnDelete()
   {
       this.OnDelete.emit({'index': this.index,'payroltaxtype':this.payroltaxtype});

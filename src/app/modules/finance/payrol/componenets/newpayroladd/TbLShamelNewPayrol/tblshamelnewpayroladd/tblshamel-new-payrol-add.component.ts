@@ -174,7 +174,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
           case 'taxtemp':
             Detail.name = element.taxtemp_name;
             break;
-          case 'recurr':
+          case 'taxRecurr':
             Detail.name = element.taxrecurr_name;
             break;
         }
