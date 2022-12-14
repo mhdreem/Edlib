@@ -92,8 +92,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/interceptors/token.interceptor';
 import { NavService } from '../shared/components/containers/default-layout/nav.service';
 import { CommonmoduleModule } from '../commonmodule/commonmodule.module';
-import { ChartjsModule } from '@coreui/angular-chartjs';
+
 import { ChartComponentComponent } from './components/chart-component/chart-component.component';
+import { ChartjsModule } from '@coreui/angular-chartjs';
+
 /////////////////////////////
 
 
@@ -122,7 +124,7 @@ export const MY_FORMATS = {
   imports: [  
     CommonModule,
     RouterModule,
-CommonmoduleModule,
+    CommonmoduleModule,
     
     MatCardModule,
     MatAutocompleteModule,

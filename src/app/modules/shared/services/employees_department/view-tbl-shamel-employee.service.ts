@@ -131,7 +131,7 @@ prev_accounter(id:number, serial: number )  :Observable <ViewTBLShamelEmployee> 
   return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"TBLShamelEmployee/prev_accounter/"+id+"/"+serial) ;    
 }
 
-next_accounter(id:number, serial: number ) :Observable<TBLShamelEmployee>  {
+next_accounter(id:number, serial: number ) :Observable<ViewTBLShamelEmployee>  {
   return this.httpClient.get<TBLShamelEmployee>(this.RestUrl +"TBLShamelEmployee/next_accounter/"+id+"/"+serial) ;    
 }
  

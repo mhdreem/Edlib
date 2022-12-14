@@ -261,13 +261,13 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
 
    
     fillAccounterAndSerialOfAdd(){
-      this.AccounterName1.setValue(this.selectedEmployee.Accounter_ID);
-      this.serial1.setValue(this.selectedEmployee.AccounterSerial);
+      this.AccounterName1.setValue(this.selectedEmployee.accounter_id);
+      this.serial1.setValue(this.selectedEmployee.accounterserial);
     }
 
     fillAccounterAndSerialOfAddDelete(){
-      this.AccounterName2.setValue(this.selectedEmployee.Accounter_ID);
-    this.serial2.setValue(this.selectedEmployee.AccounterSerial);
+      this.AccounterName2.setValue(this.selectedEmployee.accounter_id);
+    this.serial2.setValue(this.selectedEmployee.accounterserial);
     }
 
     fillIdOfAdd(){

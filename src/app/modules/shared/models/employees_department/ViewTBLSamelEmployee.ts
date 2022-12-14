@@ -15,8 +15,8 @@ export interface ViewTBLShamelEmployee {
   martialstate_name?: string;
 
   //help Variable متحولات مساعدة للمستقبل ولكن غير موجودة في backend
-  Accounter_ID?: number
-  AccounterSerial?: number
+  accounter_id?: number
+  accounterserial?: number
   accounter_name?: number,
   TBLShamelSCJobState_Last?: ITBLShamelSCJobState,
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, debounceTime, finalize, forkJoin, map, Observable, of, startWith, Subscription, switchMap, tap } from 'rxjs';
 import { ITBLShamelAccounter } from 'src/app/modules/shared/models/employees_department/TBLShamelAccounter';
+import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
 import { TBLShamelYear } from 'src/app/modules/shared/models/employees_department/TBLShamelYear';
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
@@ -21,7 +22,10 @@ import { SearchEmployeeDialogComponent } from '../search-employee-dialog/search-
   templateUrl: './employee-search.component.html',
   styleUrls: ['./employee-search.component.scss']
 })
-export class EmployeeSearchComponent implements OnInit {
+export class EmployeeSearchComponent implements OnInit, OnDestroy  {
+
+  _Subscribtion: Subscription = new Subscription();
+
   // Filtering
   List_Accounter: ITBLShamelAccounter[] = [];
   List_Accounter_Filter: Observable<ITBLShamelAccounter[]> = of([]);
@@ -33,7 +37,10 @@ export class EmployeeSearchComponent implements OnInit {
   Fixed_Year: TBLShamelYear;
   Form: FormGroup;
 
+  isLoadingFinish: boolean;
 
+
+  ViewTBLShamelEmployee_BehaviorSubject : BehaviorSubject<ViewTBLShamelEmployee> = new BehaviorSubject<ViewTBLShamelEmployee>({});
 
   constructor(
     public dialog: MatDialog,
@@ -45,8 +52,30 @@ export class EmployeeSearchComponent implements OnInit {
     public employeeService: EmployeeServiceService,
     public pageService: TblShamelNewPayrolAddPageServiceService
   ) {
+    this.isLoadingFinish = true;
     this.BuildForm();
     this.LoadData();
+
+    this.ViewTBLShamelEmployee_BehaviorSubject.subscribe(
+      res=>
+      {
+        if (res!= null && res.id!= null && res.id>0)
+        {
+          this.employeeService.search_by_id(res.id.toString()).
+          subscribe(res => {
+            this.pageService.TBLShamelEmployee = res;
+          });
+        }
+     
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    if (this._Subscribtion!= null)
+    {
+      this._Subscribtion.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
@@ -54,10 +83,10 @@ export class EmployeeSearchComponent implements OnInit {
 
   BuildForm() {
     this.Form = this.frmBuilder.group({
-      'Accounter_ID': new FormControl<number | null>(null),
-      'AccounterSerial': new FormControl<string | null>(null),
+      'accounter_id': new FormControl<number | null>(null),
+      'accounterserial': new FormControl<string | null>(null),
       'id': new FormControl<string | null>(null),
-      'FullName': new FormControl<string | null>(null)
+      'fullname': new FormControl<string | null>(null)
     });
   }
 
@@ -70,81 +99,67 @@ export class EmployeeSearchComponent implements OnInit {
       return this.ShamelAccounterService.list();
     return of(this.ShamelAccounterService.List_TBLShamelAccounter);
   }
+
   LoadMonth(): Observable<TBLShamelMonth> {
     return this.ShamelMonthService.GetMonthFixed();
-
   }
-
 
   LoadYear(): Observable<TBLShamelYear> {
-
     return this.ShamelYearService.GetYearFixed();
-
   }
+
   LoadData() {
-    forkJoin(
-      [this.LoadAccounter(),
-      this.LoadYear(),
-      this.LoadMonth()
-      ]
-    ).subscribe(res => {
+    this.isLoadingFinish = false;
+    this._Subscribtion.add(
+      forkJoin(
+        [this.LoadAccounter(),
+        this.LoadYear(),
+        this.LoadMonth()
+        ]
+      ).subscribe(res => {
+        this.isLoadingFinish = true;
+        this.List_Accounter = res[0];
+        this.ShamelAccounterService.List_TBLShamelAccounter = res[0];
+        this.ShamelAccounterService.List_TBLShamelAccounter_BehaviorSubject.next(res[0]);
 
+        this.Fixed_Month = res[2];
+        this.Fixed_Year = res[1];
 
-      this.List_Accounter = res[0];
-      this.ShamelAccounterService.List_TBLShamelAccounter = res[0];
-      this.ShamelAccounterService.List_TBLShamelAccounter_BehaviorSubject.next(res[0]);
-
-
-
-
-
-      this.Fixed_Month = res[2];
-      this.Fixed_Year = res[1];
-
-
-
-      if (this.Form != null) {
-
-
-
-
-        this.Form.controls['FullName']
-          .valueChanges
-          .pipe(
-            debounceTime(200),
-            tap(() => { }),
-            switchMap((value: string) => this.viewTBLShamelEmployeeService.getEmpFullName2(value)
-              .pipe(
-                finalize(() => { }),
+        if (this.Form != null) {
+          this.Form.controls['fullname']
+            .valueChanges
+            .pipe(
+              debounceTime(200),
+              tap(() => { }),
+              switchMap((value: string) => this.viewTBLShamelEmployeeService.getEmpFullName2(value)
+                .pipe(
+                  finalize(() => { }),
+                )
               )
             )
-          )
-          .subscribe(emps => {
-            if (emps != null && emps.length > 0
-            ) {
-              this.List_Employee = emps;
-              this.List_Employee_Filter = of(emps);
-              console.log(emps);
-            }
-          });
+            .subscribe(emps => {
+              if (emps != null && emps.length > 0
+              ) {
+                this.List_Employee = emps;
+                this.List_Employee_Filter = of(emps);
+                console.log(emps);
+              }
+            });
 
 
+          this.List_Accounter_Filter = this.Form.controls['accounter_id'].valueChanges
+            .pipe(
+              startWith(''),
+              map(value => value && typeof value === 'string' ? this._filteredAccounter(value) : this.List_Accounter.slice())
+            );
 
 
-
-        this.List_Accounter_Filter = this.Form.controls['Accounter_ID'].valueChanges
-          .pipe(
-            startWith(''),
-            map(value => value && typeof value === 'string' ? this._filteredAccounter(value) : this.List_Accounter.slice())
-          );
+        }
 
 
-      }
-
-
-    },
-      (error) => console.log(error));
-
+      },
+        (error) => console.log(error))
+    );
   }
 
 
@@ -158,50 +173,41 @@ export class EmployeeSearchComponent implements OnInit {
   }
 
   displayAccounter(accounter_id: number) {
-    if (accounter_id > 0 && this.List_Accounter!=null && this.List_Accounter.length>0) {
-      var Accounter = this.List_Accounter.filter(x=>x.accounter_id == accounter_id);
-      if (Accounter!= null && Accounter.length>0)
-      return Accounter[0].accounter_name;
+    if (accounter_id > 0 && this.List_Accounter != null && this.List_Accounter.length > 0) {
+      var Accounter = this.List_Accounter.filter(x => x.accounter_id == accounter_id);
+      if (Accounter != null && Accounter.length > 0)
+        return Accounter[0].accounter_name;
     }
     return '';
   }
 
-  
 
-  onEmployeeSelected(emp: any) {
 
-    if (emp == null || emp.id == null )
+  onEmployeeSelected(emp: ViewTBLShamelEmployee) {
+
+    if (emp == null || emp.id == null)
       return;
-
-  
 
     const id = emp.id;
 
     if (id != null && id > 0) {
       this.Form.controls['id'].setValue(id);
 
-    if (emp!= null && emp.accounter_id!= null && emp.accounter_name!= null )  
-      this.Form.controls['Accounter_ID'].setValue( emp.accounter_id);
+      if (emp != null && emp.accounter_id != null && emp.accounter_name != null)
+        this.Form.controls['accounter_id'].setValue(emp.accounter_id);
 
-      if (emp!= null && emp.accounterserial!= null && emp.accounterserial!= null )  
-      this.Form.controls['AccounterSerial'].setValue( emp.AccounterSerial);
-      
-      this.employeeService.search_by_id_mini(id).
-        subscribe(res => {
-          this.pageService.TBLShamelEmployee = res;
-        });
+      if (emp != null && emp.accounterserial != null && emp.accounterserial != null)
+        this.Form.controls['accounterserial'].setValue(emp.accounterserial);
+
+        this.ViewTBLShamelEmployee_BehaviorSubject.next(emp);
+        this.DisplayData(emp);
 
     }
   }
 
 
-
-
-
-
-
   private _filteredAccounter(value: string): ITBLShamelAccounter[] {
-    if (value) {
+    if (value!= null ) {
       const filterValue = value;
       return this.List_Accounter.filter(obj => obj.accounter_name.includes(filterValue));
 
@@ -228,7 +234,8 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.viewTBLShamelEmployeeService.next_accounter(this.pageService.TBLShamelEmployee.id, ++this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData(res);
         }
       );
     }
@@ -243,7 +250,12 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.viewTBLShamelEmployeeService.next_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, --this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData( res);
+
+         
+
+          
         }
       );
     }
@@ -257,7 +269,8 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.viewTBLShamelEmployeeService.search_by_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData( res);
         }
       );
     }
@@ -272,10 +285,33 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.employeeService.next_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData( res);
         }
       );
     }
+  }
+
+  DisplayData(emp:ViewTBLShamelEmployee)
+  {
+    if (emp == null || emp.id == null)
+      return;
+  
+    if (emp.id != null && emp.id > 0) {
+
+      this.Form.controls['id'].setValue(emp.id);
+
+      this.Form.controls['fullname'].setValue(emp);
+
+      if (emp != null && emp.accounter_id != null && emp.accounter_name != null)
+        this.Form.controls['accounter_id'].setValue(emp.accounter_id);
+
+      if (emp != null && emp.accounterserial != null && emp.accounterserial != null)
+        this.Form.controls['accounterserial'].setValue(emp.accounterserial);
+
+
+    }
+
   }
 
   previousId() {
@@ -286,7 +322,8 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.employeeService.prev_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData( res);
         }
       );
     }
@@ -301,7 +338,8 @@ export class EmployeeSearchComponent implements OnInit {
 
       this.employeeService.search_by_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.pageService.TBLShamelEmployee = res;
+          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+          this.DisplayData( res);
         }
       );
     }

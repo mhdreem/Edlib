@@ -34,6 +34,8 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+// import the module
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -149,7 +151,8 @@ UtilitiesModule,
 IconModule,
 MatProgressBarModule,
 MatProgressSpinnerModule,
-MatRadioModule
+MatRadioModule,
+NgxHoverOpacityModule
   ]
 })
 export class PayrolModule { }
