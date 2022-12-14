@@ -26,30 +26,19 @@ export class TBLShamelShatebHealthService {
   list(obj: TBLShamelShatebHealthRequest)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.post(this.RestUrl +"TBLShamelShatebHealth/Search",obj,options);  
+    return this.httpClient.post<{Item1: any[], Item2: number}>(this.RestUrl +"TBLShamelShatebHealth/Search",obj,options) as Observable<{Item1: any[], Item2: number}>;  
     
   }
 
   fill(obj: TBLShamelShatebHealthRequest)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-     return this.httpClient.post<TBLShamelShatebHealth[]>(this.RestUrl +"TBLShamelShatebHealth/Search", obj, options).subscribe
-     (
-      data=>
-      {
-        this.List_TblShamelHealthService = data;
-        for(let i= 0; i< data.length; i++){
-          var id= data[i].id;
-          this.httpClient.get<TBLShamelEmployee>(this.RestUrl+"TBLShamelEmployee/search_by_id/"+id, options).subscribe(
-            data =>{
-              this.List_TblShamelHealthService[i].TBLShamelEmployee= {};
-              this.List_TblShamelHealthService[i].TBLShamelEmployee .FullName= data.FullName;
-            })
+     this.httpClient.post<TBLShamelShatebHealth[]>(this.RestUrl +"TBLShamelShatebHealth/Search", obj, options).subscribe(data =>{
+      this.List_TblShamelHealthService = data;
+      this.List_TblShamelHealthServicet_BehaviorSubject.next(this.List_TblShamelHealthService);
 
-        }
-        this.List_TblShamelHealthServicet_BehaviorSubject.next(this.List_TblShamelHealthService);
-      }
-     )
+     });
+
     
   }
 

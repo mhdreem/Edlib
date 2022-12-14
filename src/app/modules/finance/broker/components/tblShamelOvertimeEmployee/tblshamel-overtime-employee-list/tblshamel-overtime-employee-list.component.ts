@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TBLShamelOvertimeEmployeeModifyComponent } from '../../tblShamelOvertimeEmployee/tblshamel-overtime-employee-modify/tblshamel-overtime-employee-modify.component';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import * as moment from 'moment';
@@ -39,8 +39,18 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   }
 
 
-  //To Load Data From Server Based On PageIndex
-  PageIndex: number = 1;
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
+
+  pageChanged(event: PageEvent) {
+    console.log('event', event);
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.OnSearch();
+  }
 
 
   // Reactive Filter Form 
@@ -110,7 +120,7 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
 
     // Init Selected overtime_employee_List
     this.selected_overtime_employee = {
-      serial: 0,
+      serial: null,
       fname: '',
       lname: '',
       father: '',
@@ -225,10 +235,6 @@ Load_Sex() : Observable<TBLShamelSex[]>
   
   onScroll() {
 
-    this.pageIndex = this.pageIndex + 1;
-
-    this.overtime_employee_List = []; 
-
     this.FillTable();
   }
 
@@ -249,16 +255,21 @@ Load_Sex() : Observable<TBLShamelSex[]>
         "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate(),
         "sex_name": this.Form.controls['sex_name'].value,
         "servicedayes": this.Form.controls['servicedayes'].value,
-        "servicedayes_operator": this.Form.controls['servicedayes_operator'].value
-      }, this.PageIndex).subscribe(
-        (data: TBLShamelOvertimeEmployee[] )=> {
+        "servicedayes_operator": this.Form.controls['servicedayes_operator'].value,
+        "pagesize": this.pageSize,
+      "pagenumber": this.currentPage
+      }).subscribe(
+        (data)=> {
 
          
           // if Success 
-          if (data != null && data .length >0) {
-            this.overtime_employee_List = this.overtime_employee_List.concat(data);
+          if (data.Item1 != null) {
+            this.dataSource.paginator= this.paginator;
+            this.allData.push(...data.Item1);
+            this.dataSource.data = this.allData;
+            this.totalRows= data.Item2;
+            this.dataSource._updatePaginator(this.totalRows);
           }
-          this.dataSource.data = this.overtime_employee_List;
 
         }
       )
@@ -270,9 +281,6 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
   OnSearch()
   {
-    this.PageIndex =1;
-    this.overtime_employee_List = [];
-    this.dataSource.data = this.overtime_employee_List;
     this.FillTable();
   }
 

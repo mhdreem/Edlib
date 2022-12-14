@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -49,8 +49,18 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
     Form: FormGroup;
 
-     rowInPage = 100;
-     pageIndex = 1;
+    totalRows = 0;
+    pageSize = 5;
+    currentPage = 1;
+    pageSizeOptions: number[] = [5, 10, 25, 100];
+    allData: any[]= [];
+  
+    pageChanged(event: PageEvent) {
+      console.log('event', event);
+      this.pageSize = event.pageSize;
+      this.currentPage = event.pageIndex;
+      this.Search();
+    }
 
 
   List_DocumentType: ITBLShamelDocumentType[] = [];
@@ -313,12 +323,6 @@ export class HealthComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  onScroll() {
-
-    this.pageIndex = this.pageIndex + 1;
-
-    this.Search();
-  }
 
   ngOnInit(): void {
     
@@ -326,21 +330,13 @@ export class HealthComponent implements OnInit, AfterViewInit {
   }
   btnSearchClick()
   {
-    this.pageIndex =1;
-    this.List_TBLShamelShatebHealth = [];
-    this.dataSource.data = this.List_TBLShamelShatebHealth;
     this.Search();  
   }
   Search(){
 
-
-    this.Form.controls['pageindex'].setValue(this.pageIndex);
-    this.Form.controls['rowinpage'].setValue(this.rowInPage);
-
-
-    this.healthService.fill({
-      'pageIndex': this.Form.controls['pageindex'].value,
-      'rowInPage': this.Form.controls['rowinpage'].value,
+    this.healthService.list({
+      'pageIndex': this.currentPage,
+      'rowInPage': this.pageSize,
       'id': this.Form.controls['id'].value,
       'fname': this.Form.controls['fname'].value,
       'lname': this.Form.controls['lname'].value,
@@ -357,25 +353,18 @@ export class HealthComponent implements OnInit, AfterViewInit {
       'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).toDate(),
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
-    });
-
-    this.healthService.List_TblShamelHealthServicet_BehaviorSubject.subscribe(
-      data =>{
-        this.List_TBLShamelShatebHealth =this.List_TBLShamelShatebHealth.concat(data) ;
-        this.dataSource.data = this.List_TBLShamelShatebHealth;
-        console.log("data",data);
+    }).subscribe(
+      data=>{
+        if (data.Item1 != null) {
+          console.log('data', data);
+          this.dataSource.paginator= this.paginator;
+          this.allData.push(...data.Item1);
+          this.dataSource.data = this.allData;
+          this.totalRows= data.Item2;
+          this.dataSource._updatePaginator(this.totalRows);
+        }
       }
     );
-
-
-  //   this.healthService.search(this.Form.value).subscribe((res: any) =>{
-
-  //     this.List_TBLShamelShatebHealth =this.List_TBLShamelShatebHealth.concat(res) ;
-  //     this.dataSource.data = this.List_TBLShamelShatebHealth;
-
-     
-   
-  // });
 
   }
 

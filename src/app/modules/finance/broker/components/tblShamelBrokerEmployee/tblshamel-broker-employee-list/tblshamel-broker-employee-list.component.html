@@ -120,9 +120,6 @@
 
 
 
-<div infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="1" [infiniteScrollThrottle]="100"
-    (scrolled)="onScroll()" [scrollWindow]="false" style="height: 70%; overflow-y: scroll;">
-
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
         <!-- serialNumber Serical -->
         <ng-container matColumnDef="serial">
@@ -196,6 +193,6 @@
         [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
         (click)="changeTableRowColor(idx)"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-</div>
+    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
 </ngx-hover-opacity>

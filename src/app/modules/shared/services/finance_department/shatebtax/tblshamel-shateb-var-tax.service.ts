@@ -22,7 +22,7 @@ export class TBLShamelShatebVarTaxService {
 
   list(obj: TBLShamelShatebVartaxRequest)  {
    
-    return this.httpClient.post(this.RestUrl +"TBLShamelShatebVarTax/Search",obj);  
+    return this.httpClient.post<{Item1: any[], Item2: number}>(this.RestUrl +"TBLShamelShatebVarTax/Search",obj) as Observable<{Item1: any[], Item2: number}>;  
     
   }
 
@@ -49,16 +49,6 @@ export class TBLShamelShatebVarTaxService {
       data=>
       {
         this.List_TblShamelVarTaxService = data;
-        for(let i= 0; i< data.length; i++){
-          var id= data[i].id;
-          this.httpClient.get<TBLShamelEmployee>(this.RestUrl+"TBLShamelEmployee/search_by_id/"+id, options).subscribe(
-            data =>{
-              this.List_TblShamelVarTaxService[i].TBLShamelEmployee= {};
-              this.List_TblShamelVarTaxService[i].TBLShamelEmployee .FullName= data.FullName;
-              this.List_TblShamelVarTaxService[i].shateb_number= +data.Payrol_ID;
-            })
-
-        }
         this.List_TblShamelVarTaxServicet_BehaviorSubject.next(this.List_TblShamelVarTaxService);
       }
      )

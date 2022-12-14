@@ -48,9 +48,6 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   broker_shateb_List: TblShamelBrokerShateb[] = [];
   selected_broker_shateb: TblShamelBrokerShateb;
 
-  PageIndex: number = 1;
-  rowInPage = 100;
-
   dataSource = new MatTableDataSource<TblShamelBrokerShateb>(this.broker_shateb_List);
 
   Selected_TBLShamelBrokerShateb: TblShamelBrokerShateb;
@@ -364,7 +361,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
            console.log('data', data);
             // if Success 
-            if (data.Item1!= null && data.Item1.length >0) {
+            if (data.Item1!= null) {
               this.dataSource.paginator= this.paginator;
               this.allData.push(...data.Item1);
               this.dataSource.data = this.allData;

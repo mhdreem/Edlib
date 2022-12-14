@@ -22,7 +22,7 @@ export function  Validate_ID( ShamelOvertimeEmployeeService:TBLShamelOvertimeEmp
         pipe(map(
           (data:any ) => 
           {           
-            return (data && data.serial  == 0) ? null : { 'uniq1': true }  ;
+            return (data && data.serial  == null) ? null : { 'uniq1': true }  ;
           }
         ));
    

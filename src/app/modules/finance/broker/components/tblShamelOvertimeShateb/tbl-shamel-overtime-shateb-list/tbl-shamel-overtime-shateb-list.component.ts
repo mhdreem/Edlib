@@ -358,7 +358,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
          
           // if Success 
-          if (data.Item1 != null && data.Item1.length >0) {
+          if (data.Item1 != null) {
             this.dataSource.paginator= this.paginator;
             this.allData.push(...data.Item1);
             this.dataSource.data = this.allData;

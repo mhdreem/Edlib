@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -36,8 +36,19 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
     else this.rowClicked = idx;
   }
   
-  PageIndex: number = 1;
-  rowInPage = 100;
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 1;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  allData: any[]= [];
+
+  pageChanged(event: PageEvent) {
+    console.log('event', event);
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.OnSearch();
+  }
+
   Form: FormGroup;
 
   List_SEX_NAME: TBLShamelSex[] = [];
@@ -156,15 +167,6 @@ public displaySexNameProperty(value: string): string {
   return '';
 }
 
-onScroll() {
-
-  this.PageIndex = this.PageIndex + 1;
-
-  this.broker_employee_List = []; 
-
-  this.FillTable();
-}
-
 public async FillTable() {
 
 
@@ -181,17 +183,21 @@ public async FillTable() {
       "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate(),
       "sex_name": this.Form.controls['sex_name'].value,
       "servicedayes": this.Form.controls['servicedayes'].value,
-      "servicedayes_operator": this.Form.controls['servicedayes_operator'].value
-    }, this.PageIndex).subscribe(
-      (data: TblShamelBrokerEmployee[] )=> {
+      "servicedayes_operator": this.Form.controls['servicedayes_operator'].value,
+      "pagesize": this.pageSize,
+      "pagenumber": this.currentPage
+    }).subscribe(
+      (data)=> {
 
        
         // if Success 
-        if (data != null && data .length >0) {
-          this.broker_employee_List = this.broker_employee_List.concat(data);
+        if (data.Item1 != null) {
+          this.dataSource.paginator= this.paginator;
+          this.allData.push(...data.Item1);
+          this.dataSource.data = this.allData;
+          this.totalRows= data.Item2;
+          this.dataSource._updatePaginator(this.totalRows);
         }
-        this.dataSource.data = this.broker_employee_List;
-
       }
     )
 
@@ -202,9 +208,6 @@ public async FillTable() {
 
 OnSearch()
   {
-    this.PageIndex =1;
-    this.broker_employee_List = [];
-    this.dataSource.data = this.broker_employee_List;
     this.FillTable();
   }
 

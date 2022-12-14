@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { elementAt } from 'rxjs';
+import { elementAt, Observable } from 'rxjs';
 import { TBLShamelBonusReason } from '../../../models/employees_department/TBLShamelBonusReason';
 import { TBLShamelOvertimeEmployee } from '../../../models/finance_department/broker/TBLShamelOvertimeEmployee';
 import { TBLShamelOverTimeShatebService } from './tblshamel-overtime-shateb.service';
@@ -32,11 +32,11 @@ export class TBLShamelOvertimeEmployeeService {
     }
 
 
-    Search(searchRequest : any,PageIndex:number)  {
+    Search(searchRequest : any)  {
       const headers = new HttpHeaders().set('Content-Type', 'application/json');
       const options = {  headers: headers };  
       console.log("111");
-      return this.httpClient.post<TBLShamelOvertimeEmployee[]>(this.RestUrl +`/Search/${PageIndex}`,searchRequest,this.httpOptions);  
+      return this.httpClient.post<{Item1: TBLShamelOvertimeEmployee[], Item2: number}>(this.RestUrl +`/Search/`,searchRequest,this.httpOptions) as Observable<{Item1: TBLShamelOvertimeEmployee[], Item2: number}>;  
       
     }
 

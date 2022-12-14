@@ -69,6 +69,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     this.pageService.id_BehaviorSubject.subscribe
       (
         emp => {
+          console.log('emp', emp);
           this.LoadData();
         }
       )

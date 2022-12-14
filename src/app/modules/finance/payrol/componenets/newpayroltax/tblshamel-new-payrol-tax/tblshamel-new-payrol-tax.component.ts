@@ -57,6 +57,7 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
           this.tblShamelNewPayrolTaxService.List_ta3weed  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "ta3weed");          
           this.tblShamelNewPayrolTaxService.List_taxtemp  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "taxtemp");
           this.tblShamelNewPayrolTaxService.List_recurr  = this.List_TblShamelNewPayrolTax.filter(x=>x.payroltaxtype == "recurr");
+          console.log('this.tblShamelNewPayrolTaxService.List_taxtemp', this.tblShamelNewPayrolTaxService.List_taxtemp);
 
 
      
@@ -109,7 +110,11 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
     (
       res=>
       {
-
+        if (res == 1){
+          this._SnackBar.open('تمت الإضافة بنجاح','موافق');
+        }
+        else
+        this._SnackBar.open('لم تتم الإضافة','موافق');
       }
     )
 

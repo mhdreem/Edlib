@@ -62,7 +62,7 @@ export class TBLShamelShatebPunishmentService {
   }
 
   list(obj: TBLShamelShatebPunishmentRequest)  {
-    return this.httpClient.post(this.RestUrl +"TBLShamelShatebPunishment/Search",obj);      
+    return this.httpClient.post<{Item1: any[], Item2: number}>(this.RestUrl +"TBLShamelShatebPunishment/Search",obj) as Observable<{Item1: any[], Item2: number}>;      
   }
 
   delete(id:number )  {
@@ -80,20 +80,11 @@ export class TBLShamelShatebPunishmentService {
   search(obj : TBLShamelShatebPunishmentRequest )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };
-    return this.httpClient.post<TBLShamelShatebPunishment[]>(this.RestUrl +"TBLShamelShatebPunishment/Search",obj).subscribe
+    this.httpClient.post<TBLShamelShatebPunishment[]>(this.RestUrl +"TBLShamelShatebPunishment/Search",obj).subscribe
     (
      (data)=>
      {
        this.List_TblShamelPunishmentService = data;
-       for(let i= 0; i< data.length; i++){
-         var id= data[i].id;
-         this.httpClient.get<TBLShamelEmployee>(this.RestUrl+"TBLShamelEmployee/search_by_id/"+id, options).subscribe(
-           data =>{
-             this.List_TblShamelPunishmentService[i].TBLShamelEmployee= {};
-             this.List_TblShamelPunishmentService[i].TBLShamelEmployee.FullName= data.FullName;
-           })
-
-       }
        this.List_TblShamelPunishmentServicet_BehaviorSubject.next(this.List_TblShamelPunishmentService);
      }
     );  

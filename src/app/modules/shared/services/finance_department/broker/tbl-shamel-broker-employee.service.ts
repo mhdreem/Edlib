@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TblShamelBrokerEmployee } from '../../../models/finance_department/broker/TblShamelBrokerEmployee';
 
 @Injectable({
@@ -27,10 +28,10 @@ export class TblShamelBrokerEmployeeService {
 
   }
 
-  Search(searchRequest: any, PageIndex: number) {
+  Search(searchRequest: any) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = { headers: headers };
-    return this.httpClient.post<TblShamelBrokerEmployee[]>(this.RestUrl + `/Search/${PageIndex}`, searchRequest, this.httpOptions);
+    return this.httpClient.post<{Item1: TblShamelBrokerEmployee[], Item2: number}>(this.RestUrl + `/Search/`, searchRequest, this.httpOptions) as Observable<{Item1: TblShamelBrokerEmployee[], Item2: number}>;
 
   }
 

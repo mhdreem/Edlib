@@ -151,7 +151,7 @@ return {};
 
       
         if (this.tblShamelNewPayrolTax.taxtemp_round!= null)
-        this.Form.controls['taxtemp_round'].setValue(this.tblShamelNewPayrolTax.taxtemp_round);
+        this.Form.controls['taxtemp_round'].setValue(this.tblShamelNewPayrolTax.taxtemp_round+'');
 
         if (this.tblShamelNewPayrolTax.taxtemp_order!= null)
         this.Form.controls['taxtemp_order'].setValue(this.tblShamelNewPayrolTax.taxtemp_order);

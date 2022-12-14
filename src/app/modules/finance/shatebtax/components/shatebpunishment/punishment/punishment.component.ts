@@ -1,6 +1,6 @@
 import { AfterViewInit,Component, OnInit , ViewChild } from '@angular/core';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -40,8 +40,18 @@ export class PunishmentComponent implements OnInit {
   displayedColumns: string[] = [
     'id','payrol_ID','fullName','percent','duration','documenttype_id', 'documentnum', 'documentdate', 'salary','amount', 'month_id','year_id', 'edit', 'delete'];
 
-    rowInPage = 100;
-    pageIndex = 1;
+    totalRows = 0;
+    pageSize = 5;
+    currentPage = 1;
+    pageSizeOptions: number[] = [5, 10, 25, 100];
+    allData: any[]= [];
+  
+    pageChanged(event: PageEvent) {
+      console.log('event', event);
+      this.pageSize = event.pageSize;
+      this.currentPage = event.pageIndex;
+      this.Search();
+    }
     List_DocumentType: ITBLShamelDocumentType[] = [];
     List_DocumentType_Filter: Observable<ITBLShamelDocumentType[]> = of([]);
   
@@ -308,21 +318,13 @@ BuilForm()
   }
   btnSearchClick()
   {
-    this.pageIndex =1;
-    this.List_TBLShamelShatebPunishment = [];
-    this.dataSource.data = this.List_TBLShamelShatebPunishment;
     this.Search();  
   }
   Search(){
    
-    this.Form.controls['pageindex'].setValue(this.pageIndex);
-    this.Form.controls['rowinpage'].setValue(this.rowInPage);
-
-
-   
-    this.ShamelShatebPunishmentService.fill({
-      'rowInPage': this.Form.controls['rowinpage'].value,
-      'pageIndex': this.Form.controls['pageindex'].value,
+    this.ShamelShatebPunishmentService.list({
+      'rowInPage': this.pageSize,
+      'pageIndex': this.currentPage,
       'serial': this.Form.controls['serial'].value,
       'id': this.Form.controls['id'].value,
       'duration': this.Form.controls['duration'].value,
@@ -342,34 +344,19 @@ BuilForm()
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
 
+    }).subscribe(data=>{
+      if (data.Item1 != null) {
+        console.log('data', data);
+        this.dataSource.paginator= this.paginator;
+        this.allData.push(...data.Item1);
+        this.dataSource.data = this.allData;
+        this.totalRows= data.Item2;
+        this.dataSource._updatePaginator(this.totalRows);
+      }
     });
 
-    this.ShamelShatebPunishmentService.List_TblShamelPunishmentServicet_BehaviorSubject.subscribe(
-      data =>{
-        this.List_TBLShamelShatebPunishment =this.List_TBLShamelShatebPunishment.concat(data) ;
-        this.dataSource.data = this.List_TBLShamelShatebPunishment;
-        console.log('data', data);
-      }
-    );
-
-    // this.ShamelShatebPunishmentService.search(this.Form.value).subscribe((res: any) =>{
-
-    //   this.List_TBLShamelShatebPunishment = [];
-    //   this.List_TBLShamelShatebPunishment =this.List_TBLShamelShatebPunishment.concat(res) ;
-    //   this.dataSource.data = this.List_TBLShamelShatebPunishment;
-
-  // });
-
-
-
   }
 
-  onScroll() {
-
-    this.pageIndex = this.pageIndex + 1;
-
-    this.Search();
-  }
   editRec(element: TBLShamelShatebPunishment){
     const dialogRef = this.dialog.open(PunishmentEditDialogComponent, {
       width: '800px',

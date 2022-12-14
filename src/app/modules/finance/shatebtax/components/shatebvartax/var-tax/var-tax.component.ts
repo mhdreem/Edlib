@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -43,8 +43,19 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
     'id','payrol_ID','fullName','healthnosalary_name','salary','amount','duration','documenttype_id', 'documentnum', 'documentdate',  'month_id','year_id', 'edit', 'delete'];
 
  
-    rowInPage = 100;
-    pageIndex = 1;
+    totalRows = 0;
+    pageSize = 5;
+    currentPage = 1;
+    pageSizeOptions: number[] = [5, 10, 25, 100];
+    allData: any[]= [];
+  
+    pageChanged(event: PageEvent) {
+      console.log('event', event);
+      this.pageSize = event.pageSize;
+      this.currentPage = event.pageIndex;
+      this.Search();
+    }
+
     List_DocumentType: ITBLShamelDocumentType[] = [];
     List_DocumentType_Filter: Observable<ITBLShamelDocumentType[]> = of([]);
   
@@ -346,20 +357,13 @@ BuilForm()
   
   btnSearchClick()
   {
-    this.pageIndex =1;
-    this.List_TBLShamelShatebVartax = [];
-    this.dataSource.data = this.List_TBLShamelShatebVartax;
     this.Search();  
   }
   Search(){
    
-    this.Form.controls['pageindex'].setValue(this.pageIndex);
-    this.Form.controls['rowinpage'].setValue(this.rowInPage);
-
-
-    this.ShamelShatebVarTaxService.fill({
-      'rowInPage': this.Form.controls['rowinpage'].value,
-      'pageIndex': this.Form.controls['pageindex'].value,
+    this.ShamelShatebVarTaxService.list({
+      'rowInPage': this.pageSize,
+      'pageIndex': this.currentPage,
       'serial': this.Form.controls['serial'].value,
       'id': this.Form.controls['id'].value,
       'documenttype_id': this.Form.controls['documenttype_id'].value,
@@ -374,33 +378,17 @@ BuilForm()
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
 
+    }).subscribe(data =>{
+      if (data.Item1 != null) {
+        console.log('data', data);
+        this.dataSource.paginator= this.paginator;
+        this.allData.push(...data.Item1);
+        this.dataSource.data = this.allData;
+        this.totalRows= data.Item2;
+        this.dataSource._updatePaginator(this.totalRows);
+      }
     });
 
-    this.ShamelShatebVarTaxService.List_TblShamelVarTaxServicet_BehaviorSubject.subscribe(
-      data =>{
-        this.List_TBLShamelShatebVartax =this.List_TBLShamelShatebVartax.concat(data) ;
-        this.dataSource.data = this.List_TBLShamelShatebVartax;
-        console.log('data', data);
-      }
-    );
-
-
-  //   this.ShamelShatebVarTaxService.search(this.Form.value).subscribe((res: any) =>{
-
-  //     this.List_TBLShamelShatebVartax =this.List_TBLShamelShatebVartax.concat(res) ;
-  //     this.dataSource.data = this.List_TBLShamelShatebVartax;
-
-  // });
-
-
-
-  }
-
-  onScroll() {
-
-    this.pageIndex = this.pageIndex + 1;
-
-    this.Search();
   }
 
   editRec(element: TBLShamelShatebVartax){
