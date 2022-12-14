@@ -63,7 +63,13 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
         {
           this.employeeService.search_by_id(res.id.toString()).
           subscribe(res => {
-            this.pageService.TBLShamelEmployee = res;
+            if (res!= null && res.id!= null)
+            {
+              this.pageService.TBLShamelEmployee = res;
+              this.pageService.id =  res.id;
+              this.pageService.id_BehaviorSubject.next(this.pageService.id);
+            }
+
           });
         }
      
@@ -229,13 +235,18 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
   }
 
   nextSerial() {
+
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.AccounterSerial != null) {
 
-      this.viewTBLShamelEmployeeService.next_accounter(this.pageService.TBLShamelEmployee.id, ++this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
+      this.viewTBLShamelEmployeeService.next_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData(res);
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }
+
         }
       );
     }
@@ -248,14 +259,13 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
       this.pageService.TBLShamelEmployee.Accounter_ID != null &&
       this.pageService.TBLShamelEmployee.AccounterSerial != null) {
 
-      this.viewTBLShamelEmployeeService.next_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, --this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
+      this.viewTBLShamelEmployeeService.prev_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData( res);
-
-         
-
-          
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }                 
         }
       );
     }
@@ -269,8 +279,11 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
 
       this.viewTBLShamelEmployeeService.search_by_accounter(this.pageService.TBLShamelEmployee.Accounter_ID, this.pageService.TBLShamelEmployee.AccounterSerial).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData( res);
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }
         }
       );
     }
@@ -285,8 +298,11 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
 
       this.employeeService.next_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData( res);
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }
         }
       );
     }
@@ -322,8 +338,11 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
 
       this.employeeService.prev_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData( res);
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }
         }
       );
     }
@@ -338,8 +357,11 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
 
       this.employeeService.search_by_id(this.pageService.TBLShamelEmployee.id.toString()).subscribe(
         res => {
-          this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
-          this.DisplayData( res);
+          if (res!= null && res.id!= null && res.id>0)
+          {
+            this.ViewTBLShamelEmployee_BehaviorSubject.next(res);
+            this.DisplayData(res);
+          }
         }
       );
     }

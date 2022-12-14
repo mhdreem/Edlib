@@ -127,17 +127,17 @@ next_id(id:string ):Observable <ViewTBLShamelEmployee>  {
   return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"ViewTBLShamelEmployee/next_id/"+id) ;    
 }
 
-prev_accounter(id:number, serial: number )  :Observable <ViewTBLShamelEmployee> {
-  return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"TBLShamelEmployee/prev_accounter/"+id+"/"+serial) ;    
+prev_accounter(accounter_id:number, accounterserial: number )  :Observable <ViewTBLShamelEmployee> {
+  return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"ViewTBLShamelEmployee/prev_accounter/"+accounter_id+"/"+accounterserial) ;    
 }
 
-next_accounter(id:number, serial: number ) :Observable<ViewTBLShamelEmployee>  {
-  return this.httpClient.get<TBLShamelEmployee>(this.RestUrl +"TBLShamelEmployee/next_accounter/"+id+"/"+serial) ;    
+next_accounter(accounter_id:number, accounterserial: number ) :Observable<ViewTBLShamelEmployee>  {
+  return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"ViewTBLShamelEmployee/next_accounter/"+accounter_id+"/"+accounterserial) ;    
 }
  
 
-search_by_accounter(id:number, serial: number ) :Observable<TBLShamelEmployee>  {
-  return this.httpClient.get<TBLShamelEmployee>(this.RestUrl +"TBLShamelEmployee/search_by_accounter/"+id+"/"+serial) ;    
+search_by_accounter(accounter_id:number, accounterserial: number ) :Observable<ViewTBLShamelEmployee>  {
+  return this.httpClient.get<ViewTBLShamelEmployee>(this.RestUrl +"ViewTBLShamelEmployee/search_by_accounter/"+accounter_id+"/"+accounterserial ) ;    
 }
 
 search_by_id(id:string ) :Observable<ViewTBLShamelEmployee> {
