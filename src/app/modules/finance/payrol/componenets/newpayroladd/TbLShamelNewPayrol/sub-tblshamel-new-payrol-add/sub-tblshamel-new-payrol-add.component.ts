@@ -79,7 +79,7 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
             this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxtemp')              
          this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.taxtempp_name);
          else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-          this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxRecurr')              
+          this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype==='recurr')              
        this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.taxrecurr_name);
           
         }
