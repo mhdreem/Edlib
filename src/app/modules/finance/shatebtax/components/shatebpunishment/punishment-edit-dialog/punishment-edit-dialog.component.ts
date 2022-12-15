@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -64,6 +65,7 @@ export class PunishmentEditDialogComponent implements OnInit {
     public ShamelYearService: TBLShamelYearService,
     public dialogRef: MatDialogRef<PunishmentEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebPunishment,
+    @Inject(DOCUMENT) private _document: Document
 
   ) {
 
@@ -392,12 +394,18 @@ export class PunishmentEditDialogComponent implements OnInit {
 
     };
    if (this.Form.controls['serial'].value == null || this.Form.controls['serial'].value == undefined || this.Form.controls['serial'].value <0)
-     this.ShamelShatebPunishmentService.add(obj);
+     this.ShamelShatebPunishmentService.add(obj).subscribe(res => {console.log('res', res);});
      else 
-     this.ShamelShatebPunishmentService.update(obj);
+     this.ShamelShatebPunishmentService.update(obj).subscribe(res => {console.log('res', res);});
 
    
     }
 
 
+    public focusNext(id: string) {
+      let element = this._document.getElementById(id);
+      if (element) {
+        element.focus();
+      }
+    }
 }

@@ -11,17 +11,17 @@
   
             <c-row>
               <c-col>
-                <mat-form-field color="primary" id="id" appearance="fill">
+                <mat-form-field color="primary" appearance="fill">
                   <mat-label>الإضبارة</mat-label>
-                  <input matInput formControlName="id" (change)="OnIdChange($event)">
-                  <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">sdd</mat-error>
-                  <mat-error *ngIf="Form.controls['id'].hasError('required')">sdd1</mat-error>
+                  <input matInput formControlName="id" id="id" (change)="OnIdChange($event)" (keyup.enter)="focusNext('auto_empName')">
+                  <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">رقم الإضبارة متكرر</mat-error>
+                  <mat-error *ngIf="Form.controls['id'].hasError('required')">رقم الإضبارة مطلوب</mat-error>
                 </mat-form-field>
               </c-col>
               <c-col>
                 <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>اسم الموظف</mat-label>
-                  <input matInput [matAutocomplete]="auto_empName" formControlName='fullname' required>
+                  <input matInput [matAutocomplete]="auto_empName" id="auto_empName" formControlName='fullname' (keyup.enter)="focusNext('healthnosalary_name')" required>
                   <mat-autocomplete #auto_empName="matAutocomplete" [displayWith]="displayFn"
                     (optionSelected)="onEmployeeSelected($event)">
                     <mat-option *ngIf="isLoading" class="is-loading">
@@ -46,7 +46,7 @@
               <c-col>
                 <mat-form-field class="example-full-width fitContent" appearance="fill">
                   <mat-label>نوع الحسم</mat-label>
-                  <input matInput formControlName="healthnosalary_name" [matAutocomplete]="auto_healthnosalary_name"
+                  <input matInput formControlName="healthnosalary_name" id="healthnosalary_name" (keyup.enter)="focusNext('duration')" [matAutocomplete]="auto_healthnosalary_name"
                     required>
                   <mat-autocomplete #auto_healthnosalary_name="matAutocomplete">
                     <mat-option *ngFor="let option of List_HealthNoSalary_Filter | async"
@@ -65,19 +65,30 @@
             <c-row>
   
               <c-col>
-                <mat-form-field color="primary" id="id" class="" appearance="fill">
+                <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>المدة</mat-label>
-                  <input type="number" matInput formControlName="duration" required>
+                  <input type="number" matInput formControlName="duration" id="duration" (keyup.enter)="focusNext('startdate_Day')" required>
                 </mat-form-field>
               </c-col>
               <c-col>
-                <mat-form-field color="primary" id="id" class="" appearance="fill">
-                  <mat-label>بدء الإجازة</mat-label>
-                  <input matInput [matDatepicker]="picker_startdate" formControlName="startdate" required>
-                  <mat-hint>MM/DD/YYYY</mat-hint>
-                  <mat-datepicker-toggle matSuffix [for]="picker_startdate"></mat-datepicker-toggle>
-                  <mat-datepicker #picker_startdate></mat-datepicker>
-                </mat-form-field>
+                <div class="date">
+                  <span>بدء الإجازة:</span>
+                  <div class="content">
+                    <mat-form-field class="example-full-width small-width" appearance="fill">
+                      <mat-label>اليوم</mat-label>
+                      <input type="number" matInput formControlName="startdate_Day" id="startdate_Day" (keyup.enter)="focusNext('startdate_Month')" required placeholder="ex: 21">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width small-width" appearance="fill">
+                      <mat-label>الشهر</mat-label>
+                      <input type="number" matInput formControlName="startdate_Month" id="startdate_Month" (keyup.enter)="focusNext('startdate_Year')" required placeholder="ex: 1">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width small-width" appearance="fill">
+                      <mat-label>العام</mat-label>
+                      <input type="number" matInput formControlName="startdate_Year" id="startdate_Year" (keyup.enter)="focusNext('documenttype_id')" required placeholder="ex: 2023">
+                    </mat-form-field>
+                  </div>
+                </div>
+                
               </c-col>
   
   
@@ -89,7 +100,7 @@
   
                 <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>المستند</mat-label>
-                  <input type="text" matInput formControlName="documenttype_id" [matAutocomplete]="auto_documenttype_id">
+                  <input type="text" matInput formControlName="documenttype_id" id="documenttype_id" (keyup.enter)="focusNext('documentnum')" [matAutocomplete]="auto_documenttype_id">
                   <mat-autocomplete #auto_documenttype_id="matAutocomplete"
                     [displayWith]="displayDocumentTypeProperty.bind(this)">
                     <mat-option *ngFor="let option of List_DocumentType_Filter | async" [value]="option.documenttype_id">
@@ -99,9 +110,9 @@
                 </mat-form-field>
               </c-col>
               <c-col>
-                <mat-form-field color="primary" id="id" class="" appearance="fill">
+                <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>رقم المستند</mat-label>
-                  <input matInput formControlName="documentnum" required>
+                  <input matInput formControlName="documentnum" id="documentnum" (keyup.enter)="focusNext('documentdate_Day')" required>
                 </mat-form-field>
               </c-col>
   
@@ -114,15 +125,15 @@
                   <div class="content">
                     <mat-form-field class="example-full-width small-width" appearance="fill">
                       <mat-label>اليوم</mat-label>
-                      <input type="number" matInput formControlName="documentdate_Day" placeholder="ex: 21">
+                      <input type="number" matInput formControlName="documentdate_Day" id="documentdate_Day" (keyup.enter)="focusNext('documentdate_Month')" placeholder="ex: 21">
                     </mat-form-field>
                     <mat-form-field class="example-full-width small-width" appearance="fill">
                       <mat-label>الشهر</mat-label>
-                      <input type="number" matInput formControlName="documentdate_Month" placeholder="ex: 1">
+                      <input type="number" matInput formControlName="documentdate_Month" id="documentdate_Month" (keyup.enter)="focusNext('documentdate_Year')" placeholder="ex: 1">
                     </mat-form-field>
                     <mat-form-field class="example-full-width small-width" appearance="fill">
                       <mat-label>العام</mat-label>
-                      <input type="number" matInput formControlName="documentdate_Year" placeholder="ex: 2023">
+                      <input type="number" matInput formControlName="documentdate_Year" id="documentdate_Year" (keyup.enter)="focusNext('salary')" placeholder="ex: 2023">
                     </mat-form-field>
                   </div>
                 </div>
@@ -133,15 +144,15 @@
             </c-row>
             <c-row>
               <c-col>
-                <mat-form-field color="primary" id="id" class="" appearance="fill">
+                <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>الراتب</mat-label>
-                  <input type="number" matInput formControlName="salary" required>
+                  <input type="number" matInput formControlName="salary" id="salary" (keyup.enter)="focusNext('amount')" required>
                 </mat-form-field>
               </c-col>
               <c-col>
                 <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>المبلغ</mat-label>
-                  <input type="number" matInput formControlName="amount" required>
+                  <input type="number" matInput formControlName="amount" id="amount" (keyup.enter)="focusNext('id')" required>
                 </mat-form-field>
               </c-col>
             </c-row>

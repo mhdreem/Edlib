@@ -4,5 +4,5 @@
     computer_id?:number;
     payrol_id?: string ;
     global_id?:string ;
-    insurance_id?:string ;
+    insurance_id?:number ;
 }

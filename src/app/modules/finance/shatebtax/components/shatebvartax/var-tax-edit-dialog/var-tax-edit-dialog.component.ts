@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -68,6 +69,7 @@ export class VarTaxEditDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PunishmentEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebVartax,
+    @Inject(DOCUMENT) private _document: Document
 
   ) {
 
@@ -407,5 +409,10 @@ export class VarTaxEditDialogComponent implements OnInit {
    
     }
 
-
+    public focusNext(id: string) {
+      let element = this._document.getElementById(id);
+      if (element) {
+        element.focus();
+      }
+    }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -28,6 +28,7 @@ import { TBLShamelMonth } from '../../../../../../modules/shared/models/employee
 import { TBLShamelYear } from '../../../../../../modules/shared/models/employees_department/TBLShamelYear';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -62,6 +63,8 @@ export class HealthComponent implements OnInit, AfterViewInit {
       this.Search();
     }
 
+  LoadingFinish : boolean;
+
 
   List_DocumentType: ITBLShamelDocumentType[] = [];
   List_DocumentType_Filter: Observable<ITBLShamelDocumentType[]> = of([]);
@@ -93,8 +96,10 @@ export class HealthComponent implements OnInit, AfterViewInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     private ShamelAccounterService: AccounterService,
+    @Inject(DOCUMENT) private _document: Document
     ) 
   { 
+    this.LoadingFinish = true;
    
     this.Form = this. frmBuilder.group({
       startdate_From_Day: new FormControl(''),
@@ -180,6 +185,8 @@ export class HealthComponent implements OnInit, AfterViewInit {
   }
 
   LoadData() {
+  this.LoadingFinish = false;
+
     forkJoin(
       [this.LoadDocument(),
       this.LoadHealthNoSalaray(),
@@ -248,6 +255,7 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
     }    , 
     (error) => console.log(error));
+    this.LoadingFinish = true;
 
   }
 
@@ -376,7 +384,7 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("result", result);
-      this.healthService.update(result).subscribe((result: any) => {if(result.Result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 }); this.Search();}});
+      this.Search();
     });
   }
 
@@ -394,16 +402,23 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
   insert(){
     const dialogRef = this.dialog.open(HealthEditDialogComponent, {
-      width: '1150px',
+      width: '700px',
       data: {
         
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.healthService.add(result).subscribe((result) => {console.log('ddd', result);if(result == 1){ this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.Search();
       }
       console.log('ccc',result);
     });
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 }

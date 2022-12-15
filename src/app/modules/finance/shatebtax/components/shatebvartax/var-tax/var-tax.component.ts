@@ -1,5 +1,5 @@
 
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +25,7 @@ import { TBLShamelShatebVarTaxService } from 'src/app/modules/shared/services/fi
 import { VarTaxDeleteDialogComponent } from '../var-tax-delete-dialog/var-tax-delete-dialog.component';
 import { VarTaxEditDialogComponent } from '../var-tax-edit-dialog/var-tax-edit-dialog.component';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 
 
 
@@ -42,6 +43,7 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'id','payrol_ID','fullName','healthnosalary_name','salary','amount','duration','documenttype_id', 'documentnum', 'documentdate',  'month_id','year_id', 'edit', 'delete'];
 
+    LoadingFinish : boolean;
  
     totalRows = 0;
     pageSize = 5;
@@ -90,8 +92,11 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
     public viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
-    private _snackBar: MatSnackBar) 
+    private _snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document) 
   { 
+    this.LoadingFinish = true;
+
     
     this.BuilForm();
 
@@ -188,6 +193,8 @@ BuilForm()
   }
 
   LoadData() {
+  this.LoadingFinish = false;
+
     forkJoin(
       [this.LoadDocument(),
       this.LoadMonth(),
@@ -271,6 +278,7 @@ BuilForm()
 
     },
       (error) => console.log(error));
+      this.LoadingFinish = true;
 
   }
 
@@ -431,4 +439,10 @@ BuilForm()
     });
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

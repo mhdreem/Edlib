@@ -98,8 +98,8 @@ import { ShatebtaxComponent } from './shatebtax.component';
 import { VarTaxComponent } from './components/shatebvartax/var-tax/var-tax.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MY_DATE_FORMATS } from '../../shared/models/employees_department/MY_DATE_FORMATS';
-import { PunishmentInsertDialogComponent } from './components/shatebpunishment/punishment-insert-dialog/punishment-insert-dialog.component';
-
+import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 /////////////////////////////
 
@@ -127,7 +127,7 @@ export const MY_FORMATS = {
     VarTaxDeleteDialogComponent,VarTaxEditDialogComponent,
     PunishmentComponent,PunishmentDeleteDialogComponent,PunishmentEditDialogComponent,
     HealthComponent,HealthDeleteDialogComponent,HealthEditDialogComponent
-    , VarTaxComponent,PunishmentInsertDialogComponent
+    , VarTaxComponent,
     
   ],
   imports: [
@@ -194,7 +194,8 @@ export const MY_FORMATS = {
  TabsModule,
  UtilitiesModule,
  IconModule,
-
+ NgxHoverOpacityModule,
+ MatProgressBarModule
    
   ]
   ,

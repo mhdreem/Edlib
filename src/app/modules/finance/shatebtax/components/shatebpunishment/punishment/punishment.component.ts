@@ -1,4 +1,4 @@
-import { AfterViewInit,Component, OnInit , ViewChild } from '@angular/core';
+import { AfterViewInit,Component, Inject, OnInit , ViewChild } from '@angular/core';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -25,6 +25,7 @@ import { ITBLShamelAccounter } from 'src/app/modules/shared/models/employees_dep
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-punishment',
@@ -52,6 +53,9 @@ export class PunishmentComponent implements OnInit {
       this.currentPage = event.pageIndex;
       this.Search();
     }
+
+  LoadingFinish : boolean;
+
     List_DocumentType: ITBLShamelDocumentType[] = [];
     List_DocumentType_Filter: Observable<ITBLShamelDocumentType[]> = of([]);
   
@@ -84,8 +88,11 @@ export class PunishmentComponent implements OnInit {
     public shameldocumenttypeService: TblshameldocumenttypeService,   
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
-    private _snackBar: MatSnackBar) 
+    private _snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document) 
   { 
+    this.LoadingFinish = true;
+
     this.BuilForm();
 
     this.LoadData();
@@ -163,6 +170,8 @@ BuilForm()
   }
 
   LoadData() {
+  this.LoadingFinish = false;
+
     forkJoin(
       [this.LoadDocument(),
       this.LoadMonth(),
@@ -236,6 +245,7 @@ BuilForm()
 
     },
       (error) => console.log(error));
+      this.LoadingFinish = true;
 
   }
 
@@ -396,7 +406,7 @@ BuilForm()
 
   insert(){
     const dialogRef = this.dialog.open(PunishmentEditDialogComponent, {
-      width: '1150px',
+      width: '800px',
       data: {
         
       },
@@ -409,4 +419,10 @@ BuilForm()
     });
   }
 
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 }

@@ -1,7 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { debounceTime, finalize, map, Observable, startWith, switchMap, tap, of, forkJoin } from 'rxjs';
 import { IEmployeeNameList } from 'src/app/modules/shared/models/employees_department/IEmployeeNameList';
@@ -62,7 +64,9 @@ export class HealthEditDialogComponent implements OnInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     public ShamelShatebHealthService: TBLShamelShatebHealthService,
-    @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebHealth) {
+    @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebHealth,
+    private _snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private _document: Document) {
 
       this._matDialogRef= dialogRef;
 
@@ -314,12 +318,15 @@ export class HealthEditDialogComponent implements OnInit {
       healthnosalary_name: new FormControl<string | null>(null),
       duration: new FormControl<number | null>(null),
       startdate: new FormControl<Date | null>(null),
+      startdate_Day: new FormControl<number | null>(null),
+      startdate_Month: new FormControl<number | null>(null),
+      startdate_Year: new FormControl<number | null>(null),
       documenttype_id: new FormControl<number | null>(null),
 
       documentnum: new FormControl<string | null>(null),
-      documentdate_Day: new FormControl<Date | null>(null),
-      documentdate_Month: new FormControl<Date | null>(null),
-      documentdate_Year: new FormControl<Date | null>(null),
+      documentdate_Day: new FormControl<number | null>(null),
+      documentdate_Month: new FormControl<number | null>(null),
+      documentdate_Year: new FormControl<number | null>(null),
       salary: new FormControl<number | null>(null),
       amount: new FormControl<number | null>(null),
       serial: new FormControl<number | null>(null),
@@ -396,9 +403,13 @@ export class HealthEditDialogComponent implements OnInit {
       if (this.Selected_Health.serial != null)
         this.Form.controls['serial'].setValue(this.Selected_Health.serial);
 
-      if (this.Selected_Health.startdate != null)
-        this.Form.controls['startdate'].setValue(moment(this.Selected_Health.startdate).toDate());
-
+      if (this.Selected_Health.startdate != null){
+        this.Form.controls['startdate_Day'].setValue(moment(this.Selected_Health.startdate).date());
+        this.Form.controls['startdate_Month'].setValue(moment(this.Selected_Health.startdate).month()+1);
+        this.Form.controls['startdate_Year'].setValue(moment(this.Selected_Health.startdate).year());
+        this.Form.controls['startdate'].setValue(moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).toDate());
+      }
+        
 
 
     }
@@ -426,15 +437,16 @@ export class HealthEditDialogComponent implements OnInit {
       salary : this.Form.controls['salary'].value,
       serial : this.Form.controls['serial'].value,
       //shateb_number : this.Form.controls['shateb_number'].value,
-      startdate : this.Form.controls['startdate'].value,
+      startdate : moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).toDate(),
       year_id : this.Form.controls['year_id'].value,
 
 
     };
+    console.log('obj', obj);
    if (this.Form.controls['serial'].value == null || this.Form.controls['serial'].value == undefined || this.Form.controls['serial'].value <0)
-     this.ShamelShatebHealthService.add(obj);
+     this.ShamelShatebHealthService.add(obj).subscribe((result) => {if(result == 1){ this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 });}});
      else 
-     this.ShamelShatebHealthService.update(obj);
+     this.ShamelShatebHealthService.update(obj).subscribe((result: any) => {if(result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 });}});
   }
 
   onNoClick(): void {
@@ -442,6 +454,11 @@ export class HealthEditDialogComponent implements OnInit {
   }
 
 
-
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
+  }
 
 }

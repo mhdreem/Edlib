@@ -204,7 +204,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         TblShamelNewPayrolAddDetails.push(Detail);
 
       });
-
+      console.log('TblShamelNewPayrolAddDetails', this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails);
       this.pageService.List_ta3weed = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'ta3weed');
       this.pageService.List_taxtemp = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'taxtemp');
       this.pageService.List_recurr = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'taxRecurr');
@@ -251,7 +251,8 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
   BindValue() {
 
-
+    // console.log('this.pageService.TBLShamelEmployee', this.pageService.TBLShamelEmployee);
+    // console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamelNewPayrolAdd);
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last.salary != null
