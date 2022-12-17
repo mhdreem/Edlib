@@ -23,7 +23,24 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
       this.index<this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.length      
         )
     {
-      return this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails[this.index];
+      switch(this.payroltaxtype){
+
+        case 'ta3weed':
+          if (this.pageService.List_ta3weed != null && this.pageService.List_ta3weed.length >0  && this.index < this.pageService.List_ta3weed.length)
+            return this.pageService.List_ta3weed[this.index];
+          break;
+
+        case 'taxtemp':
+          if (this.pageService.List_taxtemp != null && this.pageService.List_taxtemp.length >0  && this.index < this.pageService.List_taxtemp.length)
+            return this.pageService.List_taxtemp[this.index];
+          break;
+        case 'recurr':
+          if (this.pageService.List_recurr != null && this.pageService.List_recurr.length >0  && this.index < this.pageService.List_recurr.length)
+            return this.pageService.List_recurr[this.index];
+          break;
+        }
+
+        
     }
     return {};
   }
@@ -31,6 +48,7 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
 
   //ترتيب العنصر ضمن المصفوفة
   @Input() index : number ;
+  @Input() payroltaxtype : string ;
   // نوع السطر وذلك على حس 
   Form :FormGroup ;
 
@@ -65,18 +83,19 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
  
   bindValue ()
   {
+    console.log('2', this.TblShamelNewPayrolAddDetail);
     if (this.Form!= null)
     {
       if (this.TblShamelNewPayrolAddDetail!= null && 
           this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax!= null)
         {
           this.Form.controls['TblShamelNewPayrolTax'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax);
-
+          // console.log('1', this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax);
           if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-              this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='ta3weed')              
+              this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype==='ta3weed')              
            this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_name);
            else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
-            this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxtemp')              
+            this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype==='taxtemp')              
          this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.taxtempp_name);
          else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
           this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype==='recurr')              
@@ -84,6 +103,7 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
           
         }
 
+        console.log('this.TblShamelNewPayrolAddDetail', this.TblShamelNewPayrolAddDetail);
         if (this.TblShamelNewPayrolAddDetail!= null && 
           this.TblShamelNewPayrolAddDetail.ta3weed_active!= null)
         {
@@ -170,8 +190,11 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
   ngOnChanges(changes: SimpleChanges) {   
     if ( changes!= null && changes['index']!=null)    
     {
+      this.payroltaxtype = changes['payroltaxtype'].currentValue;
       this.index = changes['index'].currentValue ;
       this.bindValue();
+      this.bindModelToForm(this.TblShamelNewPayrolAddDetail,this.Form);          
+
     }
       
 
@@ -190,7 +213,27 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
       
         form.controls[key].valueChanges.subscribe(
             (newValue) => {
-                model[key] = newValue;
+              model[key] = newValue;
+              if (key == 'ta3weed_active'){
+
+                if (this.Form.controls['ta3weed_active'].value == true)
+                model[key] = '1';
+                if (this.Form.controls['ta3weed_active'].value == false)
+                model[key] = '0';
+              }
+              else if (key == 'taxtemp_active'){
+
+                if (this.Form.controls['taxtemp_active'].value == true)
+                model[key] = '1';
+                if (this.Form.controls['taxtemp_active'].value == false)
+                model[key] = '0';
+              }
+              else if (key == 'taxrecurr_active'){
+                if (this.Form.controls['taxrecurr_active'].value == true)
+                model[key] = '1';
+                if (this.Form.controls['taxrecurr_active'].value == false)
+                model[key] = '0';
+              }
             }
         )
     });

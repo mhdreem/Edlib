@@ -118,78 +118,59 @@ output{
 }
 
 .bottom{
-    border: 1px solid black;
     padding: 10px;
     margin-bottom: 40px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 930px;
+    width: 1131px;
     .right{
-        .title1{
-            background-color: rgb(228, 189, 81);
-            color: white;
-            padding: 10px;
-        }
-        
+        width: 30%;
         .spanBox{
             margin-top: 10px;
             display: flex;
             justify-content: space-between;
             width: 292px;
             span{
-                margin-left: 15px;
+                margin-left: 44px;
             }
             span:last-child{
-                margin-right: 42px;
+                margin-right: 7px;
             }
         }
     }
 
     .middle{
-        .title2{
-            background-color: rgb(228, 189, 81);
-            color: white;
-            padding: 10px;
-        }
-        
+        width: 30%;
         .spanBox{
             margin-top: 10px;
             display: flex;
             justify-content: space-between;
             width: 292px;
             span{
-                margin-left: 15px;
+                margin-left: 47px;
             }
-            span:last-child{
-                margin-right: 40px;
-            }
+            
         }
     }
 
     .left{
-        .title3{
-            background-color: rgb(228, 189, 81);
-            color: white;
-            padding: 10px;
-        }
-        
+        width: 30%;
         .spanBox{
             margin-top: 10px;
             display: flex;
-            justify-content: space-between;
             width: 718px;
             span{
-                margin-left: 15px;
+                margin-left: 41px;
             }
             span:nth-child(2){
                 margin-right: 10px;
             }
             span:nth-child(3){
-                margin-right: 27px;
+                margin-right: -9px;
             }
             span:last-child{
-                margin-right: 40px;
+                margin-right: 1px;
             }
         }
     }
@@ -204,3 +185,12 @@ output{
     flex-direction: column;
     justify-content: space-between;
 }
+
+.title1, .title2, .title3{
+    background-color: rgb(228, 189, 81);
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    width: fit-content;
+}
+

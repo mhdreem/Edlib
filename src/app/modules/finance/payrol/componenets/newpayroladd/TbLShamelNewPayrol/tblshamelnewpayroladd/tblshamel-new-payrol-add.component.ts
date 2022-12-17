@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, Observable, of } from 'rxjs';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
@@ -60,7 +61,8 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     public employeeService: EmployeeServiceService,
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
-    private tblShamelNewPayrolTaxService: TblShamelNewPayrolTaxService) {
+    private tblShamelNewPayrolTaxService: TblShamelNewPayrolTaxService,
+    private snackBar: MatSnackBar,) {
 
 
     this.BuildForm();
@@ -241,7 +243,9 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
           this.pageService.List_taxtemp = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'taxtemp');
           this.pageService.List_recurr = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'recurr');
     
-    
+          console.log('List_ta3weed', this.pageService.List_ta3weed);
+          console.log('List_taxtemp', this.pageService.List_taxtemp);
+          console.log('List_recurr', this.pageService.List_recurr);
           this.BindValue();
 
         }
@@ -385,21 +389,61 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
       });
     }
   }
-
+  request: TblShamelNewPayrolAdd= new TblShamelNewPayrolAdd();
   save() {
-    var request: TblShamelNewPayrolAdd;
-    for (let i = 0; i < this.updateList.length; i++) {
-      this.tblShamelNewPayrolAddService.getById(this.updateList[i].id).subscribe(
-        res => {
-          request = res;
-          request.id = this.updateList[i].id;
-          request.TblShamelNewPayrolAddDetails = this.updateList[i].TblShamelNewPayrolAddDetails;
-
-        }
-      );
-      this.tblShamelNewPayrolAddService.update(request);
-
+    let isNull= false;
+    console.log('this.pageService.List_ta3weed', this.pageService.List_ta3weed);
+    for (let i= 0; i< this.pageService.List_ta3weed.length; i++){
+      if (this.pageService.List_ta3weed[i].ta3weed_active && (this.pageService.List_ta3weed[i].ta3weed_amount == 0 && this.pageService.List_ta3weed[i].ta3weed_percent == 0 )){
+        isNull= true;
+        this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
+          duration: 3000,
+        });
+      }
     }
+
+    for (let i= 0; i< this.pageService.List_taxtemp.length; i++){
+      if (this.pageService.List_taxtemp[i].taxtemp_active && (this.pageService.List_taxtemp[i].taxtemp_amount == 0 && this.pageService.List_taxtemp[i].taxtemp_percent == 0 )){
+        isNull= true;
+        this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للحسمية المراد إضافتها', '', {
+          duration: 3000,
+        });
+      }
+    }
+
+    for (let i= 0; i< this.pageService.List_recurr.length; i++){
+      if (this.pageService.List_recurr[i].taxrecurr_active && (this.pageService.List_recurr[i].taxrecurr_balance == 0 && this.pageService.List_recurr[i].taxrecurr_fee == 0 || this.pageService.List_recurr[i].taxrecurr_total == 0 )){
+        isNull= true;
+        this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
+          duration: 3000,
+        });
+      }
+    }
+
+    if (isNull)
+    return;
+    // copy to not affect the original payrolAddDetails, Otherwise the ui rows will change
+    this.request = this.pageService.TblShamelNewPayrolAdd;
+    console.log('this.pageService.List_ta3weed', this.pageService.List_ta3weed);
+    this.pageService.List_ta3weed.forEach(listItem =>{
+      if (listItem.ta3weed_active)
+      this.request.TblShamelNewPayrolAddDetails.push(listItem);
+    });
+
+    this.pageService.List_taxtemp.forEach(listItem =>{
+      if (listItem.taxtemp_active)
+      this.request.TblShamelNewPayrolAddDetails.push(listItem);
+    });
+
+    this.pageService.List_recurr.forEach(listItem =>{
+      if (listItem.taxrecurr_active)
+      this.request.TblShamelNewPayrolAddDetails.push(listItem);
+    });
+console.log('this.pageService.TblShamelNewPayrolAdd', this.request);
+      this.tblShamelNewPayrolAddService.update(this.request).subscribe(res => {
+        console.log('res', res);
+      });
+
   }
 
 

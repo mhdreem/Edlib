@@ -1,3 +1,27 @@
 mat-form-field{
-    margin-left: 20px;
+    max-width: 100%;
+}
+
+:host{
+width: fit-content;
+}
+
+.r{
+    display: flex;
+}
+
+.col{
+    margin-left: 5px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-form-field{
+    width: 120px;
+}
+
+.sm-field{
+    width: 75px
 }

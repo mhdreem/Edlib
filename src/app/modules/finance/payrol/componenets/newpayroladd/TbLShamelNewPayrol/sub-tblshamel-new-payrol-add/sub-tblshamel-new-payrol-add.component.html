@@ -1,89 +1,83 @@
 <form  [formGroup]="Form" #form="ngForm">
-    <c-container *ngIf="this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype =='ta3weed'">
-        <c-row>
-            <c-col>
+    <div class="r" *ngIf="this.TblShamelNewPayrolAddDetail?.TblShamelNewPayrolTax?.payroltaxtype =='ta3weed'">
+            <div class="col" >
                 <mat-form-field color="primary" appearance="fill">
                     <input matInput formControlName="name">
                 </mat-form-field>
-            </c-col>
+            </div>
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col " >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="ta3weed_amount">
                 </mat-form-field>
-            </c-col>
+            </div>
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="ta3weed_percent">
                 </mat-form-field>
-            </c-col>
-            <c-col>
-                <mat-checkbox class="example-margin" formControlName="ta3weed_active"></mat-checkbox>
-            </c-col>
+            </div>
+            <div class="col sm-field" >
+                <mat-checkbox class="example-margin" color="primary" formControlName="ta3weed_active"></mat-checkbox>
+            </div>
 
-        </c-row>
-    </c-container>
+        </div>
     <!--تعويضات-->
 
-    <c-container *ngIf="this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype =='taxtemp'">
-        <c-row>
-            <c-col>
+    <div class="r" *ngIf="this.TblShamelNewPayrolAddDetail?.TblShamelNewPayrolTax?.payroltaxtype =='taxtemp'">
+            <div class="col" >
                 <mat-form-field color="primary" appearance="fill">
                     <input matInput formControlName="name">
                 </mat-form-field>
-            </c-col>
+            </div >
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="taxtemp_amount">
                 </mat-form-field>
-            </c-col>
+            </div >
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="taxtemp_percent">
                 </mat-form-field>
-            </c-col>
+            </div >
 
            
-            <c-col>
-                <mat-checkbox class="example-margin" formControlName="taxtemp_active"></mat-checkbox>
-            </c-col>
+            <div class="col sm-field" >
+                <mat-checkbox class="example-margin" color="primary" formControlName="taxtemp_active"></mat-checkbox>
+            </div >
 
-        </c-row>
-    </c-container>
+    </div>
 
 
-    <c-container *ngIf="this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype =='taxRecurr'">
-        <c-row>
-            <c-col>
+    <div class="r" *ngIf="this.TblShamelNewPayrolAddDetail?.TblShamelNewPayrolTax?.payroltaxtype =='recurr'">
+            <div class="col" >
                 <mat-form-field color="primary" appearance="fill">
                     <input matInput formControlName="name">
                 </mat-form-field>
-            </c-col>
+            </div >
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="taxrecurr_fee">
                 </mat-form-field>
-            </c-col>
+            </div >
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="taxrecurr_balance">
                 </mat-form-field>
-            </c-col>
+            </div >
 
-            <c-col>
-                <mat-form-field color="primary" appearance="fill">
+            <div class="col" >
+                <mat-form-field class="sm-field" color="primary" appearance="fill">
                     <input matInput formControlName="taxrecurr_total">
                 </mat-form-field>
-            </c-col>
-            <c-col>
-                <mat-checkbox class="example-margin" formControlName="taxrecurr_active"></mat-checkbox>
+            </div >
+            <div class="col sm-field" >
+                <mat-checkbox class="example-margin" color="primary" formControlName="taxrecurr_active"></mat-checkbox>
 
-            </c-col>
+            </div >
 
-        </c-row>
-    </c-container>
+    </div>

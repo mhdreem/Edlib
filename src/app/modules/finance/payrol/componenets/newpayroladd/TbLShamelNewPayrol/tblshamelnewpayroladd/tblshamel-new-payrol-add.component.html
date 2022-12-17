@@ -92,10 +92,10 @@
 </form>
 </div>
 
-<div >
-    <div >
-        <span >التعويضات الدائمة والمؤقتة</span>
-        <div class="spanBox">
+<div class="bottom">
+    <div class="right">
+        <span class="title1">التعويضات الدائمة والمؤقتة</span>
+        <div class="spanBox spanBox1">
             <span>اسم التعويض</span>
             <span>المبلغ</span>
             <span>النسبة</span>
@@ -103,12 +103,13 @@
         <sub-tblshamel-new-payrol-add
             *ngFor="let item of this.pageService.List_ta3weed ; index as i"            
             [index]="i"
+            [payroltaxtype]="'ta3weed'"
             >
         </sub-tblshamel-new-payrol-add>
-    </div>
+    </div >
     <div class="middle">
         <span class="title2">الحسميات الدائمة والمؤقتة</span>
-        <div class="spanBox">
+        <div class="spanBox spanBox2">
             <span>اسم الحسمية</span>
             <span>المبلغ</span>
             <span>النسبة</span>
@@ -116,13 +117,14 @@
         <sub-tblshamel-new-payrol-add
         *ngFor="let item of this.pageService.List_taxtemp ; index as i"            
         [index]="i"
+        [payroltaxtype]="'taxtemp'"
         >
     </sub-tblshamel-new-payrol-add>
      
     </div>
     <div class="left">
         <span class="title3">الحسميات ذات الأرصدة</span>
-        <div class="spanBox">
+        <div class="spanBox spanBox3">
             <span>اسم الحسمية</span>
             <span>الاجمالي</span>
             <span>القسط</span>
@@ -131,6 +133,7 @@
         <sub-tblshamel-new-payrol-add
         *ngFor="let item of this.pageService.List_recurr ; index as i"            
         [index]="i"
+        [payroltaxtype]="'recurr'"
         >
     </sub-tblshamel-new-payrol-add>
         
