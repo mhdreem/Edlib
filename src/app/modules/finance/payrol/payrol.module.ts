@@ -59,6 +59,8 @@ import { SubTBLShamelNewPayrolTaxComponent } from './componenets/newpayroltax/su
 import { SubTblshamelNewPayrolAddComponent } from './componenets/newpayroladd/TbLShamelNewPayrol/sub-tblshamel-new-payrol-add/sub-tblshamel-new-payrol-add.component';
 import { MainEntryTbLShamelNewPayrolAddComponent } from './componenets/newpayroladd/TbLShamelNewPayrol/main-entry-tbl-shamel-new-payrol-add/main-entry-tbl-shamel-new-payrol-add.component';
 import { SearchEmployeeDialogComponent } from './componenets/employee/search-employee-dialog/search-employee-dialog.component';
+import { EmployeePageShatebComponent } from './componenets/employee-page-shateb/employee-page-shateb.component';
+import { PrintEmployeeShatebPageComponent } from './componenets/print/print-employee-shateb-page/print-employee-shateb-page.component';
 
 
 /////////////////////////////
@@ -91,7 +93,9 @@ export const MY_FORMATS = {
     EmployeeSearchComponent,
     SubTBLShamelNewPayrolTaxComponent,
     MainEntryTbLShamelNewPayrolAddComponent,
-    SearchEmployeeDialogComponent
+    SearchEmployeeDialogComponent,
+    EmployeePageShatebComponent,
+    PrintEmployeeShatebPageComponent
    ],
   imports: [
     CommonModule,

@@ -1,0 +1,34 @@
+td{
+    border-left: 1px solid rgba(8, 8, 8, 0.116);
+    padding-inline: 5px !important;
+}
+
+.mat-header-row.cdk-header-row {
+    th{
+        font-weight: bold ;
+        font-size: 18px ;
+    }
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.view{
+    margin-bottom: 10px;
+}
+
+button{
+    margin-left: 10px;
+}
+
+app-print-employee-shateb-page{
+    display: none;
+}
