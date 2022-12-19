@@ -105,79 +105,104 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
 
         console.log('this.TblShamelNewPayrolAddDetail', this.TblShamelNewPayrolAddDetail);
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.ta3weed_active!= null)
+          this.TblShamelNewPayrolAddDetail.ta3weed_active!= null &&
+          this.TblShamelNewPayrolAddDetail.ta3weed_active > 0)
         {
           this.Form.controls['ta3weed_active'].setValue(this.TblShamelNewPayrolAddDetail.ta3weed_active);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.ta3weed_amount!= null)
+          this.TblShamelNewPayrolAddDetail.ta3weed_amount!= null&&
+          this.TblShamelNewPayrolAddDetail.ta3weed_amount>0
+          )
         {
           this.Form.controls['ta3weed_amount'].setValue(this.TblShamelNewPayrolAddDetail.ta3weed_amount);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.ta3weed_percent!= null)
+          this.TblShamelNewPayrolAddDetail.ta3weed_percent!= null &&
+          this.TblShamelNewPayrolAddDetail.ta3weed_percent>0
+          )
         {
           this.Form.controls['ta3weed_percent'].setValue(this.TblShamelNewPayrolAddDetail.ta3weed_percent);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxrecurr_balance!= null)
+          this.TblShamelNewPayrolAddDetail.taxrecurr_balance!= null &&
+          this.TblShamelNewPayrolAddDetail.taxrecurr_balance>0
+          )
         {
           this.Form.controls['taxrecurr_balance'].setValue(this.TblShamelNewPayrolAddDetail.taxrecurr_balance);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxrecurr_fee!= null)
+          this.TblShamelNewPayrolAddDetail.taxrecurr_fee!= null&&
+          this.TblShamelNewPayrolAddDetail.taxrecurr_fee >0
+          )
         {
           this.Form.controls['taxrecurr_fee'].setValue(this.TblShamelNewPayrolAddDetail.taxrecurr_fee);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxrecurr_order!= null)
+          this.TblShamelNewPayrolAddDetail.taxrecurr_order!= null &&
+          this.TblShamelNewPayrolAddDetail.taxrecurr_order >0)
         {
           this.Form.controls['taxrecurr_order'].setValue(this.TblShamelNewPayrolAddDetail.taxrecurr_order);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxrecurr_total!= null)
+          this.TblShamelNewPayrolAddDetail.taxrecurr_total!= null &&
+          this.TblShamelNewPayrolAddDetail.taxrecurr_total>0
+          )
         {
           this.Form.controls['taxrecurr_total'].setValue(this.TblShamelNewPayrolAddDetail.taxrecurr_total);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxtemp_active!= null)
+          this.TblShamelNewPayrolAddDetail.taxtemp_active!= null &&
+          this.TblShamelNewPayrolAddDetail.taxtemp_active >0)
         {
           this.Form.controls['taxtemp_active'].setValue(this.TblShamelNewPayrolAddDetail.taxtemp_active);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxtemp_amount!= null)
+          this.TblShamelNewPayrolAddDetail.taxrecurr_active!= null &&
+          this.TblShamelNewPayrolAddDetail.taxrecurr_active>0)
+        {
+          this.Form.controls['taxrecurr_active'].setValue(this.TblShamelNewPayrolAddDetail.taxrecurr_active);
+        }
+
+        if (this.TblShamelNewPayrolAddDetail!= null && 
+          this.TblShamelNewPayrolAddDetail.taxtemp_amount!= null &&
+          this.TblShamelNewPayrolAddDetail.taxtemp_amount>0)
         {
           this.Form.controls['taxtemp_amount'].setValue(this.TblShamelNewPayrolAddDetail.taxtemp_amount);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.taxtemp_percent!= null)
+          this.TblShamelNewPayrolAddDetail.taxtemp_percent!= null &&
+          this.TblShamelNewPayrolAddDetail.taxtemp_percent>0)
         {
           this.Form.controls['taxtemp_percent'].setValue(this.TblShamelNewPayrolAddDetail.taxtemp_percent);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroladd_fk!= null)
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroladd_fk!= null &&
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroladd_fk>0)
         {
           this.Form.controls['tblshamelnewpayroladd_fk'].setValue(this.TblShamelNewPayrolAddDetail.tblshamelnewpayroladd_fk);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk!= null)
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk!= null &&
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk>0)
         {
           this.Form.controls['tblshamelnewpayroltax_fk'].setValue(this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk);
         }
 
         if (this.TblShamelNewPayrolAddDetail!= null && 
-          this.TblShamelNewPayrolAddDetail.tblshamelnpayroladddet_serail!= null)
+          this.TblShamelNewPayrolAddDetail.tblshamelnpayroladddet_serail!= null &&
+          this.TblShamelNewPayrolAddDetail.tblshamelnpayroladddet_serail>0)
         {
           this.Form.controls['tblshamelnpayroladddet_serail'].setValue(this.TblShamelNewPayrolAddDetail.tblshamelnpayroladddet_serail);
         }
@@ -215,24 +240,23 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
             (newValue) => {
               model[key] = newValue;
               if (key == 'ta3weed_active'){
-
+                model[key] = '0';
                 if (this.Form.controls['ta3weed_active'].value == true)
                 model[key] = '1';
-                if (this.Form.controls['ta3weed_active'].value == false)
-                model[key] = '0';
+
               }
               else if (key == 'taxtemp_active'){
-
+                model[key] = '0';
                 if (this.Form.controls['taxtemp_active'].value == true)
                 model[key] = '1';
-                if (this.Form.controls['taxtemp_active'].value == false)
-                model[key] = '0';
+
               }
               else if (key == 'taxrecurr_active'){
-                if (this.Form.controls['taxrecurr_active'].value == true)
-                model[key] = '1';
-                if (this.Form.controls['taxrecurr_active'].value == false)
                 model[key] = '0';
+                if (this.Form.controls['taxrecurr_active'].value == true)
+                  model[key] = '1';
+
+                 
               }
             }
         )

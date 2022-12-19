@@ -17,6 +17,7 @@ export class TblShamelNewPayrolAdd
   locked ?:number;
 
  salary_old ?:number;
+ salary ?:number;
 
  salary_insurance ?:number;
 
@@ -24,7 +25,7 @@ export class TblShamelNewPayrolAdd
 
  TBLShamelEmployee?: TBLShamelEmployee; 
 
-
+ salary_last_jobstate?:number;
   FirstChild?:number;
   SecondChild ?:number;
   ThirdChild ?:number;
@@ -32,6 +33,84 @@ export class TblShamelNewPayrolAdd
   RestChild ?:number;
 
 
+  public Clone(obj:any)
+  {
+   if (obj!= null )
+   {
+      if (obj.id != null)
+         this.id = obj.id;
+
+         if (obj.insurance_kind != null)
+         this.insurance_kind = obj.insurance_kind;
+
+         if (obj.FirstChild != null)
+         this.FirstChild = obj.FirstChild;
+
+         if (obj.FourChild != null)
+         this.FourChild = obj.FourChild;
+
+
+         if (obj.RestChild != null)
+         this.RestChild = obj.RestChild;
+
+
+         if (obj.SecondChild != null)
+         this.SecondChild = obj.SecondChild;
+
+
+         if (obj.TBLShamelEmployee != null)
+         this.TBLShamelEmployee = obj.TBLShamelEmployee;
+
+
+         if (obj.salary_last_jobstate != null)
+         this.salary_last_jobstate = obj.salary_last_jobstate;
+
+         if (obj.TblShamelNewPayrolAddDetails != null)
+         this.TblShamelNewPayrolAddDetails = obj.TblShamelNewPayrolAddDetails;
+
+
+         if (obj.ThirdChild != null)
+         this.ThirdChild = obj.ThirdChild;
+
+
+         if (obj.family != null)
+         this.family = obj.family;
+
+         if (obj.family_ta3weed != null)
+         this.family_ta3weed = obj.family_ta3weed;
+
+         if (obj.id != null)
+         this.id = obj.id;
+
+
+         if (obj.insurance_kind != null)
+         this.insurance_kind = obj.insurance_kind;
+
+         if (obj.locked != null)
+         this.locked= obj.locked;
+
+
+         if (obj.salary != null)
+         this.salary= obj.salary;
+
+
+         if (obj.wife != null)
+         this.wife= obj.wife;
+
+
+   }
+  }
+  public Get_Last_Salary_From_JobState () :number
+  {
+      this.salary = 0;
+      if (this.TBLShamelEmployee != null &&
+       this.TBLShamelEmployee.TBLShamelSCJobState_Last!= null &&
+       this.TBLShamelEmployee.TBLShamelSCJobState_Last.salary!= null
+       )
+          this.salary = this.TBLShamelEmployee.TBLShamelSCJobState_Last.salary;
+
+       return this.salary;
+  }
 
  public fill_child_info_from_family () 
  {

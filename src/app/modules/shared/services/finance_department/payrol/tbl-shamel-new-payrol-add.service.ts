@@ -32,5 +32,23 @@ export class TblShamelNewPayrolAddService {
     const options = {  headers: headers };
     return this.httpClient.put(this.RestUrl +`TblShamelNewPayrolAdd/${obj.id}`,obj,options);  
   }
+
+  Save(obj : TblShamelNewPayrolAddRequest,month_id:number,year_id:number )  {
+    console.log("res4");
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +`TblShamelNewPayrolAdd/Save/${month_id}/${year_id}`,obj,options);  
+  }
+
+  
+
+  add(obj : TblShamelNewPayrolAddRequest )  {
+    console.log("res4");
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +`TblShamelNewPayrolAdd/`,obj,options);  
+  }
   
 }
