@@ -407,6 +407,15 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         this.pageService.TblShamelNewPayrolAdd.id = this.Form.controls['id'].value;
 
 
+        if (
+          this.Form.controls['payrol_id'].value != null)
+          this.pageService.TblShamelNewPayrolAdd.id = this.Form.controls['payrol_id'].value;
+  
+  
+
+        
+            
+
       if (
         this.Form.controls['wife'].value != null)
         this.pageService.TblShamelNewPayrolAdd.wife = this.Form.controls['wife'].value;
@@ -439,6 +448,9 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
       else
         Family = '0' + Family;
 
+
+        
+
       if (
         this.Form.controls['RestChild'].value != null &&
         this.Form.controls['RestChild'].value.length > 0)
@@ -447,6 +459,13 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         Family = '0' + Family;
 
 
+      this.Form.controls['family'].setValue(Family);
+
+      if (
+        this.Form.controls['family'].value != null)
+      this.pageService.TblShamelNewPayrolAdd.family = Family;
+
+   
       if (
         this.Form.controls['family_ta3weed'].value != null)
         this.pageService.TblShamelNewPayrolAdd.family_ta3weed = this.Form.controls['family_ta3weed'].value;
