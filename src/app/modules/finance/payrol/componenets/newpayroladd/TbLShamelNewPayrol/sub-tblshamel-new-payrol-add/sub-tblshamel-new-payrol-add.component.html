@@ -8,13 +8,13 @@
 
             <div class="col " >
                 <mat-form-field class="sm-field" color="primary" appearance="fill">
-                    <input matInput formControlName="ta3weed_amount">
+                    <input #input1 matInput formControlName="ta3weed_amount" (change)="clearPercentInput()">
                 </mat-form-field>
             </div>
 
             <div class="col" >
                 <mat-form-field class="sm-field" color="primary" appearance="fill">
-                    <input matInput formControlName="ta3weed_percent">
+                    <input #input2 matInput formControlName="ta3weed_percent" (change)="clearAmountInput()">
                 </mat-form-field>
             </div>
             <div class="col sm-field" >

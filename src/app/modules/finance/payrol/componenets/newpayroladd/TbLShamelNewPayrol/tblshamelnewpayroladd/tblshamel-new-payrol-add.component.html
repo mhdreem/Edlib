@@ -81,8 +81,8 @@
        
             <mat-form-field class="example-full-width" appearance="fill">
             <mat-select formControlName="insurance_kind">
-                <mat-option value="0" color="primary" >مشترك بالتأمينات الإجتماعية</mat-option>
-                <mat-option value="1" color="primary" >مشترك بالتأمين والمعاش</mat-option>
+                <mat-option [value]="0" color="primary" >مشترك بالتأمينات الإجتماعية</mat-option>
+                <mat-option [value]="1" color="primary" >مشترك بالتأمين والمعاش</mat-option>
             </mat-select>
         </mat-form-field>
        
@@ -115,8 +115,8 @@
             <span>النسبة</span>
         </div>
         <sub-tblshamel-new-payrol-add
-        *ngFor="let item of this.pageService.List_taxtemp ; index as i"            
-        [index]="i"
+        *ngFor="let item of this.pageService.List_taxtemp ; index as j"            
+        [index]="j"
         [payroltaxtype]="'taxtemp'"
         >
     </sub-tblshamel-new-payrol-add>
@@ -131,8 +131,8 @@
             <span>الرصيد</span>
         </div>
         <sub-tblshamel-new-payrol-add
-        *ngFor="let item of this.pageService.List_recurr ; index as i"            
-        [index]="i"
+        *ngFor="let item of this.pageService.List_recurr ; index as k"            
+        [index]="k"
         [payroltaxtype]="'recurr'"
         >
     </sub-tblshamel-new-payrol-add>

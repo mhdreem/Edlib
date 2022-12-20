@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainEntryTblShamelEmployeePageShatebComponent } from './componenets/employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb.component';
 import { MainEntryTbLShamelNewPayrolAddComponent } from './componenets/newpayroladd/TbLShamelNewPayrol/main-entry-tbl-shamel-new-payrol-add/main-entry-tbl-shamel-new-payrol-add.component';
 import { TbLShamelNewPayrolAddComponent } from './componenets/newpayroladd/TbLShamelNewPayrol/tblshamelnewpayroladd/tblshamel-new-payrol-add.component';
 import { TBLShamelNewPayrolTaxComponent } from './componenets/newpayroltax/tblshamel-new-payrol-tax/tblshamel-new-payrol-tax.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
     children:[
       { path: 'salaryinput', component:  MainEntryTbLShamelNewPayrolAddComponent} ,
       { path: 'ta3weedTaxProgramming', component:  TBLShamelNewPayrolTaxComponent} ,
+      { path: 'employeePageShateb', component:  MainEntryTblShamelEmployeePageShatebComponent} ,
       
      ]
   }

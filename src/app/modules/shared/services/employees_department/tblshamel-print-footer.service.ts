@@ -23,7 +23,7 @@ export class TblshamelPrintFooterService {
   list(id: number): Observable<AdjustPrintDialog[]>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TblShamelNewPrintFooter/list_by_user_id/"+id,options) as Observable<AdjustPrintDialog[]>;  
+    return this.httpClient.get(this.RestUrl +"TblShamelPrintFooter/list_by_user_id/"+id,options) as Observable<AdjustPrintDialog[]>;  
     
   }
 

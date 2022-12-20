@@ -263,4 +263,11 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
     });
 }
 
+clearPercentInput(){
+  this.Form.controls['ta3weed_percent'].setValue('');
+}
+
+clearAmountInput(){
+  this.Form.controls['ta3weed_amount'].setValue('');
+}
 }

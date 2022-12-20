@@ -61,6 +61,8 @@ import { MainEntryTbLShamelNewPayrolAddComponent } from './componenets/newpayrol
 import { SearchEmployeeDialogComponent } from './componenets/employee/search-employee-dialog/search-employee-dialog.component';
 import { EmployeePageShatebComponent } from './componenets/employee-page-shateb/employee-page-shateb.component';
 import { PrintEmployeeShatebPageComponent } from './componenets/print/print-employee-shateb-page/print-employee-shateb-page.component';
+import { MainEntryTblShamelEmployeePageShatebComponent } from './componenets/employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb.component';
+import {NgxPrintModule} from 'ngx-print';
 
 
 /////////////////////////////
@@ -95,7 +97,8 @@ export const MY_FORMATS = {
     MainEntryTbLShamelNewPayrolAddComponent,
     SearchEmployeeDialogComponent,
     EmployeePageShatebComponent,
-    PrintEmployeeShatebPageComponent
+    PrintEmployeeShatebPageComponent,
+    MainEntryTblShamelEmployeePageShatebComponent
    ],
   imports: [
     CommonModule,
@@ -156,7 +159,8 @@ IconModule,
 MatProgressBarModule,
 MatProgressSpinnerModule,
 MatRadioModule,
-NgxHoverOpacityModule
+NgxHoverOpacityModule,
+NgxPrintModule
   ]
 })
 export class PayrolModule { }

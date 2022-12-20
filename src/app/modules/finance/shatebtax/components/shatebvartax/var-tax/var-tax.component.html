@@ -1,3 +1,7 @@
+<c-row>
+  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+</c-row>
+<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
 <form action="" [formGroup]="Form" #form="ngForm">
   <mat-accordion class="example-headers-align" multi>
 
@@ -276,3 +280,4 @@
 
 
 </div>
+</ngx-hover-opacity>

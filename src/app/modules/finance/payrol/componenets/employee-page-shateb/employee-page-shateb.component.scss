@@ -1,13 +1,16 @@
+
+
+table{
+    width: 100%;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
 td{
     border-left: 1px solid rgba(8, 8, 8, 0.116);
     padding-inline: 5px !important;
-}
-
-.mat-header-row.cdk-header-row {
-    th{
-        font-weight: bold ;
-        font-size: 18px ;
-    }
 }
 
 .demo-row-is-clicked {

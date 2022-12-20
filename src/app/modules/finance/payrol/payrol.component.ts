@@ -26,12 +26,18 @@ export class PayrolComponent implements OnInit {
       iconComponent: { name: 'cil-pencil' },
   
     },
-   
+    
     {
       name: 'برمجة التعويض والحسم' ,
       url: 'finace/module/shatebpayrol/manage/ta3weedTaxProgramming',
       iconComponent: { name: 'cil-pencil' },
-    }
+    },
+    {
+      name: 'صفحة شطب عامل' ,
+      url: 'finace/module/shatebpayrol/manage/employeePageShateb',
+      iconComponent: { name: 'cil-pencil' },
+  
+    },
     
    
     

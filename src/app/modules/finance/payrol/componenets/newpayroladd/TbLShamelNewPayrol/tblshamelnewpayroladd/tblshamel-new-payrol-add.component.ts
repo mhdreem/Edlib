@@ -280,13 +280,13 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
   calcFamilyRepayment() {
 
     if (this.pageService.TblShamelNewPayrolAdd != null) {
-      this.pageService.TblShamelNewPayrolAdd.FirstChild = +this.Form.controls['familyChildFirst'].value;
-      this.pageService.TblShamelNewPayrolAdd.SecondChild = +this.Form.controls['familyChildSecond'].value;
-      this.pageService.TblShamelNewPayrolAdd.ThirdChild = +this.Form.controls['familyChildThird'].value;
-      this.pageService.TblShamelNewPayrolAdd.FourChild = +this.Form.controls['familyChildFourth'].value;
+      this.pageService.TblShamelNewPayrolAdd.FirstChild = +this.Form.controls['FirstChild'].value;
+      this.pageService.TblShamelNewPayrolAdd.SecondChild = +this.Form.controls['SecondChild'].value;
+      this.pageService.TblShamelNewPayrolAdd.ThirdChild = +this.Form.controls['ThirdChild'].value;
+      this.pageService.TblShamelNewPayrolAdd.FourChild = +this.Form.controls['FourChild'].value;
       this.pageService.TblShamelNewPayrolAdd.wife = this.Form.controls['wife'].value;
-      this.pageService.TblShamelNewPayrolAdd.family = this.Form.controls['familyChildFourth'].value + this.Form.controls['familyChildThird'].value +
-        this.Form.controls['familyChildSecond'].value + this.Form.controls['familyChildFirst'].value;
+      this.pageService.TblShamelNewPayrolAdd.family = this.Form.controls['FourChild'].value + this.Form.controls['ThirdChild'].value +
+        this.Form.controls['SecondChild'].value + this.Form.controls['FirstChild'].value;
       this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
       this.Form.controls['family_ta3weed'].setValue(this.pageService.TblShamelNewPayrolAdd.calc_family_ta3weed());
 
@@ -297,9 +297,9 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
   BindValue() {
 
     this.Form.reset();
-
+    this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
     // console.log('this.pageService.TBLShamelEmployee', this.pageService.TBLShamelEmployee);
-    // console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamelNewPayrolAdd);
+    console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamelNewPayrolAdd);
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last.salary != null
@@ -397,8 +397,9 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     }
   }
 
-  request: TblShamelNewPayrolAdd = new TblShamelNewPayrolAdd();
+  request: any ;
   save() {
+    this.request= {};
     if (this.Form != null) {
 
 
@@ -485,13 +486,13 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         this.pageService.TblShamelNewPayrolAdd.locked = this.Form.controls['locked'].value;
 
 
-      let isNull = false;
+      let isInputsNull = false;
       console.log('this.pageService.List_ta3weed', this.pageService.List_ta3weed);
 
       for (let i = 0; i < this.pageService.List_ta3weed.length; i++) {
 
         if (this.pageService.List_ta3weed[i].ta3weed_active != null && this.pageService.List_ta3weed[i].ta3weed_active == 1 && (this.pageService.List_ta3weed[i].ta3weed_amount == 0 && this.pageService.List_ta3weed[i].ta3weed_percent == 0)) {
-          isNull = true;
+          isInputsNull = true;
           this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
             duration: 3000,
           });
@@ -500,7 +501,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
       for (let i = 0; i < this.pageService.List_taxtemp.length; i++) {
         if (this.pageService.List_taxtemp[i].taxtemp_active && (this.pageService.List_taxtemp[i].taxtemp_amount == 0 && this.pageService.List_taxtemp[i].taxtemp_percent == 0)) {
-          isNull = true;
+          isInputsNull = true;
           this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للحسمية المراد إضافتها', '', {
             duration: 3000,
           });
@@ -509,17 +510,17 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
       for (let i = 0; i < this.pageService.List_recurr.length; i++) {
         if (this.pageService.List_recurr[i].taxrecurr_active && (this.pageService.List_recurr[i].taxrecurr_balance == 0 && this.pageService.List_recurr[i].taxrecurr_fee == 0)) {
-          isNull = true;
+          isInputsNull = true;
           this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
             duration: 3000,
           });
         }
       }
 
-      if (isNull)
+      if (isInputsNull)
         return;
-      // copy to not affect the original payrolAddDetails, Otherwise the ui rows will change
-      this.request = this.pageService.TblShamelNewPayrolAdd;
+      // a copy to not affect the original payrolAddDetails, Otherwise the ui rows will change
+      this.request = {...this.pageService.TblShamelNewPayrolAdd};
       this.request.TblShamelNewPayrolAddDetails = [];
       console.log('this.pageService.List_ta3weed', this.pageService.List_ta3weed);
       this.pageService.List_ta3weed.forEach(listItem => {
@@ -537,10 +538,12 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
           this.request.TblShamelNewPayrolAddDetails.push(listItem);
       });
 
-
-
+console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamelNewPayrolAdd);
+      console.log('request', this.request);
       this.tblShamelNewPayrolAddService.Save(this.request, this.Fixed_Month.month_id, this.Fixed_Year.year_id).subscribe(res => {
         console.log('res', res);
+        console.log('this.pageService.List_ta3weed', this.pageService.List_ta3weed);
+
       });
 
     }

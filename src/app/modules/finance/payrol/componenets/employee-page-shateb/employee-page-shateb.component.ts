@@ -9,6 +9,8 @@ import { JobServiceDataAdjustPrintDialogComponent } from 'src/app/modules/employ
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
+import { TBLShamelShatebPageStatisticsService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-shateb-page-statistics.service';
+import { TblShamelNewPayrolAddPageServiceService } from '../newpayroladd/TbLShamelNewPayrol/tbl-shamel-new-payrol-add-page-service.service';
 
 @Component({
   selector: 'app-employee-page-shateb',
@@ -28,11 +30,13 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
     else this.rowClicked = idx;
   }
 
-  displayedColumns: string[] = ['serial', 'fname', 'lname', 'father', 'mother', 'birthdate',
-    'sexname', 'servicedayes', 'action'];
+  displayedColumns: string[] = ['serial', 'itemp_name', 'month1', 'month2', 'month3', 'month4',
+    'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12'];
 
   //Data Source For MatTable
-  // dataSource = new MatTableDataSource<TblShamelBrokerEmployee>(this.broker_employee_List);
+  dataSource = new MatTableDataSource<any>();
+
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   _Subscription: Subscription;
   Form: FormGroup;
@@ -45,16 +49,30 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
-    public dialog: MatDialog,) { 
+    public dialog: MatDialog,
+    private tblShamelShatebPageStatisticsService: TBLShamelShatebPageStatisticsService,
+    public pageService: TblShamelNewPayrolAddPageServiceService,) { 
     this.LoadingFinish = true;
     this.BuildForm();
-    this.Load_Data();
+    if (this.pageService.id_BehaviorSubject != null)
+      this.pageService.id_BehaviorSubject.subscribe
+        (
+          emp => {
+            console.log('emp', emp);
+            if (emp == null || emp <= 0)
+              return;
+
+            this.Load_Data();
+
+          }
+        )
+    // this.Load_Data();
   }
 
   public BuildForm() {
@@ -144,11 +162,21 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
   adjustPrintFooter(){
     const dialogRef = this.dialog.open(JobServiceDataAdjustPrintDialogComponent, {
       width: '1150px',
-      data: 'PrintUpgradeQualityGrade',
+      data: 'MoneyM2PrintShatebPage',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       
     });
+  }
+
+  View(){
+    this.tblShamelShatebPageStatisticsService.list(this.pageService.id,this.UpgradeYear.value).subscribe((res: any) =>{
+      this.dataSource.data = [res];
+    });
+  }
+
+  clearDataSource(){
+    this.dataSource.data = [];
   }
 }
