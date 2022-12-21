@@ -70,4 +70,14 @@ export class TblShamelNewPayrolTaxService {
     const options = {  headers: headers };
     return this.httpClient.put(this.RestUrl +`TblShamelNewPayrolTax/${obj.serial}`,obj,options);  
   }
+
+
+
+  GetByID(Serial:number) :Observable<TblShamelNewPayrolTax> {
+   
+    return this.httpClient.get<TblShamelNewPayrolTax>(this.RestUrl +`TblShamelNewPayrolTax/GetByID/${Serial}`);  
+    
+  }
+
+
 }

@@ -19,7 +19,8 @@ export class TblShamelNewPayrolAdd
  salary_old ?:number;
  salary ?:number;
 
- salary_insurance ?:number;
+ 
+InsuranceSalary ?:number;
 
  TblShamelNewPayrolAddDetails?: TblShamelNewPayrolAddDetail[]; 
 
@@ -33,6 +34,23 @@ export class TblShamelNewPayrolAdd
   RestChild ?:number;
 
 
+  constructor()
+  {
+   this.id= 0;
+
+   this.wife ='0';
+ 
+   this.family ='0000';
+ 
+   this.family_ta3weed =0;
+ 
+   this.insurance_kind =0;
+ 
+   this.locked =0;
+ 
+   this.salary_old =0;
+   this.salary =0;
+  }
   public Clone(obj:any)
   {
    if (obj!= null )
@@ -114,13 +132,13 @@ export class TblShamelNewPayrolAdd
 
  public fill_child_info_from_family () 
  {
-    if(this.family== null )
-        this.family ='';
+   
+       if (this.family == null || this.family  == undefined)
+       this.family ='';
 
-    this.family = this.family.padEnd(5,'0');
+    this.family = this.family.padEnd(4,'0');
 
-    let result : number;
-
+   
 
     this.FirstChild = this.family[this.family.length-1] == '1' ? 1 :0 ;
 
@@ -128,6 +146,7 @@ export class TblShamelNewPayrolAdd
     this.ThirdChild = this.family[this.family.length-3] == '1' ? 1 :0 ;
     this.FourChild = this.family[this.family.length-4] == '1' ? 1 :0 ;
     this.RestChild = this.family[this.family.length-5] == '1' ? 1 :0 ;
+    this.calc_family_ta3weed();
 
 
 
@@ -149,14 +168,16 @@ if (this.FirstChild>0)
  if (this.FourChild>0)
  result= result+25;
 
+ /*
  if (this.RestChild>0)
  result= result+25;
+*/
 
- if(this.wife != null && this.wife =='')
+ if(this.wife != null && this.wife =='1')
  {
     result= result+3500;
  }
-
+   this.family_ta3weed = result;
  return result;
 
  }

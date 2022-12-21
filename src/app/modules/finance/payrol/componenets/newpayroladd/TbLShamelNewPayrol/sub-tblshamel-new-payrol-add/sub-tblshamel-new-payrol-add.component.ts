@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup } from '@angular/forms';
 import { TblShamelNewPayrolAddDetail } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolAddDetail';
 import { TblShamelNewPayrolTax } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolTax';
+import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-tax.service';
 import { TblShamelNewPayrolAddPageServiceService } from '../tbl-shamel-new-payrol-add-page-service.service';
 
 @Component({
@@ -40,7 +41,20 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
           break;
         }
 
-        
+        if (this.TblShamelNewPayrolAddDetail!= null &&
+          this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax== null &&
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk != null &&
+          this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk >0
+          )
+          {
+            this.tblshamelnewpayroltaxservice.GetByID(this.TblShamelNewPayrolAddDetail.tblshamelnewpayroltax_fk).subscribe(
+              data=>
+              {
+                this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax = data;
+              }
+            ); 
+            
+          }
     }
     return {};
   }
@@ -53,7 +67,9 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
   Form :FormGroup ;
 
 
-  constructor(public pageService:TblShamelNewPayrolAddPageServiceService) { 
+  constructor(
+    public pageService:TblShamelNewPayrolAddPageServiceService,
+    public tblshamelnewpayroltaxservice :TblShamelNewPayrolTaxService ) { 
     this.BuildForm();
   }
 
@@ -83,14 +99,14 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
  
   bindValue ()
   {
-    console.log('2', this.TblShamelNewPayrolAddDetail);
+ 
     if (this.Form!= null)
     {
       if (this.TblShamelNewPayrolAddDetail!= null && 
           this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax!= null)
         {
           this.Form.controls['TblShamelNewPayrolTax'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax);
-          // console.log('1', this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax);
+         
           if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null &&
               this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype==='ta3weed')              
            this.Form.controls['name'].setValue(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_name);
@@ -267,7 +283,85 @@ clearPercentInput(){
   this.Form.controls['ta3weed_percent'].setValue('');
 }
 
-clearAmountInput(){
+
+public  GetValOfPercent(Percent:number,
+   Round:number,  Salary:number):number
+  {
+      let Val:number = 0;
+      switch (Round)
+      {
+          case 10:
+              Val = Math.round(Math.ceil(Salary * Percent / 100) * 10) / 10;
+              break;
+          case 5:
+              Val = Math.round(Math.ceil(Salary * Percent / 100) / 5) * 5;
+              break;
+          case 1:
+              Val = Math.round(Math.ceil(Salary * Percent / 100));
+              break;
+          case 0:
+              Val = Math.trunc(Math.ceil(Salary * Percent / 100));
+              break;
+          case -1:
+              Val = Math.floor(Salary * Percent / 100);
+              break;
+
+      }
+      return Val;
+
+  }
+
+CalcTawidPercent(){
+
+  if (this.Form.controls['ta3weed_percent'] == null ||
+  this.Form.controls['ta3weed_percent'].value == null ||
+  this.Form.controls['ta3weed_percent'].value==0)
+  return; 
+
   this.Form.controls['ta3weed_amount'].setValue('');
+  let Percent : number = this.Form.controls['ta3weed_percent'].value;
+  if (Percent!= null && Percent>0)
+  {
+    if (this.TblShamelNewPayrolAddDetail!= null &&
+        this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax!= null &&
+        this.pageService.TblShamelNewPayrolAdd!= null &&
+        this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype!= null)
+        {
+          if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='ta3weed')          
+          {
+            if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==1)
+            {
+
+              this.TblShamelNewPayrolAddDetail.ta3weed_amount = this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.ta3weed_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.salary_old);
+            }else if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==2)
+            {
+              this.TblShamelNewPayrolAddDetail.ta3weed_amount =this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.ta3weed_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.salary);
+            }
+            if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==3)
+            {
+              this.TblShamelNewPayrolAddDetail.ta3weed_amount =this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.ta3weed_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.InsuranceSalary);
+            }
+            this.Form.controls['ta3weed_amount'].setValue(this.TblShamelNewPayrolAddDetail.ta3weed_amount);
+
+          } else if (this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.payroltaxtype=='taxtemp')
+          {
+            if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==1)
+            {
+
+              this.TblShamelNewPayrolAddDetail.taxtemp_amount = this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.taxtemp_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.salary_old);
+            }else if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==1)
+            {
+              this.TblShamelNewPayrolAddDetail.taxtemp_amount =this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.taxtemp_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.salary);
+            }
+            if(this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.salary_source_fk==1)
+            {
+              this.TblShamelNewPayrolAddDetail.taxtemp_amount =this.GetValOfPercent(this.TblShamelNewPayrolAddDetail.taxtemp_percent,this.TblShamelNewPayrolAddDetail.TblShamelNewPayrolTax.ta3weed_round,this.pageService.TblShamelNewPayrolAdd.InsuranceSalary);
+            }
+          }
+
+
+        }
+  }
+
 }
 }

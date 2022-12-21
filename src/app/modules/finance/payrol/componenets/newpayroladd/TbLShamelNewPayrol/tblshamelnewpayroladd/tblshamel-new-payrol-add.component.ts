@@ -99,7 +99,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
       'locked': new FormControl<string | null>(null),
       'salary_old': new FormControl<number | null>(null),
       'salary_last_jobstate': new FormControl<number | null>(null),
-      'salary_insurance': new FormControl<number | null>(null)
+      'InsuranceSalary': new FormControl<number | null>(null)
 
     });
   }
@@ -183,10 +183,11 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
         this.pageService.TblShamelNewPayrolAdd.id = this.pageService.TBLShamelEmployee.id;
         this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee = this.pageService.TBLShamelEmployee;
-
-        this.pageService.TblShamelNewPayrolAdd.salary_insurance = 0;
-        this.pageService.TblShamelNewPayrolAdd.salary_old = 0;
+        this.pageService.TblShamelNewPayrolAdd.InsuranceSalary = this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee.InsuranceSalary;        
         this.pageService.TblShamelNewPayrolAdd.Get_Last_Salary_From_JobState();
+
+        
+
 
         let TblShamelNewPayrolAddDetails: TblShamelNewPayrolAddDetail[] = [];
         this.List_TblShamelNewPayrolTax.forEach(element => {
@@ -252,6 +253,11 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         console.log('List_taxtemp', this.pageService.List_taxtemp);
         console.log('List_recurr', this.pageService.List_recurr);
         this.BindValue();
+        
+      this.bindModelToForm(this.pageService.TblShamelNewPayrolAdd,this.Form);
+
+
+
 
       }
 
@@ -279,16 +285,17 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
   calcFamilyRepayment() {
 
-    if (this.pageService.TblShamelNewPayrolAdd != null) {
-      this.pageService.TblShamelNewPayrolAdd.FirstChild = +this.Form.controls['FirstChild'].value;
-      this.pageService.TblShamelNewPayrolAdd.SecondChild = +this.Form.controls['SecondChild'].value;
-      this.pageService.TblShamelNewPayrolAdd.ThirdChild = +this.Form.controls['ThirdChild'].value;
-      this.pageService.TblShamelNewPayrolAdd.FourChild = +this.Form.controls['FourChild'].value;
-      this.pageService.TblShamelNewPayrolAdd.wife = this.Form.controls['wife'].value;
-      this.pageService.TblShamelNewPayrolAdd.family = this.Form.controls['FourChild'].value + this.Form.controls['ThirdChild'].value +
-        this.Form.controls['SecondChild'].value + this.Form.controls['FirstChild'].value;
-      this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
+    if (this.pageService.TblShamelNewPayrolAdd != null) {      
+
+      this.pageService.TblShamelNewPayrolAdd.FirstChild = (this.Form.controls['FirstChild'].value!=null && this.Form.controls['FirstChild'].value==1) ? 1:0;    
+      this.pageService.TblShamelNewPayrolAdd.SecondChild =  (this.Form.controls['SecondChild'].value!=null && this.Form.controls['SecondChild'].value==1) ? 1:0; 
+      this.pageService.TblShamelNewPayrolAdd.ThirdChild = (this.Form.controls['ThirdChild'].value!=null && this.Form.controls['ThirdChild'].value==1) ? 1:0; 
+      this.pageService.TblShamelNewPayrolAdd.FourChild = (this.Form.controls['FourChild'].value!=null && this.Form.controls['FourChild'].value==1) ? 1:0; 
+      this.pageService.TblShamelNewPayrolAdd.wife = (this.Form.controls['wife'].value!=null && this.Form.controls['wife'].value==1) ? '1':'0'; 
+      this.pageService.TblShamelNewPayrolAdd.family = this.pageService.TblShamelNewPayrolAdd.FourChild.toString() + this.pageService.TblShamelNewPayrolAdd.ThirdChild.toString() +this.pageService.TblShamelNewPayrolAdd.SecondChild.toString() +this.pageService.TblShamelNewPayrolAdd.FirstChild.toString() ;
+      this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();      
       this.Form.controls['family_ta3weed'].setValue(this.pageService.TblShamelNewPayrolAdd.calc_family_ta3weed());
+      
 
 
     }
@@ -296,10 +303,12 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
   BindValue() {
 
+    //تهئية عناصر الفورم
     this.Form.reset();
-    this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
-    // console.log('this.pageService.TBLShamelEmployee', this.pageService.TBLShamelEmployee);
-    console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamelNewPayrolAdd);
+
+    //حساب التعويض العائلي
+   
+   //جلب آخر راتب
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last != null &&
       this.pageService.TBLShamelEmployee.TBLShamelSCJobState_Last.salary != null
@@ -310,7 +319,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.InsuranceSalary != null
     )
-      this.Form.controls['salary_insurance'].setValue(this.pageService.TBLShamelEmployee.InsuranceSalary);
+      this.Form.controls['InsuranceSalary'].setValue(this.pageService.TBLShamelEmployee.InsuranceSalary);
 
 
     if (this.pageService.TBLShamelEmployee != null &&
@@ -326,40 +335,25 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
     if (this.pageService.TblShamelNewPayrolAdd != null) {
       //يحوي بيانات
-      if (this.pageService.TblShamelNewPayrolAdd.salary_insurance != null)
-        this.Form.controls['salary_insurance'].setValue(this.pageService.TblShamelNewPayrolAdd.salary_insurance);
-
+    
       if (this.pageService.TblShamelNewPayrolAdd.insurance_kind != null)
         this.Form.controls['insurance_kind'].setValue(this.pageService.TblShamelNewPayrolAdd.insurance_kind);
 
-      if (this.pageService.TblShamelNewPayrolAdd.family_ta3weed != null)
+        if (this.pageService.TblShamelNewPayrolAdd.family_ta3weed != null)
         this.Form.controls['family_ta3weed'].setValue(this.pageService.TblShamelNewPayrolAdd.family_ta3weed);
 
-      if (this.pageService.TblShamelNewPayrolAdd.family != null)
-        this.Form.controls['family'].setValue(this.pageService.TblShamelNewPayrolAdd.family);
-
-      if (this.pageService.TblShamelNewPayrolAdd.FirstChild != null)
-        this.Form.controls['FirstChild'].setValue(this.pageService.TblShamelNewPayrolAdd.FirstChild);
-
-      if (this.pageService.TblShamelNewPayrolAdd.SecondChild != null)
-        this.Form.controls['SecondChild'].setValue(this.pageService.TblShamelNewPayrolAdd.SecondChild);
-
-
-      if (this.pageService.TblShamelNewPayrolAdd.ThirdChild != null)
-        this.Form.controls['ThirdChild'].setValue(this.pageService.TblShamelNewPayrolAdd.ThirdChild);
-
-      if (this.pageService.TblShamelNewPayrolAdd.FourChild != null)
-        this.Form.controls['FourChild'].setValue(this.pageService.TblShamelNewPayrolAdd.FourChild);
-
-
-      if (this.pageService.TblShamelNewPayrolAdd.RestChild != null)
-        this.Form.controls['RestChild'].setValue(this.pageService.TblShamelNewPayrolAdd.RestChild);
-
-      if (this.pageService.TblShamelNewPayrolAdd.wife != null)
+        if (this.pageService.TblShamelNewPayrolAdd.wife != null)
         this.Form.controls['wife'].setValue(this.pageService.TblShamelNewPayrolAdd.wife);
 
 
+      if (this.pageService.TblShamelNewPayrolAdd.family != null)
+      {
+        this.Form.controls['family'].setValue(this.pageService.TblShamelNewPayrolAdd.family);
+        this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
+   
+      }
 
+   
 
     } else {
       //لا يحوي بيانات
@@ -550,5 +544,22 @@ console.log('this.pageService.TblShamelNewPayrolAdd', this.pageService.TblShamel
 
   }
 
+
+
+
+  
+  bindModelToForm(model: any, form: FormGroup) {
+    if (model== null ||  form == null)
+    return;
+    const keys = Object.keys(form.controls);
+    keys.forEach(key => {
+      
+        form.controls[key].valueChanges.subscribe(
+            (newValue) => {
+              model[key] = newValue;             
+            }
+        )
+    });
+}
 
 }
