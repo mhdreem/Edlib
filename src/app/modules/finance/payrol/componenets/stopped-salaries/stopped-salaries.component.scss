@@ -1,0 +1,36 @@
+.date{
+    background-color: gray;
+    padding: 10px;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+}
+
+table{
+    width: 100%;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
+td{
+    border-left: 1px solid rgba(8, 8, 8, 0.116);
+    padding-inline: 5px !important;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.view{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
