@@ -63,9 +63,6 @@ import { EmployeePageShatebComponent } from './componenets/employee-page-shateb/
 import { PrintEmployeeShatebPageComponent } from './componenets/print/print-employee-shateb-page/print-employee-shateb-page.component';
 import { MainEntryTblShamelEmployeePageShatebComponent } from './componenets/employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb.component';
 import {NgxPrintModule} from 'ngx-print';
-import { StoppedSalariesComponent } from './componenets/stopped-salaries/stopped-salaries.component';
-import { ChangeSalariesComponent } from './componenets/change-salaries/change-salaries.component';
-import { InsuranceSalary2SalaryComponent } from './componenets/insurance-salary2-salary/insurance-salary2-salary.component';
 
 
 /////////////////////////////
@@ -101,10 +98,7 @@ export const MY_FORMATS = {
     SearchEmployeeDialogComponent,
     EmployeePageShatebComponent,
     PrintEmployeeShatebPageComponent,
-    MainEntryTblShamelEmployeePageShatebComponent,
-    StoppedSalariesComponent,
-    ChangeSalariesComponent,
-    InsuranceSalary2SalaryComponent
+    MainEntryTblShamelEmployeePageShatebComponent
    ],
   imports: [
     CommonModule,

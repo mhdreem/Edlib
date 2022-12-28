@@ -38,24 +38,6 @@ export class PayrolComponent implements OnInit {
       iconComponent: { name: 'cil-pencil' },
   
     },
-    {
-      name: 'الرواتب المتوقفة' ,
-      url: 'finace/module/shatebpayrol/manage/stoppedSalary',
-      iconComponent: { name: 'cil-pencil' },
-  
-    },
-    {
-      name: 'الرواتب المتبدلة' ,
-      url: 'finace/module/shatebpayrol/manage/changeSalary',
-      iconComponent: { name: 'cil-pencil' },
-  
-    },
-    {
-      name: 'التأميني = المقطوع' ,
-      url: 'finace/module/shatebpayrol/manage/insuranceSalary2Salary',
-      iconComponent: { name: 'cil-pencil' },
-  
-    },
     
    
     
