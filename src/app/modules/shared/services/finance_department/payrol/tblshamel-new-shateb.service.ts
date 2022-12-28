@@ -52,4 +52,62 @@ export class TBLShamelNewShatebService {
     const options = {  headers: headers };
     return this.httpClient.put(this.RestUrl +`TBLShamelNewShateb/${obj.serail}`,obj,options);  
   }
+
+  stoppedSalaries(req : any )  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/StoppedSalary",req,options);  
+  }
+
+  changeSalaries(req : any )  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/ChangeSalary",req,options);  
+  }
+
+  updateInsuranceSalary2Salary( monthId: number, yearId: number)  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/UpdateInsuranceSalary2Salary/"+monthId+'/'+yearId,options);  
+  }
+
+  updateSalaryOld2Salary( monthId: number, yearId: number)  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/UpdateSalaryOld2Salary/"+monthId+'/'+yearId,options);  
+  }
+
+  newPayrolDifference(request: any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/NewPayrolDifference/",request,options);  
+
+  }
+
+  moveAccounter(request: any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/TBLShamelEmployeeMoveAccounter/",request,options);  
+  }
+
+  stopAccounter(request: any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/TBLShamelEmployeeStopAccounter/",request,options);  
+  }
+
+  newPayrolShatebStatistics(request: any){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  
+    const options = {  headers: headers };
+    return this.httpClient.post(this.RestUrl +"TBLShamelNewShateb/NewPayrolShatebStatics/",request,options);  
+
+  }
 }

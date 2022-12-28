@@ -63,6 +63,13 @@ import { EmployeePageShatebComponent } from './componenets/employee-page-shateb/
 import { PrintEmployeeShatebPageComponent } from './componenets/print/print-employee-shateb-page/print-employee-shateb-page.component';
 import { MainEntryTblShamelEmployeePageShatebComponent } from './componenets/employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb/main-entry-tbl-shamel-employee-page-shateb.component';
 import {NgxPrintModule} from 'ngx-print';
+import { StoppedSalariesComponent } from './componenets/stopped-salaries/stopped-salaries.component';
+import { ChangeSalariesComponent } from './componenets/change-salaries/change-salaries.component';
+import { InsuranceSalary2SalaryComponent } from './componenets/insurance-salary2-salary/insurance-salary2-salary.component';
+import { PayrolDifferenceComponent } from './componenets/payrol-difference/payrol-difference.component';
+import { AccounterRefreshComponent } from './componenets/accounter-refresh/accounter-refresh.component';
+import { SalaryStatisticsComponent } from './componenets/salary-statistics/salary-statistics.component';
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 
 /////////////////////////////
@@ -98,7 +105,13 @@ export const MY_FORMATS = {
     SearchEmployeeDialogComponent,
     EmployeePageShatebComponent,
     PrintEmployeeShatebPageComponent,
-    MainEntryTblShamelEmployeePageShatebComponent
+    MainEntryTblShamelEmployeePageShatebComponent,
+    StoppedSalariesComponent,
+    ChangeSalariesComponent,
+    InsuranceSalary2SalaryComponent,
+    PayrolDifferenceComponent,
+    AccounterRefreshComponent,
+    SalaryStatisticsComponent
    ],
   imports: [
     CommonModule,
@@ -160,7 +173,8 @@ MatProgressBarModule,
 MatProgressSpinnerModule,
 MatRadioModule,
 NgxHoverOpacityModule,
-NgxPrintModule
+NgxPrintModule,
+MatExpansionModule
   ]
 })
 export class PayrolModule { }

@@ -1,0 +1,74 @@
+.con{
+    display: flex;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+
+    .up{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.employeeNum{
+    display: flex;
+    align-items: center;
+}
+table{
+    width: 100%;
+}
+
+td, th{
+    padding: 5px !important;
+}
+
+.demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: rgb(182, 182, 182);
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.view{
+    margin-bottom: 10px;
+}
+
+.table-wrap{
+    overflow-x: scroll;
+  }
+
+  button{
+      margin-left: 10px;
+  }
+
+  mat-form-field{
+      margin-left: 10px;
+  }
+
+  output{
+    background-color: gray;
+    padding: 10px;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+    width: 80px;
+  }
+
+  .date{
+    background-color: gray;
+    padding: 10px;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+  }

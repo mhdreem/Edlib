@@ -1,0 +1,181 @@
+<div class="container">
+    <div class="right">
+        <span class="title">إدخال عامل لملاك معتمد</span>
+        <form [formGroup]="Form1">
+            
+        
+              <div class="rightUp">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>اسم الموظف</mat-label>
+                    <input matInput 
+                    [matAutocomplete]="autoEmployee1" 
+                    [formControl]='Autocomplete_EmployeeName_Ctrl1'
+                    id="Autocomplete_EmployeeName_Ctrl1"
+                    (keyup.enter)="focusNext('id1')"
+                    >
+                  </mat-form-field>
+                
+                  <mat-autocomplete
+                   #autoEmployee1="matAutocomplete"
+                   [displayWith]="displayFn"
+                   (optionSelected)="onEmployeeSelected('add')"
+                   >
+                    <mat-option *ngIf="isLoading" class="is-loading">
+              
+                      <mat-spinner diameter="50"></mat-spinner>
+                  </mat-option>
+                  
+                  <ng-container *ngIf="!isLoading">
+                      <mat-option *ngFor="let emp of filteredEmployeeNameList1" [value]="emp.id">
+                        <small>{{ emp.fullname }}</small>        
+                      </mat-option>
+                    </ng-container>
+                  </mat-autocomplete>
+        
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>رقم الإضبارة</mat-label>
+                    <input matInput [formControl]='id1' id="id1" (keyup.enter)="focusNext('AccounterName3')" (change)="onIdSelect('add')">
+                  </mat-form-field>
+    
+                  <mat-form-field class="example-full-width fitContent" appearance="fill">
+                    <mat-label>اسم المعتمد</mat-label>
+                    <input type="text"
+                           matInput
+                           [formControl]="AccounterName1"
+                           [matAutocomplete]="autoAccounter1"
+                           id="AccounterName1" 
+                           
+                           >
+                    <mat-autocomplete #autoAccounter1="matAutocomplete"
+                    [displayWith]="displayAccounterNameProperty.bind(this)">
+                      <mat-option *ngFor="let option of Accounter_Name_Filter1 | async" [value]="option.accounter_id">
+                        {{option.accounter_name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+        
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>رقم التسلسل</mat-label>
+                    <input matInput [formControl]='serial1' id="serial1">
+                  </mat-form-field>
+              </div>
+              <div class="rightDown">
+                <mat-form-field class="example-full-width fitContent" appearance="fill">
+                    <mat-label>المعتمد الجديد</mat-label>
+                    <input type="text"
+                           matInput
+                           [formControl]="AccounterName3"
+                           [matAutocomplete]="autoAccounter3" 
+                           id="AccounterName3"
+                           (keyup.enter)="focusNext('payrolSlice')"
+                           >
+                    <mat-autocomplete #autoAccounter3="matAutocomplete"
+                    [displayWith]="displayAccounterNameProperty.bind(this)">
+                      <mat-option *ngFor="let option of Accounter_Name_Filter3 | async" [value]="option.accounter_id">
+                        {{option.accounter_name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+        
+                  <mat-form-field class="example-full-width fitContent" appearance="fill">
+                    <mat-label>مركز الكلفة</mat-label>
+                    <input type="text"
+                        matInput
+                        [formControl]="payrolSlice"
+                        [matAutocomplete]="auto2" 
+                        id="payrolSlice"
+                        (keyup.enter)="focusNext('serial3')">
+                    <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayPayrolSlice.bind(this)" (optionSelected)="onSliceSelected()">
+                    <mat-option *ngFor="let option of filteredPayrolSliceOptions | async" [value]="option.slice_id">
+                        {{option.slice_name}}
+                    </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>التسلسل الجديد</mat-label>
+                    <input matInput [formControl]='serial3' id="serial3" (keyup.enter)="focusNext('Autocomplete_EmployeeName_Ctrl1')">
+                  </mat-form-field>
+
+                  <span style="color: red;">الرقم المقترح</span>
+
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-left: 5px">تأمين ومعاش</span>
+                    <output id="outputInsurance1"></output>
+                </div>
+
+                <div style="display: flex; align-items: center;">
+                    <span style="margin-left: 5px">تأمينات اجتماعيه</span>
+                    <output id="outputInsurance2" ></output>
+                </div>
+              </div>
+        </form>
+        
+
+          <button mat-raised-button color="primary" (click)="add()" [disabled]="!Form1.valid">إضافة</button>
+    </div>
+
+    <div class="left">
+        <span class="title">حذف عامل من ملاك معتمد</span>
+        <form [formGroup]="Form2">
+            
+            <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>اسم المعتمد</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="AccounterName2"
+                       [matAutocomplete]="autoAccounter2" 
+                       id="AccounterName2"
+                       (keyup.enter)="focusNext('serial2')"
+                       >
+                <mat-autocomplete #autoAccounter2="matAutocomplete"
+                [displayWith]="displayAccounterNameProperty.bind(this)">
+                  <mat-option *ngFor="let option of Accounter_Name_Filter1 | async" [value]="option.accounter_id">
+                    {{option.accounter_name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>رقم التسلسل</mat-label>
+                <input matInput [formControl]='serial2' id="serial2" (keyup.enter)="focusNext('AccounterName2')" (change)="onIdSelect('delete')">
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>اسم الموظف</mat-label>
+                <input matInput 
+                [matAutocomplete]="autoEmployee2" 
+                [formControl]='Autocomplete_EmployeeName_Ctrl2'
+                id="Autocomplete_EmployeeName_Ctrl2"
+                >
+              </mat-form-field>
+            
+              <mat-autocomplete
+               #autoEmployee2="matAutocomplete"
+               [displayWith]="displayFn"
+               >
+                <mat-option *ngIf="isLoading" class="is-loading">
+          
+                  <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              
+              <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let emp of filteredEmployeeNameList2" [value]="emp">
+                    <small>{{ emp.fullname }}</small>        
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+    
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>رقم الإضبارة</mat-label>
+                <input matInput [formControl]='id2' id="id2">
+              </mat-form-field>
+    
+              
+        </form>
+        
+
+          <button mat-raised-button color="primary" (click)="delete()" [disabled]="!Form2.valid">حذف</button>
+
+    </div>
+</div>
