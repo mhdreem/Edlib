@@ -244,6 +244,40 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
        }
 
     }
-
   }
+
+    DeleteAll()
+    {
+      this.tblShamelNewPayrolTaxService.deleteAll().subscribe(
+        res=>
+        {
+          if (res>0)
+          {
+            this._SnackBar.open('تم حذف جميع السجلات','موافق');
+          }else 
+          {
+            this._SnackBar.open('لم يتم الحذف','موافق');
+
+          }
+        }
+      )
+    }
+
+    addFromOldPayRollAdd()
+    {
+      this.tblShamelNewPayrolTaxService.addFromOldPayRollAdd().subscribe(
+        res=>
+        {
+          if (res>0)
+          {
+            this._SnackBar.open('تم حذف جميع السجلات','موافق');
+          }else 
+          {
+            this._SnackBar.open('لم يتم الحذف','موافق');
+
+          }
+        }
+      )
+    }
+
 }

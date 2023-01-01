@@ -39,7 +39,7 @@
 
             <div class="col" >
                 <mat-form-field class="sm-field" color="primary" appearance="fill">
-                    <input matInput formControlName="taxtemp_percent">
+                    <input matInput formControlName="taxtemp_percent" (change)="CalcTaxTempPercent()">
                 </mat-form-field>
             </div >
 

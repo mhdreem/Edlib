@@ -136,7 +136,7 @@ InsuranceSalary ?:number;
        if (this.family == null || this.family  == undefined)
        this.family ='';
 
-    this.family = this.family.padEnd(4,'0');
+    this.family = this.family.padEnd(5,'0');
 
    
 

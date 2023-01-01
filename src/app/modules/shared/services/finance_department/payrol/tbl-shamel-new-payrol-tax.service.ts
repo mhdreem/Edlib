@@ -52,6 +52,24 @@ export class TblShamelNewPayrolTaxService {
     return this.httpClient.delete(this.RestUrl +"TblShamelNewPayrolTax/delete/"+id);  
   }
 
+
+  
+  
+  addFromOldPayRollAdd( )  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {  headers: headers };
+    return this.httpClient.get(this.RestUrl +`TblShamelNewPayrolTax/addFromOldPayRollAdd`);  
+  }
+
+
+  
+  deleteAll( )  {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = {  headers: headers };
+    return this.httpClient.delete(this.RestUrl +`TblShamelNewPayrolTax/deleteAll`);  
+  }
+
+
   add(obj : TblShamelNewPayrolTax )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;

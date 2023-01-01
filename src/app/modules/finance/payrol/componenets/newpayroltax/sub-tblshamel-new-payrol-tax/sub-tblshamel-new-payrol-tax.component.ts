@@ -91,10 +91,10 @@ return {};
         this.tblShamelNewPayrolTax!= undefined)
     { 
       if (this.tblShamelNewPayrolTax.payroltaxconstant!= null)
-        if (this.tblShamelNewPayrolTax.payroltaxconstant == 'perm')
+        if (this.tblShamelNewPayrolTax.payroltaxconstant == 'دائم')
           this.Form.controls['payroltaxconstant'].setValue('دائم');
-        else if (this.tblShamelNewPayrolTax.payroltaxconstant == 'temp')
-        this.Form.controls['payroltaxconstant'].setValue('مؤقت');
+        else if (this.tblShamelNewPayrolTax.payroltaxconstant == 'مؤقت')
+          this.Form.controls['payroltaxconstant'].setValue('مؤقت');
 
         if (this.tblShamelNewPayrolTax.payroltaxtype!= null)
         this.Form.controls['payroltaxtype'].setValue(this.tblShamelNewPayrolTax.payroltaxtype);
