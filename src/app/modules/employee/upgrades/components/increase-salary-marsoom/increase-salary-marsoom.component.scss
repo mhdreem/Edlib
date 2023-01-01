@@ -70,6 +70,10 @@ textarea {
 
  form{
      display: flex;
-     border: 1px solid black;
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
      padding: 10px;
  }

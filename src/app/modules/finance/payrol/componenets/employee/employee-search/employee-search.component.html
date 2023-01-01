@@ -34,11 +34,9 @@
       </c-col>
       <c-col>
         <button mat-raised-button color="primary" (click)="previousSerial()"> < </button>
-      </c-col>
-      <c-col>
         <button mat-raised-button color="primary" (click)="nextSerial()">></button>
+
       </c-col>
-     
   
     </c-row>
   </c-col>
@@ -64,6 +62,7 @@
     </ng-container>
   </mat-autocomplete>
   </mat-form-field>
+  <button mat-raised-button color="primary" (click)="searchEmployee()">...</button>
   </c-col>
   
 </c-row>
@@ -86,7 +85,7 @@
   </c-col>
 
 <c-col xl="1">
-  <button mat-raised-button color="primary" (click)="searchEmployee()">...</button>
+  
 </c-col>
 </c-row>
 

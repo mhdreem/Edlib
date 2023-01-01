@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/co
 import { Observable } from 'rxjs';
 
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -13,6 +13,7 @@ import { TBLShamelDaera } from 'src/app/modules/shared/models/employees_departme
 import { TBLShamelUser } from 'src/app/modules/shared/models/employees_department/TBLShamelUser';
 import { TBLShamelDaeraService } from 'src/app/modules/shared/services/employees_department/tblshamel-daera.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tblshamel-user-edit',
@@ -71,11 +72,13 @@ pp:any;
 
   //#region Constuctor 
   constructor(
+    public dialogRef: MatDialogRef<TBLShamelUserEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {obj: TBLShamelUser},  
     public UserService:TBLShamelUserService,
     public DaeraService:TBLShamelDaeraService,
     private fb: UntypedFormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private snackBar: MatSnackBar
   ) {
     this.loading = true;
     if (data && data.obj )
@@ -224,7 +227,9 @@ pp:any;
     if (value)
     {
     const filterValue = value ;
-    return this.TBLShamelDaera_List.filter(obj => obj.daera_name.includes(filterValue) );
+    console.log('this.TBLShamelDaera_List', this.TBLShamelDaera_List);
+    console.log('value', value);
+    return this.TBLShamelDaera_List.filter(obj => obj.Daera_Name.includes(filterValue) );
     }
     return this.TBLShamelDaera_List.slice();
   }
@@ -265,7 +270,6 @@ pp:any;
    
 
       console.log(this.Selected_User);
-  
 this.Form.patchValue(
   {
     
@@ -275,8 +279,8 @@ this.Form.patchValue(
     UserName:this.Selected_User.username,
     Password:this.Selected_User.password,
     HDSERIAL:this.Selected_User.hdserial,
-    EnterMinTime:this.Selected_User.entermintime,
-    EnterMaxTime:this.Selected_User.entermaxtime,    
+    EnterMinTime:moment(this.Selected_User.entermintime).format('hh:mm:ss'),
+    EnterMaxTime: moment(this.Selected_User.entermaxtime).format('hh:mm:ss'),    
     Enabled:this.Selected_User.enabled,
   }
 );
@@ -307,8 +311,8 @@ if (this.Selected_User )
     this.Selected_User.enabled= this.enabled.value;        
     this.Selected_User.fullname= this.fullname.value;
 
-    this.Selected_User.entermintime= this.entermintime.value;
-    this.Selected_User.entermaxtime= this.entermaxtime.value;
+    this.Selected_User.entermintime= '01/01/1900 '+this.entermintime.value;
+    this.Selected_User.entermaxtime= '01/01/1900 '+this.entermaxtime.value;
 
     this.Selected_User.username= this.username.value;
     this.Selected_User.password= this.password.value;
@@ -345,7 +349,7 @@ if (this.Selected_User )
   //#region  Display Display Member
   public displayDaeraProperty(value:string):string  {
     if (value && this.TBLShamelDaera_List){     
-      let Daera:any = this.TBLShamelDaera_List.find(crs => crs.daera_id.toString() == value) ;
+      let Daera:any = this.TBLShamelDaera_List.find(crs => crs.Daera_ID.toString() == value) ;
       if (Daera)
       return Daera.Daera_Name;
     }
@@ -423,6 +427,10 @@ if (
         {
           this.ClearObject();
           this.ClearForm();
+          this.snackBar.open('تمت الإضافة', '', {
+            duration: 2000,
+          });
+          this.dialogRef.close();
         }else
         {
 
@@ -436,13 +444,17 @@ if (
              this.Selected_User.user_id>0)
              {
                console.log('update');
-               console.log(this.Selected_User);
+               console.log('this.Selected_User',this.Selected_User);
 
       this.UserService.update(this.Selected_User).toPromise().then((res:any) => {
         console.log(res)
         if (res == 1)
         {
           this.getValue();
+          this.snackBar.open('تم التعديل', '', {
+            duration: 2000,
+          });
+          this.dialogRef.close();
 
         }else
         {

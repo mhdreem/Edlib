@@ -31,7 +31,7 @@ export class TBLShamelUserService {
   delete(User_ID:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelUser/delete/"+User_ID,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelUser/"+User_ID,options);  
   }
 
   add(obj :  TBLShamelUser )  {

@@ -327,7 +327,7 @@ export class TBLShamelPrivilagesComponent implements OnInit {
       if (Result)
       {
           this.Selected_User = Result;
-          this.Daera_Name.setValue(this.Selected_User.TBLShamelDaera.daera_name);          
+          this.Daera_Name.setValue(this.Selected_User.TBLShamelDaera.Daera_Name);          
       }
         
 

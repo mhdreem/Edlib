@@ -31,8 +31,13 @@ mat-radio-group{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid black;
     padding: 10px;
+
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 
     mat-radio-button{
         margin-bottom: 4px;
@@ -55,4 +60,9 @@ mat-radio-group{
 
   app-print-rank{
       display: none;
+  }
+
+  th{
+    background-color: gray;
+    color: white;
   }

@@ -64,8 +64,9 @@ export class TBLShamelUserListComponent implements OnInit ,OnChanges  {
   Add(): void {
     this.selected_User = {};
     const dialogRef = this.dialog.open(TBLShamelUserEditComponent, {
-      height: '60%',
-      width: '80%',
+      height: '80%',
+      width: '50%',
+      position: {top: '7%', left: '20%'},
       data: {obj: this.selected_User}
     });
    
@@ -94,25 +95,15 @@ try{
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
      
-          const snack = this.snackBar.open('سوف يتم الآن الحذف');
-         
-
-
           this.ShamelUserService.delete(element.user_id).toPromise().then((res :any)=> 
             {
-              snack.dismiss();
-
               console.log(res);
               if (res==1)
                 this.FillTable();
-
+                this.snackBar.open('تم الحذف', '', {
+                  duration: 2000,
+                });
             });
-            this.snackBar.open('تم الحذف', 'Fechar', {
-              duration: 2000,
-            });
-
-            this.snackBar.dismiss();
- 
          
         }
       });
@@ -131,8 +122,9 @@ try{
       this.selected_User = element;
 
       const dialogRef = this.dialog.open(TBLShamelUserEditComponent, {
-        height: '60%',
-        width: '80%',
+        height: '80%',
+        width: '50%',
+        position: {top: '7%', left: '20%'},
         data: {obj: this.selected_User}
       });
   
@@ -147,5 +139,9 @@ try{
 
 
 
-
+  rowClicked: number;
+  changeTableRowColor(idx: any) { 
+    if(this.rowClicked === idx) this.rowClicked = -1;
+    else this.rowClicked = idx;
+  }
 }

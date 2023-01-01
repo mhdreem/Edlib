@@ -2,7 +2,7 @@
   <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
 </c-row>
 <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
-<span class="dateLabel">عام الترفيع:{{fixedYear}}</span>
+<span class="dateLabel" style="color: white;">عام الترفيع:{{fixedYear}}</span>
 <form [formGroup]="Form">
     <div class="date">
         <span>تاريخ التبدل:</span>

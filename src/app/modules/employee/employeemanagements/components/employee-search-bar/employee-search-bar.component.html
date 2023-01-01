@@ -30,50 +30,38 @@
 
     <c-row>
 
-      <c-col [xl]="2">
+      <c-col [xl]="3">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم الإضبارة</mat-label>
           <input id="id" matInput formControlName="id" (change)="idChanged()">
         </mat-form-field>
-      </c-col>
-
-      <c-col [xl]="1">
         <button mat-raised-button color="primary" (click)="previousId()">
           < </button>
-      </c-col>
-      <c-col [xl]="1">
         <button mat-raised-button color="primary" (click)="nextId()">></button>
       </c-col>
 
-      <c-col [xl]="2">
-        <mat-form-field class="example-full-width" appearance="fill">
+
+      <c-col [xl]="3" style="margin-left: 20px;">
+        <mat-form-field class="example-full-width" appearance="fill" style="width: 183px !important;">
           <mat-label>رقم الذاتي السجل العام بالدولة</mat-label>
           <input id="id" matInput formControlName="global_id" (change)="idChanged()">
         </mat-form-field>
-      </c-col>
-
-      <c-col [xl]="1">
         <button mat-raised-button color="primary" (click)="previous_global_id()">
           < </button>
-      </c-col>
-      <c-col [xl]="1">
         <button mat-raised-button color="primary" (click)="next_global_id()">></button>
+
       </c-col>
 
-      <c-col [xl]="2">
+      <c-col [xl]="3">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم الحاسوب</mat-label>
           <input id="id" matInput formControlName="computer_id" (change)="idChanged()">
         </mat-form-field>
-      </c-col>
-
-      <c-col [xl]="1">
         <button mat-raised-button color="primary" (click)="previous_computer_id()">
           < </button>
+          <button mat-raised-button color="primary" (click)="next_computer_id()">></button>
       </c-col>
-      <c-col [xl]="1">
-        <button mat-raised-button color="primary" (click)="next_computer_id()">></button>
-      </c-col>
+
     </c-row>
 
 </form>

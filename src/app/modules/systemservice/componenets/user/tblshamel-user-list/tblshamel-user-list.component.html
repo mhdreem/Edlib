@@ -1,85 +1,90 @@
 
+<div>
+  <h3>
+    <button mat-raised-button color="primary" style="margin-bottom: 20px" (click)="Add()">إدخال</button>
+  </h3>
+</div>
 <table mat-table [dataSource]="User_List" class="mat-elevation-z8 demo-table">
     <!-- certificate_name Column -->
     <ng-container matColumnDef="User_ID">
-      <th mat-header-cell *matHeaderCellDef>User_ID.</th>
+      <th mat-header-cell *matHeaderCellDef>رقم العامل</th>
       <td mat-cell *matCellDef="let element">{{element.user_id}}</td>
     </ng-container>
   
     <!-- specification_name Column -->
     <ng-container matColumnDef="FullName">
-      <th mat-header-cell *matHeaderCellDef>FullName</th>
+      <th mat-header-cell *matHeaderCellDef>اسم العامل</th>
       <td mat-cell *matCellDef="let element">{{element.fullname}}</td>
     </ng-container>
   
     <!-- graduationyear Column -->
     <ng-container matColumnDef="Daera_Name">
-      <th mat-header-cell *matHeaderCellDef>Daera_Name</th>
-      <td mat-cell *matCellDef="let element">{{element.TBLShamelDaera.Daera_Name}}</td>
+      <th mat-header-cell *matHeaderCellDef>الدائرة</th>
+      <td mat-cell *matCellDef="let element">{{element?.TBLShamelDaera?.Daera_Name}}</td>
     </ng-container>
 
     
   
     <!-- country_name Column -->
     <ng-container matColumnDef="UserName">
-      <th mat-header-cell *matHeaderCellDef>UserName</th>
+      <th mat-header-cell *matHeaderCellDef>اسم الحساب</th>
       <td mat-cell *matCellDef="let element">{{element.username}}</td>
     </ng-container>
   
       <!-- state_name Column -->
     <ng-container matColumnDef="HDSERIAL">
-    <th mat-header-cell *matHeaderCellDef>HDSERIAL</th>
-    <td mat-cell *matCellDef="let element">{{element.HDSERIAL}}</td>
+    <th mat-header-cell *matHeaderCellDef>رقم الهارد ديسك</th>
+    <td mat-cell *matCellDef="let element">{{element.hdserial}}</td>
     </ng-container>
 
     <!-- rank_name Column -->
     <ng-container matColumnDef="EnterMinTime">
-        <th mat-header-cell *matHeaderCellDef>EnterMinTime</th>
-        <td mat-cell *matCellDef="let element">{{element.EnterMinTime}}</td>
+        <th mat-header-cell *matHeaderCellDef>توقيت الدخول: من</th>
+        <td mat-cell *matCellDef="let element">{{element.entermintime | date:'hh:mm:ss'}}</td>
     </ng-container>
 
     <!-- studyduration Column -->
     <ng-container matColumnDef="EnterMaxTime">
-        <th mat-header-cell *matHeaderCellDef>EnterMaxTime</th>
-        <td mat-cell *matCellDef="let element">{{element.EnterMaxTime}}</td>
+        <th mat-header-cell *matHeaderCellDef>توقيت الدخول: الى</th>
+        <td mat-cell *matCellDef="let element">{{element.entermaxtime | date:'hh:mm:ss'}}</td>
     </ng-container>
 
 
         <!-- studyduration Column -->
         <ng-container matColumnDef="SEnabled">
-            <th mat-header-cell *matHeaderCellDef>SEnabled</th>
-            <td mat-cell *matCellDef="let element">{{element.SEnabled}}</td>
+            <th mat-header-cell *matHeaderCellDef>حساب فعال</th>
+            <td mat-cell *matCellDef="let element">{{element.enabled}}</td>
         </ng-container>
 
         
     <!-- studyduration Column -->
     <ng-container matColumnDef="AccountCreationDate">
-        <th mat-header-cell *matHeaderCellDef>AccountCreationDate</th>
-        <td mat-cell *matCellDef="let element">{{element.AccountCreationDate}}</td>
+        <th mat-header-cell *matHeaderCellDef>إنشاء حساب: التاريخ</th>
+        <td mat-cell *matCellDef="let element">{{element.accountcreationdate}}</td>
     </ng-container>
 
      <!-- studyduration Column -->
      <ng-container matColumnDef="AccountCreationTime">
-        <th mat-header-cell *matHeaderCellDef>AccountCreationTime</th>
-        <td mat-cell *matCellDef="let element">{{element.AccountCreationTime}}</td>
+        <th mat-header-cell *matHeaderCellDef>إنشاء حساب: التوقيت</th>
+        <td mat-cell *matCellDef="let element">{{element.accountcreationtime | date:'hh:mm:ss'}}</td>
     </ng-container>
 
      <!-- studyduration Column -->
      <ng-container matColumnDef="AccountModificationDate">
-        <th mat-header-cell *matHeaderCellDef>AccountModificationDate</th>
-        <td mat-cell *matCellDef="let element">{{element.AccountModificationDate}}</td>
+        <th mat-header-cell *matHeaderCellDef>تعديل الحساب: التاريخ</th>
+        <td mat-cell *matCellDef="let element">{{element.accountmodificationdate}}</td>
     </ng-container>
 
      <!-- studyduration Column -->
      <ng-container matColumnDef="AccountModificationTime">
-        <th mat-header-cell *matHeaderCellDef>AccountModificationTime</th>
-        <td mat-cell *matCellDef="let element">{{element.AccountModificationTime}}</td>
+        <th mat-header-cell *matHeaderCellDef>تعديل الحساب: التوقيت</th>
+        <td mat-cell *matCellDef="let element">{{element.accountmodificationtime | date:'hh:mm:ss'}}</td>
     </ng-container>
 
 
 
     <ng-container matColumnDef="Action">
-        <tr><th mat-header-cell *matHeaderCellDef> Action </th></tr>
+        <tr><th mat-header-cell *matHeaderCellDef> تعديل\حذف </th></tr>
         <tr>
           <td mat-cell *matCellDef="let element" style="width:20%">
             <button mat-icon-button color="warn" (click)="Delete(element)" title="View Contact"><mat-icon>delete</mat-icon></button>
@@ -92,15 +97,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
         mat-row              
-        *matRowDef="let row; columns: displayedColumns;"
+        *matRowDef="let row; columns: displayedColumns;let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"
     ></tr>
   </table>
   
-  <div>
-    <h3>
-      <button (click)="Add()">ds</button>
-    </h3>
-  </div>
+  
   
 
 

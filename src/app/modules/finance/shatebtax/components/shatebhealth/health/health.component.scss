@@ -62,3 +62,18 @@ mat-expansion-panel{
 button{
     margin-bottom: 10px;
 }
+
+th{
+    background-color: gray;
+    color: white;
+  }
+
+  mat-radio-group{
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 10px;
+
+}

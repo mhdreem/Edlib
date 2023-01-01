@@ -4,10 +4,13 @@ import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime, finalize, forkJoin, lastValueFrom, map, Observable, of, startWith, Subscription, switchMap, tap } from 'rxjs';
 import { ITBLShamelAccounter } from 'src/app/modules/shared/models/employees_department/TBLShamelAccounter';
+import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
 import { TblShamelPayrolSlice } from 'src/app/modules/shared/models/finance_department/payrol/tblShamelPayrolSlice';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { TBLShamelAccounterService } from 'src/app/modules/shared/services/employees_department/tblshamel-accounter.service';
+import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
+import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TblshamelPayrolSliceService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-payrol-slice.service';
@@ -50,6 +53,9 @@ export class AccounterRefreshComponent implements OnInit {
   selectedEmployee: ViewTBLShamelEmployee;
 
   isLoading = false;
+
+  fixedYear: string;
+  fixedMonth: TBLShamelMonth;
   constructor(@Inject(DOCUMENT) private _document: Document,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     private tblShamelAccounterService: TBLShamelAccounterService,
@@ -57,7 +63,9 @@ export class AccounterRefreshComponent implements OnInit {
     private employeeServiceService: EmployeeServiceService,
     private snackBar: MatSnackBar,
     private tblshamelPayrolSliceService: TblshamelPayrolSliceService,
-    private tblShamelNewShatebService: TBLShamelNewShatebService) {
+    private tblShamelNewShatebService: TBLShamelNewShatebService,
+    private tblShamelYearService: TBLShamelYearService,
+    public ShamelMonthService: TBLShamelMonthService,) {
 
     this.BuildForm();
     this.Load_Data();
@@ -252,6 +260,18 @@ export class AccounterRefreshComponent implements OnInit {
 
     this.Autocomplete_EmployeeName_Ctrl2.disable();
     this.id2.disable();
+
+    this.tblShamelYearService.GetYearFixed().subscribe(
+      res => {
+        this.fixedYear = res.year_name;
+      }
+    );
+
+    this.ShamelMonthService.GetMonthFixed().subscribe(
+      res => {
+        this.fixedMonth = res;
+      }
+    );
     
   }
 
@@ -276,6 +296,14 @@ export class AccounterRefreshComponent implements OnInit {
   }
 
      add(){
+      //  let request = {
+      //   id: this.Autocomplete_EmployeeName_Ctrl1.value,
+      //   accounterserial: this.AccounterName3.value,
+      //   accounter_id: ,
+      //   accounter_name: this.displayAccounterNameProperty(this.AccounterName3.value+''),
+      //   year_id: this.fixedYear,
+      //   month_id: this.fixedMonth 
+      //  };
       this.tblShamelNewShatebService.moveAccounter({})
       .subscribe(res => {
         if (res == 1){
