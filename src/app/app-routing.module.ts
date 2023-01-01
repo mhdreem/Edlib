@@ -47,6 +47,15 @@ const routes: Routes = [
     
         canActivate: [AuthGuardServiceService],
         loadChildren: () => import("./modules/finance/finance.module").then(m => m.FinanceModule)
+      },
+      {
+        path: 'systemservice',
+        data: {
+          title: 'خدمات النظام'
+        },
+    
+        canActivate: [AuthGuardServiceService],
+        loadChildren: () => import("./modules/systemservice/systemservice.module").then(m => m.SystemserviceModule)
       }
     ]
 
@@ -74,6 +83,7 @@ const routes: Routes = [
       title: 'Page 500'
     }
   },
+
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
 ];

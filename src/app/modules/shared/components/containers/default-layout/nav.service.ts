@@ -31,7 +31,13 @@ export class NavService {
       url: 'finace',
       formname:'مديرية الشؤون المالية',
       iconComponent: { name: 'cil-pencil' },
-    }     
+    } ,
+    {
+      name: 'خدمات النظام' ,
+      url: 'systemservice',
+      formname:'خدمات النظام',
+      iconComponent: { name: 'cil-pencil' },
+    }
   ];
 
   public navItems_Subject : BehaviorSubject< INavData[]>= new BehaviorSubject< INavData[]>(this.navItems);

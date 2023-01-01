@@ -4,9 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { TBLShamelUserListComponent } from './modules/shared/components/user/tblshamel-user-list/tblshamel-user-list.component';
-import { TBLShamelUserEditComponent } from './modules/shared/components/user/tblshamel-user-edit/tblshamel-user-edit.component';
-import { TBLShamelPrivilagesComponent } from './modules/shared/components/user/tblshamel-privilages/tblshamel-privilages.component';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -96,9 +93,7 @@ import { ConfirmationdialogComponent } from './modules/shared/components/confirm
       Page404Component,
       Page500Component,
       ConfirmationdialogComponent,
-      TBLShamelUserListComponent,
-      TBLShamelUserEditComponent,
-      TBLShamelPrivilagesComponent
+     
   ],
   imports: [
     CommonModule,

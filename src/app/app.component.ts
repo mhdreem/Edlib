@@ -14,6 +14,7 @@ import { IGlobalEmployeeList } from './modules/shared/services/employees_departm
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
   title = 'منظومة الشامل الإدارية و المالية';
     navItems: INavData[] = [
     {
@@ -32,6 +33,12 @@ export class AppComponent {
       name: 'مديرية الشؤون المالية' ,
       url: 'finace',
       formname:'مديرية الشؤون المالية',
+      iconComponent: { name: 'cil-pencil' },
+    },
+    {
+      name: 'خدمات النظام' ,
+      url: 'systemservice',
+      formname:'خدمات النظام',
       iconComponent: { name: 'cil-pencil' },
     }
        

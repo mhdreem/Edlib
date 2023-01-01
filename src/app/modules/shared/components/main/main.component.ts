@@ -33,7 +33,13 @@ export class MainComponent implements OnInit {
       url: 'finace',
       iconComponent: { name: 'cil-pencil' },
     },
-   
+  
+    {
+      name: 'خدمات النظام' ,
+      url: 'systemservice',
+      formname:'خدمات النظام',
+      iconComponent: { name: 'cil-pencil' },
+    }
     
   ];
   
