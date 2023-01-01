@@ -57,7 +57,7 @@ export class TBLShamelDaeraService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;  
     const options = {  headers: headers };
-    return this.httpClient.put(this.RestUrl +"TBLShamelDaera/"+obj.Daera_ID,obj,options);  
+    return this.httpClient.put(this.RestUrl +"TBLShamelDaera/"+obj.daera_id,obj,options);  
   }
 
 }

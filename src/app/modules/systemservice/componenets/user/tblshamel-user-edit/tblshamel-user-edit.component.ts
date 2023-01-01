@@ -229,7 +229,7 @@ pp:any;
     const filterValue = value ;
     console.log('this.TBLShamelDaera_List', this.TBLShamelDaera_List);
     console.log('value', value);
-    return this.TBLShamelDaera_List.filter(obj => obj.Daera_Name.includes(filterValue) );
+    return this.TBLShamelDaera_List.filter(obj => obj.daera_name.includes(filterValue) );
     }
     return this.TBLShamelDaera_List.slice();
   }
@@ -349,7 +349,7 @@ if (this.Selected_User )
   //#region  Display Display Member
   public displayDaeraProperty(value:string):string  {
     if (value && this.TBLShamelDaera_List){     
-      let Daera:any = this.TBLShamelDaera_List.find(crs => crs.Daera_ID.toString() == value) ;
+      let Daera:any = this.TBLShamelDaera_List.find(crs => crs.daera_id.toString() == value) ;
       if (Daera)
       return Daera.Daera_Name;
     }

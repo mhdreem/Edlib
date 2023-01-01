@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpParamsOptions } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TBLShamelUser } from '../../models/employees_department/TBLShamelUser';
 
 @Injectable({
@@ -10,6 +10,11 @@ export class TBLShamelUserService {
 
   Login_User_BehavourSubject: BehaviorSubject<TBLShamelUser> = new BehaviorSubject<TBLShamelUser>({});
   Login_User :TBLShamelUser ;
+
+  Users_List: TBLShamelUser[] = [];
+  Users_List_BehavourSubject : BehaviorSubject<TBLShamelUser[]> = new  BehaviorSubject<TBLShamelUser[]>([]);
+
+
 
 
   private RestUrl = 'https://localhost:44335/api/';
@@ -22,16 +27,33 @@ export class TBLShamelUserService {
 
 
 
-  list()  {
+  fill ()  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TBLShamelUser",options);      
+    return this.httpClient.get<TBLShamelUser[]>(this.RestUrl +"TBLShamelUser",options).subscribe(
+      data=>
+      {
+        if (data!= null && data.length>=0)
+        {
+          this.Users_List = data;
+          this.Users_List_BehavourSubject.next(this.Users_List);
+        }        
+      }
+    )
   }
+
+  
+  list() :Observable<TBLShamelUser[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+    const options = {  headers: headers };  
+    return this.httpClient.get<TBLShamelUser[]>(this.RestUrl +"TBLShamelUser",options);      
+  }
+  
 
   delete(User_ID:number )  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
     const options = {  headers: headers };
-    return this.httpClient.delete(this.RestUrl +"TBLShamelUser/"+User_ID,options);  
+    return this.httpClient.delete(this.RestUrl +"TBLShamelUser/delete/"+User_ID,options);  
   }
 
   add(obj :  TBLShamelUser )  {

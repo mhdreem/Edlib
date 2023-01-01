@@ -1,10 +1,10 @@
 
 import { MatRadioButton, MatRadioChange, MatRadioModule } from '@angular/material/radio';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource, MatTreeNode} from '@angular/material/tree';
@@ -14,77 +14,12 @@ import { TBLShamelPrivilages } from 'src/app/modules/shared/models/employees_dep
 import { TBLShamelUser } from 'src/app/modules/shared/models/employees_department/TBLShamelUser';
 import { TBLShamelPrivilageServiceService } from 'src/app/modules/shared/services/employees_department/tblshamel-privilage-service.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
+import { SubscriptionLike } from 'subsink/dist/subsink';
+import { TBLShamelProgramTreeService } from 'src/app/modules/shared/services/systemservice/tblshamel-program-tree.service';
+import { TBLShamelProgramTree } from 'src/app/modules/shared/models/systemservice/TBLShamelProgramTree';
 
 
- //Array Of AutoComplere With Filter
- interface TreeNode {
-  FormCaption: string;   
-  FormName: string;  
-  TypeForm:number;
-  id:number,
-  children?: TreeNode[];
-}
 
-const Privilage_DATA: TreeNode[] = [
-  {
-    FormCaption: 'مديرية الشؤون الإدارية',
-    FormName:'',
-    TypeForm:2,
-    id:0,
-    children: [
-      { 
-        FormCaption: 'الذاتية',
-        FormName:'',
-         TypeForm:2 ,
-         id:1,
-         children:[
-           {
-            FormCaption: 'البطاقة الذاتية',
-            FormName:'',
-             TypeForm:2 ,
-             id:2,
-             children:[
-               {
-                FormCaption:'البيانات الشخصية',
-                FormName:'ManageEmployeeDataCardFrame1',
-                TypeForm:1,
-                id:3,
-               },
-               {
-                FormCaption:'المؤهل العلمي',
-                FormName:'ManageSCEducationFrame1',
-                TypeForm:1,
-                id:4,
-               },
-
-             ]
-           },
-           { 
-            FormCaption: 'الترفيعات والزيادات',
-            FormName:'',
-             TypeForm:2 ,
-             id:5,
-             children:[
-              {                
-                FormCaption:'تجهيز ملف الترفيعات',
-                FormName:'UpgradePrepareAllFrame1',
-                TypeForm:1,
-                id:6,
-               },
-               {
-                  FormCaption:'عرض بيانات الترفيعات',
-                  FormName:'UpgradeViewDataFrame1',
-                  TypeForm:1,                  
-                  id:7,
-                },                       
-              ]                    
-            }
-         ]
-        
-    },    
-  ]
-
-}];
 
 
 @Component({
@@ -96,109 +31,209 @@ export class TBLShamelPrivilagesComponent implements OnInit {
   @ViewChildren(MatTreeNode, { read: ElementRef }) treeNodes: ElementRef[];
 
 
-  privilageEntry:UntypedFormControl;
-
-  privilageInput:UntypedFormControl; 
-  privilageUpdate:UntypedFormControl; 
-  privilageDisplay:UntypedFormControl; 
-  privilagePrint:UntypedFormControl; 
-  privilageDelete:UntypedFormControl; 
-
 
 
   
+
+  Form:FormGroup;
+  user_id : FormControl<number|undefined>;
+  daera_name : FormControl<string|undefined>;
+  formname: FormControl<string|undefined>;
+  nodetext: FormControl<string|undefined>;
+  privilage:FormControl<string|undefined>;    
+  privilageInput:FormControl<boolean|null>; 
+  privilageUpdate:FormControl<boolean|null>; 
+  privilageDisplay:FormControl<boolean|null>; 
+  privilagePrint:FormControl<boolean|null>; 
+  privilageDelete:FormControl<boolean|null>; 
+  privilageEntry:FormControl<boolean|null>; 
+  FormType:FormControl<number|null>; 
+
+
+  PrivilageTreeControl = new NestedTreeControl<TBLShamelProgramTree>(node => node.tBLShamelProgramTrees_Children);
+
+
+  dataSource = new MatTreeNestedDataSource<TBLShamelProgramTree>();
+
+  hasChild = (_: number, node: TBLShamelProgramTree) => !!node.tBLShamelProgramTrees_Children && node.tBLShamelProgramTrees_Children.length > 0;
+
+
   User_List :TBLShamelUser[]=[];
   filteredUserOptions: Observable<TBLShamelUser[]>;  
   Selected_User : TBLShamelUser;
-  Selected_Node :TreeNode;
-
-  Form:UntypedFormGroup;
-  autocomplete_Users = new UntypedFormControl();
-  Daera_Name = new UntypedFormControl();
-  
-  ShowPrivilage:Number;
+  Selected_TBLShamelProgramTree : TBLShamelProgramTree;
 
 
-  PrivilageTreeControl = new NestedTreeControl<TreeNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<TreeNode>();
+  Selected_User_Form_Privilage:TBLShamelPrivilages;
 
+  Subscription:Subscription = new Subscription ();
 
-
-  hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
-
-
-  ShamelPrivilages:TBLShamelPrivilages;
 
   constructor(
     public UserService:TBLShamelUserService,
-    public PrivilageService:TBLShamelPrivilageServiceService,
-     private fb: UntypedFormBuilder) {
-    this.dataSource.data = Privilage_DATA;
-  
+    public PrivilageService:TBLShamelPrivilageServiceService, 
+    public ShamelProgramTreeService:TBLShamelProgramTreeService, 
+     private fb: FormBuilder) {
+   
     this.BuildForm();
-    this.FillArrayUsingService();
-    this.ShowPrivilage = 0;
+    this.LoadData();  
    }
 
+   ngOnInit(): void {
+  }
 
+
+   
    public BuildForm()
    {
      try{  
-
-      this.autocomplete_Users   = new UntypedFormControl();
-      this.Daera_Name   = new UntypedFormControl();
-
-      this.privilageEntry= new UntypedFormControl();
-      this.privilageInput=new UntypedFormControl();
-      this.privilageUpdate=new UntypedFormControl();
-      this.privilageDisplay=new UntypedFormControl();
-      this.privilagePrint=new UntypedFormControl();
-      this.privilageDelete = new UntypedFormControl();
-
-     
-      
-
-      
-
       this.Form = this.fb.group({
-        });
-        this.Form .addControl('autocomplete_Users',this.autocomplete_Users);        
-        this.Form .addControl('Daera_Name',this.Daera_Name);
+        'user_id':this.user_id = new FormControl<number | null>(null),
+        'daera_name':this.daera_name= new FormControl<string | null>(null),
+        'formname':this.daera_name= new FormControl<string | null>(null),
+        'nodetext':this.daera_name= new FormControl<string | null>(null),
+        'privilage':this.daera_name= new FormControl<string | null>(null),
+        'privilageInput': this.privilageInput =new FormControl<boolean | null>(null),
+        'privilageUpdate': this.privilageUpdate= new FormControl<boolean | null>(null),
+        'privilageDisplay':this.privilageDisplay= new FormControl<boolean | null>(null),
+        'privilagePrint':  this.privilagePrint= new FormControl<boolean | null>(null),
+        'privilageDelete': this.privilageDelete= new FormControl<boolean | null>(null),
+        'privilageEntry' : this.privilageEntry= new FormControl<boolean | null>(null),
+        'FormType':this.FormType= new FormControl<number| null>(null),
 
-        this.Form .addControl('privilageEntry',this.privilageEntry);
-        this.Form .addControl('privilageInput',this.privilageInput);
-        this.Form .addControl('privilageUpdate',this.privilageUpdate);
-        this.Form .addControl('privilageDisplay',this.privilageDisplay);
-        this.Form .addControl('privilagePrint',this.privilagePrint);
-        this.Form .addControl('privilageDelete',this.privilageDelete);
-
-
-        
-
+      });
+      
       }catch(Exception:any){
         console.log(Exception);
       }
    }
-   //#endregion
+   
 
-  ngOnInit(): void {
+   LoadFormName() :  Observable<TBLShamelProgramTree[]>
+   {
+    if (this.ShamelProgramTreeService.List_TBLShamelProgramTree != null &&
+      this.ShamelProgramTreeService.List_TBLShamelProgramTree.length>0)
+      return of (this.ShamelProgramTreeService.List_TBLShamelProgramTree);
+      return this.ShamelProgramTreeService.BuildTree();
+   }
+
+
+
+   LoadUser() : Observable<TBLShamelUser[]> 
+   {
+    if (this.UserService.Users_List != null &&
+      this.UserService.Users_List.length>0)
+      return of (this.UserService.Users_List);
+      return this.UserService.list();
+   }
+
+
+  LoadData()
+  {
+    this.Subscription.add(    
+    forkJoin(
+      [this.LoadUser(),
+      this.LoadFormName()]      
+    ).subscribe
+    (
+      res=>
+      {
+        if (res!= null && res.length>0 )
+        {
+          this.User_List=res[0];
+          this.UserService.Users_List =   res[0];
+          this.UserService.Users_List_BehavourSubject.next(this.User_List);
+
+          //after FillData
+          this.filteredUserOptions = this.user_id.valueChanges
+          .pipe(
+            startWith(''),        
+            map(value => value   && typeof value === 'string'  ? this._filteredUser(value) : this.User_List.slice() )
+          );  
+
+          this.dataSource.data = res[1];
+          this.ShamelProgramTreeService.List_TBLShamelProgramTree= res[1];
+          this.ShamelProgramTreeService.List_TBLShamelProgramTree_BehaviorSubject.next(res[1])  ;
+
+        }
+      }
+    )
+    );
   }
 
-  public InputPrivilage()
+  ////////////////////////
+  ////// For AutoComplete
+  ////////////////////////
+
+
+  public displayUSerProperty(value:string):string  {
+
+    if (value!= null && this.User_List!= null && this.User_List.length>0){
+     
+      let User:TBLShamelUser = this.User_List.find(obj => obj.user_id.toString() == value) ;
+      if (User!= null && User.fullname != null && User.user_id!= null)
+        return User.fullname;
+    }
+    return '';
+
+  }  
+
+  public OnSelectUserChange(event: MatAutocompleteSelectedEvent) {
+   
+    if ( event != null   )
+    {    
+      let Id:Number= event.option.value as Number;
+
+      var Result = this.User_List.find(x => x.user_id === Id);
+      if (Result!= null && Result.user_id!= null &&  Result.user_id>0)
+      {
+          this.Selected_User = Result;
+          this.daera_name.setValue(this.Selected_User.TBLShamelDaera.daera_name);          
+      }      
+    }
+      
+  }
+
+
+  
+  
+ 
+  private _filteredUser(value: string): TBLShamelUser[] {   
+    if (value!= null )
+    {
+      const filterValue = value ;
+      return this.User_List.filter(obj => obj.fullname.includes(filterValue) );
+    }
+    return this.User_List.slice();
+  }
+
+
+  /////////////////////////////////
+  /////
+  //////////////////////////////////
+
+  
+  public DisplayPrivilage()
   {
       try{
 
          
-          const usingArrayFrom = Array.from(this.ShamelPrivilages.privilage);
+          const usingArrayFrom = Array.from(this.Selected_User_Form_Privilage.privilage);
           if (usingArrayFrom && usingArrayFrom .length>0)
           {
-            if (this.Selected_Node && this.Selected_Node.TypeForm ==1)
+            if (this.Selected_TBLShamelProgramTree && this.Selected_TBLShamelProgramTree.formtype ==1)
+            {
+              let Result :boolean = false;
+
+              Result=(usingArrayFrom[2] == '1')?true : false ;              
+              this.privilageEntry.setValue(Result);
+
+            } else if (this.Selected_TBLShamelProgramTree && this.Selected_TBLShamelProgramTree.formtype ==2)
             {
               usingArrayFrom.forEach((currentValue, index) => {
-                let Result :boolean = false;
-                Result=Boolean(JSON.parse(currentValue));
-                console.log(index);
-                console.log(Result);
+
+                let Result :boolean = false ;
+                Result = (currentValue=='0')?false : true ;
 
                 switch(index)
                 {
@@ -222,14 +257,6 @@ export class TBLShamelPrivilagesComponent implements OnInit {
   
                 
               });
-            }else if (this.Selected_Node && this.Selected_Node.TypeForm ==2)
-            {
-              let Result :boolean = false;
-              Result=Boolean(JSON.parse(usingArrayFrom[2]));
-              this.privilageEntry.setValue(Result);
-              console.log('InputPrivilage'+Result);
-
-
             }
           
             
@@ -243,6 +270,7 @@ export class TBLShamelPrivilagesComponent implements OnInit {
 
      
   
+
  
   }
 
@@ -250,9 +278,9 @@ export class TBLShamelPrivilagesComponent implements OnInit {
   {
       try{
           console.log('dsdsds');
-          console.log(this.ShamelPrivilages. privilage);
+          console.log(this.Selected_User_Form_Privilage. privilage);
           console.log('dsdsds');
-          const usingArrayFrom = Array.from(this.ShamelPrivilages.privilage);
+          const usingArrayFrom = Array.from(this.Selected_User_Form_Privilage.privilage);
           if (usingArrayFrom && usingArrayFrom .length>0)
           {
 
@@ -273,211 +301,101 @@ export class TBLShamelPrivilagesComponent implements OnInit {
   }
 
   
-  public GetPrivilage()
+
+
+  public GetPrivilageFromServer()
   {
     console.log("GetPrivilage");
 
-    if (this.Selected_User && this.Selected_User.user_id>0 &&
-      this.Selected_Node && this.Selected_Node.FormName)
+
+
+    if (this.Selected_User && 
+      this.Selected_User.user_id>0 &&
+      this.Selected_TBLShamelProgramTree!= null &&
+       this.Selected_TBLShamelProgramTree.formname!= null)
     {
-        this.PrivilageService.GetByUserAndForm(this.Selected_User .user_id,this.Selected_Node.FormName).subscribe(res =>
-          {
-            console.log(res );
-            this.ShamelPrivilages = res as TBLShamelPrivilages;
-            console.log(this.ShamelPrivilages);
-
-            if (this.ShamelPrivilages && 
-              this.ShamelPrivilages.privilage)
+        this.PrivilageService.GetByUserAndForm(this.Selected_User .user_id,this.Selected_TBLShamelProgramTree.formname).subscribe(res =>
+          {           
+            this.Selected_User_Form_Privilage = res as TBLShamelPrivilages;        
+            if (this.Selected_User_Form_Privilage != null && 
+              this.Selected_User_Form_Privilage.privilage!= null)
               {
-                this.InputPrivilage();
-                
+                this.DisplayPrivilage();                
               }
-
-
           }
           );
     }
     
   }
-  public displayUSerProperty(value:string):string  {
-
-   
-
-    
-    if (value && this.User_List){
-     
-      let User:any = this.User_List.find(obj => obj.user_id.toString() == value) ;
-      if (User)
-      return User.fullname;
-    }
-    return '';
-  }  
-
-  public OnSelectUserChange(event: MatAutocompleteSelectedEvent) {
-    console.log('OnSelectStateChange');
-    console.log(event.option.value);
-    if ( event   )
-    {
-
-      
-
-      let Id:Number= event.option.value as Number;
-
-      var Result = this.User_List.find(x => x.user_id === Id);
-      if (Result)
-      {
-          this.Selected_User = Result;
-          this.Daera_Name.setValue(this.Selected_User.TBLShamelDaera.Daera_Name);          
-      }
-        
-
-    }
-      
-  }
-
-  
-  public async FillArrayUsingService()
-  {
-    try{
-
-      if (!this.User_List || this.User_List.length<=0)
-      {
-        
-       this.UserService.list().subscribe(
-         (data:any)=> {
-           
-          console.log('AAAA');    
-          this.User_List=data;  
-           console.log(data);    
-         });
-
-
-     
-      }
-
-      
-      
-      this.filteredUserOptions = this.autocomplete_Users.valueChanges
-      .pipe(
-        startWith(''),        
-        map(value => value   && typeof value === 'string'  ? this._filteredUser(value) : this.User_List.slice() )
-      );  
-    
-    }catch(Exception : any)
-    {}
-  }
  
-  private _filteredUser(value: string): TBLShamelUser[] {   
 
-    console.log(value.toString()); 
 
-    if (value)
-    {
-    const filterValue = value ;
-    return this.User_List.filter(obj => obj.fullname.includes(filterValue) );
-    }
-    return this.User_List.slice();
-  }
 
-  ClickNode(node:TreeNode){
 
-    console.log(node);
+  ClickNode(node:TBLShamelProgramTree){
 
-this.update();
+   this.privilageDelete.setValue(false);
+   this.privilageDisplay.setValue(false);
+   this.privilageEntry.setValue(false);
+   this.privilageInput.setValue(false);
+   this.privilageInput.setValue(false);
+   this.privilageUpdate.setValue(false);
 
-this.Selected_Node =node;
+    this.Selected_TBLShamelProgramTree =node;
+    
+
+
   if (this.Selected_User && this.Selected_User.user_id >0)
   {
-    console.log('GetPrivilage');
-
-    this.GetPrivilage();
-    console.log('end GetPrivilage');
-
+   
+    this.GetPrivilageFromServer();
+  
   }
-    if (node )
-    {
-      console.log(node .TypeForm );
-      switch(node .TypeForm )
-      {
-        case 2:
-          this.ShowPrivilage = 2;
-          break;
-
-        case 1:
-        this.ShowPrivilage = 1;
-        break;
-
-
-      }
-    }
+    
 
     
     
   }
 
 
-  setAll(completed: boolean) {
-    
-    
-  }
   
 
-  public update()
+  public Save ()
   {
-    if (!this.ShamelPrivilages 
+    if (this.Selected_User== null ||
+      this.Selected_User== undefined ||
+      this.Selected_User.user_id == null 
+      )
+      {
+        //اظهار رسالة خطا
+        return;
+      }
+
+      if (this.Selected_TBLShamelProgramTree== null ||
+        this.Selected_TBLShamelProgramTree== undefined ||
+        this.Selected_TBLShamelProgramTree.formname == null 
+        )
+        {
+          //اظهار رسالة خطا
+          return;
+        }
+
+    if (this.Selected_User_Form_Privilage == null ||
+      this.Selected_User_Form_Privilage == undefined
 
       )
       {
-        this.ShamelPrivilages= {};
+        this.Selected_User_Form_Privilage= {};
       }
 
+      this.Selected_User_Form_Privilage.user_id = this.Selected_User.user_id;
+      this.Selected_User_Form_Privilage.formname = this.Selected_TBLShamelProgramTree.formname;
+
+
     let strPrivilage:string  ='';
-console.log(this.Selected_Node);
-    if (this.Selected_Node &&
-      this.Selected_Node.TypeForm==1)
-      {
-        console.log(this.privilageInput.value);
-        if (this.privilageInput.value == true)
-          strPrivilage = strPrivilage +'1';
-        else 
-          strPrivilage = strPrivilage +'0';
-
-
-          console.log(this.privilageUpdate.value);
-
-          if (this.privilageUpdate.value == true)
-          strPrivilage = strPrivilage +'1';
-        else 
-          strPrivilage = strPrivilage +'0';
-          
-          console.log(this.privilageDisplay.value);
-
-          if (this.privilageDisplay.value == true)
-          strPrivilage = strPrivilage +'1';
-        else 
-          strPrivilage = strPrivilage +'0';
-
-          console.log(this.privilagePrint.value);
-
-          if (this.privilagePrint.value == true)
-          strPrivilage = strPrivilage +'1';
-        else 
-          strPrivilage = strPrivilage +'0';
-
-
-          console.log(this.privilageDelete.value);
-
-
-          if (this.privilageDelete.value == true)
-          strPrivilage = strPrivilage +'1';
-        else 
-          strPrivilage = strPrivilage +'0';
-
-
-          console.log(strPrivilage);
-
-      }else if (this.Selected_Node &&
-        this.Selected_Node.TypeForm==2)
+console.log(this.Selected_TBLShamelProgramTree);
+     if (this.Selected_TBLShamelProgramTree &&
+        this.Selected_TBLShamelProgramTree.formtype==1)
         {
          
           if (this.privilageEntry.value == true)
@@ -485,46 +403,86 @@ console.log(this.Selected_Node);
           strPrivilage = '00100';
         else 
         strPrivilage = '00000';
-        }
-
-        if (this.Selected_Node && this.Selected_User.user_id >0 &&
-          this.ShamelPrivilages
-        )
+        }else if (this.Selected_TBLShamelProgramTree!=null &&
+          this.Selected_TBLShamelProgramTree.formtype==2)
           {
-            console.log('Update');
-            console.log(strPrivilage);
-            
+            console.log(this.privilageInput.value);
+            if (this.privilageInput.value == true)
+              strPrivilage = strPrivilage +'1';
+            else 
+              strPrivilage = strPrivilage +'0';
+    
+    
+              console.log(this.privilageUpdate.value);
+    
+              if (this.privilageUpdate.value == true)
+              strPrivilage = strPrivilage +'1';
+            else 
+              strPrivilage = strPrivilage +'0';
+              
+              console.log(this.privilageDisplay.value);
+    
+              if (this.privilageDisplay.value == true)
+              strPrivilage = strPrivilage +'1';
+            else 
+              strPrivilage = strPrivilage +'0';
+    
+              console.log(this.privilagePrint.value);
+    
+              if (this.privilagePrint.value == true)
+              strPrivilage = strPrivilage +'1';
+            else 
+              strPrivilage = strPrivilage +'0';
+    
+    
+              console.log(this.privilageDelete.value);
+    
+    
+              if (this.privilageDelete.value == true)
+              strPrivilage = strPrivilage +'1';
+            else 
+              strPrivilage = strPrivilage +'0';
+    
+    
+              console.log(strPrivilage);
+    
+          }
 
-        this.ShamelPrivilages.formname = this.Selected_Node.FormName;
-        this.ShamelPrivilages.user_id = this.Selected_User.user_id;
-        this.ShamelPrivilages.privilage  = strPrivilage;
+        
 
-        console.log(this.ShamelPrivilages);
+        this.Selected_User_Form_Privilage.formname = this.Selected_TBLShamelProgramTree.formname;
+        this.Selected_User_Form_Privilage.user_id = this.Selected_User.user_id;
+        this.Selected_User_Form_Privilage.privilage  = strPrivilage;
 
-        this.PrivilageService.InsertIfNew(this.ShamelPrivilages).subscribe
+        console.log(this.Selected_User_Form_Privilage);
+
+        this.PrivilageService.InsertIfNew(this.Selected_User_Form_Privilage).subscribe
         (res => 
           {
-            console.log('inside syn');
-            console.log(res);
+            if (res!= null && res>0)
+            {
+              console.log('inside syn');
+              console.log(res);
+            }
+
 
           }
           
 
           );
         console.log('end update');
-          }
+          
 
 
 
   }
 
-  onChange(mrChange: MatRadioChange) {
-    console.log("Begin onChange");
-    console.log(mrChange.value);
-    let mrButton: MatRadioButton = mrChange.source;
-    console.log(mrButton.name);
-    console.log(mrButton.checked);
-    console.log(mrButton.inputId);
-    console.log("End onChange");
- } 
+  
+  setAll(completed: boolean) {
+    
+    
+    
+  }
+
+
 }

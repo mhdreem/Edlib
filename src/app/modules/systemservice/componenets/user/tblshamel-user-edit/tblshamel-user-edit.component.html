@@ -23,8 +23,8 @@
         <mat-label>الدائرة</mat-label>
         <input type="text" matInput [formControl]="daera_id" formControlName="Daera_ID" [matAutocomplete]="auto_Daera_ID">
         <mat-autocomplete #auto_Daera_ID="matAutocomplete" [displayWith]="displayDaeraProperty.bind(this)" (optionSelected)="OnSelectDaeraChange($event)">
-          <mat-option *ngFor="let option of filteredDaeraOptions | async" [value]="option.Daera_ID">
-            {{option.Daera_Name}}
+          <mat-option *ngFor="let option of filteredDaeraOptions | async" [value]="option.daera_id">
+            {{option.daera_name}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

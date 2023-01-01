@@ -44,13 +44,13 @@ export class TBLShamelPrivilageServiceService {
 
   GetByUserAndForm(User_ID:number,FormName:string)  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const data = {'User_ID': User_ID,'FormName':FormName };
-    const httpParams = new HttpParams({ fromObject: data });
+    
+   
+    let obj :any = {'User_ID':User_ID,'FormName':FormName};
 
-    //const options = {  headers: headers,params: httpParams};  
     const options = {  headers: headers};  
-    console.log(options);
-    return this.httpClient.get(this.RestUrl +"TBLShamelPrivilages/GetByUserAndForm/"+User_ID+"/"+FormName ,options);      
+
+    return this.httpClient.post(this.RestUrl +"TBLShamelPrivilages/GetByUserAndForm",  obj );      
   }
 
   InsertIfNew(obj :  TBLShamelPrivilages )  {

@@ -1,5 +1,5 @@
 export class  TBLShamelDaera {
-    public Daera_ID :number;
-    public Daera_Name: string;
+    public daera_id :number;
+    public daera_name: string;
     public Fixed :number;
 }
