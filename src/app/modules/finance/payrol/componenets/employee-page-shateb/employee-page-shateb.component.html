@@ -21,9 +21,9 @@
         </mat-autocomplete>
         </mat-form-field>
 </form>
-<button class="view" mat-raised-button color="primary" (click)="View()" [disabled]="!(pageService.id && UpgradeYear.value)" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
-<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="shateb-page-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة صفحة الشطب</button>
+<button class="view" mat-raised-button color="primary" (click)="View()" [disabled]="!(pageService.id && UpgradeYear.value)">عرض</button>
+<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
+<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="shateb-page-section" ngxPrint>طباعة صفحة الشطب</button>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
         <ng-container matColumnDef="serial">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>التسلسل</th>

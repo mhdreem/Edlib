@@ -18,8 +18,6 @@ import { TblShamelNewPayrolAddPageServiceService } from '../newpayroladd/TbLSham
   styleUrls: ['./employee-page-shateb.component.scss']
 })
 export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
-  formname:string = 'صفحة شطب عامل';
-
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -13,7 +13,6 @@ import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/fi
 })
 
 export class TBLShamelNewPayrolTaxComponent  implements OnInit {
-  formname:string = 'برمجة التعويض والحسم';
 
 
   List_TblShamelNewPayrolTax: TblShamelNewPayrolTax[]= [];
