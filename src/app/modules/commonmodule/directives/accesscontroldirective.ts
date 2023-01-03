@@ -46,7 +46,7 @@ import { TBLShamelUserService } from '../../shared/services/employees_department
     {
       if (this.userService.Login_User != null &&
         this.userService.Login_User.user_id!= null &&
-        this.userService.Login_User.user_id>=0)
+        this.userService.Login_User.user_id>=-1)
         {
           this.SelectedUser = this.userService .Login_User;
           return;
@@ -57,7 +57,7 @@ import { TBLShamelUserService } from '../../shared/services/employees_department
           var User =  localStorage.getItem('User') as TBLShamelUser;  
           if (User!= null &&
               User.user_id!= null &&
-              User.user_id>0)
+              User.user_id>-1)
           {
             this.userService .Login_User = User;
             this.userService .Login_User_BehavourSubject.next(User);

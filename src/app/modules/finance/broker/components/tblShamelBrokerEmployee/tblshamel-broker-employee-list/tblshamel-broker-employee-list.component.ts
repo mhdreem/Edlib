@@ -22,6 +22,7 @@ import { TblshamelBrokerEmployeeModifyComponent } from '../tblshamel-broker-empl
   styleUrls: ['./tblshamel-broker-employee-list.component.scss']
 })
 export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewInit {
+  formname:string = 'ذاتية الوكلاء';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

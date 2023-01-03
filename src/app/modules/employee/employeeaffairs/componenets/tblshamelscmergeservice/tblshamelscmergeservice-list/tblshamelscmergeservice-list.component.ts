@@ -20,6 +20,7 @@ import { TblshamelscmergeserviceModifyComponent } from '../tblshamelscmergeservi
   styleUrls: ['./tblshamelscmergeservice-list.component.scss']
 })
 export class TblshamelscmergeserviceListComponent implements OnInit,AfterViewInit {
+  formname:string = 'ضم الخدمة';
  //Join Variable   
  Selected_Emp: TBLShamelEmployee = {};
  @ViewChild('paginator') paginator: MatPaginator;

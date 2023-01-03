@@ -12,7 +12,7 @@ import { TblShamelBonusAddComponent } from '../tbl-shamel-bonus-add/tbl-shamel-b
   styleUrls: ['./tbl-shamel-bonus-list.component.scss']
 })
 export class TblShamelBonusListComponent implements OnInit {
-
+  formname:string = 'جدول نوع المكافأة';
   ELEMENT_DATA: TBLShamelBonus[] = [];
   dataSource = new MatTableDataSource<TBLShamelBonus>();
 

@@ -19,7 +19,7 @@ import { TblShamelBrokerShatebService } from 'src/app/modules/shared/services/fi
 })
 export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 
-
+  formname:string = 'احصائيات';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   

@@ -18,7 +18,7 @@ import { forkJoin, Observable, of, Subscription } from 'rxjs';
 })
 export class TblshamelincmarsoomlistComponent implements OnInit ,AfterViewInit,OnDestroy  {
   //Join Variable   
-  formname:string = 'ManageSCIncMarsoomFrame1';
+  formname:string = 'مراسيم الزيادة';
   LoadingFinish:boolean;
 _Subscription:Subscription =new Subscription();
   @ViewChild('paginator') paginator: MatPaginator;

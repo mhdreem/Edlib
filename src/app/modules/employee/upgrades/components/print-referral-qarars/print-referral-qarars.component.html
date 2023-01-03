@@ -72,15 +72,15 @@
           <input matInput type="number" value="" [formControl]="LastQararNum" (change)="clearDataSource()">
         </mat-form-field>
             
-        <button id="view" mat-raised-button color="primary" (click)="Search()">بحث</button>
+        <button id="view" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">بحث</button>
         
       </form>
     </mat-expansion-panel>
   </mat-accordion>
   
-  <button class="view" mat-raised-button color="primary" (click)="list()">عرض السجلات</button>
-<button mat-raised-button color="primary" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]">طباعة الإحالات</button>
-<button mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
+  <button class="view" mat-raised-button color="primary" (click)="list()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+<button mat-raised-button color="primary" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة الإحالات</button>
+<button mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
 
 <div class="table-wrap">
 

@@ -1,6 +1,6 @@
-<button class="search" mat-raised-button color="primary" (click)="Search()">عرض السجلات</button>
-<button  mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
-<button class="view" mat-raised-button color="primary" (click)="print()" [disabled]="!dataSource.data[0]">طباعة</button>
+<button class="search" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+<button  mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+<button class="view" mat-raised-button color="primary" (click)="print()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
 
 <div class="col-md-12">
     <div class="table-wrap">

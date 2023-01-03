@@ -21,7 +21,7 @@ import { DOCUMENT } from "@angular/common";
   styleUrls: ['./tblshamelscbonuslist.component.scss']
 })
 export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDestroy {
-  formname:string = 'ManageSCIncMarsoomFrame1';
+  formname:string = 'المكافئات';
   //Join Variable
   Selected_Emp: TBLShamelEmployee = {};
   LoadingFinish:Boolean;

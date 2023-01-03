@@ -113,8 +113,8 @@
 
 <div>
     <h3>
-        <button mat-raised-button color="primary" class="view" (click)="OnSearch()">عرض</button>
-        <button mat-raised-button color="primary" class="add" (click)="Add('')">إضافة</button>
+        <button mat-raised-button color="primary" class="view" (click)="OnSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+        <button mat-raised-button color="primary" class="add" (click)="Add('')" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
     </h3>
 </div>
 

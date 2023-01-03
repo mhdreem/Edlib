@@ -18,6 +18,7 @@ import { TBLShamelSCLEgalHolidayAddComponent } from '../tblshamel-sc-legal-holid
   styleUrls: ['./tblshamel-sc-legal-holiday-list.component.scss']
 })
 export class TBLShamelSCLEgalHolidayListComponent implements OnInit,AfterViewInit {
+  formname:string = 'الإجازات الإدارية';
  //Join Variable   
  Selected_Emp: TBLShamelEmployee = {};
  @ViewChild('paginator') paginator: MatPaginator;

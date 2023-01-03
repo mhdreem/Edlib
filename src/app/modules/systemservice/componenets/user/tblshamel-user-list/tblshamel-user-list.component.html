@@ -1,7 +1,7 @@
 
 <div>
   <h3>
-    <button mat-raised-button color="primary" style="margin-bottom: 20px" (click)="Add()">إدخال</button>
+    <button mat-raised-button color="primary" style="margin-bottom: 20px" (click)="Add()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إدخال</button>
   </h3>
 </div>
 <table mat-table [dataSource]="User_List" class="mat-elevation-z8 demo-table">

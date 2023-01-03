@@ -14,7 +14,7 @@ import { Stats3PrintComponent } from '../print/stats3-print/stats3-print.compone
   styleUrls: ['./stats3.component.scss']
 })
 export class Stats3Component implements OnInit {
-
+  formname:string = 'احصائيات وظيفية';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

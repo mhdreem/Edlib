@@ -12,7 +12,7 @@ import { TblShamelJobKindAddComponent } from '../tbl-shamel-job-kind-add/tbl-sha
   styleUrls: ['./tbl-shamel-job-kind-list.component.scss']
 })
 export class TblShamelJobKindListComponent implements OnInit {
-
+  formname:string = 'جدول نوع الوظيفة';
   ELEMENT_DATA: ITBLShamelJobKind[] = [];
   dataSource = new MatTableDataSource<ITBLShamelJobKind>();
 

@@ -70,6 +70,7 @@ import { PayrolDifferenceComponent } from './componenets/payrol-difference/payro
 import { AccounterRefreshComponent } from './componenets/accounter-refresh/accounter-refresh.component';
 import { SalaryStatisticsComponent } from './componenets/salary-statistics/salary-statistics.component';
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 
 /////////////////////////////
@@ -174,7 +175,8 @@ MatProgressSpinnerModule,
 MatRadioModule,
 NgxHoverOpacityModule,
 NgxPrintModule,
-MatExpansionModule
+MatExpansionModule,
+CommonmoduleModule
   ]
 })
 export class PayrolModule { }

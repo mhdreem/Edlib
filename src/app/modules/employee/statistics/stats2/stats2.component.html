@@ -446,7 +446,7 @@
 
     </mat-accordion>
 </div>
-<button class="search" mat-raised-button color="primary" (click)="ExcuteSearch()">عرض السجلات</button>
+<button class="search" mat-raised-button color="primary" (click)="ExcuteSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
 <div class="col-md-12">
     <div class="table-wrap">
 

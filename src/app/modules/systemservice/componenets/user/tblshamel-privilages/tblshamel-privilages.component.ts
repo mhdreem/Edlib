@@ -17,6 +17,7 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
 import { SubscriptionLike } from 'subsink/dist/subsink';
 import { TBLShamelProgramTreeService } from 'src/app/modules/shared/services/systemservice/tblshamel-program-tree.service';
 import { TBLShamelProgramTree } from 'src/app/modules/shared/models/systemservice/TBLShamelProgramTree';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -28,6 +29,7 @@ import { TBLShamelProgramTree } from 'src/app/modules/shared/models/systemservic
   styleUrls: ['./tblshamel-privilages.component.scss']
 })
 export class TBLShamelPrivilagesComponent implements OnInit {
+  formname1:string = 'صلاحيات الدخول';
   @ViewChildren(MatTreeNode, { read: ElementRef }) treeNodes: ElementRef[];
 
 
@@ -73,7 +75,8 @@ export class TBLShamelPrivilagesComponent implements OnInit {
     public UserService:TBLShamelUserService,
     public PrivilageService:TBLShamelPrivilageServiceService, 
     public ShamelProgramTreeService:TBLShamelProgramTreeService, 
-     private fb: FormBuilder) {
+     private fb: FormBuilder,
+     private snackBar: MatSnackBar,) {
    
     this.BuildForm();
     this.LoadData();  
@@ -185,7 +188,7 @@ export class TBLShamelPrivilagesComponent implements OnInit {
       let Id:Number= event.option.value as Number;
 
       var Result = this.User_List.find(x => x.user_id === Id);
-      if (Result!= null && Result.user_id!= null &&  Result.user_id>0)
+      if (Result!= null && Result.user_id!= null &&  Result.user_id>-1)
       {
           this.Selected_User = Result;
           this.daera_name.setValue(this.Selected_User.TBLShamelDaera.daera_name);          
@@ -310,7 +313,7 @@ export class TBLShamelPrivilagesComponent implements OnInit {
 
 
     if (this.Selected_User && 
-      this.Selected_User.user_id>0 &&
+      this.Selected_User.user_id>-1 &&
       this.Selected_TBLShamelProgramTree!= null &&
        this.Selected_TBLShamelProgramTree.formname!= null)
     {
@@ -345,7 +348,7 @@ export class TBLShamelPrivilagesComponent implements OnInit {
     
 
 
-  if (this.Selected_User && this.Selected_User.user_id >0)
+  if (this.Selected_User && this.Selected_User.user_id >-1)
   {
    
     this.GetPrivilageFromServer();
@@ -367,7 +370,9 @@ export class TBLShamelPrivilagesComponent implements OnInit {
       this.Selected_User.user_id == null 
       )
       {
-        //اظهار رسالة خطا
+        this.snackBar.open('تم التعديل بنجاحيجب اختيار اسم المستخدم', '', {
+          duration: 3000,
+        });
         return;
       }
 
@@ -376,6 +381,9 @@ export class TBLShamelPrivilagesComponent implements OnInit {
         this.Selected_TBLShamelProgramTree.formname == null 
         )
         {
+          this.snackBar.open('يجب اختيار اسم الواجهه', '', {
+            duration: 3000,
+          });
           //اظهار رسالة خطا
           return;
         }
@@ -463,6 +471,9 @@ console.log(this.Selected_TBLShamelProgramTree);
             {
               console.log('inside syn');
               console.log(res);
+              this.snackBar.open('تم الحفظ بنجاح', '', {
+                duration: 3000,
+              });
             }
 
 

@@ -125,7 +125,7 @@
     </form>
   </mat-expansion-panel>
 </mat-accordion>
-<button class="view" mat-raised-button color="primary" (click)="Search()">عرض السجلات</button>
+<button class="view" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
   
 <mat-form-field class="search" appearance="standard">
   <mat-label>بحث</mat-label>

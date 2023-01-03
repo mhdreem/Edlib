@@ -32,7 +32,13 @@ export class SystemserviceComponent implements OnInit {
       name: 'السماحيات' ,
       url: 'systemservice/module/privilige',
       iconComponent: { name: 'cil-pencil' },
-    }
+    },
+
+    {
+      name: 'تعريف واجهات البرنامج' ,
+      url: 'systemservice/module/programTree',
+      iconComponent: { name: 'cil-pencil' },
+    },
    
    
    

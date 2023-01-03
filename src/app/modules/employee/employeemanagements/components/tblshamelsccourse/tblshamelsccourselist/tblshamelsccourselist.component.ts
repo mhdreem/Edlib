@@ -23,7 +23,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  {
 
-  formname:string = '';
+  formname:string = 'الدراسات والدورات';
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

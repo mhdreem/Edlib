@@ -10,7 +10,7 @@
 </div>
 <div>
   للإضافة على الجدول انقر على اضافة
-  <button class="add" mat-raised-button color="primary" (click)="Add()">اضافة</button>
+  <button class="add" mat-raised-button color="primary" (click)="Add()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">اضافة</button>
 </div>
 
 <div class="col-md-12">

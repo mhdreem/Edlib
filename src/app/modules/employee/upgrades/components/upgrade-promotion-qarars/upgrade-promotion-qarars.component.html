@@ -60,7 +60,7 @@
                     <mat-label>رقم آخر قرار</mat-label>
                     <input matInput type="number" value="" [formControl]="MaxQararNum">
                   </mat-form-field>
-                  <button mat-raised-button color="primary" (click)="deleteQararNumbers()">مسح أرقام القرارات</button>
+                  <button mat-raised-button color="primary" (click)="deleteQararNumbers()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">مسح أرقام القرارات</button>
               </div>
 
               <hr>

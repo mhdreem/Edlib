@@ -35,7 +35,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./var-tax.component.scss']
 })
 export class VarTaxComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'حسم مختلف';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   

@@ -3,7 +3,7 @@
 </div>
 <div>
   للإضافة على الجدول انقر على اضافة
-  <button mat-raised-button color="primary" (click)="Add()" [disabled]="employee_id == null">اضافة</button>
+  <button mat-raised-button color="primary" (click)="Add()" [disabled]="employee_id == null" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">اضافة</button>
 </div>
 <mat-form-field appearance="standard">
   <mat-label>بحث</mat-label>

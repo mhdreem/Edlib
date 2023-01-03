@@ -54,7 +54,7 @@
         </form>
         
 
-          <button mat-raised-button color="primary" (click)="add()" [disabled]="!Form1.valid">إضافة</button>
+          <button mat-raised-button color="primary" (click)="add()" [disabled]="!Form1.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
     </div>
 
     <div class="left">
@@ -112,7 +112,7 @@
         </form>
         
 
-          <button mat-raised-button color="primary" (click)="delete()" [disabled]="!Form2.valid">حذف</button>
+          <button mat-raised-button color="primary" (click)="delete()" [disabled]="!Form2.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">حذف</button>
 
     </div>
 </div>

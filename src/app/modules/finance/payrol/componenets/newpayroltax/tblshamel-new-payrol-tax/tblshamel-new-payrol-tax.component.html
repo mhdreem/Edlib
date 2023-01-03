@@ -15,7 +15,7 @@
 <div class="boxes">
     <div class="right">
         <span class="title1">التعويضات الدائمة والمؤقتة</span>
-        <button mat-raised-button color="primary" (click)="Add_Tawid()">اضافة تعويض +</button>        
+        <button mat-raised-button color="primary" (click)="Add_Tawid()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">اضافة تعويض +</button>        
         <div class="spanBox spanBox1">
             <span> اسم التعويض على الطابعة</span>
             <span>اسم التعويض على الشاشة</span>
@@ -37,7 +37,7 @@
     </div>
     <div class="middle">
         <span class="title2">الحسميات الدائمة والمؤقتة</span>
-        <button mat-raised-button color="primary" (click)="Add_Tax()">إضافة حسمية دائمة أو مؤقتة +</button>        
+        <button mat-raised-button color="primary" (click)="Add_Tax()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة حسمية دائمة أو مؤقتة +</button>        
         <div class="spanBox spanBox2">
             <span>اسم الحسمية على الطابعة</span>
             <span>اسم الحسمية على الشاشة</span>
@@ -52,7 +52,7 @@
     </div>
     <div class="left">
         <span class="title3">الحسميات ذات الأرصدة</span>
-        <button mat-raised-button color="primary" (click)="Add_Recurr()">إضافة حسمية ذات أرصدة +</button>        
+        <button mat-raised-button color="primary" (click)="Add_Recurr()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة حسمية ذات أرصدة +</button>        
         <div class="spanBox spanBox3">
             <span>اسم الحسمية على الطابعة</span>
             <span>اسم الحسمية على الشاشة</span>
@@ -73,9 +73,9 @@
 </div>
 
 
-<button id="saveButton" mat-raised-button color="primary" (click)="save()">حفظ</button>
+<button id="saveButton" mat-raised-button color="primary" (click)="save()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00011'">حفظ</button>
 
-<button id="DeleteAllButton" mat-raised-button color="primary" (click)="DeleteAll()">حذف الجميع</button>
+<button id="DeleteAllButton" mat-raised-button color="primary" (click)="DeleteAll()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">حذف الجميع</button>
 
 
-<button id="addFromOldPayRollAdd" mat-raised-button color="primary" (click)="addFromOldPayRollAdd()">اضافة الجميع من القديم</button>
+<button id="addFromOldPayRollAdd" mat-raised-button color="primary" (click)="addFromOldPayRollAdd()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">اضافة الجميع من القديم</button>

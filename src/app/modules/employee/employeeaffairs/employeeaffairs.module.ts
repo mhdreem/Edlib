@@ -75,6 +75,7 @@ import { TblshamelscmergeserviceModifyComponent } from './componenets/tblshamels
 import { TBLShamelSCSuddenHolidayAddComponent } from './componenets/tblshamelscsuddenholiday/tblshamel-sc-sudden-holiday-add/tblshamel-sc-sudden-holiday-add.component';
 import { TBLShamelSCSuddenHolidayListComponent } from './componenets/tblshamelscsuddenholiday/tblshamel-sc-sudden-holiday-list/tblshamel-sc-sudden-holiday-list.component';
 import { EmployeeaffairsManageComponent } from './componenets/employeeaffairs-manage.component';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 
 
@@ -160,7 +161,8 @@ import { EmployeeaffairsManageComponent } from './componenets/employeeaffairs-ma
  UtilitiesModule,
  IconModule,
     EmployeeaffairsRoutingModule,
-    NgxHoverOpacityModule
+    NgxHoverOpacityModule,
+    CommonmoduleModule
   ]
 })
 export class EmployeeaffairsModule { }

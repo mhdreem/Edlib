@@ -12,7 +12,7 @@ import { TblShamelChangeReasonAddComponent } from '../tbl-shamel-change-reason-a
   styleUrls: ['./tbl-shamel-change-reason-list.component.scss']
 })
 export class TblShamelChangeReasonListComponent implements OnInit {
-
+  formname:string = 'جدول سبب التبدل';
   ELEMENT_DATA: ITBLShamelChangeReason[] = [];
   dataSource = new MatTableDataSource<ITBLShamelChangeReason>();
 

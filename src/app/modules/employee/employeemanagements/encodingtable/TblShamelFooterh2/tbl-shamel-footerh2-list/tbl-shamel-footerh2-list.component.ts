@@ -12,7 +12,7 @@ import { TblShamelFooterh2AddComponent } from '../tbl-shamel-footerh2-add/tbl-sh
   styleUrls: ['./tbl-shamel-footerh2-list.component.scss']
 })
 export class TblShamelFooterh2ListComponent implements OnInit {
-
+  formname:string = 'جدول اسم تذييل الطباعة';
   ELEMENT_DATA: ITBLShamelFooterH2[] = [];
   dataSource = new MatTableDataSource<ITBLShamelFooterH2>();
 

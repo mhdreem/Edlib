@@ -17,7 +17,7 @@ import { FixUpgradeYearModifyComponent } from '../fix-upgrade-year-modify/fix-up
   styleUrls: ['./fix-upgrade-year-list.component.scss']
 })
 export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'تثبيت دورة الترفيع';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

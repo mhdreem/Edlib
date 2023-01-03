@@ -28,6 +28,7 @@ import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finan
   styleUrls: ['./salary-statistics.component.scss']
 })
 export class SalaryStatisticsComponent implements OnInit {
+  formname:string = 'احصائيات';
 
   LoadingFinish : boolean;
 

@@ -26,6 +26,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./print-upgrade-qarars.component.scss']
 })
 export class PrintUpgradeQararsComponent implements OnInit {
+  formname:string = 'طباعة قرارات الترفيع';
   LoadingFinish : boolean;
 
   _Subscription: Subscription;

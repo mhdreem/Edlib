@@ -1,6 +1,6 @@
 <span class="date" style="color: white;">{{fixedYear}}/{{fixedMonth?.month_name}}</span>
 
-<button class="view" mat-raised-button color="primary" (click)="View()" >عرض</button>
+<button class="view" mat-raised-button color="primary" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="PAYROL_ID">

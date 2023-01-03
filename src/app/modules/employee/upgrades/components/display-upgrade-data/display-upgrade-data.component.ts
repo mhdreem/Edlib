@@ -33,6 +33,7 @@ import { PrintRankComponent } from '../print/print-rank/print-rank.component';
   styleUrls: ['./display-upgrade-data.component.scss']
 })
 export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
+  formname:string = 'عرض بيانات الترفيع';
   LoadingFinish : boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

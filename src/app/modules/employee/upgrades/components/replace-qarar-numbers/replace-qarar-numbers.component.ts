@@ -16,7 +16,7 @@ import { TblshamelScJobStateService } from 'src/app/modules/shared/services/empl
   styleUrls: ['./replace-qarar-numbers.component.scss']
 })
 export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'استبدال أرقام القرارات';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   

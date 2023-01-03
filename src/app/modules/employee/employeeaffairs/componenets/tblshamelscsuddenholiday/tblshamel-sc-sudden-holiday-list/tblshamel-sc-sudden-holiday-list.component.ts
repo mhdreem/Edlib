@@ -19,6 +19,7 @@ import { TBLShamelSCSuddenHolidayAddComponent } from '../tblshamel-sc-sudden-hol
   styleUrls: ['./tblshamel-sc-sudden-holiday-list.component.scss']
 })
 export class TBLShamelSCSuddenHolidayListComponent implements OnInit,AfterViewInit {
+  formname:string = 'الإجازات الاضطرارية';
 //Join Variable   
 Selected_Emp: TBLShamelEmployee = {};
 @ViewChild('paginator') paginator: MatPaginator;

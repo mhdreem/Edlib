@@ -39,6 +39,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./stats2.component.scss']
 })
 export class Stats2Component implements OnInit, OnDestroy {
+  formname:string = 'بحث موسع';
   LoadingFinish : boolean;
 
   @ViewChild(MatSort) sort!: MatSort;

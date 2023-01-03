@@ -20,7 +20,7 @@ import { DOCUMENT } from "@angular/common";
   styleUrls: ['./tblshamelscpunishmentlist.component.scss']
 })
 export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit  {
-  formname:string = 'ManageSCPunishmentFrame1';
+  formname:string = 'العقوبات';
     //Join Variable   
     Selected_Emp: TBLShamelEmployee = {};
     @ViewChild('paginator') paginator: MatPaginator;

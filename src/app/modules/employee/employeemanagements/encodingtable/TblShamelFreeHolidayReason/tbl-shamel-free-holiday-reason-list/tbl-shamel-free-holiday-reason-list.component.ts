@@ -12,7 +12,7 @@ import { TblShamelFreeHolidayReasonAddComponent } from '../tbl-shamel-free-holid
   styleUrls: ['./tbl-shamel-free-holiday-reason-list.component.scss']
 })
 export class TblShamelFreeHolidayReasonListComponent implements OnInit {
-
+  formname:string = 'جدول سبب الإجازة الخاصة';
   ELEMENT_DATA: ITBLShamelFreeHolidayReason[] = [];
   dataSource = new MatTableDataSource<ITBLShamelFreeHolidayReason>();
 

@@ -445,9 +445,11 @@ if (
              {
                console.log('update');
                console.log('this.Selected_User',this.Selected_User);
-
-      this.UserService.update(this.Selected_User).toPromise().then((res:any) => {
-        console.log(res)
+              let Selected_UserCopy = this.Selected_User;
+              Selected_UserCopy.entermaxtime = moment(Selected_UserCopy.entermaxtime).format('hh:mm:ss');
+              Selected_UserCopy.entermintime = moment(Selected_UserCopy.entermintime).format('hh:mm:ss');
+      this.UserService.update(Selected_UserCopy).toPromise().then((res:any) => {
+        console.log(res);
         if (res == 1)
         {
           this.getValue();

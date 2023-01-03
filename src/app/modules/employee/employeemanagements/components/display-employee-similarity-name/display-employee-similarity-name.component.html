@@ -1,4 +1,4 @@
-<button class="search" mat-raised-button color="primary" (click)="view()">عرض</button>
+<button class="search" mat-raised-button color="primary" (click)="view()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
 <div class="col-md-12">
     <div class="table-wrap">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>

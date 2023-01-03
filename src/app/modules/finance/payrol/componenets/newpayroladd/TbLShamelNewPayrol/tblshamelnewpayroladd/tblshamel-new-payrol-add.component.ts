@@ -27,6 +27,8 @@ import { TblShamelNewPayrolAddPageServiceService } from '../tbl-shamel-new-payro
   styleUrls: ['./tblshamel-new-payrol-add.component.scss']
 })
 export class TbLShamelNewPayrolAddComponent implements OnInit {
+  formname:string = 'إدخال بيانات راتب';
+
   Form: FormGroup;
   List_TblShamelNewPayrolTax: TblShamelNewPayrolTax[] = [];
 

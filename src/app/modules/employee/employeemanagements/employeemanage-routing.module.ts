@@ -211,7 +211,7 @@ const routes: Routes = [
             { path: 'footerh2', component: TblShamelFooterh2ListComponent },
             { path: 'freeholidayreason', component: TblShamelFreeHolidayReasonListComponent },        
             { path: 'class', component: TblShamelClassListComponent },        
-            { path: 'documentType', component: TblShamelDocumentTypeListComponent },        
+            { path: 'documenttype', component: TblShamelDocumentTypeListComponent },        
           ]
       }
 

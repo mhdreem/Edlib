@@ -1,7 +1,7 @@
 <!-- app.component.html -->
 <div class="container text-center">
 
-  <button mat-button (click)="openDialog('إضافة',{})" mat-flat-button color="primary" >إضافة </button>
+  <button mat-button (click)="openDialog('إضافة',{})" mat-flat-button color="primary" style="margin-bottom: 10px;" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة </button>
 
   <table mat-table  [dataSource]="dataSource" #mytable   class="my-table mat-elevation-z8">
     <!--- Note that these columns can be defined in any order.

@@ -305,7 +305,7 @@
 
     </mat-accordion>
 </div>
-<button class="search" mat-raised-button color="primary" (click)="ExcuteSearch()">عرض السجلات</button>
+<button class="search" mat-raised-button color="primary" (click)="ExcuteSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
     <div class="table-wrap">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>

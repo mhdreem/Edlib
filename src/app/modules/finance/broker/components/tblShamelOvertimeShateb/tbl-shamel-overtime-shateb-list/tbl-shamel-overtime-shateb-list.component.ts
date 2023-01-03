@@ -32,7 +32,7 @@ import { TblShamelOvertimeShatebModifyComponent } from '../tbl-shamel-overtime-s
   styleUrls: ['./tbl-shamel-overtime-shateb-list.component.scss']
 })
 export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'سجل الشطب';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

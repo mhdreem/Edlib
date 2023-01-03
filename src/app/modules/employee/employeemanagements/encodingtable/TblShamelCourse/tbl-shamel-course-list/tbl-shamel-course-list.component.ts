@@ -12,7 +12,7 @@ import { TblShamelCourseAddComponent } from '../tbl-shamel-course-add/tbl-shamel
   styleUrls: ['./tbl-shamel-course-list.component.scss']
 })
 export class TblShamelCourseListComponent implements OnInit {
-
+  formname:string = 'جدول الدراسات والدورات';
   ELEMENT_DATA: ITBLShamelCourse[] = [];
   dataSource = new MatTableDataSource<ITBLShamelCourse>();
 
