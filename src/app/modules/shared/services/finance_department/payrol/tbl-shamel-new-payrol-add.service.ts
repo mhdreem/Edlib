@@ -18,10 +18,10 @@ export class TblShamelNewPayrolAddService {
  
   constructor(private httpClient : HttpClient) { }
 
-  getById(id: number)  {
+  getById(id: number) :Observable<TblShamelNewPayrolAdd>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
-    return this.httpClient.get(this.RestUrl +"TblShamelNewPayrolAdd/GetByID/"+id,options) as Observable<TblShamelNewPayrolAdd>;  
+    return this.httpClient.get<TblShamelNewPayrolAdd>(this.RestUrl +"TblShamelNewPayrolAdd/GetByID/"+id,options) as Observable<TblShamelNewPayrolAdd>;  
     
   }
 

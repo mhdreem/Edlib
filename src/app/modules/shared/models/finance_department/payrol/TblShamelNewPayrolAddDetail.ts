@@ -12,7 +12,9 @@ export interface TblShamelNewPayrolAddDetail
      ta3weed_amount  ?:number;
      ta3weed_percent  ?:number;
     ta3weed_active  ?:number;
-    
+    ta3weed_order  ?:number;
+
+
      taxtemp_amount ?:number;
      taxtemp_percent  ?:number;
      taxtemp_order  ?:number;

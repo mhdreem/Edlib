@@ -87,14 +87,14 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
           ta3weed_name:element.ta3weed_name,
           ta3weedp_name:element.ta3weedp_name,
           ta3weed_round:element.ta3weed_round,
-          ta3weedp_order:element.ta3weedp_order,
+          ta3weed_order:element.ta3weed_order,
           taxtemp_name:element.taxtemp_name,
           taxtempp_name:element.taxtempp_name,
           taxtemp_round:element.taxtemp_round,
           taxtemp_order:element.taxtemp_order,
           taxrecurr_name:element.taxrecurr_name,
           taxrecurrp_name:element.taxrecurrp_name,
-          taxrecurrp_order:element.taxrecurrp_order,
+          taxrecurr_order:element.taxrecurr_order,
           payroltaxtype:element.payroltaxtype,
           payroltaxconstant:element.payroltaxconstant,
 
@@ -124,7 +124,7 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
   isNotNull(element: any){
     let isNotNull = false;
     if (element.payroltaxtype == 'ta3weed'){
-      if (element.ta3weed_name != null && element.ta3weedp_name != null && element.ta3weed_round != null && element.ta3weedp_order != null)
+      if (element.ta3weed_name != null && element.ta3weedp_name != null && element.ta3weed_round != null && element.ta3weed_order != null)
       isNotNull= true;
     }
     else if (element.payroltaxtype == 'taxtemp'){
@@ -132,7 +132,7 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
       isNotNull= true;
     }
     else if (element.payroltaxtype == 'recurr'){
-      if (element.taxrecurr_name != null && element.taxrecurrp_name != null && element.taxrecurrp_order != null)
+      if (element.taxrecurr_name != null && element.taxrecurrp_name != null && element.taxrecurr_order != null)
       isNotNull= true;
     }
     return isNotNull;

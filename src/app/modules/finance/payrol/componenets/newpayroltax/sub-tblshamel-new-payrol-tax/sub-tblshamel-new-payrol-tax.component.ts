@@ -67,14 +67,14 @@ return {};
       ta3weed_name: new FormControl<string|null>(null, Validators.required),
       ta3weedp_name: new FormControl<string|null>(null, Validators.required),
       ta3weed_round: new FormControl<number|null>(null, Validators.required),
-      ta3weedp_order: new FormControl<number|null>(null, Validators.required),
+      ta3weed_order: new FormControl<number|null>(null, Validators.required),
       taxtemp_name: new FormControl<string|null>(null, Validators.required),
       taxtempp_name: new FormControl<string|null>(null, Validators.required),
       taxtemp_round: new FormControl<number|null>(null, Validators.required),
       taxtemp_order: new FormControl<number|null>(null, Validators.required),
       taxrecurr_name: new FormControl<string|null>(null, Validators.required),
       taxrecurrp_name: new FormControl<string|null>(null, Validators.required),
-      taxrecurrp_order: new FormControl<number|null>(null, Validators.required),
+      taxrecurr_order: new FormControl<number|null>(null, Validators.required),
       payroltaxtype: new FormControl<string|null>(null),
       payroltaxconstant: new FormControl<string|null>(null, Validators.required)
     }, 
@@ -126,8 +126,8 @@ return {};
         this.Form.controls['ta3weedp_name'].setValue(this.tblShamelNewPayrolTax.ta3weedp_name);
 
 
-        if (this.tblShamelNewPayrolTax.ta3weedp_order!= null)
-        this.Form.controls['ta3weedp_order'].setValue(this.tblShamelNewPayrolTax.ta3weedp_order);
+        if (this.tblShamelNewPayrolTax.ta3weed_order!= null)
+        this.Form.controls['ta3weed_order'].setValue(this.tblShamelNewPayrolTax.ta3weed_order);
 
         if (this.tblShamelNewPayrolTax.taxrecurr_name!= null)
         this.Form.controls['taxrecurr_name'].setValue(this.tblShamelNewPayrolTax.taxrecurr_name);
@@ -136,8 +136,8 @@ return {};
         this.Form.controls['taxrecurrp_name'].setValue(this.tblShamelNewPayrolTax.taxrecurrp_name);
 
 
-        if (this.tblShamelNewPayrolTax.taxrecurrp_order!= null)
-        this.Form.controls['taxrecurrp_order'].setValue(this.tblShamelNewPayrolTax.taxrecurrp_order);
+        if (this.tblShamelNewPayrolTax.taxrecurr_order!= null)
+        this.Form.controls['taxrecurr_order'].setValue(this.tblShamelNewPayrolTax.taxrecurr_order);
 
 
 

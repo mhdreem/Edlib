@@ -51,55 +51,46 @@ InsuranceSalary ?:number;
    this.salary_old =0;
    this.salary =0;
   }
-  public Clone(obj:any)
+  public Clone(obj:TblShamelNewPayrolAdd)
   {
    if (obj!= null )
    {
+     
+      
+
       if (obj.id != null)
          this.id = obj.id;
 
-         if (obj.insurance_kind != null)
-         this.insurance_kind = obj.insurance_kind;
 
-         if (obj.FirstChild != null)
-         this.FirstChild = obj.FirstChild;
-
-         if (obj.FourChild != null)
-         this.FourChild = obj.FourChild;
-
-
-         if (obj.RestChild != null)
-         this.RestChild = obj.RestChild;
-
-
-         if (obj.SecondChild != null)
-         this.SecondChild = obj.SecondChild;
-
-
-         if (obj.TBLShamelEmployee != null)
-         this.TBLShamelEmployee = obj.TBLShamelEmployee;
-
-
-         if (obj.salary_last_jobstate != null)
-         this.salary_last_jobstate = obj.salary_last_jobstate;
-
-         if (obj.TblShamelNewPayrolAddDetails != null)
-         this.TblShamelNewPayrolAddDetails = obj.TblShamelNewPayrolAddDetails;
-
-
-         if (obj.ThirdChild != null)
-         this.ThirdChild = obj.ThirdChild;
+         if (obj.wife != null)
+         this.wife= obj.wife;
 
 
          if (obj.family != null)
          this.family = obj.family;
 
+
+
          if (obj.family_ta3weed != null)
          this.family_ta3weed = obj.family_ta3weed;
 
-         if (obj.id != null)
-         this.id = obj.id;
 
+         if (obj.insurance_kind != null)
+         this.insurance_kind = obj.insurance_kind;
+
+
+         if (this.family!= null && this.family.length>0)
+         {
+            this.fill_child_info_from_family();
+            this.calc_family_ta3weed();
+
+         }
+         
+         if (obj.salary_old != null)
+         this.salary_old = obj.salary_old;
+
+         if (obj.salary != null)
+         this.salary = obj.salary;
 
          if (obj.insurance_kind != null)
          this.insurance_kind = obj.insurance_kind;
@@ -107,14 +98,45 @@ InsuranceSalary ?:number;
          if (obj.locked != null)
          this.locked= obj.locked;
 
+         if (obj.InsuranceSalary != null)
+         this.InsuranceSalary= obj.InsuranceSalary;
 
          if (obj.salary != null)
          this.salary= obj.salary;
 
+        
+         
 
-         if (obj.wife != null)
-         this.wife= obj.wife;
+         if (obj.TBLShamelEmployee != null)
+         {
+            this.TBLShamelEmployee= Object.assign({}, obj.TBLShamelEmployee);
+            //this.TBLShamelEmployee =  obj.TBLShamelEmployee;
 
+         }
+
+
+
+         
+
+         if (obj.TblShamelNewPayrolAddDetails != null)
+         {
+            this.TblShamelNewPayrolAddDetails = obj.TblShamelNewPayrolAddDetails;
+         }
+         
+
+         this.salary_last_jobstate = this.Get_Last_Salary_From_JobState();
+
+
+
+        
+
+        
+
+
+      
+
+
+      
 
    }
   }

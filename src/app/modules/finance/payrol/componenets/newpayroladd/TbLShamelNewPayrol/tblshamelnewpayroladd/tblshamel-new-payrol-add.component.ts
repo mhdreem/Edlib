@@ -140,6 +140,120 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     return this.ShamelYearService.GetYearFixed();
 
   }
+
+  public Fill_Empty_Tax() : TblShamelNewPayrolAddDetail[]
+  {
+    let TblShamelNewPayrolAddDetails: TblShamelNewPayrolAddDetail[] = [];
+
+    if (this.List_TblShamelNewPayrolTax!= null && this.List_TblShamelNewPayrolTax.length>0)
+    {
+      var List_ta3weed = this.List_TblShamelNewPayrolTax.filter(x => x.payroltaxtype == 'ta3weed');
+        var List_taxtemp = this.List_TblShamelNewPayrolTax.filter(x =>  x.payroltaxtype == 'taxtemp');
+        var List_recurr = this.List_TblShamelNewPayrolTax.filter(x =>  x.payroltaxtype == 'recurr');
+
+        List_ta3weed.sort(function (a, b) {
+          return a.ta3weed_order - b.ta3weed_order;
+        });
+
+
+
+
+        List_taxtemp.sort(function (a, b) {
+          return a.taxtemp_order - b.taxtemp_order;
+        });
+
+        
+        List_recurr.sort(function (a, b) {
+          return a.taxrecurr_order - b.taxrecurr_order;
+        });
+
+        List_ta3weed.forEach(element => {
+
+        let Detail: TblShamelNewPayrolAddDetail = {
+          tblshamelnewpayroladd_fk: this.pageService.TBLShamelEmployee.id,
+          tblshamelnewpayroltax_fk: element.serial
+        };
+        Detail.TblShamelNewPayrolTax = Object.assign({}, element);
+       
+
+
+        switch (element.payroltaxtype) {
+          case 'ta3weed':
+            Detail.name = element.ta3weedp_name;
+            Detail.ta3weed_order =element.ta3weed_order;
+            
+            break;
+          case 'taxtemp':
+            Detail.name = element.taxtempp_name;
+            Detail.taxtemp_order =element.taxtemp_order;
+            break;
+          case 'recurr':
+            Detail.name = element.taxrecurrp_name;
+            Detail.taxrecurr_order =element.taxrecurr_order;
+            break;
+        }
+        TblShamelNewPayrolAddDetails.push(Detail);
+    });
+
+    List_taxtemp.forEach(element => {
+
+      let Detail: TblShamelNewPayrolAddDetail = {
+        tblshamelnewpayroladd_fk: this.pageService.TBLShamelEmployee.id,
+        tblshamelnewpayroltax_fk: element.serial
+      };
+      Detail.TblShamelNewPayrolTax = Object.assign({}, element);
+    
+
+      switch (element.payroltaxtype) {
+        case 'ta3weed':
+          Detail.name = element.ta3weedp_name;
+          Detail.ta3weed_order =element.ta3weed_order;
+          
+          break;
+        case 'taxtemp':
+          Detail.name = element.taxtempp_name;
+          Detail.taxtemp_order =element.taxtemp_order;
+          break;
+        case 'recurr':
+          Detail.name = element.taxrecurrp_name;
+          Detail.taxrecurr_order =element.taxrecurr_order;
+          break;
+      }
+      TblShamelNewPayrolAddDetails.push(Detail);
+  });
+
+  List_recurr.forEach(element => {
+
+    let Detail: TblShamelNewPayrolAddDetail = {
+      tblshamelnewpayroladd_fk: this.pageService.TBLShamelEmployee.id,
+      tblshamelnewpayroltax_fk: element.serial
+    };
+    Detail.TblShamelNewPayrolTax = Object.assign({}, element);
+  
+
+    switch (element.payroltaxtype) {
+      case 'ta3weed':
+        Detail.name = element.ta3weedp_name;
+        Detail.ta3weed_order =element.ta3weed_order;
+        
+        break;
+      case 'taxtemp':
+        Detail.name = element.taxtempp_name;
+        Detail.taxtemp_order =element.taxtemp_order;
+        break;
+      case 'recurr':
+        Detail.name = element.taxrecurrp_name;
+        Detail.taxrecurr_order =element.taxrecurr_order;
+        break;
+    }
+    TblShamelNewPayrolAddDetails.push(Detail);
+});
+
+  }
+    return TblShamelNewPayrolAddDetails;
+        
+  }
+
   LoadData() {
 
     forkJoin(
@@ -155,6 +269,12 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
       this.tblShamelNewPayrolTaxService.List_TblShamelNewPayrolTax = res[0];
       this.tblShamelNewPayrolTaxService.List_TblShamelNewPayrolTax_BehaviorSubject.next(res[0]);
 
+      
+
+
+         
+
+
 
       this.Fixed_Year = res[1];
       this.Fixed_Month = res[2];
@@ -164,82 +284,78 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
       this.pageService.TblShamelNewPayrolAdd = new TblShamelNewPayrolAdd();
       this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails = [];
-      this.pageService.TblShamelNewPayrolAdd.Clone(res[4]);
 
+      let obj :TblShamelNewPayrolAdd =  res[4] as TblShamelNewPayrolAdd ;
+      if (obj!= null)
+      {
+        //this.pageService.TblShamelNewPayrolAdd= Object.assign({}, obj);
+        this.pageService.TblShamelNewPayrolAdd.Clone(obj);
+        this.pageService.TblShamelNewPayrolAdd = this.pageService.TblShamelNewPayrolAdd as TblShamelNewPayrolAdd;
 
-      this.pageService.TblShamelNewPayrolAdd_BehaviorSubject.next(this.pageService.TblShamelNewPayrolAdd);
+        this.pageService.TblShamelNewPayrolAdd.fill_child_info_from_family();
+        this.pageService.TblShamelNewPayrolAdd.salary_last_jobstate = this.pageService.TblShamelNewPayrolAdd.Get_Last_Salary_From_JobState();
+        this.pageService.TblShamelNewPayrolAdd.calc_family_ta3weed();
+        this.pageService.TblShamelNewPayrolAdd_BehaviorSubject.next(this.pageService.TblShamelNewPayrolAdd);
+      }            
+      if (this.pageService.TblShamelNewPayrolAdd == null ||
+           this.pageService.TblShamelNewPayrolAdd == undefined ||
+           this.pageService.TblShamelNewPayrolAdd.id == null ||
+           this.pageService.TblShamelNewPayrolAdd.id == undefined  ||
+           this.pageService.TblShamelNewPayrolAdd.id == 0 
+           ) {
 
-
-
-      if (this.pageService.TblShamelNewPayrolAdd == null || this.pageService.TblShamelNewPayrolAdd == undefined) {
-        this.pageService.TblShamelNewPayrolAdd = new TblShamelNewPayrolAdd();
-        this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails = [];
+          this.pageService.TblShamelNewPayrolAdd = new TblShamelNewPayrolAdd();
+          if (this.pageService.TBLShamelEmployee != null &&
+            this.pageService.TBLShamelEmployee.id != null &&
+            this.pageService.TBLShamelEmployee.id > 0
+          ) {          
+            this.pageService.TblShamelNewPayrolAdd.id = this.pageService.TBLShamelEmployee.id;
+            this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee= Object.assign({}, this.pageService.TBLShamelEmployee);
+            this.pageService.TblShamelNewPayrolAdd.InsuranceSalary = this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee.InsuranceSalary;        
+            this.pageService.TblShamelNewPayrolAdd.Get_Last_Salary_From_JobState();            
+          }
+          this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails = [];
       }
+    
+      var TblShamelNewPayrolAddDetails =   this.Fill_Empty_Tax();
 
-      if (this.pageService.TBLShamelEmployee != null &&
-        this.pageService.TBLShamelEmployee.id != null &&
-        this.pageService.TBLShamelEmployee.id > 0
-      ) {
+      TblShamelNewPayrolAddDetails.forEach(element => {
 
-        this.pageService.TblShamelNewPayrolAdd.id = this.pageService.TBLShamelEmployee.id;
-        this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee = this.pageService.TBLShamelEmployee;
-        this.pageService.TblShamelNewPayrolAdd.InsuranceSalary = this.pageService.TblShamelNewPayrolAdd.TBLShamelEmployee.InsuranceSalary;        
-        this.pageService.TblShamelNewPayrolAdd.Get_Last_Salary_From_JobState();
+        if (this.pageService.TblShamelNewPayrolAdd != null &&
+          this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails != null &&
+           this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.length > 0) 
+           {
+             var payrollDetails = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.tblshamelnewpayroltax_fk == element.TblShamelNewPayrolTax.serial);
 
-        
+             if (payrollDetails!= null && payrollDetails.length>0)
+             {
+              var payrollDetail = payrollDetails[0];
+              if (payrollDetail != null ) {
+                element.ta3weed_active = payrollDetail.ta3weed_active;
+                element.ta3weed_amount = payrollDetail.ta3weed_amount;
+                element.ta3weed_percent = payrollDetail.ta3weed_percent;
+                element.taxrecurr_balance = payrollDetail.taxrecurr_balance;
+                element.taxrecurr_fee = payrollDetail.taxrecurr_fee;
+                element.taxrecurr_order = payrollDetail.taxrecurr_order;
+                element.taxrecurr_total = payrollDetail.taxrecurr_total;
+                element.taxtemp_amount = payrollDetail.taxtemp_amount;
+                element.taxtemp_order = payrollDetail.taxtemp_order;
+                element.taxtemp_percent = payrollDetail.taxtemp_percent;
+                element.taxtemp_active = payrollDetail.taxtemp_active;
+                element.ta3weed_active = payrollDetail.ta3weed_active;
+                element.taxrecurr_active = payrollDetail.taxrecurr_active;
+                element.ta3weed_order = payrollDetail.ta3weed_order;
+               }
+             }
 
+          
 
-        let TblShamelNewPayrolAddDetails: TblShamelNewPayrolAddDetail[] = [];
-        this.List_TblShamelNewPayrolTax.forEach(element => {
+         }
 
-          let Detail: TblShamelNewPayrolAddDetail = {
-            tblshamelnewpayroladd_fk: this.pageService.TBLShamelEmployee.id,
-            tblshamelnewpayroltax_fk: element.serial
-          };
+      });
+      
 
-          Detail.TblShamelNewPayrolTax = element;
-
-          switch (element.payroltaxtype) {
-            case 'ta3weed':
-              Detail.name = element.ta3weed_name;
-              break;
-            case 'taxtemp':
-              Detail.name = element.taxtemp_name;
-              break;
-            case 'recurr':
-              Detail.name = element.taxrecurr_name;
-              break;
-          }
-
-
-          Detail.tblshamelnewpayroladd_fk = this.pageService.TBLShamelEmployee.id;
-          Detail.tblshamelnewpayroltax_fk = element.serial;
-
-          if (this.pageService.TblShamelNewPayrolAdd != null && this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails != null && this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.length > 0) {
-            var payrollDetail = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.find(x => x.tblshamelnewpayroltax_fk == element.serial);
-
-
-            if (payrollDetail != null) {
-              Detail.ta3weed_active = payrollDetail.ta3weed_active;
-              Detail.ta3weed_amount = payrollDetail.ta3weed_amount;
-              Detail.ta3weed_percent = payrollDetail.ta3weed_percent;
-              Detail.taxrecurr_balance = payrollDetail.taxrecurr_balance;
-              Detail.taxrecurr_fee = payrollDetail.taxrecurr_fee;
-              Detail.taxrecurr_order = payrollDetail.taxrecurr_order;
-              Detail.taxrecurr_total = payrollDetail.taxrecurr_total;
-              Detail.taxtemp_amount = payrollDetail.taxtemp_amount;
-              Detail.taxtemp_order = payrollDetail.taxtemp_order;
-              Detail.taxtemp_percent = payrollDetail.taxtemp_percent;
-              Detail.taxtemp_active = payrollDetail.taxtemp_active;
-              Detail.ta3weed_active = payrollDetail.ta3weed_active;
-              Detail.taxrecurr_active = payrollDetail.taxrecurr_active;
-            }
-
-          }
-
-          TblShamelNewPayrolAddDetails.push(Detail);
-
-        });
+         
 
         this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails = TblShamelNewPayrolAddDetails;
         this.pageService.TblShamelNewPayrolAdd_BehaviorSubject.next(this.pageService.TblShamelNewPayrolAdd);
@@ -249,17 +365,33 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         this.pageService.List_taxtemp = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'taxtemp');
         this.pageService.List_recurr = this.pageService.TblShamelNewPayrolAdd.TblShamelNewPayrolAddDetails.filter(x => x.TblShamelNewPayrolTax != null && x.TblShamelNewPayrolTax.payroltaxtype == 'recurr');
 
+        this.pageService.List_ta3weed = this.pageService.List_ta3weed.sort(function (a, b) {
+          return a.ta3weed_order - b.ta3weed_order;
+        });
+
+
+
+
+        this.pageService.List_taxtemp = this.pageService.List_taxtemp.sort(function (a, b) {
+          return a.taxtemp_order - b.taxtemp_order;
+        });
+
+        
+        this.pageService.List_recurr = this.pageService.List_recurr.sort(function (a, b) {
+          return a.taxrecurr_order - b.taxrecurr_order;
+        });
+
+
         console.log('List_ta3weed', this.pageService.List_ta3weed);
         console.log('List_taxtemp', this.pageService.List_taxtemp);
         console.log('List_recurr', this.pageService.List_recurr);
+
         this.BindValue();
         
       this.bindModelToForm(this.pageService.TblShamelNewPayrolAdd,this.Form);
 
 
 
-
-      }
 
 
 
@@ -340,17 +472,20 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
         this.Form.controls['InsuranceSalary'].setValue(this.pageService.TblShamelNewPayrolAdd.InsuranceSalary);
   
 
+        if (this.pageService.TblShamelNewPayrolAdd != null &&
+          this.pageService.TblShamelNewPayrolAdd.salary_old != null &&
+          this.pageService.TblShamelNewPayrolAdd.salary_old> 0
+        )
+          this.Form.controls['salary_old'].setValue(this.pageService.TblShamelNewPayrolAdd.salary_old);
+  
+          
     if (this.pageService.TBLShamelEmployee != null &&
       this.pageService.TBLShamelEmployee.Payrol_ID != null
     )
       this.Form.controls['payrol_id'].setValue(this.pageService.TBLShamelEmployee.Payrol_ID);
 
 
-    if (this.pageService.TBLShamelEmployee != null &&
-      this.pageService.TBLShamelEmployee.Payrol_ID != null
-    )
-      this.Form.controls['payrol_id'].setValue(this.pageService.TBLShamelEmployee.Payrol_ID);
-
+  
     if (this.pageService.TblShamelNewPayrolAdd != null) {
       //يحوي بيانات
     
@@ -384,6 +519,11 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
           if (this.pageService.TblShamelNewPayrolAdd.RestChild!= null && this.pageService.TblShamelNewPayrolAdd.RestChild!= undefined)
           this.Form.controls['FourChild'].setValue(this.pageService.TblShamelNewPayrolAdd.RestChild);
+   
+
+          
+          if (this.pageService.TblShamelNewPayrolAdd.RestChild!= null && this.pageService.TblShamelNewPayrolAdd.RestChild!= undefined)
+          this.Form.controls['RestChild'].setValue(this.pageService.TblShamelNewPayrolAdd.RestChild);
    
       }
 
@@ -443,28 +583,31 @@ getValue ()
 
   let Family: string = '';
   if (
-    this.Form.controls['FirstChild'].value != null && this.Form.controls['FirstChild'].value.length > 0)
+    this.Form.controls['FirstChild'].value != null && this.Form.controls['FirstChild'].value.toString().length > 0)
     Family = this.Form.controls['FirstChild'].value + Family;
   else
     Family = '0' + Family;
 
   if (
     this.Form.controls['SecondChild'].value != null &&
-    this.Form.controls['SecondChild'].value.length > 0)
+    this.Form.controls['SecondChild'].value.toString().length > 0)
     Family = this.Form.controls['SecondChild'].value + Family;
   else
     Family = '0' + Family;
 
   if (
     this.Form.controls['ThirdChild'].value != null &&
-    this.Form.controls['ThirdChild'].value.length > 0)
+    this.Form.controls['ThirdChild'].value.toString().length > 0)
     Family = this.Form.controls['ThirdChild'].value + Family;
   else
     Family = '0' + Family;
 
+    console.log( 'حجم طول المصفوفة');
+console.log( this.Form.controls['FourChild'].value.length);
+
   if (
     this.Form.controls['FourChild'].value != null &&
-    this.Form.controls['FourChild'].value.length > 0)
+    this.Form.controls['FourChild'].value.toString().length > 0)
     Family = this.Form.controls['FourChild'].value + Family;
   else
     Family = '0' + Family;
@@ -474,7 +617,7 @@ getValue ()
 
   if (
     this.Form.controls['RestChild'].value != null &&
-    this.Form.controls['RestChild'].value.length > 0)
+    this.Form.controls['RestChild'].value.toString().length > 0)
     Family = this.Form.controls['RestChild'].value + Family;
   else
     Family = '0' + Family;
