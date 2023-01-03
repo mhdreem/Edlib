@@ -12,7 +12,7 @@ import { TblShamelDepartmentAddComponent } from '../tbl-shamel-department-add/tb
   styleUrls: ['./tbl-shamel-department-list.component.scss']
 })
 export class TblShamelDepartmentListComponent implements OnInit {
-
+  formname:string = 'جدول مركز الوظيفة';
   ELEMENT_DATA: ITBLShamelDepartment[] = [];
   dataSource = new MatTableDataSource<ITBLShamelDepartment>();
 

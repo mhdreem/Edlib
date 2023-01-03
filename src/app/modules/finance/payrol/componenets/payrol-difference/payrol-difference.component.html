@@ -103,8 +103,8 @@
         </div>
     </form>
 
-    <button class="view" mat-raised-button color="primary" (click)="View()">عرض</button>
-    <button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint>طباعة</button>
+    <button class="view" mat-raised-button color="primary" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+    <button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
 
     <div class="table-wrap">
 

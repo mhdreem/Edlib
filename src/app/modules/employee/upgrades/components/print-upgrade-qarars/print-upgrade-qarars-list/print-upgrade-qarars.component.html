@@ -17,13 +17,13 @@
     </div>
     <div class="left">
         <div class="top">
-            <button mat-raised-button color="primary" (click)="addHeader()">إضافة</button>
-            <button mat-raised-button color="primary" (click)="updateHeader()">تعديل</button>
+            <button mat-raised-button color="primary" (click)="addHeader()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+            <button mat-raised-button color="primary" (click)="updateHeader()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">تعديل</button>
 
         </div>
         <div class="bottom">
-            <button mat-raised-button color="primary" (click)="previousHeader()"><</button>
-            <button mat-raised-button color="primary" (click)="nextHeader()">></button>
+            <button mat-raised-button color="primary" (click)="previousHeader()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'"><</button>
+            <button mat-raised-button color="primary" (click)="nextHeader()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">></button>
 
         </div>
     </div>
@@ -112,13 +112,13 @@
     </div>
     <div class="left">
         <div class="top">
-            <button mat-raised-button color="primary" (click)="addFooter1()">إضافة</button>
-            <button mat-raised-button color="primary" (click)="updateFooter1()">تعديل</button>
+            <button mat-raised-button color="primary" (click)="addFooter1()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+            <button mat-raised-button color="primary" (click)="updateFooter1()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">تعديل</button>
 
         </div>
         <div class="bottom">
-            <button mat-raised-button color="primary" (click)="previousFooter1()"><</button>
-            <button mat-raised-button color="primary" (click)="nextFooter1()">></button>
+            <button mat-raised-button color="primary" (click)="previousFooter1()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'"><</button>
+            <button mat-raised-button color="primary" (click)="nextFooter1()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">></button>
 
         </div>
     </div>
@@ -139,13 +139,13 @@
     </div>
     <div class="left">
         <div class="top">
-            <button mat-raised-button color="primary" (click)="addFooter2()">إضافة</button>
-            <button mat-raised-button color="primary" (click)="updateFooter2()">تعديل</button>
+            <button mat-raised-button color="primary" (click)="addFooter2()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+            <button mat-raised-button color="primary" (click)="updateFooter2()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">تعديل</button>
 
         </div>
         <div class="bottom">
-            <button mat-raised-button color="primary" (click)="previousFooter2()"><</button>
-            <button mat-raised-button color="primary" (click)="nextFooter2()">></button>
+            <button mat-raised-button color="primary" (click)="previousFooter2()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'"><</button>
+            <button mat-raised-button color="primary" (click)="nextFooter2()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">></button>
 
         </div>
     </div>
@@ -155,8 +155,8 @@
     <form class="example-form" [formGroup]="Form1">
         <!-- <mat-checkbox [formControl]="showWord">إظهار كلمة رئيس المكتب التنفيذي</mat-checkbox> -->
     </form>
-    <button mat-raised-button color="primary" (click)="print()" >طباعة</button>
-    <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
+    <button mat-raised-button color="primary" (click)="print()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+    <button mat-raised-button color="primary" (click)="adjustPrintFooter()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
     
 
 

@@ -10,6 +10,7 @@ import { EmployeeServiceService } from 'src/app/modules/shared/services/employee
   styleUrls: ['./display-employee-similarity-name.component.scss']
 })
 export class DisplayEmployeeSimilarityNameComponent implements OnInit {
+  formname:string = 'عرض تشابه الأسماء';
 
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

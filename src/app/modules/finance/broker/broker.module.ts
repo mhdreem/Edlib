@@ -82,7 +82,10 @@ import { TblShamelBrokerPrintTotalsListComponent } from './components/tblShamelB
 import {MatSortModule} from '@angular/material/sort';
 import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
+
 /////////////////////////////
+
 
 //component 
 
@@ -219,7 +222,8 @@ BrokerRoutingModule,
 MatExpansionModule,
 MatSortModule,
 MatProgressBarModule,
-NgxHoverOpacityModule
+NgxHoverOpacityModule,
+CommonmoduleModule
 
   ]
 })

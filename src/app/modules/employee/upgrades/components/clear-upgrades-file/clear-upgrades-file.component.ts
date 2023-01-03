@@ -8,7 +8,7 @@ import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employe
   styleUrls: ['./clear-upgrades-file.component.scss']
 })
 export class ClearUpgradesFileComponent implements OnInit {
-
+  formname:string = 'مسح ملف الترفيعات';
   constructor(private tblShamelUpgradeService: TBLShamelUpgradeService,
     private snackBar: MatSnackBar,) { }
 

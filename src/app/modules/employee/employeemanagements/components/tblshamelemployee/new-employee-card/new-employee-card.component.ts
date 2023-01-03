@@ -36,6 +36,7 @@ const moment = _moment;
   styleUrls: ['./new-employee-card.component.scss']
 })
 export class NewEmployeeCardComponent implements OnInit, OnDestroy {
+  formname:string = 'إدخال بطاقة';
 
   _Selected_Employee: TBLShamelEmployee = {};
   @Input() set Selected_Employee(passFromParent: TBLShamelEmployee) {

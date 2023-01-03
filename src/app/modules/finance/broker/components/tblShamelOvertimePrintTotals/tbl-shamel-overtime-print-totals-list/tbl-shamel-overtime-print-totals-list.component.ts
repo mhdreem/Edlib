@@ -19,6 +19,7 @@ import { TBLShamelOverTimeShatebService } from 'src/app/modules/shared/services/
   styleUrls: ['./tbl-shamel-overtime-print-totals-list.component.scss']
 })
 export class TblShamelOvertimePrintTotalsListComponent implements OnInit, AfterViewInit {
+  formname:string = 'احصائيات';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

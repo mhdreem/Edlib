@@ -14,7 +14,7 @@ import { TblshamelScJobStateService } from 'src/app/modules/shared/services/empl
   styleUrls: ['./remaining-old-qarars.component.scss']
 })
 export class RemainingOldQararsComponent implements OnInit {
-
+  formname:string = 'القرارات الوهمية المتبقية';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   

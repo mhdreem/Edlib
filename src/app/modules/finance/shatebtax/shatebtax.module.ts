@@ -100,6 +100,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MY_DATE_FORMATS } from '../../shared/models/employees_department/MY_DATE_FORMATS';
 import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 /////////////////////////////
 
@@ -195,7 +196,8 @@ export const MY_FORMATS = {
  UtilitiesModule,
  IconModule,
  NgxHoverOpacityModule,
- MatProgressBarModule
+ MatProgressBarModule,
+ CommonmoduleModule
    
   ]
   ,

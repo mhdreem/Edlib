@@ -28,6 +28,7 @@ import { PrintReferralsComponent } from '../print/print-referrals/print-referral
   styleUrls: ['./print-referral-qarars.component.scss']
 })
 export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDestroy {
+  formname:string = 'طباعة احالات القرارات';
   LoadingFinish : boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

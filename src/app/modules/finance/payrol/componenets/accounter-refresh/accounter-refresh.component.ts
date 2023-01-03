@@ -21,6 +21,7 @@ import { TblshamelPayrolSliceService } from 'src/app/modules/shared/services/fin
   styleUrls: ['./accounter-refresh.component.scss']
 })
 export class AccounterRefreshComponent implements OnInit {
+  formname:string = 'تحديث ملاك معتمد';
 
   _Subscription: Subscription;
   

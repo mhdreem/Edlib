@@ -13,6 +13,7 @@ import { JobServiceDataAdjustPrintDialogComponent } from '../service-data/job-se
   styleUrls: ['./print-employee-card.component.scss']
 })
 export class PrintEmployeeCardComponent implements OnInit {
+  formname:string = 'طباعة البطاقة';
 
   Selected_Emp: TBLShamelEmployee = {};
 

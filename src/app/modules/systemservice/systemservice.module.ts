@@ -40,7 +40,10 @@ import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxPrintModule } from 'ngx-print';
-import {MatTreeModule} from '@angular/material/tree'; 
+import {MatTreeModule} from '@angular/material/tree';
+import { TblshamelProgramTreeListComponent } from './componenets/programTree/tblshamel-program-tree-list/tblshamel-program-tree-list.component';
+import { TblshamelProgramTreeModifyComponent } from './componenets/programTree/tblshamel-program-tree-modify/tblshamel-program-tree-modify.component'; 
+import { CommonmoduleModule } from '../commonmodule/commonmodule.module';
 
 
 @NgModule({
@@ -48,7 +51,9 @@ import {MatTreeModule} from '@angular/material/tree';
     SystemserviceComponent,
     TBLShamelUserListComponent,
     TBLShamelUserEditComponent,
-    TBLShamelPrivilagesComponent
+    TBLShamelPrivilagesComponent,
+    TblshamelProgramTreeListComponent,
+    TblshamelProgramTreeModifyComponent
   ],
   imports: [
     CommonModule,
@@ -110,7 +115,8 @@ MatRadioModule,
 NgxHoverOpacityModule,
 NgxPrintModule,
 MatExpansionModule,
-MatTreeModule
+MatTreeModule,
+CommonmoduleModule
 
 
   ]

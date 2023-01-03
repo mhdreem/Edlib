@@ -32,6 +32,7 @@ import { TblShamelBrokerShatebModifyComponent } from '../tbl-shamel-broker-shate
   styleUrls: ['./tbl-shamel-broker-shateb-list.component.scss']
 })
 export class TblShamelBrokerShatebListComponent implements OnInit {
+  formname:string = 'سجل شطب الوكلاء';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

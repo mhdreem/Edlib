@@ -12,7 +12,7 @@ import { TblShamelRankAddComponent } from '../tbl-shamel-rank-add/tbl-shamel-ran
   styleUrls: ['./tbl-shamel-rank-list.component.scss']
 })
 export class TblShamelRankListComponent implements OnInit {
-
+  formname:string = 'جدول التقدير';
   ELEMENT_DATA: ITBLShamelRank[] = [];
   dataSource = new MatTableDataSource<ITBLShamelRank>();
 

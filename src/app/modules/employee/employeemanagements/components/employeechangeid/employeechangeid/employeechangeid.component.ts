@@ -16,6 +16,8 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./employeechangeid.component.scss']
 })
 export class EmployeechangeidComponent implements OnInit {
+  formname:string = 'تغيير رقم بطاقة';
+
   Selected_Emp: TBLShamelEmployee = {};
 
 

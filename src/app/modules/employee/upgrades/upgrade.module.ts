@@ -116,6 +116,7 @@ import {NgxPrintModule} from 'ngx-print';
 /////////////////////////////
 
 import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 
 export const MY_FORMATS = {
@@ -220,7 +221,8 @@ export const MY_FORMATS = {
  UpgradeRoutingModule,
  MatProgressBarModule,
  NgxPrintModule,
- NgxHoverOpacityModule
+ NgxHoverOpacityModule,
+ CommonmoduleModule
   ],
   exports:[
   

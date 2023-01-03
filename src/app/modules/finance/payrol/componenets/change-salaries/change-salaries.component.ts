@@ -13,6 +13,7 @@ import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finan
   styleUrls: ['./change-salaries.component.scss']
 })
 export class ChangeSalariesComponent implements OnInit {
+  formname:string = 'الرواتب المتبدلة';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

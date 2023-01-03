@@ -127,9 +127,9 @@
       </mat-radio-group>
 </form>
 
-<button class="view" mat-raised-button color="primary" (click)="View()">عرض</button>
-<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
-<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint>طباعة درجة الكفاءة</button>
+<button class="view" mat-raised-button color="primary" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة درجة الكفاءة</button>
 <!-- <button class="view" mat-raised-button color="primary" (click)="printUpgradeData()" [disabled]="!dataSource.data[0]">طباعة بيانات الترفيع للتدقيق</button> -->
 
 <div class="table-wrap">

@@ -26,7 +26,7 @@
         <!-- There is inline padding applied to this node using styles.
           This padding value depends on the mat-icon-button width. -->
           <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>         
-            <mat-radio-button [value]="node.serail" (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>                        
+            <mat-radio-button color="primary" [value]="node.serail" (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>                        
         </mat-tree-node>
 
 
@@ -43,7 +43,7 @@
                 </mat-icon>
               </button>
 
-              <mat-radio-button [value]="node.serail" 
+              <mat-radio-button color="primary" [value]="node.serail" 
               (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>                        
 
             </div>
@@ -87,7 +87,7 @@
 
       <c-row>
         <c-col>
-          <mat-checkbox formControlName="privilageEntry" (change)="setAll($event.checked)" >سماحية الوصول إلى النافذة</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilageEntry" (change)="setAll($event.checked)" >سماحية الوصول إلى النافذة</mat-checkbox>
         </c-col>
         </c-row>
 
@@ -99,19 +99,19 @@
     
       <c-row>
         <c-col>
-          <mat-checkbox formControlName="privilageInput"  (change)="setAll($event.checked)" >ادخال</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilageInput"  (change)="setAll($event.checked)" >ادخال</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox formControlName="privilageUpdate" (change)="setAll($event.checked)" >تعديل</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilageUpdate" (change)="setAll($event.checked)" >تعديل</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox formControlName="privilageDisplay" (change)="setAll($event.checked)" >عرض</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilageDisplay" (change)="setAll($event.checked)" >عرض</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox formControlName="privilagePrint" (change)="setAll($event.checked)" >طباعة</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilagePrint" (change)="setAll($event.checked)" >طباعة</mat-checkbox>
         </c-col>      
         <c-col>
-          <mat-checkbox formControlName="privilageDelete" (change)="setAll($event.checked)" >حذف</mat-checkbox>
+          <mat-checkbox color="primary" formControlName="privilageDelete" (change)="setAll($event.checked)" >حذف</mat-checkbox>
         </c-col>
     </c-row>
 
@@ -123,7 +123,7 @@
 
  
   
-<button id="btnSave" (click)="Save()" >حفظ</button>
+<button mat-raised-button color="primary" id="btnSave" (click)="Save()" accessControl  [FormName]="formname1" [CheckedPrivilige]="'00010'">حفظ</button>
     
    
   </form>

@@ -36,7 +36,7 @@
 
 </div>
 <div>
-  <button mat-raised-button color="warn" mat-dialog-close (click)="change_employee_id()" >
+  <button mat-raised-button color="warn" mat-dialog-close (click)="change_employee_id()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">
   تغيير
   </button>
 

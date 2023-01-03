@@ -12,7 +12,7 @@ import { TblShamelDocumentTypeAddComponent } from '../tbl-shamel-document-type-a
   styleUrls: ['./tbl-shamel-document-type-list.component.scss']
 })
 export class TblShamelDocumentTypeListComponent implements OnInit {
-
+  formname:string = 'جدول نوع المستند';
   ELEMENT_DATA: ITBLShamelDocumentType[] = [];
   dataSource = new MatTableDataSource<ITBLShamelDocumentType>();
 

@@ -56,8 +56,8 @@
   </div>
 
   </form>
-  <button mat-raised-button color="primary" (click)="View()">عرض</button>
-  <button id="view" mat-raised-button color="primary" (click)="Replace()">استبدال</button>
+  <button mat-raised-button color="primary" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+  <button id="view" mat-raised-button color="primary" (click)="Replace()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">استبدال</button>
 
 
 <div class="table-wrap">

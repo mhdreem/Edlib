@@ -169,8 +169,8 @@
   
 
 
-  <button id="view" mat-raised-button color="primary" (click)="btnSearchClick()">عرض</button>
-  <button mat-raised-button color="primary" (click)="insert()">إدخال</button>
+  <button id="view" mat-raised-button color="primary" (click)="btnSearchClick()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+  <button mat-raised-button color="primary" (click)="insert()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إدخال</button>
 
 </form>
 

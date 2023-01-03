@@ -778,7 +778,7 @@
 
 
             <c-row>
-              <button class="submit-button my-2" mat-flat-button (click)="Save()" color="primary">حفظ</button>
+              <button class="submit-button my-2" mat-flat-button (click)="Save()" color="primary" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">حفظ</button>
             </c-row>
 
 </c-container>

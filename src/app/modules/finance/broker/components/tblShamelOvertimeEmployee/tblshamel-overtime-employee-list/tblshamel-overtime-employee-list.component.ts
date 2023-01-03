@@ -24,7 +24,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./tblshamel-overtime-employee-list.component.scss']
 })
 export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
-
+  formname:string = 'الذاتية';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatTable) table!: MatTable<TBLShamelOvertimeEmployee>;

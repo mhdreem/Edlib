@@ -17,6 +17,7 @@ import { ServiceDataPrintComponent } from '../service-data-print/service-data-pr
   styleUrls: ['./job-service-data.component.scss']
 })
 export class JobServiceDataComponent implements OnInit {
+  formname:string = 'بيانات الخدمة';
 
   _Subscription: Subscription;
 

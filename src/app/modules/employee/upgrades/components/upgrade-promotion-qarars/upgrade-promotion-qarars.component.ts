@@ -21,6 +21,7 @@ import {ITBLShamelJobName} from '../../../../../modules/shared/models/employees_
   styleUrls: ['./upgrade-promotion-qarars.component.scss']
 })
 export class UpgradePromotionQararsComponent implements OnInit {
+  formname:string = 'تهيئة قرارات الترفيع';
   LoadingFinish : boolean;
 
   fixedYear: string;

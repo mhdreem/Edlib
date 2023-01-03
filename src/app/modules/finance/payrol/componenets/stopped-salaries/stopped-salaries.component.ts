@@ -13,6 +13,7 @@ import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finan
   styleUrls: ['./stopped-salaries.component.scss']
 })
 export class StoppedSalariesComponent implements OnInit, AfterViewInit {
+  formname:string = 'الرواتب المتوقفة';
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

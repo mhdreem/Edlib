@@ -64,6 +64,7 @@ export class TBLShamelProgramTreeService {
   }
 
   update(obj : TBLShamelProgramTree )  {
+    console.log('obj', obj);
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const httpParams: HttpParamsOptions = { 'obj': obj } as HttpParamsOptions;
     const options = {  headers: headers };

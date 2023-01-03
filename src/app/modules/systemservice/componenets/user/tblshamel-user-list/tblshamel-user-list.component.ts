@@ -15,7 +15,7 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
   styleUrls: ['./tblshamel-user-list.component.scss']
 })
 export class TBLShamelUserListComponent implements OnInit ,OnChanges  {
-
+  formname:string = 'حسابات المستخدمين';
 
   // List For Table
   public User_List :TBLShamelUser []=[];

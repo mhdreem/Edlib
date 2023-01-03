@@ -33,6 +33,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./punishment.component.scss']
 })
 export class PunishmentComponent implements OnInit {
+  formname:string = 'عقوبات';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

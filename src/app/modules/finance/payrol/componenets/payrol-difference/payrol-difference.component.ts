@@ -21,6 +21,7 @@ import { TblshamelPayrolSliceService } from 'src/app/modules/shared/services/fin
   styleUrls: ['./payrol-difference.component.scss']
 })
 export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
+  formname:string = 'فروقات ترفيعات وزيادات';
 
   LoadingFinish : boolean;
 

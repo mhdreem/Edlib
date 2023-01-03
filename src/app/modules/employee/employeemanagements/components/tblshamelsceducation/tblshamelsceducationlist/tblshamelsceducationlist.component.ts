@@ -19,7 +19,7 @@ import { DOCUMENT } from "@angular/common";
 })
 export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit {
 
-  formname:string = 'ManageSCEducationFrame1';
+  formname:string = 'المؤهل العلمي';
   
 
   //Join Variable   

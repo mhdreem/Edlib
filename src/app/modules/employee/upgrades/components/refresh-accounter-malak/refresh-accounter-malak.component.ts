@@ -16,7 +16,7 @@ import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/em
   styleUrls: ['./refresh-accounter-malak.component.scss']
 })
 export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
-
+  formname:string = 'تحديث ملاك معتمد';
   
   _Subscription: Subscription;
   

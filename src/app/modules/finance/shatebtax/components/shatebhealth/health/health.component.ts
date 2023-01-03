@@ -37,7 +37,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./health.component.scss']
 })
 export class HealthComponent implements OnInit, AfterViewInit {
-
+  formname:string = 'بلا أجر \ صحية';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
  

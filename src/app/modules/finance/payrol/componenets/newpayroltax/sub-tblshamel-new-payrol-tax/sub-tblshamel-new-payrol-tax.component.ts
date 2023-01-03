@@ -11,7 +11,7 @@ import { TblShamelNewPayrolTaxValidatorFormGroup } from './TblShamelNewPayrolTax
   styleUrls: ['./sub-tblshamel-new-payrol-tax.component.scss']
 })
 export class SubTBLShamelNewPayrolTaxComponent implements OnInit, OnChanges {
-
+  formname:string = 'برمجة التعويض والحسم';
   _tblShamelNewPayrolTax:TblShamelNewPayrolTax;
   
 

@@ -12,7 +12,7 @@ import { TblShamelPunishmentAddComponent } from '../tbl-shamel-punishment-add/tb
   styleUrls: ['./tbl-shamel-punishment-list.component.scss']
 })
 export class TblShamelPunishmentListComponent implements OnInit {
-
+  formname:string = 'جدول نوع العقوبات';
   ELEMENT_DATA: ITBLShamelPunishment[] = [];
   dataSource = new MatTableDataSource<ITBLShamelPunishment>();
 

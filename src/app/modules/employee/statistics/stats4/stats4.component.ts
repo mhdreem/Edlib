@@ -25,7 +25,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./stats4.component.scss']
 })
 export class stats4 implements OnInit, OnDestroy {
-
+  formname:string = 'احصائيات بين تاريخين';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -18,6 +18,7 @@ import { TblshamelschealthholidayModifyComponent } from '../tblshamelschealthhol
   styleUrls: ['./tblshamelschealthholiday-list.component.scss']
 })
 export class TblshamelschealthholidayListComponent implements OnInit,AfterViewInit {
+  formname:string = 'الإجازات الصحية';
  //Join Variable   
  Selected_Emp: TBLShamelEmployee = {};
  @ViewChild('paginator') paginator: MatPaginator;

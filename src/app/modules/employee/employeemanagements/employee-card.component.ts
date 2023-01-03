@@ -276,12 +276,12 @@ export class EmployeeCardComponent implements OnInit {
     }
   
   ,
-  {
-    name: 'ادخال بطاقة شخصية',
-    url: 'employees/module/employeecards/Cards/manage/newemployee',
-    iconComponent: { name: 'cil-pencil' },
-    formname:''
-  },
+  // {
+  //   name: 'ادخال بطاقة شخصية',
+  //   url: 'employees/module/employeecards/Cards/manage/newemployee',
+  //   iconComponent: { name: 'cil-pencil' },
+  //   formname:''
+  // },
   
   
   

@@ -99,6 +99,7 @@ import { Stats3PrintComponent } from './print/stats3-print/stats3-print.componen
 import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 /////////////////////////////
+import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
 
 
 
@@ -192,7 +193,8 @@ export const MY_FORMATS = {
  IconModule,
  StatisticsRoutingModule,
  MatProgressBarModule,
- NgxHoverOpacityModule
+ NgxHoverOpacityModule,
+ CommonmoduleModule
   ],
   exports:[
    

@@ -11,6 +11,7 @@ import {TblShamelFooterh1AddComponent} from '../tbl-shamel-footerh1-add/tbl-sham
   styleUrls: ['./tbl-shamel-footerh1-list.component.scss']
 })
 export class TblShamelFooterh1ListComponent implements OnInit {
+  formname:string = 'جدول صفة تذييل الطباعة';
   ELEMENT_DATA: ITBLShamelFooterH1[] = [];
   dataSource = new MatTableDataSource<ITBLShamelFooterH1>();
 

@@ -12,6 +12,7 @@ import { TblShamelCertificateAddComponent } from '../tbl-shamel-certificate-add/
   styleUrls: ['./tbl-shamel-certificate-list.component.scss']
 })
 export class TblShamelCertificateListComponent implements OnInit {
+  formname:string = 'جدول الشهادات';
 
   ELEMENT_DATA: ITBLShamelCertificate[] = [];
   dataSource = new MatTableDataSource<ITBLShamelCertificate>();

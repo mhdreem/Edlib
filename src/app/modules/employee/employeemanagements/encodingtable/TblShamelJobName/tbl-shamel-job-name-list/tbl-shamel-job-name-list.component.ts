@@ -12,7 +12,7 @@ import { TblShamelJobNameAddComponent } from '../tbl-shamel-job-name-add/tbl-sha
   styleUrls: ['./tbl-shamel-job-name-list.component.scss']
 })
 export class TblShamelJobNameListComponent implements OnInit {
-
+  formname:string = 'جدول الصفة الوظيفية';
   ELEMENT_DATA: ITBLShamelJobName[] = [];
   dataSource = new MatTableDataSource<ITBLShamelJobName>();
 

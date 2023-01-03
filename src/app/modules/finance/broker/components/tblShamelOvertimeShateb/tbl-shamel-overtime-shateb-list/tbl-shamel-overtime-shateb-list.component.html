@@ -142,8 +142,8 @@
   </mat-accordion>
     <div class="table-responsive">
 
-      <button mat-raised-button color="primary" (click)="OnSearch()">عرض</button>
-    <button mat-raised-button color="primary" (click)="adjustPrintFooter()" >معايرة تذييل الطباعة</button>
+      <button mat-raised-button color="primary" (click)="OnSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+    <button mat-raised-button color="primary" (click)="adjustPrintFooter()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
 
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>

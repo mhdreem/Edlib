@@ -12,7 +12,7 @@ import { TblShamelSpecificationAddComponent } from '../tbl-shamel-specification-
   styleUrls: ['./tbl-shamel-specification-list.component.scss']
 })
 export class TblShamelSpecificationListComponent implements OnInit {
-
+  formname:string = 'جدول الاختصاص';
   ELEMENT_DATA: ITBLShamelSpecification[] = [];
   dataSource = new MatTableDataSource<ITBLShamelSpecification>();
 
