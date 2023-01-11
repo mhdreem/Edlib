@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   LoginResultState: string = '';
 
+  hide = true;
   constructor(private formBuilder: UntypedFormBuilder,
     private router: Router,
      public ShemlUserService: TBLShamelUserService,
