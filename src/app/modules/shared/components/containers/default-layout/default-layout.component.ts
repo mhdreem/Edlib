@@ -1,16 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { INavData } from '@coreui/angular';
 import { BreadcrumbRouterService } from '@coreui/angular/lib/breadcrumb/breadcrumb-router/breadcrumb-router.service';
+import { IconSetService } from '@coreui/icons-angular';
 import { TBLShamelUser } from '../../../models/employees_department/TBLShamelUser';
 import { TBLShamelUserService } from '../../../services/employees_department/tblshamel-user.service';
+import { ThemeService } from '../../../services/theme.service';
 import { NavService } from './nav.service';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
+  styleUrls: ['./default-layout.component.scss']
+
 })
-export class DefaultLayoutComponent implements OnInit {
+export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   _navItems: INavData[];
   
 
@@ -96,9 +100,11 @@ export class DefaultLayoutComponent implements OnInit {
     suppressScrollX: true,
   };
 
+  darkTheme: boolean;
   constructor(
     private navService:NavService,
-    private userService :TBLShamelUserService
+    private userService :TBLShamelUserService,
+    private themeService: ThemeService
     ) {
       this.load_User();
     this.navService.navItems_Subject.subscribe(
@@ -111,7 +117,16 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.load_User();
+
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+    
    
+  }
+
+  ngAfterViewInit(){
+    
   }
 
   load_User()

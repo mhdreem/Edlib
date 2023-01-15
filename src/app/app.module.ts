@@ -79,6 +79,7 @@ import {
 import { IconModule } from '@coreui/icons-angular';
 import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './modules/shared/components/containers';
 import { ConfirmationdialogComponent } from './modules/shared/components/confirmationdialog/confirmationdialog.component';
+import { ThemeButtonComponent } from './modules/shared/components/theme-button/theme-button.component';
 
 
 
@@ -93,7 +94,7 @@ import { ConfirmationdialogComponent } from './modules/shared/components/confirm
       Page404Component,
       Page500Component,
       ConfirmationdialogComponent,
-     
+      ThemeButtonComponent     
   ],
   imports: [
     CommonModule,

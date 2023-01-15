@@ -25,6 +25,7 @@ import { EmployeePageService } from '../../employee-page-service';
 import { Validator_Education } from './Validator_Education';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamelsceducationmodify',
@@ -87,7 +88,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
 
   submitted = false;
 
-
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelsceducationmodifyComponent>,
@@ -102,6 +103,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
     public PageService: EmployeePageService,
     private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
       this.id_employee = data.id;
@@ -257,7 +259,9 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
 
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
 
   }

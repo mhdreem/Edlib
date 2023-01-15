@@ -11,6 +11,7 @@ import { EmployeePageService } from "../../employee-page-service";
 import { ConfirmationdialogComponent } from "../../common/confirmationdialog/confirmationdialog.component";
 import { TblshamelsceducationmodifyComponent } from "../tblshamelsceducationmodify/tblshamelsceducationmodify.component";
 import { DOCUMENT } from "@angular/common";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tblshamelsceducationlist',
@@ -36,6 +37,7 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
   selected_employee_education_Rows = new Set<ITBLShamelSCEducation>();
   dataSource: MatTableDataSource<ITBLShamelSCEducation>;
 
+  darkTheme: boolean;
 
 
   constructor(
@@ -43,7 +45,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
     public educationService: TblshamelsceducationService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document,) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
     this.employee_education_List = [];
 
@@ -73,9 +76,11 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
   }
 
 
-
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.employee_education_List);
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.employee_education_List);
@@ -122,8 +127,9 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
 
     const dialogRef = this.dialog.open(TblshamelsceducationmodifyComponent, {
-      height: '60%',
-      width: '30%',
+      height: '70%',
+      width: '35%',
+      position: {top: '10%'},
       data: { obj: this.selected_employee_education, id: this.Selected_Emp.id }
     });
 
@@ -185,8 +191,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
 
       const dialogRef = this.dialog.open(TblshamelsceducationmodifyComponent, {
-        height: '60%',
-        width: '30%',
+        height: '70%',
+        width: '35%',
         data: { obj: this.selected_employee_education, id: this.Selected_Emp.id }
       });
 

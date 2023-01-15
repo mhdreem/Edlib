@@ -16,6 +16,7 @@ import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { EmployeeSeachDialogComponent } from '../employee-seach-dialog/employee-seach-dialog.component';
 import { EmployeePageService } from '../employee-page-service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-employee-search-bar',
@@ -54,13 +55,15 @@ return this._Selected_Employee;
 
   _Subscription:Subscription = new Subscription() ;
   
+  darkTheme: boolean;
   constructor(
     public dialog: MatDialog,
     private frmBuilder: FormBuilder,
  
     public viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
     public employeeService: EmployeeServiceService,
-    public pageService: EmployeePageService
+    public pageService: EmployeePageService,
+    private themeService: ThemeService
   ) {
     this.BuildForm();
   }
@@ -70,6 +73,9 @@ return this._Selected_Employee;
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   BuildForm() {

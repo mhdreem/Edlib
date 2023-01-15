@@ -27,3 +27,43 @@
 
 
 
+.darkTheme mat-form-field, .darkTheme ::ng-deep .mat-form-field-label{
+    color: white !important;
+}
+
+.darkTheme ::ngg-deep .mat-form-field-underline::before{
+    background-color: white !important;
+}
+
+.darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: #04113B !important;
+}
+
+.darkTheme button{
+    color: white !important;
+    background-color: #013247 !important;
+  }
+
+.darkTheme ::ng-deep .mat-form-field-label{
+    height: 19px !important;
+}
+
+
+
+
+button{
+    color: white !important;
+    background-color: #6C5ED3 !important;
+}
+
+mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: white !important;
+}
+
+mat-form-field, ::ng-deep .mat-form-field-label{
+    color: black !important;
+}
+
+::ngg-deep .mat-form-field-underline::before{
+    background-color: black !important;
+}

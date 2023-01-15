@@ -10,6 +10,7 @@ import { ViewTBLSamelEmployeeSearch } from 'src/app/modules/shared/models/employ
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_department/IGlobalEmployeeList';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../employee-page-service';
 
 
@@ -53,7 +54,7 @@ export class EmployeeListSearchComponent implements OnInit {
 
 Form:FormGroup;
 
-
+darkTheme: boolean;
 
   constructor(
     private router:Router,
@@ -63,7 +64,8 @@ Form:FormGroup;
     public restApi:EmployeeServiceService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     public GlobalEmployeeList : IGlobalEmployeeList,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private themeService: ThemeService) {
       this.PageIndex =1;
 
       this.Form =this.fb.group({
@@ -86,6 +88,9 @@ Form:FormGroup;
 
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   SelectItemChange (Selected_Employee: ViewTBLShamelEmployee)
