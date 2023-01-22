@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>العقوبات</h2>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <h2 mat-dialog-title>العقوبات</h2>
 <c-row>
   <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
 </c-row>
@@ -161,7 +162,7 @@
   </button>
 
 
-  <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()">
+  <button mat-raised-button class="save" cdkFocusInitial (click)="Save()">
     <mat-icon class="mat-icon-rtl-mirror">save
     </mat-icon>
     حفظ
@@ -169,3 +170,5 @@
 
 </mat-dialog-actions>
 </ngx-hover-opacity>
+
+</div>

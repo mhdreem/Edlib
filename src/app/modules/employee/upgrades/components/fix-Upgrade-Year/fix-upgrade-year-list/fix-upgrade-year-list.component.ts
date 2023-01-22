@@ -9,6 +9,7 @@ import { ConfirmationDialogComponent } from 'src/app/modules/finance/broker/comp
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { FixUpgradeYearModifyComponent } from '../fix-upgrade-year-modify/fix-upgrade-year-modify.component';
 
 @Component({
@@ -29,15 +30,21 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
 
   selected_upgrade_year: TblShamelUpgradeYear;
 
+  darkTheme: boolean;
 
   constructor(private tblShamelYearService: TBLShamelYearService,
     private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,) { 
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) { 
       
     }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+    
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

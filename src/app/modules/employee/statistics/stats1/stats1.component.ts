@@ -30,6 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PrintComponent } from '../../employeemanagements/components/print/print/print.component';
 import { PrintCardComponent } from '../../employeemanagements/components/print/print-card/print-card.component';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 @Component({
   selector: 'app-stats1',
   templateUrl: './stats1.component.html',
@@ -121,6 +122,8 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     this.ExcuteSearch();
   }
 
+  darkTheme: boolean;
+
   constructor(
   
     public departmentService: TblshameldepartmentService,
@@ -135,7 +138,8 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
       this.dataSource = new MatTableDataSource<any>([]);
       this.LoadingFinish = true;
@@ -408,6 +412,9 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
 
   
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngOnDestroy(): void {

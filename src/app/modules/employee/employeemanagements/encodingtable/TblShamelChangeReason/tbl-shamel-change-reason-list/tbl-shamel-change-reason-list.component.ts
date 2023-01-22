@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelChangeReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelChangeReason';
 import { TblshamelchangereasonService } from 'src/app/modules/shared/services/employees_department/tblshamelchangereason.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelChangeReasonAddComponent } from '../tbl-shamel-change-reason-add/tbl-shamel-change-reason-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelChangeReasonListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tBLShamelChangeReasonService:TblshamelchangereasonService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tBLShamelChangeReasonService.List_ITBLShamelChangeReason == null ||
       tBLShamelChangeReasonService.List_ITBLShamelChangeReason.length ==0
      )
@@ -123,6 +127,9 @@ export class TblShamelChangeReasonListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

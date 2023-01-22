@@ -1,35 +1,37 @@
-<form class="example-form" [formGroup]="Form" #form="ngForm">
-    <div class="right">
-        <fieldset>
-            <legend>البطاقة الذاتية</legend>
-            <div class="con">
-                <mat-checkbox color="primary" (change)="change1($event)" formControlName="allDataCheckbox" [disabled]="true" >جميع بيانات البطاقة الذاتية</mat-checkbox>
-            </div>
+<div class="theme" [class.darkTheme]="darkTheme">
+    <form class="example-form" [formGroup]="Form" #form="ngForm">
+        <div class="right">
+            <fieldset>
+                <legend class="white">البطاقة الذاتية</legend>
+                <div class="con">
+                    <mat-checkbox class="white" color="primary" (change)="change1($event)" formControlName="allDataCheckbox" [disabled]="true" >جميع بيانات البطاقة الذاتية</mat-checkbox>
+                </div>
+        
+                <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="print-card-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة البطاقة</button>
+                <!-- <button  mat-raised-button color="primary" (click)="printInterface()" >طباعة الواجهة</button> -->
+            </fieldset>
+        </div>
+        
+        <div class="left">
+            <fieldset>
+                <legend class="white">بيانات العامل الإضافية</legend>
+                <div class="con1">
+                    <mat-checkbox class="white" color="primary" (change)="change2($event)" formControlName="punishmentsCheckbox">العقوبات</mat-checkbox>
+                    <mat-checkbox class="white" color="primary" (change)="change2($event)" formControlName="bonusCheckbox">المكافئات</mat-checkbox>
+                    <mat-checkbox class="white" color="primary" (change)="change2($event)" formControlName="holidaiesCheckbox">إجازات خاصة بلا أجر</mat-checkbox>
+                </div>
+        
+                <button mat-raised-button class="add"  [disabled]="!Selected_Emp.id" printSectionId="print-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                <button  mat-raised-button class="add" (click)="adjustPrintFooter()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+            </fieldset>
+        </div>
+    </form>
     
-            <button mat-raised-button color="primary" [disabled]="!Selected_Emp.id" printSectionId="print-card-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة البطاقة</button>
-            <!-- <button  mat-raised-button color="primary" (click)="printInterface()" >طباعة الواجهة</button> -->
-        </fieldset>
+    <div id="print-section">
+        <app-print [data]="printInput"></app-print>
     </div>
     
-    <div class="left">
-        <fieldset>
-            <legend>بيانات العامل الإضافية</legend>
-            <div class="con1">
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="punishmentsCheckbox">العقوبات</mat-checkbox>
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="bonusCheckbox">المكافئات</mat-checkbox>
-                <mat-checkbox color="primary" (change)="change2($event)" formControlName="holidaiesCheckbox">إجازات خاصة بلا أجر</mat-checkbox>
-            </div>
-    
-            <button mat-raised-button color="primary"  [disabled]="!Selected_Emp.id" printSectionId="print-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
-            <button  mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-        </fieldset>
+    <div id="print-card-section">
+        <app-print-card ></app-print-card>
     </div>
-</form>
-
-<div id="print-section">
-    <app-print [data]="printInput"></app-print>
-</div>
-
-<div id="print-card-section">
-    <app-print-card ></app-print-card>
 </div>

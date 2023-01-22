@@ -10,6 +10,7 @@ import { TblshamelFooterh2Service } from 'src/app/modules/shared/services/employ
 import { TblshamelPrintFooterService } from 'src/app/modules/shared/services/employees_department/tblshamel-print-footer.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { TblshamelclassService } from 'src/app/modules/shared/services/employees_department/tblshamelclass.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-job-service-data-adjust-print-dialog',
@@ -58,6 +59,7 @@ export class JobServiceDataAdjustPrintDialogComponent implements OnInit {
   Title5_List: ITBLShamelFooterH1[] = [];
   filteredTitle5Options: Observable<ITBLShamelFooterH1[]>;
   
+  darkTheme: boolean;
 
   constructor(public dialogRef: MatDialogRef<JobServiceDataAdjustPrintDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string,
@@ -66,7 +68,8 @@ export class JobServiceDataAdjustPrintDialogComponent implements OnInit {
     private tblshamelFooterh1Service: TblshamelFooterh1Service,
     private tblshamelFooterh2Service: TblshamelFooterh2Service,
     private fb: UntypedFormBuilder,
-    private tblShamelUserService: TBLShamelUserService) {
+    private tblShamelUserService: TBLShamelUserService,
+    private themeService: ThemeService) {
 
       this._matDialogRef= dialogRef;
       this.BuildForm();
@@ -415,6 +418,10 @@ export class JobServiceDataAdjustPrintDialogComponent implements OnInit {
       }
           
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+    
     const matDialogConfig: MatDialogConfig = new MatDialogConfig();
     matDialogConfig.position = { left: `50px`, top: `150px` };
     this._matDialogRef.updatePosition(matDialogConfig.position);

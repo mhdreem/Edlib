@@ -1,253 +1,255 @@
-<mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-          مفاتيح البحث
-      </mat-panel-title>
-      <mat-panel-description>
-          من أجل التحكم بالبحث انقر هنا
-          <mat-icon fontIcon="search"></mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <form action="" [formGroup]="Form">
-      <div class="dates">
-        <div class="date">
-          <span>من تاريخ:</span>
-          <div class="content">
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>اليوم</mat-label>
-              <input type="number" matInput [formControl]="FirstDateDay" placeholder="ex: 21"
-              id="FirstDateDay" (keyup.enter)="focusNext('FirstDateMonth')" (change)="clearDataSource()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>الشهر</mat-label>
-              <input type="number" matInput [formControl]="FirstDateMonth" placeholder="ex: 1"
-              id="FirstDateMonth" (keyup.enter)="focusNext('FirstDateYear')" (change)="clearDataSource()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>العام</mat-label>
-              <input type="number" matInput [formControl]="FirstDateYear" placeholder="ex: 2023"
-              id="FirstDateYear" (keyup.enter)="focusNext('EndDateDay')" (change)="clearDataSource()">
-            </mat-form-field>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            مفاتيح البحث
+        </mat-panel-title>
+        <mat-panel-description>
+            من أجل التحكم بالبحث انقر هنا
+            <mat-icon fontIcon="search"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form action="" [formGroup]="Form">
+        <div class="dates">
+          <div class="date">
+            <span class="white">من تاريخ:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="FirstDateDay" placeholder="ex: 21"
+                id="FirstDateDay" (keyup.enter)="focusNext('FirstDateMonth')" (change)="clearDataSource()">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="FirstDateMonth" placeholder="ex: 1"
+                id="FirstDateMonth" (keyup.enter)="focusNext('FirstDateYear')" (change)="clearDataSource()">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="FirstDateYear" placeholder="ex: 2023"
+                id="FirstDateYear" (keyup.enter)="focusNext('EndDateDay')" (change)="clearDataSource()">
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-
-        <div class="date">
-          <span>الى تاريخ:</span>
-          <div class="content">
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>اليوم</mat-label>
-              <input type="number" matInput [formControl]="EndDateDay" placeholder="ex: 21"
-              id="EndDateDay" (keyup.enter)="focusNext('EndDateMonth')" (change)="clearDataSource()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>الشهر</mat-label>
-              <input type="number" matInput [formControl]="EndDateMonth" placeholder="ex: 1"
-              id="EndDateMonth" (keyup.enter)="focusNext('EndDateYear')" (change)="clearDataSource()">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>العام</mat-label>
-              <input type="number" matInput [formControl]="EndDateYear" placeholder="ex: 2023"
-              id="EndDateYear" (keyup.enter)="focusNext('MalakState')" (change)="clearDataSource()">
-            </mat-form-field>
+  
+          <div class="date">
+            <span class="white">الى تاريخ:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput [formControl]="EndDateDay" placeholder="ex: 21"
+                id="EndDateDay" (keyup.enter)="focusNext('EndDateMonth')" (change)="clearDataSource()">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput [formControl]="EndDateMonth" placeholder="ex: 1"
+                id="EndDateMonth" (keyup.enter)="focusNext('EndDateYear')" (change)="clearDataSource()">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput [formControl]="EndDateYear" placeholder="ex: 2023"
+                id="EndDateYear" (keyup.enter)="focusNext('MalakState')" (change)="clearDataSource()">
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>الوضع بالملاك</mat-label>
-          <input type="text"
-                matInput
-                [matAutocomplete]="autoMalakState"
-                [formControl]="MalakState"
-                id="MalakState" (keyup.enter)="focusNext('FirstDateDay')">
-          <mat-autocomplete #autoMalakState="matAutocomplete"
-          [displayWith]="displayMalakStateProperty.bind(this)"
-          (optionSelected)="clearDataSource()">
-            <mat-option *ngFor="let option of filteredMalakStateOptions | async" [value]="option.malakstate_id">
-              {{option.malakstate_name}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-
-      </div>
-
-
-      <fieldset>
-        <legend>الإحصاء</legend>
-        <mat-radio-group color="primary" aria-label="Select an option">
-            <mat-radio-button value="1" (change)="birthdateChecked();clearDataSource();">تاريخ الولادة</mat-radio-button>
-            <mat-radio-button value="2" (change)="firstJobDateChecked(); clearDataSource();">تاريخ المباشرة</mat-radio-button>
-            <mat-radio-button value="3" (change)="punishmentsChecked(); clearDataSource();">عقوبات</mat-radio-button>
-            <mat-radio-button value="4" (change)="bonusChecked(); clearDataSource();">مكافئات</mat-radio-button>
-            <mat-radio-button value="5" (change)="freeHolidayChecked(); clearDataSource();">خاصة بلا أجر</mat-radio-button>
-            <mat-radio-button value="6" (change)="legalHolidayChecked(); clearDataSource();">إجازات إدارية</mat-radio-button>
-            <mat-radio-button value="7" (change)="healthHolidayChecked(); clearDataSource();">إجازات صحية</mat-radio-button>
-            <mat-radio-button value="8" (change)="suddenHolidayChecked(); clearDataSource();">إجازات إضطرارية</mat-radio-button>
-            <mat-radio-button value="9"  (change)="changeReasonChecked(); clearDataSource();">سبب التبدل</mat-radio-button>
-          </mat-radio-group>
-
-
+  
           <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>سبب الإجازة</mat-label>
+            <mat-label>الوضع بالملاك</mat-label>
             <input type="text"
                   matInput
-                  [formControl]="SuddenHoliday"
-                  [matAutocomplete]="autoSuddenHoliday"
-                  (keyup)="suddenHolidayChanged()">
-            <mat-autocomplete #autoSuddenHoliday="matAutocomplete" (optionSelected)="suddenHolidayChanged(); clearDataSource();"
-            [displayWith]="displaySuddenHolidayProperty.bind(this)">
-              <mat-option *ngFor="let option of filteredSuddenHolidayOptions | async" [value]="option.suddenholiday_id">
-                {{option.suddenholiday_name}}
+                  [matAutocomplete]="autoMalakState"
+                  [formControl]="MalakState"
+                  id="MalakState" (keyup.enter)="focusNext('FirstDateDay')">
+            <mat-autocomplete #autoMalakState="matAutocomplete"
+            [displayWith]="displayMalakStateProperty.bind(this)"
+            (optionSelected)="clearDataSource()">
+              <mat-option *ngFor="let option of filteredMalakStateOptions | async" [value]="option.malakstate_id">
+                {{option.malakstate_name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-
-
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>سبب التبدل</mat-label>
-            <input type="text"
-                  matInput
-                  [formControl]="ChangeReason"
-                  [matAutocomplete]="autoChangeReason"
-                  (keyup)="changeReasonChanged()">
-            <mat-autocomplete #autoChangeReason="matAutocomplete" (optionSelected)="changeReasonChanged(); clearDataSource();"
-            [displayWith]="displayChangeReasonProperty.bind(this)">
-              <mat-option *ngFor="let option of filteredChangeReasonOptions | async" [value]="option.changereason_id">
-                {{option.changereason_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        
+  
+  
+        </div>
+  
+  
+        <fieldset>
+          <legend class="white">الإحصاء</legend>
+          <mat-radio-group color="primary" aria-label="Select an option">
+              <mat-radio-button class="white" value="1" (change)="birthdateChecked();clearDataSource();">تاريخ الولادة</mat-radio-button>
+              <mat-radio-button class="white" value="2" (change)="firstJobDateChecked(); clearDataSource();">تاريخ المباشرة</mat-radio-button>
+              <mat-radio-button class="white" value="3" (change)="punishmentsChecked(); clearDataSource();">عقوبات</mat-radio-button>
+              <mat-radio-button class="white" value="4" (change)="bonusChecked(); clearDataSource();">مكافئات</mat-radio-button>
+              <mat-radio-button class="white" value="5" (change)="freeHolidayChecked(); clearDataSource();">خاصة بلا أجر</mat-radio-button>
+              <mat-radio-button class="white" value="6" (change)="legalHolidayChecked(); clearDataSource();">إجازات إدارية</mat-radio-button>
+              <mat-radio-button class="white" value="7" (change)="healthHolidayChecked(); clearDataSource();">إجازات صحية</mat-radio-button>
+              <mat-radio-button class="white" value="8" (change)="suddenHolidayChecked(); clearDataSource();">إجازات إضطرارية</mat-radio-button>
+              <mat-radio-button class="white" value="9"  (change)="changeReasonChecked(); clearDataSource();">سبب التبدل</mat-radio-button>
+            </mat-radio-group>
+  
+  
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>سبب الإجازة</mat-label>
+              <input type="text"
+                    matInput
+                    [formControl]="SuddenHoliday"
+                    [matAutocomplete]="autoSuddenHoliday"
+                    (keyup)="suddenHolidayChanged()">
+              <mat-autocomplete #autoSuddenHoliday="matAutocomplete" (optionSelected)="suddenHolidayChanged(); clearDataSource();"
+              [displayWith]="displaySuddenHolidayProperty.bind(this)">
+                <mat-option *ngFor="let option of filteredSuddenHolidayOptions | async" [value]="option.suddenholiday_id">
+                  {{option.suddenholiday_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+  
+  
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>سبب التبدل</mat-label>
+              <input type="text"
+                    matInput
+                    [formControl]="ChangeReason"
+                    [matAutocomplete]="autoChangeReason"
+                    (keyup)="changeReasonChanged()">
+              <mat-autocomplete #autoChangeReason="matAutocomplete" (optionSelected)="changeReasonChanged(); clearDataSource();"
+              [displayWith]="displayChangeReasonProperty.bind(this)">
+                <mat-option *ngFor="let option of filteredChangeReasonOptions | async" [value]="option.changereason_id">
+                  {{option.changereason_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           
-      </fieldset>
-
-    </form>
-  </mat-expansion-panel>
-</mat-accordion>
-<button class="view" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+            
+        </fieldset>
   
-<mat-form-field class="search" appearance="standard">
-  <mat-label>بحث</mat-label>
-  <input matInput (keyup)="applyFilter($event)" #input>
-</mat-form-field>
-<div class="table-wrap">
-
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-
-
-      <!-- file_number Column -->
-      <ng-container matColumnDef="file_number">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الإضبارة </th>
-          <td mat-cell *matCellDef="let element">{{element?.ID}}</td>
-      </ng-container>
-
-      <!-- computer_number Column -->
-      <ng-container matColumnDef="computer_number">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم حاسوب</th>
-          <td mat-cell *matCellDef="let element">{{element?.COMPUTER_ID}}</td>
-      </ng-container>
-
-      <!-- first_name Column -->
-      <ng-container matColumnDef="first_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>الاسم</th>
-          <td mat-cell *matCellDef="let element">{{element?.FNAME}}</td>
-      </ng-container>
-
-
-
-      <!-- last_name Column -->
-      <ng-container matColumnDef="last_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>الكنية</th>
-          <td mat-cell *matCellDef="let element">{{element?.LNAME}}</td>
-      </ng-container>
-
-
-      <!-- father Column -->
-      <ng-container matColumnDef="father">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>الأب</th>
-        <td mat-cell *matCellDef="let element">{{element?.FATHER}}</td>
-      </ng-container>
-
-      <!-- mother Column -->
-      <ng-container matColumnDef="mother">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>الأم</th>
-        <td mat-cell *matCellDef="let element">{{element?.MOTHER}}</td>
-      </ng-container>
-
-      <!-- category Column -->
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة</th>
-      <td mat-cell *matCellDef="let element">{{element?.CLASS_NAME}}</td>
-    </ng-container>
-
-    <!-- job_adjective Column -->
-    <ng-container matColumnDef="job_adjective">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية</th>
-      <td mat-cell *matCellDef="let element">{{element?.JOBNAME_NAME}}</td>
-    </ng-container>
-
-    <!-- bitrh_date Column -->
-    <ng-container matColumnDef="bitrh_date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ الميلاد</th>
-      <td mat-cell *matCellDef="let element">{{element?.BIRTHDATE | date:'yyyy/MM/dd'}}</td>
-    </ng-container>
-
-    <!-- commencement_date Column -->
-    <ng-container matColumnDef="commencement_date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ المباشرة</th>
-      <td mat-cell *matCellDef="let element">{{element?.STARTDATE | date:'yyyy/MM/dd'}}</td>
-    </ng-container>
-
-
-    <!-- malak_state Column -->
-    <ng-container matColumnDef="malak_state">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>الوضع بالملاك</th>
-      <td mat-cell *matCellDef="let element">{{element?.MALAKSTATE_NAME}}</td>
-    </ng-container>
-
-    <!-- document_number Column -->
-    <ng-container matColumnDef="document_number">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم المستند</th>
-      <td mat-cell *matCellDef="let element">{{element?.DOC_NUMBER}}</td>
-    </ng-container>
-
-
-    <!-- document_date Column -->
-    <ng-container matColumnDef="document_date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ المستند</th>
-      <td mat-cell *matCellDef="let element">{{element?.DOC_DATE | date:'yyyy/MM/dd'}}</td>
-    </ng-container>
-
-    <!-- document_type Column -->
-    <ng-container matColumnDef="document_type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>نوع المستند</th>
-      <td mat-cell *matCellDef="let element">{{element?.LAST_DOCUMENTTYPE_NAME}}</td>
-    </ng-container>
-
-      
-
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button class="view" mat-raised-button style="margin-top: 10px" class="add" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+    
+  <mat-form-field class="search" appearance="fill">
+    <mat-label>بحث</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
+  <div class="table-wrap">
   
-
-
-
-
-
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
-      [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
-      (click)="changeTableRowColor(idx)"></tr>
-
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">لا يوجد بيانات مطابقة للبحث "{{input.value}}"</td>
-      </tr>
-  </table>
-
-  <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-  [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
-
-
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  
+  
+        <!-- file_number Column -->
+        <ng-container matColumnDef="file_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الإضبارة </th>
+            <td mat-cell *matCellDef="let element">{{element?.ID}}</td>
+        </ng-container>
+  
+        <!-- computer_number Column -->
+        <ng-container matColumnDef="computer_number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم حاسوب</th>
+            <td mat-cell *matCellDef="let element">{{element?.COMPUTER_ID}}</td>
+        </ng-container>
+  
+        <!-- first_name Column -->
+        <ng-container matColumnDef="first_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>الاسم</th>
+            <td mat-cell *matCellDef="let element">{{element?.FNAME}}</td>
+        </ng-container>
+  
+  
+  
+        <!-- last_name Column -->
+        <ng-container matColumnDef="last_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>الكنية</th>
+            <td mat-cell *matCellDef="let element">{{element?.LNAME}}</td>
+        </ng-container>
+  
+  
+        <!-- father Column -->
+        <ng-container matColumnDef="father">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>الأب</th>
+          <td mat-cell *matCellDef="let element">{{element?.FATHER}}</td>
+        </ng-container>
+  
+        <!-- mother Column -->
+        <ng-container matColumnDef="mother">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>الأم</th>
+          <td mat-cell *matCellDef="let element">{{element?.MOTHER}}</td>
+        </ng-container>
+  
+        <!-- category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة</th>
+        <td mat-cell *matCellDef="let element">{{element?.CLASS_NAME}}</td>
+      </ng-container>
+  
+      <!-- job_adjective Column -->
+      <ng-container matColumnDef="job_adjective">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية</th>
+        <td mat-cell *matCellDef="let element">{{element?.JOBNAME_NAME}}</td>
+      </ng-container>
+  
+      <!-- bitrh_date Column -->
+      <ng-container matColumnDef="bitrh_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ الميلاد</th>
+        <td mat-cell *matCellDef="let element">{{element?.BIRTHDATE | date:'yyyy/MM/dd'}}</td>
+      </ng-container>
+  
+      <!-- commencement_date Column -->
+      <ng-container matColumnDef="commencement_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ المباشرة</th>
+        <td mat-cell *matCellDef="let element">{{element?.STARTDATE | date:'yyyy/MM/dd'}}</td>
+      </ng-container>
+  
+  
+      <!-- malak_state Column -->
+      <ng-container matColumnDef="malak_state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>الوضع بالملاك</th>
+        <td mat-cell *matCellDef="let element">{{element?.MALAKSTATE_NAME}}</td>
+      </ng-container>
+  
+      <!-- document_number Column -->
+      <ng-container matColumnDef="document_number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم المستند</th>
+        <td mat-cell *matCellDef="let element">{{element?.DOC_NUMBER}}</td>
+      </ng-container>
+  
+  
+      <!-- document_date Column -->
+      <ng-container matColumnDef="document_date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ المستند</th>
+        <td mat-cell *matCellDef="let element">{{element?.DOC_DATE | date:'yyyy/MM/dd'}}</td>
+      </ng-container>
+  
+      <!-- document_type Column -->
+      <ng-container matColumnDef="document_type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>نوع المستند</th>
+        <td mat-cell *matCellDef="let element">{{element?.LAST_DOCUMENTTYPE_NAME}}</td>
+      </ng-container>
+  
+        
+  
+    
+  
+  
+  
+  
+  
+  
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
+        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+        (click)="changeTableRowColor(idx)"></tr>
+  
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">لا يوجد بيانات مطابقة للبحث "{{input.value}}"</td>
+        </tr>
+    </table>
+  
+    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+  
+  
+  </div>
 </div>

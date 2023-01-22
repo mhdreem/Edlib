@@ -1,3 +1,5 @@
+@import '../../../../../../../theme.scss';
+
 .inputsGroup{
     display: flex;
 
@@ -19,17 +21,17 @@ mat-form-field{
     color: white !important;
 }
 
-.darkTheme ::ngg-deep .mat-form-field-underline::before{
+.darkTheme ::ng-deep .mat-form-field-underline::before{
     background-color: white !important;
 }
 
 .darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
-    background-color: #04113B !important;
+    background-color: $darkSecondary !important;
 }
 
 .darkTheme .save{
     color: white !important;
-    background-color: #013247 !important;
+    background-color: $darkPrimary !important;
     }
 
 
@@ -45,13 +47,31 @@ mat-form-field, ::ng-deep .mat-form-field-label{
 
 .save{
     color: white !important;
-    background-color: #6C5ED3 !important;
+    background-color: $lightPrimary !important;
 }
 
-::ngg-deep .mat-form-field-underline::before{
+::ng-deep .mat-form-field-underline::before{
     background-color: black !important;
 }
 
 mat-form-field ::ng-deep .mat-form-field-flex{
-    background-color: #EAF7F0 !important;
+    background-color: $lightBackground !important;
 }
+
+.add:disabled, .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+    color: rgba(0,0,0,.26) !important;
+  }
+
+  mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+    background-color: rgba(0,0,0,.12) !important;
+  }

@@ -9,6 +9,7 @@ import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_depar
 import { TBLShamelSCSuddenHoliday } from 'src/app/modules/shared/models/employees_department/TBLShamelSCSuddenHoliday';
 import { TBLShamelSCSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-sudden-holiday.service';
 import { TBLShamelSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sudden-holiday.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 
 import { TBLShamelSCSuddenHolidayAddComponent } from '../tblshamel-sc-sudden-holiday-add/tblshamel-sc-sudden-holiday-add.component';
@@ -33,13 +34,16 @@ selected_employee_SuddenHoliday :TBLShamelSCSuddenHoliday;
 displayedColumns: string[] = [ 'startdate', 'enddate','duration','suddenholiday_id','documenttype_id', 'document_number',
                               'documentdate','action'];
 
+darkTheme: boolean;
+
 
 constructor(
   public PageService: EmployeePageService,
   public ShamelSCSuddenHolidayService : TBLShamelSCSuddenHolidayService,
   public ShamelSuddenHolidayService : TBLShamelSuddenHolidayService,
   public dialog: MatDialog,
-  private snackBar: MatSnackBar) {
+  private snackBar: MatSnackBar,
+  private themeService: ThemeService) {
 
 this.dataSource = new MatTableDataSource([]);
     
@@ -68,6 +72,9 @@ this.employee_SuddenHoliday_List=[]
     
 ngOnInit(): void {
   this.dataSource = new MatTableDataSource(this.employee_SuddenHoliday_List);
+  this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+    this.darkTheme= res;
+  })
 }
 ngAfterViewInit() {
   this.dataSource = new MatTableDataSource(this.employee_SuddenHoliday_List);

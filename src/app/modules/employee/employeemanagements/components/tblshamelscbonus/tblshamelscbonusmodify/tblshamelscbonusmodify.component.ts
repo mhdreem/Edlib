@@ -21,6 +21,7 @@ import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/em
 import { EmployeePageService } from '../../employee-page-service';
 import { FormValidationHelpersService } from 'src/app/modules/shared/services/helpers/form-validation-helpers.service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
@@ -88,6 +89,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
   docDateMonthIsFilled: boolean= false;
   docDateYearIsFilled: boolean= false;
 
+  darkTheme: boolean;
   //#region Constuctor
   constructor(
     @Inject(DOCUMENT) private _document: Document,
@@ -100,7 +102,8 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     public formValidatorsService: FormValidationHelpersService,
     public PageService: EmployeePageService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private themeService: ThemeService
   ) {
 
     if (this.ShameldocumenttypeService.List_ITBLShamelDocumentType == null ||
@@ -166,7 +169,9 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
 
   ngOnInit(): void {
 
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
   }
 

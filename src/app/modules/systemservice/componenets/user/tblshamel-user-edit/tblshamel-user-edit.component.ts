@@ -14,6 +14,7 @@ import { TBLShamelUser } from 'src/app/modules/shared/models/employees_departmen
 import { TBLShamelDaeraService } from 'src/app/modules/shared/services/employees_department/tblshamel-daera.service';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamel-user-edit',
@@ -70,6 +71,8 @@ pp:any;
  
   loading: boolean = false;
 
+  darkTheme: boolean;
+
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TBLShamelUserEditComponent>,
@@ -78,7 +81,8 @@ pp:any;
     public DaeraService:TBLShamelDaeraService,
     private fb: UntypedFormBuilder,
     private sanitizer: DomSanitizer,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService
   ) {
     this.loading = true;
     if (data && data.obj )
@@ -106,6 +110,10 @@ pp:any;
     this.FillArrayUsingService();
     console.log('ngOnInit');
      this.SetValue();
+
+     this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

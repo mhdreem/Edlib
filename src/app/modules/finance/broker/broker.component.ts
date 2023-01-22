@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { INavData } from '@coreui/angular';
 import { NavService } from '../../shared/components/containers/default-layout/nav.service';
+import { ReturnBtnService } from '../../shared/services/return-btn.service';
 
 
 @Component({
@@ -67,13 +68,45 @@ export class BrokerComponent implements OnInit {
 
    
 
+  returnNavItems: INavData[] = [
+    {
+      name: 'القسم المالي',
+      url: '/',
+      iconComponent: { name: 'cil-speedometer' },
+      badge: {
+        color: 'info',
+        text: 'NEW'
+      }
+    },
+    {
+      name: 'الوكلاء و الساعات' ,
+      url: 'finace/module/broker',
+      iconComponent: { name: 'cil-pencil' },
+  
+    },
 
+    {
+      name: 'الحسميات' ,
+      url: 'finace/module/shatebtax',
+      iconComponent: { name: 'cil-pencil' },
+    }
+    ,
+    {
+      name: 'الرواتب' ,
+      url: 'finace/module/shatebpayrol',
+      iconComponent: { name: 'cil-pencil' },
+    }
+  ];
 
 
  
-constructor(private navService:NavService) {
+constructor(private navService:NavService,
+  private returnBtnService: ReturnBtnService) {
   this.navService.navItems_Subject.next(this.navItems);
  
+  this.returnBtnService.navItems= this.returnNavItems;
+  this.returnBtnService.returnUrl= 'http://localhost:4200/finace/module';
+
 }
 
 ngOnInit(): void {

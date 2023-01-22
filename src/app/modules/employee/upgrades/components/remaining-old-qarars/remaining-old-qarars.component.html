@@ -1,6 +1,7 @@
-<form action="" [formGroup]="Form">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <form action="" [formGroup]="Form">
     <div class="date">
-        <span>تاريخ القرار الوهمي:</span>
+        <span class="white" style="margin-bottom: 10px; display: block;">تاريخ القرار الوهمي:</span>
         <div class="content">
           <mat-form-field class="example-full-width small-width" appearance="fill">
             <mat-label>اليوم</mat-label>
@@ -22,7 +23,7 @@
     
 </form>
 
-<button mat-raised-button color="primary" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+<button mat-raised-button class="add" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
 
 <div class="table-wrap">
 
@@ -63,3 +64,4 @@
   
   
   </div>
+</div>

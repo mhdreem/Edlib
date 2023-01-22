@@ -2,11 +2,12 @@ import { Component, OnInit, Optional, Inject } from "@angular/core";
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { TBLShamelSuddenHoliday } from "src/app/modules/shared/models/employees_department/TBLShamelSuddenHoliday";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tbl-shamel-sudden-holiday-add',
   templateUrl: './tbl-shamel-sudden-holiday-add.component.html',
-  styleUrls: ['./tbl-shamel-sudden-holiday-add.component.css']
+  styleUrls: ['./tbl-shamel-sudden-holiday-add.component.scss']
 
 })
 export class TblShamelSuddenHolidayAddComponent implements OnInit {
@@ -20,10 +21,13 @@ export class TblShamelSuddenHolidayAddComponent implements OnInit {
 
   local_data:TBLShamelSuddenHoliday={suddenholiday_id:0,suddenholiday_name:'',Fixed:0};
 
+  darkTheme: boolean;
+
   constructor(private frmBuilder:UntypedFormBuilder,
     public dialogRef: MatDialogRef<TblShamelSuddenHolidayAddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_SuddenHoliday_id= new UntypedFormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -65,6 +69,9 @@ export class TblShamelSuddenHolidayAddComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

@@ -9,6 +9,7 @@ import { TBLShamelProgramTreeService } from 'src/app/modules/shared/services/sys
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TblshamelProgramTreeModifyComponent } from '../tblshamel-program-tree-modify/tblshamel-program-tree-modify.component';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamel-program-tree-list',
@@ -31,10 +32,12 @@ export class TblshamelProgramTreeListComponent implements OnInit, AfterViewInit 
   tableDataSource: MatTableDataSource<TBLShamelProgramTree>;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  darkTheme: boolean;
 
   constructor(private tblShamelProgramTreeService: TBLShamelProgramTreeService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog) { 
+    public dialog: MatDialog,
+    private themeService: ThemeService) { 
     this.tableDataSource = new MatTableDataSource([]);
   }
 
@@ -42,6 +45,10 @@ export class TblshamelProgramTreeListComponent implements OnInit, AfterViewInit 
     this.tblShamelProgramTreeService.BuildTree().subscribe(res =>{
       this.dataSource.data= res;
     });
+
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngAfterViewInit() {

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelFooterH2 } from 'src/app/modules/shared/models/employees_department/itblshamelFooterh2';
 import { TblshamelFooterh2Service } from 'src/app/modules/shared/services/employees_department/tblshamel-footerh2.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelFooterh2AddComponent } from '../tbl-shamel-footerh2-add/tbl-shamel-footerh2-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelFooterh2ListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tblshamelFooterh2Service:TblshamelFooterh2Service,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tblshamelFooterh2Service.List_ITBLShamelFooterh2 == null ||
       tblshamelFooterh2Service.List_ITBLShamelFooterh2.length ==0
      )
@@ -124,6 +128,9 @@ export class TblShamelFooterh2ListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

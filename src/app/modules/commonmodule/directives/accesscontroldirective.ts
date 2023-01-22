@@ -117,7 +117,7 @@ import { TBLShamelUserService } from '../../shared/services/employees_department
   
     ngOnInit() {
         this.elementRef.nativeElement.style.display = "none";       
-        this.elementRef.nativeElement.style.display = this.check()==true ? "block" : "none";
+        this.elementRef.nativeElement.style.display = this.check()==true ? "inline-block" : "none";
           
     }
   

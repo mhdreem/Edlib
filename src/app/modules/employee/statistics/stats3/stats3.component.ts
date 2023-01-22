@@ -5,6 +5,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeStatsService } from 'src/app/modules/shared/services/employees_department/employee-stats.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { JobServiceDataAdjustPrintDialogComponent } from '../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { Stats3PrintComponent } from '../print/stats3-print/stats3-print.component';
 
@@ -31,9 +32,12 @@ export class Stats3Component implements OnInit {
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  darkTheme: boolean;
+
   constructor(public EmployeeStatsService :EmployeeStatsService,
     private _liveAnnouncer: LiveAnnouncer,
-    public dialog: MatDialog,) { 
+    public dialog: MatDialog,
+    private themeService: ThemeService) { 
     this.dataSource = new MatTableDataSource<any>([]);
   }
 
@@ -52,6 +56,9 @@ export class Stats3Component implements OnInit {
   }
   
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   Search(){

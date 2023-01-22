@@ -1,36 +1,40 @@
-<c-container>
-  <c-row>
-    <c-col [xl]="4">  
-        <app-employee-list-search ></app-employee-list-search>
-    </c-col>
-    <c-col [xl]="8">
-      <c-row>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                  مفاتيح البحث
-              </mat-panel-title>
-              <mat-panel-description>
-                  من أجل التحكم بالبحث انقر هنا
-                  <mat-icon fontIcon="search"></mat-icon>
-              </mat-panel-description>
-          </mat-expansion-panel-header>
-            <app-employee-search-bar></app-employee-search-bar>
-          </mat-expansion-panel>
-        
-        </mat-accordion>
+<div class="theme" [class.darkTheme]="darkTheme">
 
-        
-      </c-row>
-      <c-row>
-        <router-outlet></router-outlet>
-      </c-row>
-
-    </c-col>
-  </c-row>
-</c-container>
-
-  
+  <c-container>
+    <c-row>
+      <c-col [xl]="4">  
+          <app-employee-list-search ></app-employee-list-search>
+      </c-col>
+      <c-col [xl]="8">
+        <c-row>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="white" [cTextColor]="'#fff'" cTextColor="#fff">
+                    مفاتيح البحث
+                </mat-panel-title>
+                <mat-panel-description class="white">
+                    من أجل التحكم بالبحث انقر هنا
+                    <mat-icon fontIcon="search"></mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+              <app-employee-search-bar></app-employee-search-bar>
+            </mat-expansion-panel>
+          
+          </mat-accordion>
   
           
+        </c-row>
+        <c-row>
+          <router-outlet></router-outlet>
+        </c-row>
+  
+      </c-col>
+    </c-row>
+  </c-container>
+  
+    
+    
+            
+  
+</div>

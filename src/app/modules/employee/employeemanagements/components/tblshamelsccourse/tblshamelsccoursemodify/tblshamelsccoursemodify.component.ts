@@ -21,6 +21,7 @@ import { TblshamelcourseService } from 'src/app/modules/shared/services/employee
 import { TblshamelsccourseService } from 'src/app/modules/shared/services/employees_department/tblshamelsccourse.service';
 import { TblshamelspecificationService } from 'src/app/modules/shared/services/employees_department/tblshamelspecification.service';
 import { TblshamelstateService } from 'src/app/modules/shared/services/employees_department/tblshamelstate.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { ValidateForm } from './validate/validate_fromgroup';
 
@@ -108,6 +109,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   endDateMonthIsFilled: boolean= false;
   endDateYearIsFilled: boolean= false;
 
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     private frmBuilder: FormBuilder,
@@ -119,7 +121,8 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     public stateService: TblshamelstateService,
     public tblshameluserservice: TBLShamelUserService,
     @Inject(DOCUMENT) private _document: Document,
-    @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCCourse, id: number }
+    @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCCourse, id: number },
+    private themeService: ThemeService
   ) {
 
     //في حال كانت البيانات مرسلة عن طريق Dialog
@@ -249,6 +252,9 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   //#endregion
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngAfterViewInit() {

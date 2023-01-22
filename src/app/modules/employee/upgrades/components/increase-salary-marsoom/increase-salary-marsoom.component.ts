@@ -11,6 +11,7 @@ import { TblshamelchangereasonService } from 'src/app/modules/shared/services/em
 import { TblshameldepartmentService } from 'src/app/modules/shared/services/employees_department/tblshameldepartment.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { TblshameljobkindService } from 'src/app/modules/shared/services/employees_department/tblshameljobkind.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-increase-salary-marsoom',
@@ -47,6 +48,8 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
 
   progressBarValue1: number= 0;
   progressBarValue2: number= 0;
+  
+  darkTheme: boolean;
 
   constructor(private fb: UntypedFormBuilder,
     private tblshamelchangereasonService: TblshamelchangereasonService,
@@ -54,7 +57,8 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
     private tblshameldepartmentService: TblshameldepartmentService,
     private tblshameljobkindService: TblshameljobkindService,
     private tblshamelScJobStateService: TblshamelScJobStateService,
-    @Inject(DOCUMENT) private _document: Document) { 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) { 
     this.LoadingFinish = true;
 
       this.BuildForm();
@@ -258,6 +262,9 @@ export class IncreaseSalaryMarsoomComponent implements OnInit, OnDestroy {
       }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   public focusNext(id: string) {

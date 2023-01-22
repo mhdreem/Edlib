@@ -10,6 +10,7 @@ import { ITBLShamelIncMarsoom } from 'src/app/modules/shared/models/employees_de
 import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_department/IGlobalEmployeeList';
 import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/employees_department/tblshamelincmarsoom.service';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamelincmarsoomlist',
@@ -34,14 +35,15 @@ _Subscription:Subscription =new Subscription();
                                 'documentdate', 'changereason_name' , 'incpercentage','additionalvalue','begindate','action'];
 
 
-
+  darkTheme: boolean;
 
   constructor(
     public IncMarsoomService : TblshamelincmarsoomService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     public GlobalEmployeeList:IGlobalEmployeeList,
-    private _snackBar: MatSnackBar ) {
+    private _snackBar: MatSnackBar,
+    private themeService: ThemeService ) {
 
       this.dataSource = new MatTableDataSource<ITBLShamelIncMarsoom>([]);
       this.IncMarsoom_List =[];
@@ -105,6 +107,9 @@ this.Load_ITBLShamelIncMarsoom()
  
    ngOnInit(): void {
      this.dataSource = new MatTableDataSource(this.IncMarsoom_List);
+     this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
    }
    
    ngAfterViewInit() {

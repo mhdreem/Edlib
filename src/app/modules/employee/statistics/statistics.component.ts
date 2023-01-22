@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { INavData } from '@coreui/angular';
 import { NavService } from '../../shared/components/containers/default-layout/nav.service';
 import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
+import { ReturnBtnService } from '../../shared/services/return-btn.service';
 
 @Component({
   selector: 'app-statistics',
@@ -14,7 +15,11 @@ export class StatisticsComponent implements OnInit {
   
 
  navItems: INavData[] = [
-
+  {      
+    name: 'مديرية الشؤون الادارية',
+    url: 'employees/module',
+    iconComponent: { name: 'cil-pencil' }
+  }, 
   {
     title: true,
     name: 'الاحصائيات'
@@ -52,8 +57,47 @@ export class StatisticsComponent implements OnInit {
 
 ];
   
+
+
+returnNavItems: INavData[] = [
+  {
+    title: true,
+    name: 'مديرية الشؤون الادارية',
+    formname: 'مديرية الشؤون الادارية',
+    url: 'employees',
+  },
+
+  {
+    name: 'ش.ادارية البطاقة الذاتية',
+    url: 'employees/module/employeecards',
+    formname:'ش.ادارية البطاقة الذاتية',
+    iconComponent: { name: 'cil-pencil' }
+  }
+  ,
+  {
+    name: 'ش.ادارية الترفيعات والزيادات',
+    formname: 'ش.ادارية الترفيعات والزيادات',
+    iconComponent: { name: 'cil-pencil' },
+    url: 'employees/module/upgrades',
+
+  },  
+  {
+    name: 'ش.ادارية شؤون العاملين',
+    formname: 'ش.ادارية شؤون العاملين',
+    url: 'employees/module/employeeaffairs',
+    iconComponent: { name: 'cil-pencil' },
+  },
+  {
+    name: 'ش.ادارية الاحصائيات',
+    formname: 'ش.ادارية الاحصائيات',
+    iconComponent: { name: 'cil-pencil' },
+    url: 'employees/module/statistics',
+
+  }
+];
 constructor(private navService:NavService,
-  private router: Router) {
+  private router: Router,
+  private returnBtnService: ReturnBtnService) {
     this.navService.navItems_Subject.next(this.navItems);
     this.router.events
       .subscribe(
@@ -65,6 +109,9 @@ constructor(private navService:NavService,
               
           }
         });
+
+    this.returnBtnService.navItems= this.returnNavItems;
+    this.returnBtnService.returnUrl= 'http://localhost:4200/employees/module/statistics/models';
 }
 
 

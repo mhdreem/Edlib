@@ -14,6 +14,7 @@ import { TblshamelscbonusmodifyComponent } from "../tblshamelscbonusmodify/tblsh
 import { FormValidationHelpersService } from "src/app/modules/shared/services/helpers/form-validation-helpers.service";
 import { Subscription } from "rxjs";
 import { DOCUMENT } from "@angular/common";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tblshamelscbonuslist',
@@ -43,7 +44,7 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
   selected_employee_Bonus_Rows = new Set<ITBLShamelSCBonus>();
   dataSource: MatTableDataSource<ITBLShamelSCBonus>;
 
-
+  darkTheme: boolean;
 
   constructor(
     public PageService: EmployeePageService,
@@ -51,7 +52,8 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
     public ShamelSCBonusService: TBLShamelSCBonusService,
     public dialog: MatDialog,
     public formValidatorsService: FormValidationHelpersService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
 
       this.LoadingFinish =true;
 
@@ -84,6 +86,9 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.employee_Bonus_List);
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.employee_Bonus_List);

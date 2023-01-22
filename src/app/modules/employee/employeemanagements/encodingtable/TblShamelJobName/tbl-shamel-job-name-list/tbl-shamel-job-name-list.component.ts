@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobName';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelJobNameAddComponent } from '../tbl-shamel-job-name-add/tbl-shamel-job-name-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelJobNameListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tblshameljobnameService:TblshameljobnameService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tblshameljobnameService.list_ITBLShamelJobName == null ||
       tblshameljobnameService.list_ITBLShamelJobName.length ==0
      )
@@ -124,6 +128,9 @@ export class TblShamelJobNameListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

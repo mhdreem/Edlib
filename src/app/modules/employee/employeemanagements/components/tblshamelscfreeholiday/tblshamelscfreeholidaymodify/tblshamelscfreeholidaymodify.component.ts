@@ -18,6 +18,7 @@ import { TBLShamelSCFreeHolidayService } from 'src/app/modules/shared/services/e
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 const moment = _moment;
 
@@ -96,6 +97,8 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
   docDateDayIsFilled: boolean= false;
   docDateMonthIsFilled: boolean= false;
   docDateYearIsFilled: boolean= false;
+
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelscfreeholidaymodifyComponent>,
@@ -108,6 +111,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
     public PageService: EmployeePageService,
     private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
 
   ) {
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -226,7 +230,9 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
 
   ngOnInit(): void {
 
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
   }
 

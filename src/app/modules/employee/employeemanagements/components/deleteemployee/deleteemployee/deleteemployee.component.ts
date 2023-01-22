@@ -7,6 +7,7 @@ import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_depar
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../employee-page-service';
 
 
@@ -50,13 +51,14 @@ export class DeleteemployeeComponent implements OnInit {
  
   
 
-
+  darkTheme: boolean;
   
   constructor(private fb: UntypedFormBuilder,
     public restApi:EmployeeServiceService,
     public PageService: EmployeePageService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
     ) {
 
       this.BuildSeachForm();
@@ -113,7 +115,9 @@ export class DeleteemployeeComponent implements OnInit {
   
   
      ngOnInit() {
-
+      this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+        this.darkTheme= res;
+      })
      
 
 

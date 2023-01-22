@@ -21,6 +21,7 @@ import { TBLShamelNationalityService } from 'src/app/modules/shared/services/emp
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
 import { TBLShamelStreetOrVillageService } from 'src/app/modules/shared/services/employees_department/tblshamel-street-or-village.service';
 import { FormValidationHelpersService } from 'src/app/modules/shared/services/helpers/form-validation-helpers.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { Validator_COMPUTER_ID } from './Validators/Validator_COMPUTER_ID';
 import { Validator_FullName } from './Validators/Validator_FullName';
@@ -129,6 +130,8 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   qararMonthIsFilled: boolean= false;
   qararYearIsFilled: boolean= false;
   
+  darkTheme: boolean;
+
   constructor(
     private pageEmployee: EmployeePageService,
     @Inject(DOCUMENT) private _document: Document,
@@ -141,6 +144,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
     private TblStreetService: TBLShamelStreetOrVillageService,
     private TblNationalityService: TBLShamelNationalityService,
     private _snackBar: MatSnackBar,
+    private themeService: ThemeService
     
   ) {
     this.LoadingFinish = true;
@@ -397,7 +401,9 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+          this.darkTheme= res;
+        })
   }
 
   private _filtered_MARTIALSTATE(name: string): TBLShamelMartialState[] {

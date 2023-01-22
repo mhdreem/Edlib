@@ -1,148 +1,152 @@
-<c-row>
-  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
-</c-row>
-<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
-<form [formGroup]="Form">
-    <div class="right">
-        <div class="date">
-            <span>تاريخ التبدل:</span>
-            <div class="content">
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21"
-                id="ChangeDateDay" (keyup.enter)="focusNext('ChangeDateMonth')">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <div class="con">
+    <c-row>
+      <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+    </c-row>
+    <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+    <form [formGroup]="Form">
+        <div class="right">
+            <div class="date">
+                <span>تاريخ التبدل:</span>
+                <div class="content">
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>اليوم</mat-label>
+                    <input type="number" matInput [formControl]="ChangeDateDay" placeholder="ex: 21"
+                    id="ChangeDateDay" (keyup.enter)="focusNext('ChangeDateMonth')">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>الشهر</mat-label>
+                    <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1"
+                    id="ChangeDateMonth" (keyup.enter)="focusNext('ChangeDateYear')">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>العام</mat-label>
+                    <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023"
+                    id="ChangeDateYear" (keyup.enter)="focusNext('ChangeReason')">
+                  </mat-form-field>
+                </div>
+              </div>
+            
+            <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>سبب التبدل</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="ChangeReason"
+                       [matAutocomplete]="ChangeReason_auto" 
+                       id="ChangeReason" (keyup.enter)="focusNext('DocumentType')"
+                       >
+                <mat-autocomplete #ChangeReason_auto="matAutocomplete"
+                [displayWith]="displayChangeReasonProperty.bind(this)">
+                  <mat-option *ngFor="let option of ChangeReason_Filter | async" [value]="option.changereason_id">
+                    {{option.changereason_name}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateMonth" placeholder="ex: 1"
-                id="ChangeDateMonth" (keyup.enter)="focusNext('ChangeDateYear')">
-              </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="ChangeDateYear" placeholder="ex: 2023"
-                id="ChangeDateYear" (keyup.enter)="focusNext('ChangeReason')">
-              </mat-form-field>
-            </div>
-          </div>
         
-        <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>سبب التبدل</mat-label>
-            <input type="text"
-                   matInput
-                   [formControl]="ChangeReason"
-                   [matAutocomplete]="ChangeReason_auto" 
-                   id="ChangeReason" (keyup.enter)="focusNext('DocumentType')"
-                   >
-            <mat-autocomplete #ChangeReason_auto="matAutocomplete"
-            [displayWith]="displayChangeReasonProperty.bind(this)">
-              <mat-option *ngFor="let option of ChangeReason_Filter | async" [value]="option.changereason_id">
-                {{option.changereason_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-    
-          <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>نوع المستند</mat-label>
-            <input type="text"
-                   matInput
-                   [formControl]="DocumentType"
-                   [matAutocomplete]="autoDocumentType" 
-                   id="DocumentType" (keyup.enter)="focusNext('DocumentId')"
-                   >
-            <mat-autocomplete #autoDocumentType="matAutocomplete"
-            [displayWith]="displayDocumentTypeProperty.bind(this)">
-              <mat-option *ngFor="let option of DocumentType_Filter | async" [value]="option.documenttype_id">
-                {{option.documenttype_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-    
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>رقم النستند</mat-label>
-            <input matInput [formControl]="DocumentId"
-            id="DocumentId" (keyup.enter)="focusNext('DocumentDateDay')">
-          </mat-form-field>
-    
-          <div class="date">
-            <span>تاريخ المستند:</span>
-            <div class="content">
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>اليوم</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateDay" placeholder="ex: 21"
-                id="DocumentDateDay" (keyup.enter)="focusNext('DocumentDateMonth')">
+              <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>نوع المستند</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="DocumentType"
+                       [matAutocomplete]="autoDocumentType" 
+                       id="DocumentType" (keyup.enter)="focusNext('DocumentId')"
+                       >
+                <mat-autocomplete #autoDocumentType="matAutocomplete"
+                [displayWith]="displayDocumentTypeProperty.bind(this)">
+                  <mat-option *ngFor="let option of DocumentType_Filter | async" [value]="option.documenttype_id">
+                    {{option.documenttype_name}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>الشهر</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateMonth" placeholder="ex: 1"
-                id="DocumentDateMonth" (keyup.enter)="focusNext('DocumentDateYear')">
-              </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>العام</mat-label>
-                <input type="number" matInput [formControl]="DocumentDateYear" placeholder="ex: 2023"
-                id="DocumentDateYear" (keyup.enter)="focusNext('Department')">
-              </mat-form-field>
-            </div>
-          </div>
         
-          <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>مركز الوظيفة</mat-label>
-            <input type="text"
-                   matInput
-                   [formControl]="Department"
-                   [matAutocomplete]="autoDepartment" 
-                   id="Department" (keyup.enter)="focusNext('JobKind')"
-                   >
-            <mat-autocomplete #autoDepartment="matAutocomplete"
-            [displayWith]="displayDepartmentProperty.bind(this)">
-              <mat-option *ngFor="let option of Department_Filter | async" [value]="option.department_id">
-                {{option.department_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>رقم النستند</mat-label>
+                <input matInput [formControl]="DocumentId"
+                id="DocumentId" (keyup.enter)="focusNext('DocumentDateDay')">
+              </mat-form-field>
+        
+              <div class="date">
+                <span>تاريخ المستند:</span>
+                <div class="content">
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>اليوم</mat-label>
+                    <input type="number" matInput [formControl]="DocumentDateDay" placeholder="ex: 21"
+                    id="DocumentDateDay" (keyup.enter)="focusNext('DocumentDateMonth')">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>الشهر</mat-label>
+                    <input type="number" matInput [formControl]="DocumentDateMonth" placeholder="ex: 1"
+                    id="DocumentDateMonth" (keyup.enter)="focusNext('DocumentDateYear')">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>العام</mat-label>
+                    <input type="number" matInput [formControl]="DocumentDateYear" placeholder="ex: 2023"
+                    id="DocumentDateYear" (keyup.enter)="focusNext('Department')">
+                  </mat-form-field>
+                </div>
+              </div>
+            
+              <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>مركز الوظيفة</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="Department"
+                       [matAutocomplete]="autoDepartment" 
+                       id="Department" (keyup.enter)="focusNext('JobKind')"
+                       >
+                <mat-autocomplete #autoDepartment="matAutocomplete"
+                [displayWith]="displayDepartmentProperty.bind(this)">
+                  <mat-option *ngFor="let option of Department_Filter | async" [value]="option.department_id">
+                    {{option.department_name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        
+              <mat-form-field class="example-full-width fitContent" appearance="fill">
+                <mat-label>نوع الوظيفة</mat-label>
+                <input type="text"
+                       matInput
+                       [formControl]="JobKind"
+                       [matAutocomplete]="autoJobKind" 
+                       id="JobKind" (keyup.enter)="focusNext('textArea')"
+                       >
+                <mat-autocomplete #autoJobKind="matAutocomplete"
+                [displayWith]="displayJobKindProperty.bind(this)">
+                  <mat-option *ngFor="let option of JobKind_Filter | async" [value]="option.jobkind_id">
+                    {{option.jobkind_name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        
+        </div>
     
-          <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>نوع الوظيفة</mat-label>
-            <input type="text"
-                   matInput
-                   [formControl]="JobKind"
-                   [matAutocomplete]="autoJobKind" 
-                   id="JobKind" (keyup.enter)="focusNext('textArea')"
-                   >
-            <mat-autocomplete #autoJobKind="matAutocomplete"
-            [displayWith]="displayJobKindProperty.bind(this)">
-              <mat-option *ngFor="let option of JobKind_Filter | async" [value]="option.jobkind_id">
-                {{option.jobkind_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+        <div class="left">
+            <textarea [formControl]="textArea" name="" id="textArea" (keyup.enter)="focusNext('ChangeDateDay')" cols="60" rows="15"></textarea>
+        </div>
+    </form>
     
+    <button mat-raised-button class="add" style="display: inline;">أخذ نسخة احتياطية</button>
+    <button mat-raised-button class="add" style="display: inline;">مشاهدة التكرارات في الوضع الوظيفي</button>
+    <button mat-raised-button class="add" style="display: inline;">رفع السقوف على المرسوم الجديد 2020</button>
+    <button mat-raised-button class="add" style="display: inline;">حل بعض المشاكل بالذاتية</button>
+    
+    <hr>
+    <button mat-raised-button class="add">تحديث الوضع الوظيفي للمرسوم الجديد 2020</button>
+    <button mat-raised-button class="add">تحديث السقوف</button>
+    <span class="white">رقم الإضبارة</span>
+    <output id="id1"></output>
+    <div class="progressBox">
+        <mat-progress-bar mode="determinate" value="progressBarValue1"></mat-progress-bar>
+        <span class="white">{{progressBarValue1}}%</span>
     </div>
-
-    <div class="left">
-        <textarea [formControl]="textArea" name="" id="textArea" (keyup.enter)="focusNext('ChangeDateDay')" cols="60" rows="15"></textarea>
+    <hr>
+    <button mat-raised-button class="add">تحديث البيانات الشخصية</button>
+    <span class="white">رقم الإضبارة</span>
+    <output id="id2"></output>
+    <div class="progressBox">
+        <mat-progress-bar mode="determinate" value="progressBarValue2"></mat-progress-bar>
+        <span class="white">{{progressBarValue2}}%</span>
     </div>
-</form>
-
-<button mat-raised-button color="primary" style="display: inline;">أخذ نسخة احتياطية</button>
-<button mat-raised-button color="primary" style="display: inline;">مشاهدة التكرارات في الوضع الوظيفي</button>
-<button mat-raised-button color="primary" style="display: inline;">رفع السقوف على المرسوم الجديد 2020</button>
-<button mat-raised-button color="primary" style="display: inline;">حل بعض المشاكل بالذاتية</button>
-
-<hr>
-<button mat-raised-button color="primary">تحديث الوضع الوظيفي للمرسوم الجديد 2020</button>
-<button mat-raised-button color="primary">تحديث السقوف</button>
-<span>رقم الإضبارة</span>
-<output id="id1"></output>
-<div class="progressBox">
-    <mat-progress-bar mode="determinate" value="progressBarValue1"></mat-progress-bar>
-    <span>{{progressBarValue1}}%</span>
+    </ngx-hover-opacity>
+  </div>
 </div>
-<hr>
-<button mat-raised-button color="primary">تحديث البيانات الشخصية</button>
-<span>رقم الإضبارة</span>
-<output id="id2"></output>
-<div class="progressBox">
-    <mat-progress-bar mode="determinate" value="progressBarValue2"></mat-progress-bar>
-    <span>{{progressBarValue2}}%</span>
-</div>
-</ngx-hover-opacity>

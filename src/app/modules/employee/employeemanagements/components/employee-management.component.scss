@@ -1,3 +1,5 @@
+@import '../../../../../theme.scss';
+
 .app-employee-list-search
 {
     width: 100%;
@@ -6,4 +8,33 @@
 
 mat-accordion{
     margin-bottom: 10px;
-  }
+}
+
+mat-accordion{
+margin-bottom: 10px;
+}
+
+.darkTheme mat-expansion-panel{
+background-color: $darkBackground !important;
+}
+
+.darkTheme ::ng-deep mat-panel-title, .darkTheme ::ng-deep mat-panel-description{
+    color: white;
+}
+
+.darkTheme .white{
+    color: white;
+}
+
+.darkTheme ::ng-deep .mat-expansion-indicator::after{
+    color: white;
+}
+
+mat-expansion-panel{
+    background-color: $lightBackground;
+}
+
+.add:disabled, .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}

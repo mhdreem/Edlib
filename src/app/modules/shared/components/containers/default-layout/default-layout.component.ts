@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { INavData } from '@coreui/angular';
 import { BreadcrumbRouterService } from '@coreui/angular/lib/breadcrumb/breadcrumb-router/breadcrumb-router.service';
 import { IconSetService } from '@coreui/icons-angular';
 import { TBLShamelUser } from '../../../models/employees_department/TBLShamelUser';
 import { TBLShamelUserService } from '../../../services/employees_department/tblshamel-user.service';
+import { ReturnBtnService } from '../../../services/return-btn.service';
 import { ThemeService } from '../../../services/theme.service';
 import { NavService } from './nav.service';
 
@@ -104,7 +106,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   constructor(
     private navService:NavService,
     private userService :TBLShamelUserService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private returnBtnService: ReturnBtnService,
+    private router: Router
     ) {
       this.load_User();
     this.navService.navItems_Subject.subscribe(
@@ -153,4 +157,8 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
       
   }
 
+  onReturnClick(){
+    this.navService.navItems_Subject.next(this.returnBtnService.navItems);
+    this.router.navigate([this.returnBtnService.returnUrl]);
+  }
 }

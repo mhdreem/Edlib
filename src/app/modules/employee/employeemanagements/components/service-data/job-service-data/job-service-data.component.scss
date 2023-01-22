@@ -1,9 +1,10 @@
+@import '../../../../../../../theme.scss';
+
 fieldset{
     width: fit-content;
     padding: 20px;
     margin-left: 10px;
 
-    background: transparent;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
     backdrop-filter: blur(5px);
@@ -58,3 +59,100 @@ mat-radio-group{
 app-service-data-print, app-employee-state-data-print, app-experience-certificate-print{
     display: none;
 }
+
+.centerRight{
+    margin-top: 15px;
+}
+
+.darkTheme ::ng-deep .mat-radio-outer-circle{
+    border-color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-radio-inner-circle{
+    background-color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-checkbox-frame{
+    border-color: white !important;
+}
+
+.darkTheme .white{
+    color: white;
+}
+
+.darkTheme fieldset{
+    background-color: $darkBackground;
+}
+
+fieldset{
+    background-color: $lightBackground;
+}
+
+.darkTheme mat-form-field, .darkTheme ::ng-deep .mat-form-field-label{
+    color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-form-field-underline::before{
+    background-color: white !important;
+}
+
+.darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: $darkSecondary !important;
+}
+
+.darkTheme .save{
+    color: white !important;
+    background-color: $darkPrimary !important;
+    }
+
+
+
+::ng-deep .mat-form-field-label{
+    height: 19px !important;
+}
+
+
+.save{
+    color: white !important;
+    background-color: $lightPrimary !important;
+}
+
+::ng-deep .mat-form-field-underline::before{
+    background-color: black !important;
+}
+
+mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: white !important;
+}
+
+mat-form-field, ::ng-deep .mat-form-field-label{
+    color: black !important;
+}
+
+.darkTheme .add, .darkTheme .edit{
+    color: white !important;
+    background-color: $darkPrimary !important;
+  }
+
+  .add, .edit{
+    color: white !important;
+    background-color: $lightPrimary !important;
+  }
+
+  .add:disabled, .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+    color: rgba(0,0,0,.26) !important;
+  }
+
+  mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+    background-color: rgba(0,0,0,.12) !important;
+  }

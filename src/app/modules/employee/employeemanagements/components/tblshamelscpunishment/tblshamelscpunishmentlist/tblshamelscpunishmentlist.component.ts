@@ -13,6 +13,7 @@ import { ConfirmationdialogComponent } from "../../common/confirmationdialog/con
 import { TblshamelscpunishmentmodifyComponent } from "../tblshamelscpunishmentmodify/tblshamelscpunishmentmodify.component";
 import { Subscription } from "rxjs";
 import { DOCUMENT } from "@angular/common";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tblshamelscpunishmentlist',
@@ -44,12 +45,15 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
   LoadingFinish:Boolean;
 
   
+  darkTheme: boolean;
+
   constructor(
     @Inject(DOCUMENT) private _document: Document,
     public PageService: EmployeePageService,
     public ShamelSCPunishmentService : TBLShamelSCPunishmentService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private themeService: ThemeService
    
     ) {
 
@@ -83,6 +87,9 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
 
      ngOnInit(): void {
       this.dataSource = new MatTableDataSource(this.employee_Punishment_List);
+      this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+        this.darkTheme= res;
+      })
     }
     ngAfterViewInit() {
       this.dataSource = new MatTableDataSource(this.employee_Punishment_List);

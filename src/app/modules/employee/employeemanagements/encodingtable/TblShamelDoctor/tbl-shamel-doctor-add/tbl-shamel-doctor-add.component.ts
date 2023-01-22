@@ -2,12 +2,13 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelDoctor } from 'src/app/modules/shared/models/employees_department/ITBLShamelDoctor';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
   selector: 'app-tbl-shamel-doctor-add',
   templateUrl: './tbl-shamel-doctor-add.component.html',
-  styleUrls: ['./tbl-shamel-doctor-add.component.css']
+  styleUrls: ['./tbl-shamel-doctor-add.component.scss']
 })
 export class TblShamelDoctorAddComponent implements OnInit {
 
@@ -17,10 +18,14 @@ export class TblShamelDoctorAddComponent implements OnInit {
   frm_fixed : UntypedFormControl;
   action:string;
   local_data:ITBLShamelDoctor={};
+
+  darkTheme: boolean;
+
   constructor(private frmBuilder:UntypedFormBuilder,
     public dialogRef: MatDialogRef<TblShamelDoctorAddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_Doctor_id= new UntypedFormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -56,6 +61,9 @@ export class TblShamelDoctorAddComponent implements OnInit {
     this.dialogRef.close({event:'إلغاء'});
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

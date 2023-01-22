@@ -7,17 +7,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { TBLShamelMergeServiceReason } from 'src/app/modules/shared/models/employees_department/TBLShamelMergeServiceReason';
 import { TBLShamelMergeServiceReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-merge-service-reason.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelMergeServiceReasonAddComponent } from '../tbl-shamel-merge-service-reason-add/tbl-shamel-merge-service-reason-add.component';
 
 
 @Component({
   selector: 'app-tbl-shamel-merge-service-reason-list',
   templateUrl: './tbl-shamel-merge-service-reason-list.component.html',
-  styleUrls: ['./tbl-shamel-merge-service-reason-list.component.css']
+  styleUrls: ['./tbl-shamel-merge-service-reason-list.component.scss']
 
 
 })
 export class TblShamelMergeServiceReasonListComponent {
+  formname:string = 'جدول سبب ضم الخدمة';
 
   //تعريف مصفوفة البيانات
   ELEMENT_DATA: TBLShamelMergeServiceReason[] = [];
@@ -34,10 +36,13 @@ export class TblShamelMergeServiceReasonListComponent {
 
   @ViewChild(MatTable, { static: true }) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
   constructor(
     public dialog: MatDialog,
     //اضفنا السيرفس من أجل جلب البيانات
-    private tblShamelMergeServiceReasonService: TBLShamelMergeServiceReasonService
+    private tblShamelMergeServiceReasonService: TBLShamelMergeServiceReasonService,
+    private themeService: ThemeService
   ) {
     //باعتبار ان السيرفس متل static 
     //ويتم انشاؤها مرة واحدة وتبقى طول حياة البرنامج
@@ -136,6 +141,9 @@ export class TblShamelMergeServiceReasonListComponent {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

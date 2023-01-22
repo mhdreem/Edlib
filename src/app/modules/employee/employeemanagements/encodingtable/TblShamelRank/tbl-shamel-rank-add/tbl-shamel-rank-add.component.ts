@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelRank } from 'src/app/modules/shared/models/employees_department/ITBLShamelRank';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-rank-add',
@@ -19,10 +20,13 @@ export class TblShamelRankAddComponent implements OnInit {
 
   local_data:ITBLShamelRank={rank_id:0,rank_name:'',Fixed:0};
 
+  darkTheme: boolean;
+
   constructor(private frmBuilder:FormBuilder,
     public dialogRef: MatDialogRef<TblShamelRankAddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_Rank_id= new FormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -63,6 +67,9 @@ export class TblShamelRankAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

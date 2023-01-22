@@ -26,6 +26,7 @@ import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/empl
 import { TblshameljobkindService } from 'src/app/modules/shared/services/employees_department/tblshameljobkind.service';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { TblshamelscjobstateService } from 'src/app/modules/shared/services/employees_department/tblshamelscjobstate.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../employee-page-service';
 
 const moment = _moment;
@@ -130,6 +131,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
   docDateMonthIsFilled: boolean= false;
   docDateYearIsFilled: boolean= false;
 
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     public PageService: EmployeePageService,
@@ -147,6 +149,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
     private ngZone: NgZone,
     private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
   ) {
 
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -348,7 +351,9 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
   //#region  Init Component
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
 
   }

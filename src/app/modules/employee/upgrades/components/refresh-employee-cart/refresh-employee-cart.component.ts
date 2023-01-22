@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { TblshamelTaskService } from 'src/app/modules/shared/services/employees_department/tblshamel-task.service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-refresh-employee-cart',
@@ -55,6 +56,7 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
 
   userId: number;
 
+  darkTheme: boolean;
 
   constructor(private tblShamelYearService: TBLShamelYearService,
     private fb: UntypedFormBuilder,
@@ -66,7 +68,8 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     private tblShamelUpgradeService: TBLShamelUpgradeService,
     private tblShamelUserService: TBLShamelUserService,
     private tblshamelTaskService: TblshamelTaskService,
-    @Inject(DOCUMENT) private _document: Document,) { 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) { 
     this.LoadingFinish = true;
 
       this.BuildForm();
@@ -265,6 +268,10 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

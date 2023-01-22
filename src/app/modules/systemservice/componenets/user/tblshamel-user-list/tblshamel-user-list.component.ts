@@ -7,6 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTable } from '@angular/material/table';
 import { TBLShamelUser } from 'src/app/modules/shared/models/employees_department/TBLShamelUser';
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
@@ -29,11 +30,13 @@ export class TBLShamelUserListComponent implements OnInit ,OnChanges  {
   // Select Object
   selected_User_Rows = new Set<TBLShamelUser>();                              
  
+  darkTheme: boolean;
 
 
   constructor(public ShamelUserService:TBLShamelUserService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
       this.User_List =[];
       this.FillTable();
      }
@@ -45,6 +48,9 @@ export class TBLShamelUserListComponent implements OnInit ,OnChanges  {
 
    
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

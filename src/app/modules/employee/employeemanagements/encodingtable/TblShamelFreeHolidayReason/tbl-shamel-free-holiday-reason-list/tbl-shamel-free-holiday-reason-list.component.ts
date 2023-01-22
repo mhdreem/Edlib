@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelFreeHolidayReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelFreeHolidayReason';
 import { TBLShamelFreeHolidayReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-free-holiday-reason.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelFreeHolidayReasonAddComponent } from '../tbl-shamel-free-holiday-reason-add/tbl-shamel-free-holiday-reason-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelFreeHolidayReasonListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tBLShamelFreeHolidayReasonService:TBLShamelFreeHolidayReasonService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tBLShamelFreeHolidayReasonService.List_TBLShamelFreeHolidayReason == null ||
       tBLShamelFreeHolidayReasonService.List_TBLShamelFreeHolidayReason.length ==0
      )
@@ -123,6 +127,9 @@ export class TblShamelFreeHolidayReasonListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

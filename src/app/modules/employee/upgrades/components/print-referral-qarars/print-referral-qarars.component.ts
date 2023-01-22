@@ -21,6 +21,7 @@ import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_depar
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { JobServiceDataAdjustPrintDialogComponent } from '../../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { PrintReferralsComponent } from '../print/print-referrals/print-referrals.component';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-print-referral-qarars',
@@ -78,6 +79,7 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
 
   referralInput: any[];
 
+  darkTheme: boolean;
 
   constructor(
     private upgradeYear: TblShamelUpgradeYearService,
@@ -88,6 +90,7 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     public dialog: MatDialog,
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
+    private themeService: ThemeService
   ) {
     this.LoadingFinish = true;
 
@@ -238,6 +241,10 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../employee-page-service';
 import { PrintCardComponent } from '../print/print-card/print-card.component';
 import { PrintComponent } from '../print/print/print.component';
@@ -25,7 +26,11 @@ export class PrintEmployeeCardComponent implements OnInit {
   });
   
   printInput: any;
-  constructor(public PageService:EmployeePageService, public dialog: MatDialog) {
+
+  darkTheme: boolean;
+
+  constructor(public PageService:EmployeePageService, public dialog: MatDialog,
+    private themeService: ThemeService) {
     this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
       data => {
         this.Selected_Emp = data;
@@ -52,7 +57,9 @@ export class PrintEmployeeCardComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   change1(event: any){

@@ -9,6 +9,7 @@ import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_depar
 import { TBLShamelSCMergeService } from 'src/app/modules/shared/models/employees_department/TBLShamelSCMergeService';
 import { TBLShamelSCSuddenHoliday } from 'src/app/modules/shared/models/employees_department/TBLShamelSCSuddenHoliday';
 import { TBLShamelSCMergeServiceService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-merge-service.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 import { TBLShamelSCSuddenHolidayAddComponent } from '../../tblshamelscsuddenholiday/tblshamel-sc-sudden-holiday-add/tblshamel-sc-sudden-holiday-add.component';
@@ -33,13 +34,15 @@ export class TblshamelscmergeserviceListComponent implements OnInit,AfterViewIni
   selected_employee_MergeService :TBLShamelSCMergeService = {};
   displayedColumns: string[] = ['years', 'months', 'days','mergeservicereason_id','documenttype_id','document_number', 'documentdate','action'];
   
+  darkTheme: boolean;
  
   
   constructor(
     public PageService: EmployeePageService,
     public SCMergeServiceService : TBLShamelSCMergeServiceService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
       this.dataSource = new  MatTableDataSource<TBLShamelSCMergeService>([]);
     
       this.dataSource.data = this.employee_List_TBLShamelSCMergeService;
@@ -74,6 +77,9 @@ console.log(data);
 ngOnInit(): void {
 
   this.dataSource.data =this. employee_List_TBLShamelSCMergeService;
+  this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+    this.darkTheme= res;
+  })
 }
 ngAfterViewInit() {
   this.dataSource.data =this.employee_List_TBLShamelSCMergeService;

@@ -1,4 +1,5 @@
-
+<div class="theme" [class.darkTheme]="darkTheme">
+  
 
 
 
@@ -65,8 +66,8 @@
       this.Selected_TBLShamelProgramTree.formtype!=null && 
       this.Selected_TBLShamelProgramTree.formtype!=undefined" 
       [ngSwitch]="this.Selected_TBLShamelProgramTree.formtype">
-      لقد اخترت الواجهة 
-      {{this.Selected_TBLShamelProgramTree.formname}}
+      <span class="white">لقد اخترت الواجهة {{this.Selected_TBLShamelProgramTree.formname}}</span> 
+      
       </div>
          
 
@@ -87,7 +88,7 @@
 
       <c-row>
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilageEntry" (change)="setAll($event.checked)" >سماحية الوصول إلى النافذة</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilageEntry" (change)="setAll($event.checked)" >سماحية الوصول إلى النافذة</mat-checkbox>
         </c-col>
         </c-row>
 
@@ -99,19 +100,19 @@
     
       <c-row>
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilageInput"  (change)="setAll($event.checked)" >ادخال</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilageInput"  (change)="setAll($event.checked)" >ادخال</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilageUpdate" (change)="setAll($event.checked)" >تعديل</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilageUpdate" (change)="setAll($event.checked)" >تعديل</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilageDisplay" (change)="setAll($event.checked)" >عرض</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilageDisplay" (change)="setAll($event.checked)" >عرض</mat-checkbox>
         </c-col>
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilagePrint" (change)="setAll($event.checked)" >طباعة</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilagePrint" (change)="setAll($event.checked)" >طباعة</mat-checkbox>
         </c-col>      
         <c-col>
-          <mat-checkbox color="primary" formControlName="privilageDelete" (change)="setAll($event.checked)" >حذف</mat-checkbox>
+          <mat-checkbox class="white" color="primary" formControlName="privilageDelete" (change)="setAll($event.checked)" >حذف</mat-checkbox>
         </c-col>
     </c-row>
 
@@ -123,8 +124,10 @@
 
  
   
-<button mat-raised-button color="primary" id="btnSave" (click)="Save()" accessControl  [FormName]="formname1" [CheckedPrivilige]="'00010'">حفظ</button>
+<button mat-raised-button class="add" id="btnSave" (click)="Save()" accessControl  [FormName]="formname1" [CheckedPrivilige]="'00010'">حفظ</button>
     
    
   </form>
  
+
+</div>

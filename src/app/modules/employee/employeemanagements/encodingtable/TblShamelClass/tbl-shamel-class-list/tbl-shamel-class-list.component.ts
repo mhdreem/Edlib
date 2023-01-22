@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelClass } from 'src/app/modules/shared/models/employees_department/ITBLShamelClass';
 import { TblshamelclassService } from 'src/app/modules/shared/services/employees_department/tblshamelclass.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelClassAddComponent } from '../tbl-shamel-class-add/tbl-shamel-class-add.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { TblShamelClassAddComponent } from '../tbl-shamel-class-add/tbl-shamel-c
   styleUrls: ['./tbl-shamel-class-list.component.scss']
 })
 export class TblShamelClassListComponent implements OnInit {
-
+  formname:string = 'جدول الفئات';
   ELEMENT_DATA: ITBLShamelClass[] = [];
   dataSource = new MatTableDataSource<ITBLShamelClass>();
 
@@ -20,9 +21,12 @@ export class TblShamelClassListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tblshamelclassService:TblshamelclassService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tblshamelclassService.List_ITBLShamelClass == null ||
       tblshamelclassService.List_ITBLShamelClass.length ==0
      )
@@ -123,6 +127,9 @@ export class TblShamelClassListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

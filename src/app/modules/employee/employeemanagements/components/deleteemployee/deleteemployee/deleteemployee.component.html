@@ -1,88 +1,91 @@
-
+<div class="theme" [class.darkTheme]="darkTheme">
+  
 <form [formGroup]="DeleteForm">
 
 
-<mat-form-field  appearance="fill" class="row">
-    <mat-label>اسم الموظف</mat-label>
-
-    <input type="text" 
-           aria-label="اسم الموظف"
-           matInput                         
-           [formControl]="autocomplete_EmployeeName"
-           formControlName="autocomplete_EmployeeName"
-           [matAutocomplete]="auto"           
-           id="autocomplete_EmployeeName" (keyup.enter)="focusNext('input_Employee_ID')">
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="OnSelectEmpFullNameChange($event)">
-            <cdk-virtual-scroll-viewport class="autocomplete-test-viewport" 
-            [ngStyle]="{'height': height}"
-            itemSize="25" >
-            <mat-option *cdkVirtualFor="let employee of filteredEmployeeNameList"
-              [value]="employee.fullname"
-              [id]="employee.id"                           
-              class="autocomplete-item"                          
-              >
-              {{employee.fullname}}
-            </mat-option>
-          </cdk-virtual-scroll-viewport>
-
-           
-          
-
-          </mat-autocomplete>
+  <mat-form-field  appearance="fill">
+      <mat-label>اسم الموظف</mat-label>
+  
+      <input type="text" 
+             aria-label="اسم الموظف"
+             matInput                         
+             [formControl]="autocomplete_EmployeeName"
+             formControlName="autocomplete_EmployeeName"
+             [matAutocomplete]="auto"           
+             id="autocomplete_EmployeeName" (keyup.enter)="focusNext('input_Employee_ID')">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="OnSelectEmpFullNameChange($event)">
+              <cdk-virtual-scroll-viewport class="autocomplete-test-viewport" 
+              [ngStyle]="{'height': height}"
+              itemSize="25" >
+              <mat-option *cdkVirtualFor="let employee of filteredEmployeeNameList"
+                [value]="employee.fullname"
+                [id]="employee.id"                           
+                class="autocomplete-item"                          
+                >
+                {{employee.fullname}}
+              </mat-option>
+            </cdk-virtual-scroll-viewport>
+  
+             
+            
+  
+            </mat-autocomplete>
+      
+    </mat-form-field>   
     
-  </mat-form-field>   
   
-
-
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم الإضبارة </mat-label>
-    <input matInput  value="" [formControl]="input_Employee_ID" 
-    id="input_Employee_ID" (keyup.enter)="focusNext('Payrol_ID')">            
-  </mat-form-field>
-
-
   
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم الشطب </mat-label>
-    <input matInput  value="" [formControl]="Payrol_ID" 
-    id="Payrol_ID" (keyup.enter)="focusNext('Computer_ID')">            
-  </mat-form-field>
-
-
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم الحاسوب </mat-label>
-    <input matInput  value="" [formControl]="Computer_ID"
-    id="Computer_ID" (keyup.enter)="focusNext('Global_ID')">            
-  </mat-form-field>
-
-
-  <mat-form-field appearance="fill">            
-    <mat-label>الرقم الذاتي </mat-label>
-    <input matInput value="" [formControl]="Global_ID"
-    id="Global_ID" (keyup.enter)="focusNext('Insurance_ID')">            
-  </mat-form-field>
-
-
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم التأميني </mat-label>
-    <input matInput  value="" [formControl]="Insurance_ID" 
-    id="Insurance_ID" (keyup.enter)="focusNext('autocomplete_EmployeeName')">            
-  </mat-form-field>
-
-
-  <div class="buttons">
-    <button mat-raised-button color="warn" mat-dialog-close (click)="delete_employee()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">
-      <mat-icon class="mat-icon-rtl-mirror">close  </mat-icon>
-    حذف
-    </button>
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم الإضبارة </mat-label>
+      <input matInput  value="" [formControl]="input_Employee_ID" 
+      id="input_Employee_ID" (keyup.enter)="focusNext('Payrol_ID')">            
+    </mat-form-field>
   
   
     
-    <!-- <button mat-raised-button color="warn" mat-dialog-close >
-    <mat-icon class="mat-icon-rtl-mirror">close </mat-icon>  اغلاق  </button> -->
-  </div>
-
-
-</form>
-
-
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم الشطب </mat-label>
+      <input matInput  value="" [formControl]="Payrol_ID" 
+      id="Payrol_ID" (keyup.enter)="focusNext('Computer_ID')">            
+    </mat-form-field>
+  
+  
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم الحاسوب </mat-label>
+      <input matInput  value="" [formControl]="Computer_ID"
+      id="Computer_ID" (keyup.enter)="focusNext('Global_ID')">            
+    </mat-form-field>
+  
+  
+    <mat-form-field appearance="fill">            
+      <mat-label>الرقم الذاتي </mat-label>
+      <input matInput value="" [formControl]="Global_ID"
+      id="Global_ID" (keyup.enter)="focusNext('Insurance_ID')">            
+    </mat-form-field>
+  
+  
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم التأميني </mat-label>
+      <input matInput  value="" [formControl]="Insurance_ID" 
+      id="Insurance_ID" (keyup.enter)="focusNext('autocomplete_EmployeeName')">            
+    </mat-form-field>
+  
+  
+    <div class="buttons">
+      <button mat-raised-button color="warn" mat-dialog-close (click)="delete_employee()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">
+        <mat-icon class="mat-icon-rtl-mirror">close  </mat-icon>
+      حذف
+      </button>
+    
+    
+      
+      <!-- <button mat-raised-button color="warn" mat-dialog-close >
+      <mat-icon class="mat-icon-rtl-mirror">close </mat-icon>  اغلاق  </button> -->
+    </div>
+  
+  
+  </form>
+  
+  
+  
+</div>

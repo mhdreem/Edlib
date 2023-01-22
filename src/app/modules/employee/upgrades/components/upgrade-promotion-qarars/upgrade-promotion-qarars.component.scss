@@ -1,3 +1,6 @@
+@import '../../../../../../theme.scss';
+
+
 .fitContent{
     width: fit-content;
 }
@@ -6,7 +9,7 @@
     display: flex;
 
     .right{
-        background: transparent;
+        background: $lightBackground;
         border-radius: 16px;
         box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
         backdrop-filter: blur(5px);
@@ -64,7 +67,7 @@
     }
 
     .left{
-        background: transparent;
+        background: $lightBackground;
         border-radius: 16px;
         box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
         backdrop-filter: blur(5px);
@@ -84,13 +87,15 @@
             height: 300px;
             width: 250px;
             overflow: auto;
+            padding: 20px;
 
             p.clicked{
                 background-color: rgb(196, 196, 196);
             }
         }
         output{
-            background-color: rgb(196, 196, 196);
+            background-color: white;
+            color: black;
             width: 50px;
             height: 30px;
             display: flex;
@@ -103,6 +108,11 @@
             width: 130px;
         }
     }
+}
+
+.darkTheme output{
+    background-color: $darkBackground;
+    color: white;
 }
 
 hr{
@@ -121,3 +131,200 @@ hr{
 .date{
     display: flex;
 }
+
+
+.darkTheme mat-form-field, .darkTheme ::ng-deep .mat-form-field-label{
+    color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-form-field-underline::before{
+    background-color: white !important;
+}
+
+.darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: $darkSecondary !important;
+}
+
+.darkTheme .save{
+    color: white !important;
+    background-color: $darkPrimary !important;
+    }
+
+
+
+::ng-deep .mat-form-field-label{
+    height: 19px !important;
+}
+
+
+mat-form-field, ::ng-deep .mat-form-field-label{
+    color: black !important;
+}
+
+.save{
+    color: white !important;
+    background-color: $lightPrimary !important;
+}
+
+::ng-deep .mat-form-field-underline::before{
+    background-color: black !important;
+}
+
+mat-form-field ::ng-deep .mat-form-field-flex{
+    background-color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-radio-outer-circle{
+    border-color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-radio-inner-circle{
+    background-color: white !important;
+}
+
+.darkTheme .white{
+    color: white;
+}
+
+form{
+    background-color: $lightBackground;
+    padding: 20px;
+    width: fit-content;
+}
+
+.darkTheme form{
+    background-color: $darkBackground;
+}
+
+.add, .edit{
+    color: white !important;
+    background-color: $lightPrimary !important;
+    margin-block: 10px;
+  }
+
+  .darkTheme .add, .darkTheme .edit{
+    color: white !important;
+    background-color: $darkPrimary !important;
+  }
+
+  th, td{
+    padding: 4px !important;
+    text-align: center !important;
+  }
+
+  .darkTheme th,
+  .darkTheme mat-paginator,
+  .darkTheme ::ng-deep .mat-paginator-navigation-first,
+  .darkTheme ::ng-deep .mat-paginator-navigation-previous,
+  .darkTheme ::ng-deep .mat-paginator-navigation-next,
+  .darkTheme ::ng-deep .mat-paginator-navigation-last,
+  .darkTheme ::ng-deep .mat-select-arrow,
+  .darkTheme ::ng-deep .mat-select-value,
+  .darkTheme mat-paginator ::ng-deep .mat-form-field-underline,
+  .darkTheme mat-paginator ::ng-deep .mat-form-field-flex{
+    background-color: $darkBackground !important;
+    color: white !important;
+  }
+
+  mat-accordion{
+    margin-bottom: 10px;
+  }
+
+  .darkTheme .add, .darkTheme .edit{
+    color: white !important;
+    background-color: $darkPrimary !important;
+  }
+
+  .darkTheme .delete{
+    background-color: $darkPrimary;
+    margin-left: 5px;
+  }
+
+  .darkTheme tr{
+    background-color: $darkSecondary;
+  }
+
+  .darkTheme td{
+    color: white;
+  }
+
+  .darkTheme .mat-row:nth-child(even){
+    background-color: $darkTableEven;
+}
+.darkTheme .mat-row:nth-child(odd){
+    background-color: $darkSecondary;
+}
+
+::ng-deep .mat-form-field-label{
+  height: 19px !important;
+}
+
+.darkTheme .click{
+  color: white;
+}
+
+
+
+
+
+
+
+ th,
+   mat-paginator,
+   ::ng-deep .mat-paginator-navigation-first,
+   ::ng-deep .mat-paginator-navigation-previous,
+   ::ng-deep .mat-paginator-navigation-next,
+   ::ng-deep .mat-paginator-navigation-last,
+   ::ng-deep .mat-select-arrow,
+   ::ng-deep .mat-select-value,
+   mat-paginator ::ng-deep .mat-form-field-underline,
+   mat-paginator ::ng-deep .mat-form-field-flex{
+    background-color: $lightBackground !important;
+    color: black !important;
+  }
+
+  .add, .edit{
+    color: white !important;
+    background-color: $lightPrimary !important;
+  }
+
+  .delete{
+    background-color: $lightPrimary;
+    margin-left: 5px;
+  }
+
+  .demo-row-is-clicked {
+    background-color: orange !important;
+  }
+
+.mat-row:nth-child(even){
+    background-color: $LightTableEven;
+}
+.mat-row:nth-child(odd){
+    background-color: white;
+}
+
+.darkTheme .right, .darkTheme .left{
+    background-color: $darkBackground;
+}
+
+.add:disabled, .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+    color: rgba(0,0,0,.26) !important;
+  }
+
+  mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+    background-color: rgba(0,0,0,.12) !important;
+  }
+
+  

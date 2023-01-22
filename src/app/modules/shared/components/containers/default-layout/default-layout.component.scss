@@ -1,3 +1,6 @@
+@import '../../../../../../theme.scss';
+
+
 ::ng-deep .badge {
     display: none
 };
@@ -100,4 +103,19 @@ c-sidebar{
 
 ::ng-deep .nav-link.active{
     background-color: #b9fcd8 !important;
+}
+
+.return{
+    color: white;
+}
+
+.returnBtn{
+    display: block;
+    margin-inline: auto;
+    margin-bottom: 10px;
+    background-color: $lightPrimary;
+}
+
+.darkTheme .returnBtn{
+    background-color: $darkPrimary;
 }

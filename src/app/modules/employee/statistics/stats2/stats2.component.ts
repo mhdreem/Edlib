@@ -32,6 +32,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-stats2',
@@ -146,6 +147,8 @@ export class Stats2Component implements OnInit, OnDestroy {
     this.ExcuteSearch();
   }
 
+  darkTheme: boolean;
+
   constructor(
   
     public departmentService: TblshameldepartmentService,
@@ -162,7 +165,8 @@ export class Stats2Component implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     private ngZone: NgZone,
     private _liveAnnouncer: LiveAnnouncer,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
       this.dataSource = new MatTableDataSource<any>([]);
       this.LoadingFinish = true;
@@ -533,6 +537,9 @@ export class Stats2Component implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngOnDestroy(): void {

@@ -14,6 +14,7 @@ import { ITBLShamelSCCourse } from 'src/app/modules/shared/models/employees_depa
 import { TblshamelsccourseService } from 'src/app/modules/shared/services/employees_department/tblshamelsccourse.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
@@ -39,14 +40,15 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
   displayedColumns: string[] = ['course_name', 'specification_name', 'studyduration', 'country_name'
                                 ,'startdate','enddate' ,'action'];
 
-
+  darkTheme: boolean;
 
   constructor(
     public PageService:EmployeePageService,
     public courseService : TblshamelsccourseService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document,) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
       this.dataSource = new MatTableDataSource([]);
      
@@ -77,6 +79,9 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
    
   ngOnInit(): void { 
     this.dataSource = new MatTableDataSource(this.employee_course_List );
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.employee_course_List );

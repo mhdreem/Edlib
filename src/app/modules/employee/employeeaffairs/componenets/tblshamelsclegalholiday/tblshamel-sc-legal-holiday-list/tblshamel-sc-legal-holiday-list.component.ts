@@ -8,6 +8,7 @@ import { ConfirmationdialogComponent } from 'src/app/modules/shared/components/c
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelSCLegalHoliday } from 'src/app/modules/shared/models/employees_department/TBLShamelSCLegalHoliday';
 import { TBLShamelSCLEgalHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-legal-holiday.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 
 import { TBLShamelSCLEgalHolidayAddComponent } from '../tblshamel-sc-legal-holiday-add/tblshamel-sc-legal-holiday-add.component';
@@ -32,13 +33,15 @@ export class TBLShamelSCLEgalHolidayListComponent implements OnInit,AfterViewIni
   employee_List_TBLShamelSCLegalHoliday :TBLShamelSCLegalHoliday []=[];
   selected_employee_ShamelSCLegalHoliday :TBLShamelSCLegalHoliday;
   displayedColumns: string[] = ['duration', 'startdate', 'enddate','documenttype_id','document_number','documentdate','action'];
+  darkTheme: boolean;
   
   
   constructor(
     public PageService: EmployeePageService,
     public SCLEgalHolidayService : TBLShamelSCLEgalHolidayService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
       this.employee_List_TBLShamelSCLegalHoliday =[];
       this.dataSource = new MatTableDataSource([]);
     
@@ -67,6 +70,9 @@ export class TBLShamelSCLEgalHolidayListComponent implements OnInit,AfterViewIni
     
 ngOnInit(): void {
   this.dataSource = new MatTableDataSource(this.employee_List_TBLShamelSCLegalHoliday);
+  this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+    this.darkTheme= res;
+  })
 }
 ngAfterViewInit() {
   this.dataSource = new MatTableDataSource(this.employee_List_TBLShamelSCLegalHoliday);

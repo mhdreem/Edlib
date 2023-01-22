@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelFooterH1 } from 'src/app/modules/shared/models/employees_department/itblshamelFooterh1';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-footerh1-add',
@@ -15,10 +16,13 @@ export class TblShamelFooterh1AddComponent implements OnInit {
   frm_footerh1_name : FormControl;
   action:string;
   local_data:ITBLShamelFooterH1={};
+  darkTheme: boolean;
+
   constructor(private frmBuilder:FormBuilder,
     public dialogRef: MatDialogRef<TblShamelFooterh1AddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_footerh1_id= new FormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -47,6 +51,9 @@ export class TblShamelFooterh1AddComponent implements OnInit {
     this.dialogRef.close({event:'إلغاء'});
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

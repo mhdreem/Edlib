@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-display-employee-similarity-name',
@@ -33,11 +34,17 @@ export class DisplayEmployeeSimilarityNameComponent implements OnInit {
     this.view();
   }
 
-  constructor(private employeeServiceService: EmployeeServiceService) {
+  darkTheme: boolean;
+
+  constructor(private employeeServiceService: EmployeeServiceService,
+    private themeService: ThemeService) {
     this.dataSource = new MatTableDataSource([]);
    }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

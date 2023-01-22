@@ -2,11 +2,12 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TBLShamelMergeServiceReason } from 'src/app/modules/shared/models/employees_department/TBLShamelMergeServiceReason';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-merge-service-reason-add',
   templateUrl: './tbl-shamel-merge-service-reason-add.component.html',
-  styleUrls: ['./tbl-shamel-merge-service-reason-add.component.css']
+  styleUrls: ['./tbl-shamel-merge-service-reason-add.component.scss']
 })
 export class TblShamelMergeServiceReasonAddComponent implements OnInit {
   myform: UntypedFormGroup;
@@ -15,10 +16,14 @@ export class TblShamelMergeServiceReasonAddComponent implements OnInit {
   frm_fixed : UntypedFormControl;
   action:string;
   local_data:TBLShamelMergeServiceReason={};
+
+  darkTheme: boolean;
+
   constructor(private frmBuilder:UntypedFormBuilder,
     public dialogRef: MatDialogRef<TblShamelMergeServiceReasonAddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_MergeServiceReason_id= new UntypedFormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -64,6 +69,9 @@ export class TblShamelMergeServiceReasonAddComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelPunishment } from 'src/app/modules/shared/models/employees_department/ITBLShamelPunishment';
 import { TBLShamelPunishmentService } from 'src/app/modules/shared/services/employees_department/tblshamel-punishment.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelPunishmentAddComponent } from '../tbl-shamel-punishment-add/tbl-shamel-punishment-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelPunishmentListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tBLShamelPunishmentService:TBLShamelPunishmentService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tBLShamelPunishmentService.List_ITBLShamelPunishment == null ||
       tBLShamelPunishmentService.List_ITBLShamelPunishment.length ==0
      )
@@ -123,6 +127,9 @@ export class TblShamelPunishmentListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource, MatTable } from "@angular/material/table";
 import { ITBLShamelCardPages } from "src/app/modules/shared/models/employees_department/ITBLShamelCardPages";
 import { TBLShamelCardPagesService } from "src/app/modules/shared/services/employees_department/tblshamel-card-pages.service";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tblshamel-card-pages-list',
@@ -18,8 +19,11 @@ export class TBLShamelCardPagesListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
-   private tBLShamelCardPagesService:TBLShamelCardPagesService) {
+   private tBLShamelCardPagesService:TBLShamelCardPagesService,
+   private themeService: ThemeService) {
      if (tBLShamelCardPagesService.List_ITBLShamelCardPages == null ||
       tBLShamelCardPagesService.List_ITBLShamelCardPages.length ==0
      )
@@ -105,6 +109,9 @@ export class TBLShamelCardPagesListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

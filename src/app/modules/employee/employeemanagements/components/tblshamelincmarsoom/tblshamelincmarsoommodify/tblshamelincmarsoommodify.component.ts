@@ -18,6 +18,7 @@ import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/em
 import { TblshamelincmarsoomService } from 'src/app/modules/shared/services/employees_department/tblshamelincmarsoom.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamelincmarsoommodify',
@@ -97,6 +98,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
 
   LoadingFinish:boolean;
 
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     public dialogRef: MatDialogRef<TblshamelincmarsoommodifyComponent>,
@@ -106,7 +108,8 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
     public changereasonService: TblshamelchangereasonService,
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: UntypedFormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService
   ) {
 
     this.BuildForm();
@@ -185,7 +188,9 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
   }
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

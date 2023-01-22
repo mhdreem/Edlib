@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>تعديا الإجازة القانونية</h2>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <h2 mat-dialog-title>تعديل الإجازة القانونية</h2>
 
 <mat-dialog-content class="mat-typography">
 
@@ -102,7 +103,7 @@
     </button>
 
 
-    <button  mat-raised-button color="primary"  cdkFocusInitial (click)="Save()" >
+    <button  mat-raised-button class="add"  cdkFocusInitial (click)="Save()" >
       <mat-icon class="mat-icon-rtl-mirror">save
       </mat-icon>
       حفظ
@@ -110,3 +111,5 @@
 
   </mat-dialog-actions>
 
+
+</div>

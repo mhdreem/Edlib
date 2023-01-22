@@ -1,6 +1,7 @@
-<button class="search" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
-<button  mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-<button class="view" mat-raised-button color="primary" (click)="print()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+<div class="theme" [class.darkTheme]="darkTheme">
+    <button class="search add" mat-raised-button  (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+<button class="add"  mat-raised-button  (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+<button class="view add" mat-raised-button  (click)="print()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
 
 <div class="col-md-12">
     <div class="table-wrap">
@@ -45,41 +46,42 @@
 
 <div class="columnsGrpup">
     <div class="column1">
-        <output class="grey">الفئة</output>
-        <output class="darkGrey">فئة أولى</output>
-        <output class="darkGrey">فئة ثانية</output>
-        <output class="darkGrey">فئة ثالثة</output>
-        <output class="darkGrey">فئة رابعة</output>
-        <output class="darkGrey">فئة  خامسة</output>
+        <output class="grey white">الفئة</output>
+        <output class="darkGrey white">فئة أولى</output>
+        <output class="darkGrey white">فئة ثانية</output>
+        <output class="darkGrey white">فئة ثالثة</output>
+        <output class="darkGrey white">فئة رابعة</output>
+        <output class="darkGrey white">فئة  خامسة</output>
     </div>
 
     <div class="column2">
-        <output class="darkGrey">ذكور</output>
-        <output class="grey" id="malesInClass1"></output>
-        <output class="grey" id="malesInClass2"></output>
-        <output class="grey" id="malesInClass3"></output>
-        <output class="grey" id="malesInClass4"></output>
-        <output class="grey" id="malesInClass5"></output>
-        <output class="darkGrey" id="maleTotal"></output>
+        <output class="darkGrey white">ذكور</output>
+        <output class="grey white" id="malesInClass1"></output>
+        <output class="grey white" id="malesInClass2"></output>
+        <output class="grey white" id="malesInClass3"></output>
+        <output class="grey white" id="malesInClass4"></output>
+        <output class="grey white" id="malesInClass5"></output>
+        <output class="darkGrey white" id="maleTotal"></output>
     </div>
 
     <div class="column3">
-        <output class="darkGrey">إناث</output>
-        <output class="grey" id="femalesInClass1"></output>
-        <output class="grey" id="femalesInClass2"></output>
-        <output class="grey" id="femalesInClass3"></output>
-        <output class="grey" id="femalesInClass4"></output>
-        <output class="grey" id="femalesInClass5"></output>
-        <output class="darkGrey" id="femaleTotal"></output>
+        <output class="darkGrey white">إناث</output>
+        <output class="grey white" id="femalesInClass1"></output>
+        <output class="grey white" id="femalesInClass2"></output>
+        <output class="grey white" id="femalesInClass3"></output>
+        <output class="grey white" id="femalesInClass4"></output>
+        <output class="grey white" id="femalesInClass5"></output>
+        <output class="darkGrey white" id="femaleTotal"></output>
     </div>
 
     <div class="column4">
-        <output class="darkGrey">المجموع</output>
-        <output class="grey"  id="totalOfClass1"></output>
-        <output class="grey" id="totalOfClass2"></output>
-        <output class="grey" id="totalOfClass3"></output>
-        <output class="grey" id="totalOfClass4"></output>
-        <output class="grey" id="totalOfClass5"></output>
-        <output class="darkGrey" id="Total"></output>
+        <output class="darkGrey white">المجموع</output>
+        <output class="grey white"  id="totalOfClass1"></output>
+        <output class="grey white" id="totalOfClass2"></output>
+        <output class="grey white" id="totalOfClass3"></output>
+        <output class="grey white" id="totalOfClass4"></output>
+        <output class="grey white" id="totalOfClass5"></output>
+        <output class="darkGrey white" id="Total"></output>
     </div>
+</div>
 </div>

@@ -10,6 +10,7 @@ import { TblshamelscjobstateService } from "src/app/modules/shared/services/empl
 import { EmployeePageService } from "../../employee-page-service";
 import { ConfirmationdialogComponent } from "../../common/confirmationdialog/confirmationdialog.component";
 import { TblshamelscjobstatemodifyComponent } from "../tblshamelscjobstatemodify/tblshamelscjobstatemodify.component";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 
 @Component({
   selector: 'app-tblshamelscjobstatelist',
@@ -42,14 +43,14 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
   // Select Object
   selected_employee_JobState_Rows = new Set<ITBLShamelSCJobState>();
 
-
+  darkTheme: boolean;
 
   constructor(
     public PageService: EmployeePageService,
     public jobStateService: TblshamelscjobstateService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
-
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService
   ) {
     this.employee_JobState_List = [];
     this.dataSource = new MatTableDataSource(this.employee_JobState_List);
@@ -85,6 +86,9 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.employee_JobState_List);
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.employee_JobState_List);

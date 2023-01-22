@@ -12,6 +12,7 @@ import { TBLShamelSCMergeService } from 'src/app/modules/shared/models/employees
 import { TBLShamelMergeServiceReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-merge-service-reason.service';
 import { TBLShamelSCMergeServiceService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-merge-service.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 import { ValidateForm } from './validate/ValidateForm';
 @Component({
@@ -74,6 +75,8 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
   submitted = false;
   loading: boolean = false;
 
+  darkTheme: boolean;
+
   //#region Constuctor 
   constructor(    
     @Inject(MAT_DIALOG_DATA) public data: {obj: TBLShamelSCMergeService,id:number},
@@ -83,6 +86,7 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
     public dialogRef: MatDialogRef<TblshamelscmergeserviceModifyComponent>,
+    private themeService: ThemeService
     ) {
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
@@ -234,6 +238,9 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
 
    ngOnInit(): void {
      this.SetValue();
+     this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

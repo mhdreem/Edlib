@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobName';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-job-name-add',
@@ -16,10 +17,14 @@ export class TblShamelJobNameAddComponent implements OnInit {
   frm_jobname_fixed : FormControl;
   action:string;
   local_data:ITBLShamelJobName={};
+
+  darkTheme: boolean;
+
   constructor(private frmBuilder:FormBuilder,
     public dialogRef: MatDialogRef<TblShamelJobNameAddComponent>,
     //@Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any)  {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private themeService: ThemeService)  {
       this.myform=this.frmBuilder.group({});
       console.log(data);
       this.frm_jobname_id= new FormControl('' ,[Validators.required ,Validators.maxLength(3)]),
@@ -55,6 +60,9 @@ export class TblShamelJobNameAddComponent implements OnInit {
     this.dialogRef.close({event:'إلغاء'});
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

@@ -38,6 +38,7 @@ import { TblShamelSpecificationListComponent } from './encodingtable/TblShamelSp
 import { DisplayEmployeeSimilarityNameComponent } from './components/display-employee-similarity-name/display-employee-similarity-name.component';
 import { TblShamelClassListComponent } from './encodingtable/TblShamelClass/tbl-shamel-class-list/tbl-shamel-class-list.component';
 import { AuthGuardServiceService } from 'src/app/Global/auth-guard-service.service';
+import { TblShamelDoctorListComponent } from './encodingtable/TblShamelDoctor/tbl-shamel-doctor-list/tbl-shamel-doctor-list.component';
 
 
 const routes: Routes = [
@@ -212,6 +213,7 @@ const routes: Routes = [
             { path: 'freeholidayreason', component: TblShamelFreeHolidayReasonListComponent },        
             { path: 'class', component: TblShamelClassListComponent },        
             { path: 'documenttype', component: TblShamelDocumentTypeListComponent },        
+            { path: 'doctor', component: TblShamelDoctorListComponent },        
           ]
       }
 

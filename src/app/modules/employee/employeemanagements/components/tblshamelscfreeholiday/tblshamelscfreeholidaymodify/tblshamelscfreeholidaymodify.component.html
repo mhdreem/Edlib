@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>الإجازات الخاصة</h2>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <h2 mat-dialog-title>الإجازات الخاصة</h2>
 <c-row>
   <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
 </c-row>
@@ -62,7 +63,7 @@
           </div>
         </div>
 
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 20px;">
           <mat-label>المدة</mat-label>
           <input matInput type="number" [formControl]="duration"
             formControlName="duration" id="duration">
@@ -98,7 +99,7 @@
         </mat-form-field>
       </div>
       <div class="group2">
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 20px;">
           <mat-label>المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
             [matAutocomplete]="auto_documenttype_id"
@@ -111,7 +112,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 20px;">
           <mat-label>رقم المستند</mat-label>
 
           <input matInput type="number" [formControl]="document_number"
@@ -176,7 +177,7 @@
   </button>
 
 
-  <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()">
+  <button mat-raised-button class="save" cdkFocusInitial (click)="Save()">
     <mat-icon class="mat-icon-rtl-mirror">save
     </mat-icon>
     حفظ
@@ -184,3 +185,4 @@
 
 </mat-dialog-actions>
 </ngx-hover-opacity>
+</div>

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { Uniqe } from './validators/validate_formgroup';
 
 @Component({
@@ -37,12 +38,15 @@ export class FixUpgradeYearModifyComponent implements OnInit {
   isEndMonthSelected: boolean= false;
   isEndYearSelected: boolean= false;
 
+  darkTheme: boolean;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelUpgradeYear, action: string },
   private fb: UntypedFormBuilder,
   private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
   public dialog: MatDialog,
   private snackBar: MatSnackBar,
-  @Inject(DOCUMENT) private _document: Document) { 
+  @Inject(DOCUMENT) private _document: Document,
+  private themeService: ThemeService) { 
     this.selected_upgrade_year= data.obj;
 
     this.BuildForm();
@@ -165,6 +169,9 @@ export class FixUpgradeYearModifyComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   public ClearForm() {

@@ -12,6 +12,7 @@ import { TBLShamelSuddenHoliday } from 'src/app/modules/shared/models/employees_
 import { TBLShamelSCSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-sudden-holiday.service';
 import { TBLShamelSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sudden-holiday.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 import { ValidateForm } from './validate/ValidateForm';
 
@@ -78,6 +79,9 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
 
   isStartDateSelected: boolean= false;
   isEndDateSelected: boolean= false;
+
+  darkTheme: boolean;
+
   //#region Constuctor 
   constructor(    
     @Inject(MAT_DIALOG_DATA) public data: {obj: TBLShamelSCSuddenHoliday,id:number},
@@ -87,6 +91,7 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
     public dialogRef: MatDialogRef<TBLShamelSCSuddenHolidayAddComponent>,
+    private themeService: ThemeService
 
     ) {
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
@@ -187,7 +192,9 @@ export class TBLShamelSCSuddenHolidayAddComponent implements OnInit {
   }
     ngOnInit(): void {
   
-  
+      this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+        this.darkTheme= res;
+      })
   
     }
 

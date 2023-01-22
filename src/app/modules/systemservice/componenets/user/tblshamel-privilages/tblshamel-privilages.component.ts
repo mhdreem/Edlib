@@ -18,6 +18,7 @@ import { SubscriptionLike } from 'subsink/dist/subsink';
 import { TBLShamelProgramTreeService } from 'src/app/modules/shared/services/systemservice/tblshamel-program-tree.service';
 import { TBLShamelProgramTree } from 'src/app/modules/shared/models/systemservice/TBLShamelProgramTree';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 
@@ -70,19 +71,24 @@ export class TBLShamelPrivilagesComponent implements OnInit {
 
   Subscription:Subscription = new Subscription ();
 
+  darkTheme: boolean;
 
   constructor(
     public UserService:TBLShamelUserService,
     public PrivilageService:TBLShamelPrivilageServiceService, 
     public ShamelProgramTreeService:TBLShamelProgramTreeService, 
      private fb: FormBuilder,
-     private snackBar: MatSnackBar,) {
+     private snackBar: MatSnackBar,
+     private themeService: ThemeService) {
    
     this.BuildForm();
     this.LoadData();  
    }
 
    ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

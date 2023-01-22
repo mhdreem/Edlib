@@ -9,6 +9,7 @@ import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_d
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { TBLShamelAccounterService } from 'src/app/modules/shared/services/employees_department/tblshamel-accounter.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-refresh-accounter-malak',
@@ -42,11 +43,15 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
   selectedEmployee: ViewTBLShamelEmployee;
 
   isLoading = false;
+
+  darkTheme: boolean;
+
   constructor(public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     private tblShamelAccounterService: TBLShamelAccounterService,
     private fb: UntypedFormBuilder,
     private employeeServiceService: EmployeeServiceService,
-    private snackBar: MatSnackBar,) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
 
     this.BuildForm();
     this.Load_Data();
@@ -190,6 +195,10 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.serial2.disable();
     this.AccounterName2.disable();
+
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
     
   }
 

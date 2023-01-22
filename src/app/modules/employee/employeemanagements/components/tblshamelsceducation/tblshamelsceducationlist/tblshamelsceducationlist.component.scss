@@ -1,3 +1,5 @@
+@import '../../../../../../../theme.scss';
+
 table {
     width: 100%;
     font-size: 12px;
@@ -138,6 +140,11 @@ table {
     margin-bottom: 10px;
   }
 
+  th, td{
+    padding: 4px !important;
+    text-align: right !important;
+  }
+
   .darkTheme th,
   .darkTheme mat-paginator,
   .darkTheme ::ng-deep .mat-paginator-navigation-first,
@@ -148,7 +155,7 @@ table {
   .darkTheme ::ng-deep .mat-select-value,
   .darkTheme mat-paginator ::ng-deep .mat-form-field-underline,
   .darkTheme mat-paginator ::ng-deep .mat-form-field-flex{
-    background-color: #01081E !important;
+    background-color: $darkBackground !important;
     color: white !important;
   }
 
@@ -158,16 +165,16 @@ table {
 
   .darkTheme .add, .darkTheme .edit{
     color: white !important;
-    background-color: #013247 !important;
+    background-color: $darkPrimary !important;
   }
 
   .darkTheme .delete{
-    background-color: #013247;
+    background-color: $darkPrimary;
     margin-left: 5px;
   }
 
   .darkTheme tr{
-    background-color: #04113B;
+    background-color: $darkSecondary;
   }
 
   .darkTheme td{
@@ -175,10 +182,10 @@ table {
   }
 
   .darkTheme .mat-row:nth-child(even){
-    background-color: #0c1c50;
+    background-color: $darkTableEven;
 }
 .darkTheme .mat-row:nth-child(odd){
-    background-color: #04113B;
+    background-color: $darkSecondary;
 }
 
 ::ng-deep .mat-form-field-label{
@@ -205,17 +212,17 @@ table {
    ::ng-deep .mat-select-value,
    mat-paginator ::ng-deep .mat-form-field-underline,
    mat-paginator ::ng-deep .mat-form-field-flex{
-    background-color: #EAF7F0 !important;
+    background-color: $lightBackground !important;
     color: black !important;
   }
 
   .add, .edit{
     color: white !important;
-    background-color: #6C5ED3 !important;
+    background-color: $lightPrimary !important;
   }
 
   .delete{
-    background-color: #6C5ED3;
+    background-color: $lightPrimary;
     margin-left: 5px;
   }
 
@@ -224,8 +231,26 @@ table {
   }
 
 .mat-row:nth-child(even){
-    background-color: rgb(212 212 212);
+    background-color: $LightTableEven;
 }
 .mat-row:nth-child(odd){
     background-color: white;
+}
+
+.add:disabled, .edit:disabled{
+  background-color: rgba(0,0,0,.12) !important;
+  color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+  background-color: rgba(0,0,0,.12) !important;
+  color: rgba(0,0,0,.26);
+}
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+  color: rgba(0,0,0,.26) !important;
+}
+
+mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+  background-color: rgba(0,0,0,.12) !important;
 }

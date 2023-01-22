@@ -16,6 +16,7 @@ import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_d
 import { TBLShamelDoctorService } from 'src/app/modules/shared/services/employees_department/tblshamel-doctor.service';
 import { TBLShamelSCHealthHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-schealth-holiday.service';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 import { ValidateForm } from './validate/ValidateForm';
 const moment = _moment;
@@ -77,6 +78,8 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
   isStartDateSelected: boolean= false;
   isEndDateSelected: boolean= false;
 
+  darkTheme: boolean;
+
   //#region Constuctor 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCHealthHoliday, id: number },
@@ -87,6 +90,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
   ) {
 
     if (data != null && data.obj != null && data.id != null && data.id > 0) {
@@ -102,7 +106,9 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
 
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

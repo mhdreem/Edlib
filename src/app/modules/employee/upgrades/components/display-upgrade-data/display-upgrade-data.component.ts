@@ -24,6 +24,7 @@ import { TblshamelclassService } from 'src/app/modules/shared/services/employees
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { TblshamelrankService } from 'src/app/modules/shared/services/employees_department/tblshamelrank.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { JobServiceDataAdjustPrintDialogComponent } from '../../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { PrintRankComponent } from '../print/print-rank/print-rank.component';
 
@@ -90,6 +91,9 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
 
   rankInput: ITBLShamelUpgrade[];
 
+  darkTheme: boolean;
+
+
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private tblshamelclassService: TblshamelclassService,
     private tblshameljobnameService: TblshameljobnameService,
@@ -102,7 +106,8 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     private tblShamelAccounterService: TBLShamelAccounterService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private _document: Document,) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
     this.LoadingFinish = true;
 
       this.BuildForm();
@@ -362,6 +367,9 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
        }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngAfterViewInit() {

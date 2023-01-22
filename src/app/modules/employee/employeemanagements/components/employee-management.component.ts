@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { EmployeeServiceService } from 'src/app/modules/shared/services/employees_department/employee-service.service';
 import { IGlobalEmployeeList } from 'src/app/modules/shared/services/employees_department/IGlobalEmployeeList';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { DeleteemployeeComponent } from './deleteemployee/deleteemployee/deleteemployee.component';
 import { EmployeechangeidComponent } from './employeechangeid/employeechangeid/employeechangeid.component';
 import { EmpShowDataComponent } from './tblshamelemployee/emp-show-data/emp-show-data.component';
@@ -28,8 +29,9 @@ export class EmployeeManagementComponent implements OnInit, OnDestroy, OnChanges
   Window: String = '';
   SearchOpen:boolean;
   
+  darkTheme: boolean;
   constructor(public activatedRoute: ActivatedRoute,
-
+    private themeService: ThemeService,
     private fb: UntypedFormBuilder,
     public restApi: EmployeeServiceService, public GlobalEmployeeList: IGlobalEmployeeList) {
 
@@ -73,9 +75,12 @@ export class EmployeeManagementComponent implements OnInit, OnDestroy, OnChanges
 
   ngOnInit() {
 
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
     this.ngAfterContentInit();
+
 
   }
 

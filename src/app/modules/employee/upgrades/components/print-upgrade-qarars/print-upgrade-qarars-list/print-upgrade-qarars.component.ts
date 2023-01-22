@@ -19,6 +19,7 @@ import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_
 import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_department/tblshamel-user.service';
 import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-print-upgrade-qarars',
@@ -74,6 +75,8 @@ export class PrintUpgradeQararsComponent implements OnInit {
 
   fixedYear: string;
   
+  darkTheme: boolean;
+
   constructor(
     private tblShamelUpgradeQararHFService: TblShamelUpgradeQararHFService,
     private upgradeYear: TblShamelUpgradeYearService,
@@ -86,6 +89,8 @@ export class PrintUpgradeQararsComponent implements OnInit {
     private tblShamelUserService: TBLShamelUserService,
     private tblShamelUpgradeService: TBLShamelUpgradeService,
     @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
+    
     ) {
       this.LoadingFinish = true;
 
@@ -286,6 +291,10 @@ export class PrintUpgradeQararsComponent implements OnInit {
       );
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

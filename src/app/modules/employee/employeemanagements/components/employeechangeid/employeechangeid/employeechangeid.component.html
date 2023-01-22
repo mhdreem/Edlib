@@ -1,46 +1,41 @@
-
+<div class="theme" [class.darkTheme]="darkTheme">
+  
 
 <form [formGroup]="ChangeEmployeeForm">
-<div>
-<mat-form-field  appearance="fill" class="row">
-    <mat-label>اسم الموظف</mat-label>
-
-    <input type="text" 
-           placeholder="اسم الموظف"
-           aria-label="اسم الموظف"
-           matInput                         
-           [formControl]="autocomplete_EmployeeName"
-           id="autocomplete_EmployeeName" (keyup.enter)="focusNext('old_ID')"
-           />
-
-           
-          
-
-
-    
-  </mat-form-field>   
+  <div>
+  <mat-form-field  appearance="fill">
+      <mat-label>اسم الموظف</mat-label>
+      <input type="text" 
+             placeholder="اسم الموظف"
+             aria-label="اسم الموظف"
+             matInput                         
+             [formControl]="autocomplete_EmployeeName"
+             id="autocomplete_EmployeeName" (keyup.enter)="focusNext('old_ID')"
+             />
+    </mat-form-field>   
+  </div>
+  <div>
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم الإضبارة القديم</mat-label>
+      <input matInput  placeholder="رقم الإضبارة القديم" value="" [formControl]="old_ID" 
+      id="old_ID" (keyup.enter)="focusNext('new_ID')">            
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">            
+      <mat-label>رقم الإضبارة الجديد</mat-label>
+      <input matInput  placeholder=" رقم الإضبارة الجديد" value="" [formControl]="new_ID" 
+      id="new_ID" (keyup.enter)="focusNext('autocomplete_EmployeeName')">            
+    </mat-form-field>
+  
+  </div>
+  <div>
+    <button mat-raised-button color="warn" mat-dialog-close (click)="change_employee_id()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">
+    تغيير
+    </button>
+  
+  
+  </div>
+  
+  </form>
 </div>
-<div>
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم الإضبارة القديم</mat-label>
-    <input matInput  placeholder="رقم الإضبارة القديم" value="" [formControl]="old_ID" 
-    id="old_ID" (keyup.enter)="focusNext('new_ID')">            
-  </mat-form-field>
-</div>
-<div>
-  <mat-form-field appearance="fill">            
-    <mat-label>رقم الإضبارة الجديد</mat-label>
-    <input matInput  placeholder=" رقم الإضبارة الجديد" value="" [formControl]="new_ID" 
-    id="new_ID" (keyup.enter)="focusNext('autocomplete_EmployeeName')">            
-  </mat-form-field>
-
-</div>
-<div>
-  <button mat-raised-button color="warn" mat-dialog-close (click)="change_employee_id()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00010'">
-  تغيير
-  </button>
-
-
-</div>
-
-</form>

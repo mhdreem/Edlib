@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { EmployeeStatsService } from "../shared/services/employees_department/employee-stats.service";
 import { forkJoin, Subscription } from "rxjs";
 import { style } from "@angular/animations";
+import { ReturnBtnService } from "../shared/services/return-btn.service";
 
 
 
@@ -30,10 +31,13 @@ export class EmployeeComponent implements OnInit , OnDestroy {
   navItems: INavData[] = [
 
     {
-      title: true,
       name: 'مديرية الشؤون الادارية',
-      formname: 'مديرية الشؤون الادارية',
-      url: 'employees',
+      url: '/',
+      iconComponent: { name: 'cil-speedometer' },
+      badge: {
+        color: 'info',
+        text: 'NEW'
+      }
     },
   
     {
@@ -66,16 +70,43 @@ export class EmployeeComponent implements OnInit , OnDestroy {
   ];
   
 
-  
+  returnNavItems: INavData[] = [
+    {
+      name: 'منظومة الشامل',
+      url: '/',
+      formname:'',
+      iconComponent: { name: 'cil-speedometer' }         
+    },
+    {
+      name: 'مديرية الشؤون الادارية' ,
+      url: 'employees',
+      formname:'مديرية الشؤون الادارية',
+      iconComponent: { name: 'cil-pencil' },
+    },   
+    {
+      name: 'مديرية الشؤون المالية' ,
+      url: 'finace',
+      formname:'مديرية الشؤون المالية',
+      iconComponent: { name: 'cil-pencil' },
+    },
+    {
+      name: 'خدمات النظام' ,
+      url: 'systemservice',
+      formname:'خدمات النظام',
+      iconComponent: { name: 'cil-pencil' },
+    }
+  ];
   
 
   constructor(private navService:NavService,
     private router: Router,
     private location: PlatformLocation,    
     private renderer2: Renderer2,
+    private returnBtnService: ReturnBtnService
     ) {
       this.navService.navItems_Subject.next(this.navItems);
       
+      this.returnBtnService.navItems= this.returnNavItems;
   }
 
   ngOnInit(): void {    

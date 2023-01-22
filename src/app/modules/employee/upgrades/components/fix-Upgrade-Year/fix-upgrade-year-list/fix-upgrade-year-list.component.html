@@ -1,6 +1,8 @@
-<span class="date" style="color: white;">{{fixedYear}}</span>
+<div class="theme" [class.darkTheme]="darkTheme">
+    <div class="con">
+        <span class="date">{{fixedYear}}</span>
 
-<button mat-raised-button color="primary" class="add" (click)="Add('')" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+<button mat-raised-button class="add" (click)="Add('')" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
 
 <div class="table-wrap">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
@@ -38,7 +40,7 @@
                     title="Delete Contact">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button class="edit" mat-icon-button color="primary" (click)="Update(element)" title="Edit Contact">
+                <button class="edit" mat-icon-button (click)="Update(element)" title="Edit Contact">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -54,3 +56,5 @@
   
   
   </div>
+    </div>
+</div>

@@ -1,13 +1,14 @@
-<div class="con">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <div class="con">
     
     <div class="right">
-        <button class="search" mat-raised-button color="primary" [disabled]="!selectedNode" (click)="add()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+        <button class="search" mat-raised-button class="add" [disabled]="!selectedNode" (click)="add()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
             <!-- This is the tree node template for leaf nodes -->
             <!-- There is inline padding applied to this node using styles.
               This padding value depends on the mat-icon-button width. -->
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                <mat-radio-button color="primary" [value]="node.serail" (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>
+                <mat-radio-button class="white" color="primary" [value]="node.serail" (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>
             </mat-tree-node>
             <!-- This is the tree node template for expandable nodes -->
             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
@@ -18,7 +19,7 @@
                       {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                   </button>
-                  <mat-radio-button color="primary" [value]="node.serail" 
+                  <mat-radio-button class="white" color="primary" [value]="node.serail" 
                   (click)="ClickNode(node)">{{node.formname}}</mat-radio-button>
                 </div>
                 <!-- There is inline padding applied to this div using styles.
@@ -71,4 +72,5 @@
         
           </div>
     </div>
+</div>
 </div>

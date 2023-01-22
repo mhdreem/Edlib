@@ -1,4 +1,5 @@
-<mat-dialog-content class="mat-typography">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <mat-dialog-content class="mat-typography">
     <form [formGroup]="Form">
         
         <mat-form-field class="example-full-width" appearance="fill">
@@ -77,7 +78,7 @@
     </button>
 
 
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
+    <button mat-raised-button class="add" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
         [disabled]="Form.invalid   ">
         <mat-icon class="mat-icon-rtl-mirror">save
         </mat-icon>
@@ -85,3 +86,4 @@
     </button>
 
 </mat-dialog-actions>
+</div>

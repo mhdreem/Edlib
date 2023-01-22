@@ -5,6 +5,7 @@ import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
 import { ITBLShamelJobName } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobName';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { EmployeeStateDataPrintComponent } from '../employee-state-data-print/employee-state-data-print.component';
 import { ExperienceCertificatePrintComponent } from '../experience-certificate-print/experience-certificate-print.component';
@@ -50,9 +51,12 @@ export class JobServiceDataComponent implements OnInit {
       {radioButtonsGroup: number, jobName: string}
     ];
 
+  darkTheme: boolean;
+
   constructor(public dialog: MatDialog,
     private tblshameljobnameService: TblshameljobnameService,
-    public PageService:EmployeePageService,) { 
+    public PageService:EmployeePageService,
+    private themeService: ThemeService) { 
 
       this.BuildForm();
     this.Load_Data();
@@ -160,7 +164,9 @@ export class JobServiceDataComponent implements OnInit {
       }
 
   ngOnInit(): void {
-    
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   jobNameChecked(){

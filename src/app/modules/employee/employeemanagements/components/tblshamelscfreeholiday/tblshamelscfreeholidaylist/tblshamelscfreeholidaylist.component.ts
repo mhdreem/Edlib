@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelSCFreeHoliday } from 'src/app/modules/shared/models/employees_department/ITBLShamelSCFreeHoliday';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelSCFreeHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-scfree-holiday.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { ConfirmationdialogComponent } from '../../common/confirmationdialog/confirmationdialog.component';
 import { EmployeePageService } from '../../employee-page-service';
 import { TblshamelscfreeholidaymodifyComponent } from '../tblshamelscfreeholidaymodify/tblshamelscfreeholidaymodify.component';
@@ -46,14 +47,15 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
     // Select Object
     selected_employee_freeHoliday_Rows = new Set<ITBLShamelSCFreeHoliday>();                              
    
-  
+    darkTheme: boolean;
   
     constructor(
            public PageService: EmployeePageService,
            @Inject(DOCUMENT) private _document: Document,
       public ShamelSCFreeHolidayService : TBLShamelSCFreeHolidayService,
       public dialog: MatDialog,
-      private snackBar: MatSnackBar) {
+      private snackBar: MatSnackBar,
+      private themeService: ThemeService) {
         this.employee_freeHoliday_List =[];
 
 
@@ -88,6 +90,9 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
       
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.employee_freeHoliday_List);
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.employee_freeHoliday_List);

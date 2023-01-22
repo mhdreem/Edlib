@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelPunishmentReason } from 'src/app/modules/shared/models/employees_department/ITBLShamelPunishmentReason';
 import { TBLShamelPunishmentReasonService } from 'src/app/modules/shared/services/employees_department/tblshamel-punishment-reason.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelPunishmentReasonAddComponent } from '../tbl-shamel-punishment-reason-add/tbl-shamel-punishment-reason-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tBLShamelPunishmentReasonService:TBLShamelPunishmentReasonService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tBLShamelPunishmentReasonService.List_ITBLShamelPunishmentReason == null ||
       tBLShamelPunishmentReasonService.List_ITBLShamelPunishmentReason.length ==0
      )
@@ -124,6 +128,9 @@ export class TblShamelPunishmentReasonListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

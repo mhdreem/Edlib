@@ -22,6 +22,7 @@ import { TBLShamelMiniAreaService } from 'src/app/modules/shared/services/employ
 import { TBLShamelNationalityService } from 'src/app/modules/shared/services/employees_department/tblshamel-nationality.service';
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
 import { TBLShamelStreetOrVillageService } from 'src/app/modules/shared/services/employees_department/tblshamel-street-or-village.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 const moment = _moment;
 
@@ -96,7 +97,8 @@ export class EditEmployeeCardComponent implements OnInit {
        TBLShamelNationality_List :TBLShamelNationality[]=[];
        filtered_TBLShamelNationality_Options: Observable<TBLShamelNationality[]>;
 
-     
+       darkTheme: boolean;
+
        constructor( private fb: UntypedFormBuilder,
          public restApi:EmployeeServiceService,
      
@@ -107,7 +109,8 @@ export class EditEmployeeCardComponent implements OnInit {
          public TBLShamelMartialState_Service:TBLShamelMartialStateService,
          public TBLShamelNationality_Service:TBLShamelNationalityService,
          public GlobalEmployeeList : IGlobalEmployeeList  ,
-         @Inject(MAT_DIALOG_DATA) public data: {dataEmp: TBLShamelEmployee}) {
+         @Inject(MAT_DIALOG_DATA) public data: {dataEmp: TBLShamelEmployee},
+         private themeService: ThemeService) {
 
           console.log("inside construnctor");
          console.log(this.data.dataEmp);
@@ -500,7 +503,9 @@ export class EditEmployeeCardComponent implements OnInit {
         }
         
        ngOnInit(): void {
-       
+        this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+          this.darkTheme= res;
+        })
        }
      
      

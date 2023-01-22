@@ -14,6 +14,7 @@ import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employe
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TblshamelclassService } from 'src/app/modules/shared/services/employees_department/tblshamelclass.service';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import {ITBLShamelJobName} from '../../../../../modules/shared/models/employees_department/ITBLShamelJobName';
 @Component({
   selector: 'app-upgrade-promotion-qarars',
@@ -51,6 +52,8 @@ export class UpgradePromotionQararsComponent implements OnInit {
   jobNameToAdd: ITBLShamelJobName= {jobname_id: 0, jobname_name: ""};
   jobNameToDelete: ITBLShamelJobName= {jobname_id: 0, jobname_name: ""};
 
+  darkTheme: boolean;
+
   constructor(
     private upgradeYear: TblShamelUpgradeYearService,
     private tblshamelclassService: TblshamelclassService,
@@ -59,7 +62,8 @@ export class UpgradePromotionQararsComponent implements OnInit {
     private tblShamelUpgradeGovReportService: TblShamelUpgradeGovReportService,
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
-    private snackBar: MatSnackBar,) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
       this.LoadingFinish = true;
 
       this.BuildForm();
@@ -221,6 +225,9 @@ export class UpgradePromotionQararsComponent implements OnInit {
     );
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
     
     
   }

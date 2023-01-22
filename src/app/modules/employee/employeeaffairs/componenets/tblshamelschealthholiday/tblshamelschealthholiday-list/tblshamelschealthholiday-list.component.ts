@@ -8,6 +8,7 @@ import { ConfirmationdialogComponent } from 'src/app/modules/shared/components/c
 import { ITBLShamelSCHealthHoliday } from 'src/app/modules/shared/models/employees_department/ITBLShamelSCHealthHoliday';
 import { TBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/TBLShamelEmployee';
 import { TBLShamelSCHealthHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-schealth-holiday.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { EmployeePageService } from '../../pageservice/employee-page-service';
 
 import { TblshamelschealthholidayModifyComponent } from '../tblshamelschealthholiday-modify/tblshamelschealthholiday-modify.component';
@@ -49,13 +50,15 @@ export class TblshamelschealthholidayListComponent implements OnInit,AfterViewIn
   'document_number',
   'documentdate','action'];
 
+  darkTheme: boolean;
 
 
   constructor(
     public PageService: EmployeePageService,
     public ShamelSCHealthHolidayService : TBLShamelSCHealthHolidayService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
 
       this.employee_HealthHoliday_List =[];
     
@@ -92,6 +95,9 @@ export class TblshamelschealthholidayListComponent implements OnInit,AfterViewIn
     
 ngOnInit(): void {
   this.dataSource = new MatTableDataSource(this.employee_HealthHoliday_List);
+  this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+    this.darkTheme= res;
+  })
 }
 ngAfterViewInit() {
   this.dataSource = new MatTableDataSource(this.employee_HealthHoliday_List);

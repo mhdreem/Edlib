@@ -1,3 +1,5 @@
+@import '../../../../../../theme.scss';
+
 :host
 {
     font-size: small;
@@ -58,12 +60,12 @@ mat-list-item:hover {
 }
 
 .darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
-    background-color: #04113B !important;
+    background-color: $darkSecondary !important;
 }
 
 .darkTheme button{
     color: white !important;
-    background-color: #013247 !important;
+    background-color: $darkPrimary !important;
   }
 
   .darkTheme ::ng-deep .mat-grid-tile{
@@ -71,12 +73,12 @@ mat-list-item:hover {
 }
 
 .darkTheme ::ng-deep .mat-list-item{
-    background-color: #04113B;
-    border: 1px solid #01081E;
+    background-color: $darkSecondary;
+    border: 1px solid $darkBackground;
 }
 
 .darkTheme mat-card{
-    background-color: #01081E;
+    background-color: $darkBackground;
 }
 
 .darkTheme h4{
@@ -95,16 +97,16 @@ mat-list-item:hover {
 
 button{
     color: white !important;
-    background-color: #6C5ED3 !important;
+    background-color: $lightPrimary !important;
 }
 
 mat-card{
-    background-color: #EAF7F0;
+    background-color: $lightBackground;
 }
 
 ::ng-deep .mat-list-item{
     background-color: white;
-    border: 1px solid #EAF7F0;
+    border: 1px solid $lightBackground;
 }
 
 mat-form-field ::ng-deep .mat-form-field-flex{
@@ -118,3 +120,21 @@ mat-form-field, ::ng-deep .mat-form-field-label{
 ::ngg-deep .mat-form-field-underline::before{
     background-color: black !important;
 }
+
+.add:disabled, .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+    background-color: rgba(0,0,0,.12) !important;
+    color: rgba(0,0,0,.26);
+}
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+    color: rgba(0,0,0,.26) !important;
+  }
+
+  mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+    background-color: rgba(0,0,0,.12) !important;
+  }

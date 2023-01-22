@@ -3,14 +3,16 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource, MatTable } from "@angular/material/table";
 import { TBLShamelSuddenHoliday } from "src/app/modules/shared/models/employees_department/TBLShamelSuddenHoliday";
 import { TBLShamelSuddenHolidayService } from "src/app/modules/shared/services/employees_department/tblshamel-sudden-holiday.service";
+import { ThemeService } from "src/app/modules/shared/services/theme.service";
 import { TblShamelSuddenHolidayAddComponent } from "../tbl-shamel-sudden-holiday-add/tbl-shamel-sudden-holiday-add.component";
 
 @Component({
   selector: 'app-tbl-shamel-sudden-holiday-list',
   templateUrl: './tbl-shamel-sudden-holiday-list.component.html',
-  styleUrls: ['./tbl-shamel-sudden-holiday-list.component.css']
+  styleUrls: ['./tbl-shamel-sudden-holiday-list.component.scss']
 })
 export class TblShamelSuddenHolidayListComponent implements OnInit {
+  formname:string = 'جدول سبب الاجازة الخاصة';
 
    ELEMENT_DATA: TBLShamelSuddenHoliday[] = [];
    dataSource = new MatTableDataSource<TBLShamelSuddenHoliday>();
@@ -21,8 +23,11 @@ export class TblShamelSuddenHolidayListComponent implements OnInit {
 
   @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
   constructor(public dialog: MatDialog,
-    private tBLShamelSuddenHolidayService: TBLShamelSuddenHolidayService ) {
+    private tBLShamelSuddenHolidayService: TBLShamelSuddenHolidayService,
+    private themeService: ThemeService ) {
 
       if (tBLShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService == null ||
         tBLShamelSuddenHolidayService.List_TBLShamelSuddenHolidayService.length ==0
@@ -107,6 +112,9 @@ export class TblShamelSuddenHolidayListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

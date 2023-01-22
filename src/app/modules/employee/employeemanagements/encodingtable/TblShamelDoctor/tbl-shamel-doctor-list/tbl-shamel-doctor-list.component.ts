@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelDoctor } from 'src/app/modules/shared/models/employees_department/ITBLShamelDoctor';
 import { TBLShamelDoctorService } from 'src/app/modules/shared/services/employees_department/tblshamel-doctor.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 import { TblShamelDoctorAddComponent } from '../tbl-shamel-doctor-add/tbl-shamel-doctor-add.component';
@@ -11,9 +12,11 @@ import { TblShamelDoctorAddComponent } from '../tbl-shamel-doctor-add/tbl-shamel
 @Component({
   selector: 'app-tbl-shamel-doctor-list',
   templateUrl: './tbl-shamel-doctor-list.component.html',
-  styleUrls: ['./tbl-shamel-doctor-list.component.css']
+  styleUrls: ['./tbl-shamel-doctor-list.component.scss']
 })
 export class TblShamelDoctorListComponent implements OnInit {
+  formname:string = 'جدول الدكتور';
+
    ELEMENT_DATA: ITBLShamelDoctor[] = [];
    dataSource = new MatTableDataSource<ITBLShamelDoctor>();
 
@@ -21,8 +24,11 @@ export class TblShamelDoctorListComponent implements OnInit {
   
   @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
   constructor(public dialog: MatDialog,
-    private tBLShamelDoctorService:TBLShamelDoctorService) {
+    private tBLShamelDoctorService:TBLShamelDoctorService,
+    private themeService: ThemeService) {
       if (tBLShamelDoctorService.List_TBLShamelDoctor == null ||
         tBLShamelDoctorService.List_TBLShamelDoctor.length ==0
       )
@@ -108,6 +114,9 @@ export class TblShamelDoctorListComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

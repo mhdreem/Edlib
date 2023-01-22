@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { TBLShamelBonus } from 'src/app/modules/shared/models/employees_department/TBLShamelBonus';
 import { TBLShamelBonusService } from 'src/app/modules/shared/services/employees_department/tblshamel-bonus.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelBonusAddComponent } from '../tbl-shamel-bonus-add/tbl-shamel-bonus-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelBonusListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tBLShamelBonusService:TBLShamelBonusService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tBLShamelBonusService.List_TBLShamelBonus == null ||
       tBLShamelBonusService.List_TBLShamelBonus.length ==0
      )
@@ -123,6 +127,9 @@ export class TblShamelBonusListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ITBLShamelDocumentType } from 'src/app/modules/shared/models/employees_department/ITBLShamelDocumentType';
 import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/employees_department/tblshameldocumenttype.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelDocumentTypeAddComponent } from '../tbl-shamel-document-type-add/tbl-shamel-document-type-add.component';
 
 @Component({
@@ -20,9 +21,12 @@ export class TblShamelDocumentTypeListComponent implements OnInit {
 
  @ViewChild(MatTable,{static:true}) mytable!: MatTable<any>;
 
+ darkTheme: boolean;
+
  constructor(public dialog: MatDialog,
    private tblshameldocumenttypeService:TblshameldocumenttypeService,
-   private _snaker: MatSnackBar,) {
+   private _snaker: MatSnackBar,
+   private themeService: ThemeService) {
      if (tblshameldocumenttypeService.List_ITBLShamelDocumentType == null ||
       tblshameldocumenttypeService.List_ITBLShamelDocumentType.length ==0
      )
@@ -124,6 +128,9 @@ export class TblShamelDocumentTypeListComponent implements OnInit {
 
  }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

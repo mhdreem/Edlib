@@ -22,6 +22,7 @@ import { TBLShamelSCCancelPunishmentService } from 'src/app/modules/shared/servi
 import { TBLShamelSCPunishmentService } from 'src/app/modules/shared/services/employees_department/tblshamel-scpunishment.service';
 import { Validator_Punishment } from './Validator_Punishment';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 const moment = _moment;
@@ -95,6 +96,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
   docDateDayIsFilled: boolean= false;
   docDateMonthIsFilled: boolean= false;
   docDateYearIsFilled: boolean= false;
+
+  darkTheme: boolean;
   //#region Constuctor 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
@@ -107,7 +110,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
     public ShameldocumenttypeService: TblshameldocumenttypeService,
     private fb: FormBuilder,
     private _snaker: MatSnackBar,
-    public PageService: EmployeePageService
+    public PageService: EmployeePageService,
+    private themeService: ThemeService
   ) {
     if (data && data.obj && data.id > 0) {
       this.id_employee = data.id;
@@ -230,7 +234,9 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
   //#region  Init Component
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 

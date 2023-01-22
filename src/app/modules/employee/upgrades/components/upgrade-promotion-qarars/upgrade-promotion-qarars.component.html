@@ -1,113 +1,115 @@
-<c-row>
-<mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
-</c-row>
-<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
-<div class="con">
-    <div class="right">
-        <form class="example-form" [formGroup]="Form" #form="ngForm">
-            <div class="up">
-              <mat-form-field class="example-full-width fitContent" appearance="fill">
-                <mat-label>عام الترفيع</mat-label>
-                <input type="number"
-                        matInput
-                        [formControl]="UpgradeYear"
-                        [matAutocomplete]="autoUpgradeYear"
-                        >
-                <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
-                (optionSelected)="generateLastQararNum()"
-                [displayWith]="displayUpgradeYearProperty.bind(this)">
-                  <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
-                    {{option.YEAR_ID}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-      
-              <mat-form-field class="example-full-width fitContent" appearance="fill">
-                  <mat-label>الفئة</mat-label>
-                  <input type="text"
-                          matInput
-                          [formControl]="Class"
-                          [matAutocomplete]="autoClass"
-                          >
-                  <mat-autocomplete #autoClass="matAutocomplete"
-                  [displayWith]="displayClassProperty.bind(this)">
-                    <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
-                      {{option.class_name}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-      
-                <mat-form-field class="example-full-width fitContent" appearance="fill">
-                  <mat-label>الصفة الوظيفية</mat-label>
-                  <input type="text"
-                          matInput
-                          [formControl]="JobName"
-                          [matAutocomplete]="autoJobName"
-                          >
-                  <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobNameToAdd($event.option.value)'
-                  [displayWith]="displayJobNameProperty.bind(this)">
-                    <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
-                      {{option.jobname_name}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-            </div>
-
-              <hr>
-
-              <div class="center">
-                <mat-form-field class="example-full-width fitContent" appearance="fill">
-                    <mat-label>رقم آخر قرار</mat-label>
-                    <input matInput type="number" value="" [formControl]="MaxQararNum">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+    </c-row>
+    <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+    <div class="con">
+        <div class="right">
+            <form class="example-form" [formGroup]="Form" #form="ngForm">
+                <div class="up">
+                  <mat-form-field class="example-full-width fitContent" appearance="fill">
+                    <mat-label>عام الترفيع</mat-label>
+                    <input type="number"
+                            matInput
+                            [formControl]="UpgradeYear"
+                            [matAutocomplete]="autoUpgradeYear"
+                            >
+                    <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
+                    (optionSelected)="generateLastQararNum()"
+                    [displayWith]="displayUpgradeYearProperty.bind(this)">
+                      <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
+                        {{option.YEAR_ID}}
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
-                  <button mat-raised-button color="primary" (click)="deleteQararNumbers()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">مسح أرقام القرارات</button>
-              </div>
-
-              <hr>
-
-              <div class="down">
-                <mat-radio-group required>
-                  <mat-radio-button color="primary" value="1" (change)="legalChecked()">قرارات ترفيع نظامية</mat-radio-button>
-                  <mat-radio-button color="primary" value="2" (change)="delayChecked()">قرارات تأخير ترفيع</mat-radio-button>
-                </mat-radio-group>
-                <span>تاريخ القرار:</span>
-                <div class="date">
-                  <mat-form-field class="example-full-width small-width" appearance="fill">
-                    <mat-label>اليوم</mat-label>
-                    <input matInput [formControl]="day" placeholder="ex: 21">
-                  </mat-form-field>
-                  <mat-form-field class="example-full-width small-width" appearance="fill">
-                    <mat-label>الشهر</mat-label>
-                    <input matInput [formControl]="month" placeholder="ex: 1">
-                  </mat-form-field>
-                  <mat-form-field class="example-full-width small-width" appearance="fill">
-                    <mat-label>العام</mat-label>
-                    <input matInput [formControl]="year" placeholder="ex: 2023">
-                  </mat-form-field>
+          
+                  <mat-form-field class="example-full-width fitContent" appearance="fill">
+                      <mat-label>الفئة</mat-label>
+                      <input type="text"
+                              matInput
+                              [formControl]="Class"
+                              [matAutocomplete]="autoClass"
+                              >
+                      <mat-autocomplete #autoClass="matAutocomplete"
+                      [displayWith]="displayClassProperty.bind(this)">
+                        <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
+                          {{option.class_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+          
+                    <mat-form-field class="example-full-width fitContent" appearance="fill">
+                      <mat-label>الصفة الوظيفية</mat-label>
+                      <input type="text"
+                              matInput
+                              [formControl]="JobName"
+                              [matAutocomplete]="autoJobName"
+                              >
+                      <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobNameToAdd($event.option.value)'
+                      [displayWith]="displayJobNameProperty.bind(this)">
+                        <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
+                          {{option.jobname_name}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
                 </div>
-                <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="generateQararNumbers()">توليد أرقام القرارات</button>
-              </div>
-
-          </form>
-    </div>
-
-    <div class="middle">
-        <button mat-raised-button color="primary" (click)="addJobName()">></button>
-        <button mat-raised-button color="primary" (click)="deleteJobNameFromAddedJobNames()"><</button>
-    </div>
     
-    <div class="left">
-        <div class="jobNames">
-            <p *ngFor="let jobName of addedJobNames" id="{{jobName.jobname_id}}" (click)="selectToDelete(jobName)">{{jobName.jobname_name}}</p>
+                  <hr>
+    
+                  <div class="center">
+                    <mat-form-field class="example-full-width fitContent" appearance="fill">
+                        <mat-label>رقم آخر قرار</mat-label>
+                        <input matInput type="number" value="" [formControl]="MaxQararNum">
+                      </mat-form-field>
+                      <button mat-raised-button class="add" (click)="deleteQararNumbers()" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">مسح أرقام القرارات</button>
+                  </div>
+    
+                  <hr>
+    
+                  <div class="down">
+                    <mat-radio-group required>
+                      <mat-radio-button class="white" color="primary" value="1" (change)="legalChecked()">قرارات ترفيع نظامية</mat-radio-button>
+                      <mat-radio-button class="white" color="primary" value="2" (change)="delayChecked()">قرارات تأخير ترفيع</mat-radio-button>
+                    </mat-radio-group>
+                    <span class="white">تاريخ القرار:</span>
+                    <div class="date">
+                      <mat-form-field class="example-full-width small-width" appearance="fill">
+                        <mat-label>اليوم</mat-label>
+                        <input matInput [formControl]="day" placeholder="ex: 21">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width small-width" appearance="fill">
+                        <mat-label>الشهر</mat-label>
+                        <input matInput [formControl]="month" placeholder="ex: 1">
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width small-width" appearance="fill">
+                        <mat-label>العام</mat-label>
+                        <input matInput [formControl]="year" placeholder="ex: 2023">
+                      </mat-form-field>
+                    </div>
+                    <button mat-raised-button class="add" [disabled]="!form.valid" (click)="generateQararNumbers()">توليد أرقام القرارات</button>
+                  </div>
+    
+              </form>
         </div>
-        <div class="output1">
-            <label for="employees_count">عدد العاملين</label>
-            <output id="employees_count"></output>
+    
+        <div class="middle">
+            <button mat-raised-button class="add" (click)="addJobName()">></button>
+            <button mat-raised-button class="add" (click)="deleteJobNameFromAddedJobNames()"><</button>
         </div>
-        <div class="output2">
-            <label for="qarars_count">عدد القرارات</label>
-            <output id="qarars_count"></output>
+        
+        <div class="left">
+            <div class="jobNames">
+                <p *ngFor="let jobName of addedJobNames" id="{{jobName.jobname_id}}" (click)="selectToDelete(jobName)">{{jobName.jobname_name}}</p>
+            </div>
+            <div class="output1">
+                <label class="white" for="employees_count">عدد العاملين</label>
+                <output id="employees_count"></output>
+            </div>
+            <div class="output2">
+                <label class="white" for="qarars_count">عدد القرارات</label>
+                <output id="qarars_count"></output>
+            </div>
         </div>
     </div>
+    </ngx-hover-opacity>
 </div>
-</ngx-hover-opacity>

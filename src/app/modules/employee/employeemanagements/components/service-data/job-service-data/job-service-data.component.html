@@ -1,78 +1,80 @@
-<form class="example-form" [formGroup]="Form" #form="ngForm">
-    <div class="con">
-        
-        
-        <div class="center">
-            <fieldset>
-                <legend>شهادة خبرة</legend>
-                <div class= "contnet">
+<div class="theme" [class.darkTheme]="darkTheme">
+    <form class="example-form" [formGroup]="Form" #form="ngForm">
+        <div class="con">
+            
+            
+            <div class="center">
+                <fieldset>
+                    <legend class="white">شهادة خبرة</legend>
+                    <div class= "contnet">
+                        
+                        <div class="centerRight">
+                            <mat-radio-group formControlName="radioButtonsGroup" (change)="onJobNameChange()">
+                                <mat-radio-button class="white" color="primary" value="1" (change)="change1($event)">صفة وظيفية معينة</mat-radio-button>
+                                <mat-radio-button class="white" color="primary" value="2" (change)="change2($event)">إجمالي الخدمات</mat-radio-button>
+                                <mat-radio-button class="white" color="primary" value="3" (change)="change3($event)" [checked]="true">شهادة خبرة مفصلة</mat-radio-button>
+                                </mat-radio-group>
+                        </div>
+                        <div class="centerLeft">
+                            <mat-form-field class="example-full-width fitContent" appearance="fill">
+                                <input type="text"
+                                        matInput
+                                        formControlName="jobName"
+                                        [matAutocomplete]="autoJobName"
+                                        >
+                                <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)="onJobNameChange()"
+                                [displayWith]="displayJobNameProperty.bind(this)">
+                                <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
+                                    {{option.jobname_name}}
+                                </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
                     
-                    <div class="centerRight">
-                        <mat-radio-group formControlName="radioButtonsGroup" (change)="onJobNameChange()">
-                            <mat-radio-button color="primary" value="1" (change)="change1($event)">صفة وظيفية معينة</mat-radio-button>
-                            <mat-radio-button color="primary" value="2" (change)="change2($event)">إجمالي الخدمات</mat-radio-button>
-                            <mat-radio-button color="primary" value="3" (change)="change3($event)" [checked]="true">شهادة خبرة مفصلة</mat-radio-button>
-                            </mat-radio-group>
-                    </div>
-                    <div class="centerLeft">
-                        <mat-form-field class="example-full-width fitContent" appearance="fill">
-                            <input type="text"
-                                    matInput
-                                    formControlName="jobName"
-                                    [matAutocomplete]="autoJobName"
-                                    >
-                            <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)="onJobNameChange()"
-                            [displayWith]="displayJobNameProperty.bind(this)">
-                            <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
-                                {{option.jobname_name}}
-                            </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                </div>
-                
-                <button mat-raised-button color="primary" [disabled]="!Selected_Emp.id" printSectionId="jobName-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
-                <button mat-raised-button color="primary" (click)="adjustPrintFooter1()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-            </fieldset>
-        </div>
-    
-        <div class="left">
-            <fieldset>
-                <legend>بيان وضع العامل</legend>
-                <div class="con1">
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="employeeDataCheckbox">البيانات الشخصية للعامل</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="certificateCheckbox" >المؤهل العلمي</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="bonusCheckbox" >المكافئات</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="punishmentCheckbox" >العقوبات</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="freeHolidaysCheckbox" >إجازة خاصة أقل من 3 أشهر</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="mergeServiceCheckbox" >ضم خدمة</mat-checkbox>
-                    <mat-checkbox color="primary" (change)="onCheckBoxChange()" formControlName="jobStateCheckbox" >الوضع الوظيفي</mat-checkbox>
-                </div>
-    
-                <button mat-raised-button color="primary" [disabled]="!Selected_Emp.id" printSectionId="employeeStateData-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
-                <button  mat-raised-button color="primary" (click)="adjustPrintFooter2()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-            </fieldset>
-        </div>
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="jobName-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button mat-raised-button class="add" (click)="adjustPrintFooter1()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+                </fieldset>
+            </div>
         
-        <div class="right">
-            <fieldset>
-                <legend>بيان خدمة</legend>
-                <button mat-raised-button color="primary" [disabled]="!Selected_Emp.id" printSectionId="service-data-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
-                <button mat-raised-button color="primary" (click)="adjustPrintFooter3()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-            </fieldset>
-        </div>
-
+            <div class="left">
+                <fieldset>
+                    <legend class="white">بيان وضع العامل</legend>
+                    <div class="con1">
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="employeeDataCheckbox">البيانات الشخصية للعامل</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="certificateCheckbox" >المؤهل العلمي</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="bonusCheckbox" >المكافئات</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="punishmentCheckbox" >العقوبات</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="freeHolidaysCheckbox" >إجازة خاصة أقل من 3 أشهر</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="mergeServiceCheckbox" >ضم خدمة</mat-checkbox>
+                        <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="jobStateCheckbox" >الوضع الوظيفي</mat-checkbox>
+                    </div>
         
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="employeeStateData-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button  mat-raised-button class="add" (click)="adjustPrintFooter2()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+                </fieldset>
+            </div>
+            
+            <div class="right">
+                <fieldset>
+                    <legend class="white">بيان خدمة</legend>
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="service-data-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button mat-raised-button class="add" (click)="adjustPrintFooter3()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
+                </fieldset>
+            </div>
+    
+            
+        </div>
+    </form>
+    <div  id="service-data-section">
+        <app-service-data-print [data]="serviceDataInput"></app-service-data-print>
     </div>
-</form>
-<div  id="service-data-section">
-    <app-service-data-print [data]="serviceDataInput"></app-service-data-print>
-</div>
-
-<div  id="employeeStateData-section">
-    <app-employee-state-data-print [data]="employeeStateDataInput"></app-employee-state-data-print>
-</div>
-
-<div  id="jobName-section">
-    <app-experience-certificate-print [data]="jobNameInput"></app-experience-certificate-print>
+    
+    <div  id="employeeStateData-section">
+        <app-employee-state-data-print [data]="employeeStateDataInput"></app-employee-state-data-print>
+    </div>
+    
+    <div  id="jobName-section">
+        <app-experience-certificate-print [data]="jobNameInput"></app-experience-certificate-print>
+    </div>
 </div>

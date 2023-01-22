@@ -1,3 +1,5 @@
+@import '../../../../../../../theme.scss';
+
 .action-button {
   padding: 0 1.5rem;
 }
@@ -17,4 +19,63 @@ mat-form-field{
 .small-width{
   width: 90px;
   margin-left: 10px;
+}
+
+.darkTheme mat-form-field, .darkTheme ::ng-deep .mat-form-field-label{
+  color: white !important;
+}
+
+.darkTheme ::ng-deep .mat-form-field-underline::before{
+  background-color: white !important;
+}
+
+.darkTheme mat-form-field ::ng-deep .mat-form-field-flex{
+  background-color: $darkSecondary !important;
+}
+
+.darkTheme .save{
+  color: white !important;
+  background-color: $darkPrimary !important;
+  }
+
+
+
+::ng-deep .mat-form-field-label{
+  height: 19px !important;
+}
+
+
+mat-form-field, ::ng-deep .mat-form-field-label{
+  color: black !important;
+}
+
+.save{
+  color: white !important;
+  background-color: $lightPrimary !important;
+}
+
+::ng-deep .mat-form-field-underline::before{
+  background-color: black !important;
+}
+
+mat-form-field ::ng-deep .mat-form-field-flex{
+  background-color: $lightBackground !important;
+}
+
+.add:disabled, .edit:disabled{
+  background-color: rgba(0,0,0,.12) !important;
+  color: rgba(0,0,0,.26);
+}
+
+.darkTheme .add:disabled , .darkTheme .edit:disabled{
+  background-color: rgba(0,0,0,.12) !important;
+  color: rgba(0,0,0,.26);
+}
+
+.mat-form-field-disabled, ::ng-deep .mat-form-field-disabled .mat-form-field-label{
+  color: rgba(0,0,0,.26) !important;
+}
+
+mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
+  background-color: rgba(0,0,0,.12) !important;
 }

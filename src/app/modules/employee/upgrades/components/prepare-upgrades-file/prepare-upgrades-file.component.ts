@@ -9,6 +9,7 @@ import { TBLShamelUserService } from 'src/app/modules/shared/services/employees_
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TblshamelrankService } from 'src/app/modules/shared/services/employees_department/tblshamelrank.service';
 import { FormValidationHelpersService } from 'src/app/modules/shared/services/helpers/form-validation-helpers.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-prepare-upgrades-file',
@@ -38,6 +39,9 @@ export class PrepareUpgradesFileComponent implements OnInit {
   filteredManualOptions: Observable<ITBLShamelRank[]>;
 
   userId: number;
+
+  darkTheme: boolean;
+
   constructor(private tblShamelMonthService: TBLShamelMonthService,
     private tblShamelYearService: TBLShamelYearService,
     private fb: UntypedFormBuilder,
@@ -45,7 +49,8 @@ export class PrepareUpgradesFileComponent implements OnInit {
     private shamelrankService: TblshamelrankService,
     public formValidatorsService: FormValidationHelpersService,
     private tblshamelTaskService: TblshamelTaskService,
-    private tblShamelUserService: TBLShamelUserService,) {
+    private tblShamelUserService: TBLShamelUserService,
+    private themeService: ThemeService) {
     this.BuildForm();
     this.Load_Data();
 
@@ -137,6 +142,10 @@ export class PrepareUpgradesFileComponent implements OnInit {
         return '';
       }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+
     console.log('666', this.Form.controls);
 
     this.manualOptions.disable();

@@ -1,151 +1,153 @@
-<c-row>
-  <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
-</c-row>
-<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
-<mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            مفاتيح البحث
-        </mat-panel-title>
-        <mat-panel-description>
-            من أجل التحكم بالبحث انقر هنا
-            <mat-icon fontIcon="search"></mat-icon>
-        </mat-panel-description>
-    </mat-expansion-panel-header>
-    <form action="" [formGroup]="Form" #form="ngForm">
-      
-      <mat-form-field class="example-full-width fitContent" appearance="fill">
-          <mat-label>عام الترفيع</mat-label>
-          <input type="number"
-                  matInput
-                  [formControl]="UpgradeYear"
-                  [matAutocomplete]="autoUpgradeYear"
-                  >
-          <mat-autocomplete #autoUpgradeYear="matAutocomplete"
-          [displayWith]="displayUpgradeYearProperty.bind(this)"
-          (optionSelected)="clearDataSource()">
-            <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
-              {{option.YEAR_ID}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
+<div class="theme" [class.darkTheme]="darkTheme">
+  <c-row>
+    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+  </c-row>
+  <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+              مفاتيح البحث
+          </mat-panel-title>
+          <mat-panel-description>
+              من أجل التحكم بالبحث انقر هنا
+              <mat-icon fontIcon="search"></mat-icon>
+          </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form action="" [formGroup]="Form" #form="ngForm">
+        
         <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>الفئة</mat-label>
-            <input type="text"
+            <mat-label>عام الترفيع</mat-label>
+            <input type="number"
                     matInput
-                    [formControl]="Class"
-                    [matAutocomplete]="autoClass"
+                    [formControl]="UpgradeYear"
+                    [matAutocomplete]="autoUpgradeYear"
                     >
-            <mat-autocomplete #autoClass="matAutocomplete"
-            [displayWith]="displayClassProperty.bind(this)"
+            <mat-autocomplete #autoUpgradeYear="matAutocomplete"
+            [displayWith]="displayUpgradeYearProperty.bind(this)"
             (optionSelected)="clearDataSource()">
-              <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
-                {{option.class_name}}
+              <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
+                {{option.YEAR_ID}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-
+  
           <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>الصفة الوظيفية</mat-label>
-            <input type="text"
-                    matInput
-                    [formControl]="JobName"
-                    [matAutocomplete]="autoJobName"
-                    >
-            <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value); clearDataSource();'
-            [displayWith]="displayJobNameProperty.bind(this)">
-              <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
-                {{option.jobname_name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        
-      <mat-form-field class="example-full-width fitContent" appearance="fill">
-          <mat-label>من رقم قرار</mat-label>
-          <input matInput type="number" value="" [formControl]="FirstQararNum" (change)="clearDataSource()">
-        </mat-form-field>
-
+              <mat-label>الفئة</mat-label>
+              <input type="text"
+                      matInput
+                      [formControl]="Class"
+                      [matAutocomplete]="autoClass"
+                      >
+              <mat-autocomplete #autoClass="matAutocomplete"
+              [displayWith]="displayClassProperty.bind(this)"
+              (optionSelected)="clearDataSource()">
+                <mat-option *ngFor="let option of filteredClassOptions | async" [value]="option.class_id">
+                  {{option.class_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width fitContent" appearance="fill">
+              <mat-label>الصفة الوظيفية</mat-label>
+              <input type="text"
+                      matInput
+                      [formControl]="JobName"
+                      [matAutocomplete]="autoJobName"
+                      >
+              <mat-autocomplete #autoJobName="matAutocomplete" (optionSelected)='getJobName($event.option.value); clearDataSource();'
+              [displayWith]="displayJobNameProperty.bind(this)">
+                <mat-option *ngFor="let option of filteredJobNameOptions | async" [value]="option.jobname_id">
+                  {{option.jobname_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          
         <mat-form-field class="example-full-width fitContent" appearance="fill">
-          <mat-label>الى رقم قرار</mat-label>
-          <input matInput type="number" value="" [formControl]="LastQararNum" (change)="clearDataSource()">
-        </mat-form-field>
-            
-        <button id="view" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">بحث</button>
-        
-      </form>
-    </mat-expansion-panel>
-  </mat-accordion>
+            <mat-label>من رقم قرار</mat-label>
+            <input matInput type="number" value="" [formControl]="FirstQararNum" (change)="clearDataSource()">
+          </mat-form-field>
   
-  <button class="view" mat-raised-button color="primary" (click)="list()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
-<button mat-raised-button color="primary" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة الإحالات</button>
-<button mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-
-<div class="table-wrap">
-
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>الى رقم قرار</mat-label>
+            <input matInput type="number" value="" [formControl]="LastQararNum" (change)="clearDataSource()">
+          </mat-form-field>
+              
+          <button id="view" mat-raised-button color="primary" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">بحث</button>
+          
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+    
+    <button class="view" mat-raised-button color="primary" (click)="list()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+  <button mat-raised-button class="add" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة الإحالات</button>
+  <button mat-raised-button class="add" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
   
+  <div class="table-wrap">
   
-        <!-- upgrade_year Column -->
-        <ng-container matColumnDef="upgrade_year">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>عام الترفيع </th>
-            <td mat-cell *matCellDef="let element">{{element?.year_id}}</td>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    
+    
+          <!-- upgrade_year Column -->
+          <ng-container matColumnDef="upgrade_year">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>عام الترفيع </th>
+              <td mat-cell *matCellDef="let element">{{element?.year_id}}</td>
+          </ng-container>
+    
+          <!-- qarar_number Column -->
+          <ng-container matColumnDef="qarar_number">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم القرار</th>
+              <td mat-cell *matCellDef="let element">{{element?.qarar_num}}</td>
+          </ng-container>
+    
+          <!-- qarar_date Column -->
+          <ng-container matColumnDef="qarar_date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار</th>
+              <td mat-cell *matCellDef="let element">{{element?.qarar_date | date:'yyyy/MM/dd'}}</td>
+          </ng-container>
+    
+    
+    
+          <!-- first_name Column -->
+          <ng-container matColumnDef="first_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>أول اسم</th>
+              <td mat-cell *matCellDef="let element">{{element?.fnamelname}}</td>
+          </ng-container>
+    
+    
+          <!-- last_name Column -->
+          <ng-container matColumnDef="last_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>آخر اسم</th>
+            <td mat-cell *matCellDef="let element">{{element?.fnamelname2}}</td>
+          </ng-container>
+    
+          <!-- class Column -->
+          <ng-container matColumnDef="class">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة</th>
+            <td mat-cell *matCellDef="let element">{{element?.class_name}}</td>
+          </ng-container>
+    
+          <!-- jobname Column -->
+        <ng-container matColumnDef="jobname">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية</th>
+          <td mat-cell *matCellDef="let element">{{element?.jobname_name}}</td>
         </ng-container>
-  
-        <!-- qarar_number Column -->
-        <ng-container matColumnDef="qarar_number">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم القرار</th>
-            <td mat-cell *matCellDef="let element">{{element?.qarar_num}}</td>
-        </ng-container>
-  
-        <!-- qarar_date Column -->
-        <ng-container matColumnDef="qarar_date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ القرار</th>
-            <td mat-cell *matCellDef="let element">{{element?.qarar_date | date:'yyyy/MM/dd'}}</td>
-        </ng-container>
-  
-  
-  
-        <!-- first_name Column -->
-        <ng-container matColumnDef="first_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>أول اسم</th>
-            <td mat-cell *matCellDef="let element">{{element?.fnamelname}}</td>
-        </ng-container>
-  
-  
-        <!-- last_name Column -->
-        <ng-container matColumnDef="last_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>آخر اسم</th>
-          <td mat-cell *matCellDef="let element">{{element?.fnamelname2}}</td>
-        </ng-container>
-  
-        <!-- class Column -->
-        <ng-container matColumnDef="class">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>الفئة</th>
-          <td mat-cell *matCellDef="let element">{{element?.class_name}}</td>
-        </ng-container>
-  
-        <!-- jobname Column -->
-      <ng-container matColumnDef="jobname">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>الصفة الوظيفية</th>
-        <td mat-cell *matCellDef="let element">{{element?.jobname_name}}</td>
-      </ng-container>
-  
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
-        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
-        (click)="changeTableRowColor(idx)"></tr>
-    </table>
-  
-    <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
-  
-  
-  </div>
-  
-  <div id="printReferral-section">
-    <app-print-referrals [data]="referralInput"></app-print-referrals>
-  </div>
-</ngx-hover-opacity>
+    
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;let idx=index;"
+          [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+          (click)="changeTableRowColor(idx)"></tr>
+      </table>
+    
+      <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+    
+    
+    </div>
+    
+    <div id="printReferral-section">
+      <app-print-referrals [data]="referralInput"></app-print-referrals>
+    </div>
+  </ngx-hover-opacity>
+</div>

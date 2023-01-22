@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { TblshamelScJobStateService } from 'src/app/modules/shared/services/employees_department/tblshamel-sc-job-state.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-remaining-old-qarars',
@@ -27,10 +28,13 @@ export class RemainingOldQararsComponent implements OnInit {
   QararDateMonth: FormControl<number | null>;
   QararDateYear: FormControl<number | null>;
 
+  darkTheme: boolean;
+
   constructor(private fb: UntypedFormBuilder,
     private _liveAnnouncer: LiveAnnouncer,
     private tblshamelScJobStateService: TblshamelScJobStateService,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
       this.BuildForm();
      }
 
@@ -56,6 +60,9 @@ export class RemainingOldQararsComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   rowClicked: number;

@@ -9,6 +9,7 @@ import { EmployeeServiceService } from 'src/app/modules/shared/services/employee
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { EmployeePageService } from '../../employee-page-service';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-employeechangeid',
@@ -33,6 +34,7 @@ export class EmployeechangeidComponent implements OnInit {
  
   
 
+  darkTheme: boolean;
 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
@@ -40,7 +42,8 @@ export class EmployeechangeidComponent implements OnInit {
     private fb: UntypedFormBuilder,
     public restApi:EmployeeServiceService,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
-    private snackBar: MatSnackBar  ) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService  ) {
       this.BuildSeachForm();
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
@@ -82,11 +85,9 @@ export class EmployeechangeidComponent implements OnInit {
   
      ngOnInit() {
 
-     
-
-
-  
-
+      this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+        this.darkTheme= res;
+      })
 
      }
 
