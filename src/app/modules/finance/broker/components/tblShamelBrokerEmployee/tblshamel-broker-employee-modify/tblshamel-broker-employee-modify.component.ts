@@ -173,7 +173,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         this.Form.controls['modifyusername'].setValue(this.selected_broker_employee?.modifyusername);
 
       if (this.selected_broker_employee.modifydate != null)
-        this.Form.controls['modifydate'].setValue(moment(this.selected_broker_employee?.modifydate).toDate());
+        this.Form.controls['modifydate'].setValue(moment(this.selected_broker_employee?.modifydate).set({hour: 2}).toDate());
 
 
 
@@ -224,7 +224,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
 
         if (this.Form.controls['birthdateDay'].value != null && this.Form.controls['birthdateMonth'].value != null && this.Form.controls['birthdateYear'].value != null)
-          this.selected_broker_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate();
+          this.selected_broker_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 2}).toDate();
 
         if (this.Form.controls['sex_name'].value != null)
           this.selected_broker_employee.sex_name = this.Form.controls['sex_name'].value;

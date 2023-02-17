@@ -7,7 +7,6 @@ import { EmployeePageService } from '../employee-page-service';
 import { PrintCardComponent } from '../print/print-card/print-card.component';
 import { PrintComponent } from '../print/print/print.component';
 import { JobServiceDataAdjustPrintDialogComponent } from '../service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
-
 @Component({
   selector: 'app-print-employee-card',
   templateUrl: './print-employee-card.component.html',
@@ -91,4 +90,5 @@ export class PrintEmployeeCardComponent implements OnInit {
     });
   }
 
+  
 }

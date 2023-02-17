@@ -300,8 +300,8 @@ export class stats4 implements OnInit, OnDestroy {
 
     this.request= {...this.request,
       malakState_Name: this.MalakState.value,
-      first_Date: moment(this.FirstDateMonth.value+'/'+this.FirstDateDay.value+'/'+this.FirstDateYear.value).toDate(),
-      end_Date: moment(this.EndDateMonth.value+'/'+this.EndDateDay.value+'/'+this.EndDateYear.value).toDate(),
+      first_Date: moment(this.FirstDateMonth.value+'/'+this.FirstDateDay.value+'/'+this.FirstDateYear.value).set({hour: 2}).toDate(),
+      end_Date: moment(this.EndDateMonth.value+'/'+this.EndDateDay.value+'/'+this.EndDateYear.value).set({hour: 2}).toDate(),
       pageSize: this.pageSize,            
       pageNumber: this.currentPage};
     this.service.Stats4(this.request).subscribe(

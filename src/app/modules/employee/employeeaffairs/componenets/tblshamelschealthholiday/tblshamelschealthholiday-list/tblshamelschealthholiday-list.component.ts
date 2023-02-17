@@ -148,9 +148,9 @@ ngAfterViewInit() {
      this.selected_employee_HealthHoliday.id =this.Selected_Emp.id;
      
      const dialogRef = this.dialog.open(TblshamelschealthholidayModifyComponent, {
-       height: '60%',
-       width: '50%',
-       position: {top: '10%', left: '20%'},
+       height: '70%',
+       width: '70%',
+       position: {top: '10%', left: '10%'},
        data: {obj: this.selected_employee_HealthHoliday,id:this.Selected_Emp.id}
      });
     
@@ -190,12 +190,12 @@ ngAfterViewInit() {
                snack.dismiss();
  
                console.log(res);
-               if (res==1)
-                 this.FillTable();
+                this.FillTable();
+                this.snackBar.open('تم الحذف', 'Fechar', {
+                  duration: 2000,
+                });
+                
  
-             });
-             this.snackBar.open('تم الحذف', 'Fechar', {
-               duration: 2000,
              });
  
              this.snackBar.dismiss();
@@ -219,9 +219,9 @@ ngAfterViewInit() {
        this.selected_employee_HealthHoliday.id =this.Selected_Emp.id;
 
        const dialogRef = this.dialog.open(TblshamelschealthholidayModifyComponent, {
-         height: '60%',
-         width: '50%',
-         position: {top: '10%', left: '20%'},
+         height: '70%',
+         width: '70%',
+         position: {top: '10%', left: '10%'},
          data: {obj: this.selected_employee_HealthHoliday,id:this.Selected_Emp.id}
        });
    

@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -77,6 +78,14 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
 
   darkTheme: boolean;
 
+  documentDateDay: string= '';
+  documentDateMonth: string= '';
+  documentDateYear: string= '';
+
+  documentDateDayIsFilled: boolean= false;
+  documentDateMonthIsFilled: boolean= false;
+  documentDateYearIsFilled: boolean= false;
+
   //#region Constuctor 
   constructor(    
     @Inject(MAT_DIALOG_DATA) public data: {obj: TBLShamelSCMergeService,id:number},
@@ -86,7 +95,8 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
     public dialogRef: MatDialogRef<TblshamelscmergeserviceModifyComponent>,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    @Inject(DOCUMENT) private _document: Document,
     ) {
       this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
         data => {
@@ -346,8 +356,12 @@ export class TblshamelscmergeserviceModifyComponent implements OnInit {
       if (this.Selected_Employee_SCMergeService.document_number != null)
       this.document_number.setValue(this.Selected_Employee_SCMergeService.document_number); 
 
-      if (this.Selected_Employee_SCMergeService.documentdate != null)
+      if (this.Selected_Employee_SCMergeService.documentdate != null){
         this.documentdate.setValue(moment(this.Selected_Employee_SCMergeService.documentdate).toDate());
+        this.documentDateDay= moment(this.documentdate.value).date()+'';
+        this.documentDateMonth= (moment(this.documentdate.value).month()+1)+'';
+        this.documentDateYear= moment(this.documentdate.value).year()+'';
+      }
 
       
     
@@ -509,16 +523,33 @@ public errorHandling = (control: string, error: string) => {
   return this.Form.controls[control].hasError(error);
 }
 
-
-
-addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  if (event.value != null &&
+addEventDocumentDate(date: Date) {
+  if (date != null &&
     this.Selected_Employee_SCMergeService != null)
-    this.Selected_Employee_SCMergeService.documentdate = moment(event.value).toDate();
+    this.Selected_Employee_SCMergeService.documentdate = date;
 
 }
 
 
+documentDateChange(changeSource: string){
+  if (changeSource == 'day')
+    this.documentDateDayIsFilled= true;
+  else if (changeSource == 'month')
+    this.documentDateMonthIsFilled= true;
+  else if (changeSource == 'year')
+    this.documentDateYearIsFilled= true;
 
+  if (this.documentDateDayIsFilled && this.documentDateMonthIsFilled && this.documentDateYearIsFilled){
+    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 2}).toDate());
+    this.addEventDocumentDate(this.documentdate.value);
+  }
+ }
+
+ public focusNext(id: string) {
+  let element = this._document.getElementById(id);
+  if (element) {
+    element.focus();
+  }
+}
 
 }

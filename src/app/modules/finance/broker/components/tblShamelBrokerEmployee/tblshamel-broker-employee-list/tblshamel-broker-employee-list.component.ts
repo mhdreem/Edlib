@@ -232,7 +232,7 @@ OnSearch()
       lname: '',
       father: '',
       mother: '',
-      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
+      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 2}).toDate(),
       sex_name: '',
       servicedayes: 0,
     };

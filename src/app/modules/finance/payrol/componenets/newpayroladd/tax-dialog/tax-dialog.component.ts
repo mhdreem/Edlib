@@ -66,7 +66,7 @@ export class TaxDialogComponent implements OnInit, AfterViewInit {
 
             this.tblShamelShatebHealthService.Get_By_ID_Month_Year(this.data, this.fixedYear, this.fixedMonth ).subscribe(
               (res:any) =>{
-                // console.log('res2', res);
+                console.log('1', res);
                 this.dataSource1.data= res;
               }
             );
@@ -85,6 +85,7 @@ export class TaxDialogComponent implements OnInit, AfterViewInit {
 
             this.tblShamelShatebPunishmentService.Get_By_ID_Month_Year(this.data, this.fixedYear, this.fixedMonth ).subscribe(
               (res:any) =>{
+                console.log('2', res);
                 this.dataSource2.data= res;
               }
             );
@@ -103,6 +104,7 @@ export class TaxDialogComponent implements OnInit, AfterViewInit {
 
             this.tblShamelShatebVarTaxService.Get_By_ID_Month_Year(this.data, this.fixedYear, this.fixedMonth ).subscribe(
               (res:any) =>{
+                console.log('3', res);
                 this.dataSource3.data= res;
               }
             );

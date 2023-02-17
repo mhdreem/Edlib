@@ -126,9 +126,9 @@ Add(): void {
   this.selected_employee_SuddenHoliday.id = this.Selected_Emp.id;
 
   const dialogRef = this.dialog.open(TBLShamelSCSuddenHolidayAddComponent, {
-    height: '60%',
-    width: '50%',
-    position: {top: '10%', left: '20%'},
+    height: '70%',
+    width: '60%',
+    position: {top: '10%', left: '10%'},
     data: {obj: this.selected_employee_SuddenHoliday,id:this.Selected_Emp.id}
   });
  
@@ -171,10 +171,10 @@ if (element.serial != null )
       console.log(res);
       if (res==1)
         this.FillTable();
+        this.snackBar.open('تم الحذف', 'Fechar', {
+          duration: 2000,
+        });
 
-    });
-    this.snackBar.open('تم الحذف', 'Fechar', {
-      duration: 2000,
     });
 
     this.snackBar.dismiss();
@@ -201,9 +201,9 @@ async Update(element:TBLShamelSCSuddenHoliday)
     
 
     const dialogRef = this.dialog.open(TBLShamelSCSuddenHolidayAddComponent, {
-      height: '60%',
-      width: '50%',
-      position: {top: '10%', left: '20%'},
+      height: '70%',
+      width: '60%',
+      position: {top: '10%', left: '10%'},
       data: {obj: this.selected_employee_SuddenHoliday,id:this.Selected_Emp.id}
     });
 

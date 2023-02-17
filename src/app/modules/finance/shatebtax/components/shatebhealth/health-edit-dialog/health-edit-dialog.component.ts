@@ -427,7 +427,7 @@ export class HealthEditDialogComponent implements OnInit {
     let obj : TBLShamelShatebHealth =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).toDate(),
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 2}).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,
@@ -437,7 +437,7 @@ export class HealthEditDialogComponent implements OnInit {
       salary : this.Form.controls['salary'].value,
       serial : this.Form.controls['serial'].value,
       //shateb_number : this.Form.controls['shateb_number'].value,
-      startdate : moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).toDate(),
+      startdate : moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).set({hour: 2}).toDate(),
       year_id : this.Form.controls['year_id'].value,
 
 

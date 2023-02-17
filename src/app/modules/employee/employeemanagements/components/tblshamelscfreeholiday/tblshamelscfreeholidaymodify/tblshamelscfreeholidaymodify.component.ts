@@ -560,7 +560,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.startDateYearIsFilled= true;
 
     if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
-      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).toDate());
+      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 2}).toDate());
       this.addEventStartDate(this.startdate.value);
     }
    }
@@ -574,7 +574,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.endDateYearIsFilled= true;
 
     if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
-      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).toDate());
+      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 2}).toDate());
       this.addEventEndDate(this.enddate.value);
     }
    }
@@ -588,7 +588,7 @@ export class TblshamelscfreeholidaymodifyComponent implements OnInit, AfterViewI
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

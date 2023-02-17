@@ -537,6 +537,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
     if (this.Selected_Employee.id != null &&
       this.Selected_Employee.id > 0 &&
       this.pageEmployee.ModeEntry === 'update') {
+        
       this.empService.update(this.Selected_Employee).subscribe(
         data => {
           if (data > 0) {
@@ -840,7 +841,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.birthdayYearIsFilled= true;
 
     if (this.birthdayDayIsFilled && this.birthdayMonthIsFilled && this.birthdayYearIsFilled){
-      this.BirthDate.setValue(moment(this.birthdayMonth+'/'+this.birthdayDay+'/'+this.birthdayYear).toDate());
+      this.BirthDate.setValue(moment(this.birthdayMonth+'/'+this.birthdayDay+'/'+this.birthdayYear).set({hour: 2}).toDate());
 
     }
    }
@@ -854,7 +855,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.qararYearIsFilled= true;
 
     if (this.qararDayIsFilled && this.qararMonthIsFilled && this.qararYearIsFilled){
-      this.QararDate.setValue(moment(this.qararMonth+'/'+this.qararDay+'/'+this.qararYear).toDate());
+      this.QararDate.setValue(moment(this.qararMonth+'/'+this.qararDay+'/'+this.qararYear).set({hour: 2}).toDate());
 
     }
    }

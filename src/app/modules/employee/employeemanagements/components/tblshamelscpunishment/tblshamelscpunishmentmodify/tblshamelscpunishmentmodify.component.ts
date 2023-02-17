@@ -601,7 +601,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

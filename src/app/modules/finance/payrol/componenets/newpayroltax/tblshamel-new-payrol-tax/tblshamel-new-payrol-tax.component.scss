@@ -108,3 +108,8 @@ button{
     display: block;
     margin-top: 30px;
 }
+
+#saveButton, #DeleteAllButton, #addFromOldPayRollAdd{
+    display: inline-block;
+    margin-left: 10px
+}

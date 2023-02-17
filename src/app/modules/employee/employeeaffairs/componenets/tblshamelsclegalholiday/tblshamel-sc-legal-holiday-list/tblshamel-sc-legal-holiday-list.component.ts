@@ -123,8 +123,8 @@ ngAfterViewInit() {
   
     const dialogRef = this.dialog.open(TBLShamelSCLEgalHolidayAddComponent, {
       height: '60%',
-      width: '50%',
-      position: {top: '10%', left: '20%'},
+      width: '60%',
+      position: {top: '10%', left: '10%'},
       data: {obj: this.selected_employee_ShamelSCLegalHoliday,id:this.Selected_Emp.id}
     });
    
@@ -195,8 +195,8 @@ ngAfterViewInit() {
   
       const dialogRef = this.dialog.open(TBLShamelSCLEgalHolidayAddComponent, {
         height: '60%',
-        width: '50%',
-        position: {top: '10%', left: '20%'},
+        width: '60%',
+        position: {top: '10%', left: '10%'},
         data: {obj: this.selected_employee_ShamelSCLegalHoliday,id:this.Selected_Emp.id}
       });
   

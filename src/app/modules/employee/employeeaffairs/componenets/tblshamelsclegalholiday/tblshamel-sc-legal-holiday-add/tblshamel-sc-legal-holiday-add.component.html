@@ -8,47 +8,75 @@
   <form [formGroup]="Form">
 
    
-    <div class="row justify-content-between text-left">
+    <div class="row text-left">
 
-      <div class="form-group col-sm-4 flex-column d-flex">
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ بداية الإجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_startdate" [formControl]="startdate"
-          (dateInput)="addEventStartDate('input', $event)" (dateChange)="addEventStartDate('change', $event)"  >
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_startdate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_startdate></mat-datepicker>
+      <div class="date">
+        <span>تاريخ بداية الإجازة:</span>
+        <div class="dateContent">
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>اليوم</mat-label>
+            <input matInput placeholder="ex: 21" (change)="startDateChange('day')"
+            [(ngModel)]='startDateDay' [ngModelOptions]="{standalone: true}"
+            id="startDateDay" (keyup.enter)="focusNext('startDateMonth')">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>الشهر</mat-label>
+            <input matInput placeholder="ex: 1" (change)="startDateChange('month')"
+            [(ngModel)]='startDateMonth' [ngModelOptions]="{standalone: true}"
+            id="startDateMonth" (keyup.enter)="focusNext('startDateYear')">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>السنة</mat-label>
+            <input matInput placeholder="ex: 2022"  (change)="startDateChange('year')"
+            [(ngModel)]='startDateYear' [ngModelOptions]="{standalone: true}"
+            id="startDateYear" (keyup.enter)="focusNext('endDateDay')">
         </mat-form-field>
+        </div>
       </div>
 
-      <div class="form-group col-sm-4 flex-column d-flex">
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ انتهاء الاجازة</mat-label>
-          <input matInput [matDatepicker]="Datepicker_enddate" formControlName="enddate" [formControl]="enddate"
-          (dateInput)="addEventEndDate('input', $event)" (dateChange)="addEventEndDate('change', $event)"  >
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_enddate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_enddate></mat-datepicker>
+      <div class="date">
+        <span>تاريخ انتهاء الإجازة:</span>
+        <div class="dateContent">
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>اليوم</mat-label>
+            <input matInput placeholder="ex: 21" (change)="endDateChange('day')"
+            [(ngModel)]='endDateDay' [ngModelOptions]="{standalone: true}"
+            id="endDateDay" (keyup.enter)="focusNext('endDateMonth')">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>الشهر</mat-label>
+            <input matInput placeholder="ex: 1" (change)="endDateChange('month')"
+            [(ngModel)]='endDateMonth' [ngModelOptions]="{standalone: true}"
+            id="endDateMonth" (keyup.enter)="focusNext('endDateYear')">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width small-width" appearance="fill" >
+            <mat-label>السنة</mat-label>
+            <input matInput placeholder="ex: 2022"  (change)="endDateChange('year')"
+            [(ngModel)]='endDateYear' [ngModelOptions]="{standalone: true}"
+            id="endDateYear" (keyup.enter)="focusNext('duration')">
         </mat-form-field>
+        </div>
       </div>
 
-      <div class="form-group col-sm-4 flex-column d-flex">
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" style="width: fit-content; margin-top: 20px;">
           <mat-label>المدة</mat-label>        
-            <input matInput type="number" placeholder="Ex. Pizza" value="" [formControl]="duration"   >        
+            <input matInput type="number" placeholder="Ex. Pizza" value="" [formControl]="duration" id="duration" (keyup.enter)="focusNext('documenttype_id')" >        
         </mat-form-field>
   
-      </div>
-      
     </div>
 
   
-    <div class="row justify-content-between text-left">
+    <div class="row text-left">
 
-      <div class="form-group col-sm-4 flex-column d-flex">
 
-          <mat-form-field class="example-full-width" appearance="fill">
+          <mat-form-field class="example-full-width" appearance="fill" style="width: fit-content; margin-top: 20px;">
             <mat-label>المستند</mat-label>
             <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
-              [matAutocomplete]="auto_documenttype_id">
+              [matAutocomplete]="auto_documenttype_id" id="documenttype_id" (keyup.enter)="focusNext('document_number')">
             <mat-autocomplete #auto_documenttype_id="matAutocomplete"
               [displayWith]="displayDocumentTypeProperty.bind(this)"
               (optionSelected)="OnSelect_DocumentType($event)">
@@ -58,29 +86,41 @@
             </mat-autocomplete>
           </mat-form-field>
 
-      </div>
 
-      <div class="form-group col-sm-4 flex-column d-flex">
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width" appearance="fill" style="width: fit-content; margin-top: 20px;">
           <mat-label>رقم المستند</mat-label>        
-            <input matInput type="number" placeholder="Ex. Pizza" value="Sushi" [formControl]="document_number"   >        
+            <input matInput type="number" placeholder="Ex. Pizza" value="Sushi" [formControl]="document_number" id="document_number"  (keyup.enter)="focusNext('documentDateDay')" >        
         </mat-form-field>
   
-      </div>
 
-      <div class="form-group col-sm-4 flex-column d-flex">
-        <mat-form-field appearance="fill">
-          <mat-label>تاريخ المستند</mat-label>
-          <input matInput [matDatepicker]="Datepicker_documentdate" [formControl]="documentdate"
-          (dateInput)="addEventDocumentDate('input', $event)"
-            (dateChange)="addEventDocumentDate('change', $event)">
-          <mat-datepicker-toggle matSuffix [for]="Datepicker_documentdate"></mat-datepicker-toggle>
-          <mat-datepicker #Datepicker_documentdate></mat-datepicker>
-        </mat-form-field>
+        <div class="date">
+          <span>تاريخ المستند:</span>
+          <div class="dateContent">
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>اليوم</mat-label>
+              <input matInput placeholder="ex: 21" (change)="documentDateChange('day')"
+              [(ngModel)]='documentDateDay' [ngModelOptions]="{standalone: true}"
+              id="documentDateDay" (keyup.enter)="focusNext('documentDateMonth')">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>الشهر</mat-label>
+              <input matInput placeholder="ex: 1" (change)="documentDateChange('month')"
+              [(ngModel)]='documentDateMonth' [ngModelOptions]="{standalone: true}"
+              id="documentDateMonth" (keyup.enter)="focusNext('documentDateYear')">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width small-width" appearance="fill" >
+              <mat-label>السنة</mat-label>
+              <input matInput placeholder="ex: 2022"  (change)="documentDateChange('year')"
+              [(ngModel)]='documentDateYear' [ngModelOptions]="{standalone: true}"
+              id="documentDateYear" (keyup.enter)="focusNext('startDateDay')">
+          </mat-form-field>
+          </div>
+        </div>
   
       </div>
-
-    </div>
+  
   </form>
 <!-- </ngx-hover-opacity> -->
 

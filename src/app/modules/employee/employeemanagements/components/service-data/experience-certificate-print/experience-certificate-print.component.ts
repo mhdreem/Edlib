@@ -166,7 +166,7 @@ export class ExperienceCertificatePrintComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.data[0].TBLShamelSCJobStates.forEach(TBLShamelSCJobState =>{
+    this.data[0]?.TBLShamelSCJobStates?.forEach(TBLShamelSCJobState =>{
       if ( TBLShamelSCJobState.TBLShamelJobName != undefined && TBLShamelSCJobState.TBLShamelJobName?.jobname_name != undefined && TBLShamelSCJobState.begindate != undefined)
       this.jobStates.push({jobName: TBLShamelSCJobState.TBLShamelJobName.jobname_name, begindate: TBLShamelSCJobState.begindate});
     });

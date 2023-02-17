@@ -937,7 +937,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.changeDateYearIsFilled= true;
 
     if (this.changeDateDayIsFilled && this.changeDateMonthIsFilled && this.changeDateYearIsFilled){
-      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).toDate());
+      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).set({hour: 2}).toDate());
       this.addEvent(this.changedate.value);
     }
    }
@@ -951,7 +951,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.beginDateYearIsFilled= true;
 
     if (this.beginDateDayIsFilled && this.beginDateMonthIsFilled && this.beginDateYearIsFilled){
-      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).toDate());
+      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).set({hour: 2}).toDate());
       this.addEvent(this.begindate.value);
     }
    }
@@ -965,7 +965,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.doc_date.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).toDate());
+      this.doc_date.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
       this.addEvent(this.doc_date.value);
     }
    }

@@ -15,10 +15,10 @@ form .columns{
   }
 
 .mat-row:nth-child(even){
-    background-color: rgb(182, 182, 182);
+  background-color: $LightTableEven;
 }
 .mat-row:nth-child(odd){
-    background-color: white;
+  background-color: white;
 }
 
 .search{

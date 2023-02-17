@@ -69,3 +69,16 @@ mat-form-field ::ng-deep .mat-form-field-flex{
   mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
     background-color: rgba(0,0,0,.12) !important;
   }
+
+  .small-width{
+    width: 90px;
+    margin-left: 10px;
+  }
+
+  .date{
+    width: fit-content;
+  }
+
+  mat-form-field{
+    width: fit-content;
+  }

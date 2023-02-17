@@ -553,6 +553,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
 
   taxClicked() {
+    console.log('this.pageService.TBLShamelEmployee',this.pageService.TBLShamelEmployee);
     if (this.pageService.TBLShamelEmployee != null) {
       const dialogRef = this.dialog.open(TaxDialogComponent, {
         width: '750px',

@@ -355,12 +355,12 @@ export class HealthComponent implements OnInit, AfterViewInit {
       'accounter_id': this.Form.controls['accounter_id'].value,
       'healthnosalary_name': this.Form.controls['healthnosalary_name'].value,
       'tax_status': this.Form.controls['tax_status'].value,
-      'startdate_From': moment(this.Form.controls['startdate_From_Month'].value+'/'+this.Form.controls['startdate_From_Day'].value+'/'+this.Form.controls['startdate_From_Year'].value).toDate(),
-      'startdate_To': moment(this.Form.controls['startdate_To_Month'].value+'/'+this.Form.controls['startdate_To_Day'].value+'/'+this.Form.controls['startdate_To_Year'].value).toDate(),
-      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).toDate(),
-      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).toDate(),
-      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).toDate(),
-      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).toDate(),
+      'startdate_From': moment(this.Form.controls['startdate_From_Month'].value+'/'+this.Form.controls['startdate_From_Day'].value+'/'+this.Form.controls['startdate_From_Year'].value).set({hour: 2}).toDate(),
+      'startdate_To': moment(this.Form.controls['startdate_To_Month'].value+'/'+this.Form.controls['startdate_To_Day'].value+'/'+this.Form.controls['startdate_To_Year'].value).set({hour: 2}).toDate(),
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 2}).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 2}).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 2}).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 2}).toDate(),
     }).subscribe(
       data=>{
         if (data.Item1 != null) {

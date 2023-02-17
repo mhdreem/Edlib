@@ -153,8 +153,8 @@ OnSearch()
       // call Search
       this.tblShamelBrokerShatebService.statistics({
         area_name: this.Form.controls['area_name'].value,
-        start_date: moment(this.Form.controls['startdateMonth'].value+'/'+this.Form.controls['startdateDay'].value+'/'+this.Form.controls['startdateYear'].value).toDate(),
-        end_date: moment(this.Form.controls['enddateMonth'].value+'/'+this.Form.controls['enddateDay'].value+'/'+this.Form.controls['enddateYear'].value).toDate()
+        start_date: moment(this.Form.controls['startdateMonth'].value+'/'+this.Form.controls['startdateDay'].value+'/'+this.Form.controls['startdateYear'].value).set({hour: 2}).toDate(),
+        end_date: moment(this.Form.controls['enddateMonth'].value+'/'+this.Form.controls['enddateDay'].value+'/'+this.Form.controls['enddateYear'].value).set({hour: 2}).toDate()
       }).subscribe(
         (data: TblShamelBrokerPrintTotals[] )=> {
 

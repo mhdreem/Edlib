@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -68,6 +69,27 @@ export class TBLShamelSCLEgalHolidayAddComponent implements OnInit, OnDestroy {
   isStartDateSelected: boolean= false;
   isEndDateSelected: boolean= false;
 
+
+  startDateDay: string= '';
+  startDateMonth: string= '';
+  startDateYear: string= '';
+  endDateDay: string= '';
+  endDateMonth: string= '';
+  endDateYear: string= '';
+  documentDateDay: string= '';
+  documentDateMonth: string= '';
+  documentDateYear: string= '';
+
+  startDateDayIsFilled: boolean= false;
+  startDateMonthIsFilled: boolean= false;
+  startDateYearIsFilled: boolean= false;
+  endDateDayIsFilled: boolean= false;
+  endDateMonthIsFilled: boolean= false;
+  endDateYearIsFilled: boolean= false;
+  documentDateDayIsFilled: boolean= false;
+  documentDateMonthIsFilled: boolean= false;
+  documentDateYearIsFilled: boolean= false;
+
   darkTheme: boolean;
 
   //#region Constuctor 
@@ -78,7 +100,8 @@ export class TBLShamelSCLEgalHolidayAddComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     public PageService: EmployeePageService,
     public dialogRef: MatDialogRef<TBLShamelSCLEgalHolidayAddComponent>,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
     this.PageService.Subject_Selected_TBLShamelEmployee.subscribe(
       data => {
@@ -276,11 +299,19 @@ export class TBLShamelSCLEgalHolidayAddComponent implements OnInit, OnDestroy {
       if (this.Selected_Employee_SCLegalHoliday.duration != null)
       this.duration.setValue( this.Selected_Employee_SCLegalHoliday.duration);           
 
-      if (this.Selected_Employee_SCLegalHoliday.startdate!= null && this.Selected_Employee_SCLegalHoliday.startdate != undefined)        
-      this.startdate.setValue( moment(this.Selected_Employee_SCLegalHoliday.startdate).toDate() ); 
+      if (this.Selected_Employee_SCLegalHoliday.startdate!= null && this.Selected_Employee_SCLegalHoliday.startdate != undefined) {
+        this.startdate.setValue( moment(this.Selected_Employee_SCLegalHoliday.startdate).toDate() ); 
+        this.startDateDay= moment(this.startdate.value).date()+'';
+        this.startDateMonth= (moment(this.startdate.value).month()+1)+'';
+        this.startDateYear= moment(this.startdate.value).year()+'';
+      }       
 
-      if (this.Selected_Employee_SCLegalHoliday.enddate!= null && this.Selected_Employee_SCLegalHoliday.enddate != undefined)        
-      this.enddate.setValue(moment(this.Selected_Employee_SCLegalHoliday.enddate).toDate()); 
+      if (this.Selected_Employee_SCLegalHoliday.enddate!= null && this.Selected_Employee_SCLegalHoliday.enddate != undefined)    {
+        this.enddate.setValue(moment(this.Selected_Employee_SCLegalHoliday.enddate).toDate()); 
+        this.endDateDay= moment(this.enddate.value).date()+'';
+        this.endDateMonth= (moment(this.enddate.value).month()+1)+'';
+        this.endDateYear= moment(this.enddate.value).year()+'';
+      }    
 
       if (this.Selected_Employee_SCLegalHoliday.documenttype_id != null)
       this.documenttype_id.setValue(this.Selected_Employee_SCLegalHoliday.documenttype_id); 
@@ -288,8 +319,12 @@ export class TBLShamelSCLEgalHolidayAddComponent implements OnInit, OnDestroy {
       if (this.Selected_Employee_SCLegalHoliday.document_number != null)
       this.document_number.setValue(this.Selected_Employee_SCLegalHoliday.document_number); 
 
-      if (this.Selected_Employee_SCLegalHoliday.documentdate!= null && this.Selected_Employee_SCLegalHoliday.documentdate != undefined)        
+      if (this.Selected_Employee_SCLegalHoliday.documentdate!= null && this.Selected_Employee_SCLegalHoliday.documentdate != undefined) {
         this.documentdate.setValue(moment(this.Selected_Employee_SCLegalHoliday.documentdate).toDate());         
+        this.documentDateDay= moment(this.documentdate.value).date()+'';
+        this.documentDateMonth= (moment(this.documentdate.value).month()+1)+'';
+        this.documentDateYear= moment(this.documentdate.value).year()+'';
+      }       
     }
   
   }
@@ -429,32 +464,35 @@ public errorHandling = (control: string, error: string) => {
 }
 
 
-addEventDocumentDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  if (event.value != null &&
+addEventDocumentDate(date: Date) {
+  if (date != null &&
     this.Selected_Employee_SCLegalHoliday != null)
-    this.Selected_Employee_SCLegalHoliday.documentdate = moment(event.value).toDate();
+    this.Selected_Employee_SCLegalHoliday.documentdate = date;
 
 }
 
 
-addEventStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  if (event.value != null &&
+addEventStartDate(date: Date) {
+  if (date != null &&
     this.Selected_Employee_SCLegalHoliday != null)
-    this.Selected_Employee_SCLegalHoliday.startdate = moment(event.value).toDate();
+    this.Selected_Employee_SCLegalHoliday.startdate = date;
 
     this.isStartDateSelected= true;
     this.calcDuration();
+
+
 }
 
 
 
-addEventEndDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  if (event.value != null &&
+addEventEndDate(date: Date) {
+  if (date != null &&
     this.Selected_Employee_SCLegalHoliday != null)
-    this.Selected_Employee_SCLegalHoliday.enddate = moment(event.value).toDate();
+    this.Selected_Employee_SCLegalHoliday.enddate = date;
 
     this.isEndDateSelected= true;
     this.calcDuration();
+
 }
 
 calcDuration(){
@@ -463,5 +501,52 @@ calcDuration(){
   else return;
 }
 
+startDateChange(changeSource: string){
+  if (changeSource == 'day')
+    this.startDateDayIsFilled= true;
+  else if (changeSource == 'month')
+    this.startDateMonthIsFilled= true;
+  else if (changeSource == 'year')
+    this.startDateYearIsFilled= true;
 
+  if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
+    this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 2}).toDate());
+    this.addEventStartDate(this.startdate.value);
+  }
+ }
+
+ endDateChange(changeSource: string){
+  if (changeSource == 'day')
+    this.endDateDayIsFilled= true;
+  else if (changeSource == 'month')
+    this.endDateMonthIsFilled= true;
+  else if (changeSource == 'year')
+    this.endDateYearIsFilled= true;
+
+  if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
+    this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 2}).toDate());
+    this.addEventEndDate(this.enddate.value);
+  }
+ }
+
+ documentDateChange(changeSource: string){
+  if (changeSource == 'day')
+    this.documentDateDayIsFilled= true;
+  else if (changeSource == 'month')
+    this.documentDateMonthIsFilled= true;
+  else if (changeSource == 'year')
+    this.documentDateYearIsFilled= true;
+
+  if (this.documentDateDayIsFilled && this.documentDateMonthIsFilled && this.documentDateYearIsFilled){
+    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 2}).toDate());
+    this.addEventDocumentDate(this.documentdate.value);
+  }
+ }
+
+ public focusNext(id: string) {
+  let element = this._document.getElementById(id);
+  if (element) {
+    element.focus();
+  }
+}
 }

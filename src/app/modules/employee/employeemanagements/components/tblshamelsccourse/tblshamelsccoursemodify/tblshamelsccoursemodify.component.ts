@@ -122,7 +122,8 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     public tblshameluserservice: TBLShamelUserService,
     @Inject(DOCUMENT) private _document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { obj: ITBLShamelSCCourse, id: number },
-    private themeService: ThemeService
+    private themeService: ThemeService,
+
   ) {
 
     //في حال كانت البيانات مرسلة عن طريق Dialog
@@ -370,6 +371,12 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
   public ClearForm() {
     try {
       this.Form.reset();
+      this.startDateDay= '';
+      this.startDateMonth= '';
+      this.startDateYear= '';
+      this.endDateDay= '';
+      this.endDateMonth= '';
+      this.endDateYear= '';
     } catch (ex: any) {
     }
 
@@ -579,6 +586,9 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     if (this.Selected_Employee_Course != null &&
       (this.Selected_Employee_Course.serial == null ||
         this.Selected_Employee_Course.serial <= 0)) {
+          this.Selected_Employee_Course.startdate = moment(this.Selected_Employee_Course.startdate).set({hour: 2}).toDate();;
+          this.Selected_Employee_Course.enddate = moment(this.Selected_Employee_Course.enddate).set({hour: 2}).toDate();
+          console.log('this.Selected_Employee_Course.startdate', this.Selected_Employee_Course.startdate);
       this.sccourseService.add(this.Selected_Employee_Course).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
@@ -594,7 +604,10 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
     else if (this.Selected_Employee_Course != null &&
       this.Selected_Employee_Course != undefined &&
       this.Selected_Employee_Course.serial != null &&
-      this.Selected_Employee_Course.serial > 0)
+      this.Selected_Employee_Course.serial > 0){
+
+        this.Selected_Employee_Course.startdate = moment(this.Selected_Employee_Course.startdate).set({hour: 2}).toDate();;
+        this.Selected_Employee_Course.enddate = moment(this.Selected_Employee_Course.enddate).set({hour: 2}).toDate();
       this.sccourseService.update(this.Selected_Employee_Course).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
@@ -603,7 +616,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
         } else {
         }
       });
-
+    }
 
   }
 
@@ -685,7 +698,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
       this.startDateYearIsFilled= true;
 
     if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
-      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).toDate());
+      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 2}).toDate());
       this.addEventStartDate(this.startdate.value);
     }
    }
@@ -699,7 +712,7 @@ export class TblshamelsccoursemodifyComponent implements OnInit, AfterViewInit {
       this.endDateYearIsFilled= true;
 
     if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
-      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).toDate());
+      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 2}).toDate());
       this.addEventEndDate(this.enddate.value);
     }
    }

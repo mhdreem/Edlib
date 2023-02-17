@@ -216,7 +216,7 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
 
 
       if (this.selected_overtime_employee != null && this.selected_overtime_employee.enterdate != null)
-        this.Form.controls['enterdate'].setValue(moment(this.selected_overtime_employee?.enterdate).toDate());
+        this.Form.controls['enterdate'].setValue(moment(this.selected_overtime_employee?.enterdate).set({hour: 2}).toDate());
 
 
       if (this.selected_overtime_employee != null && this.selected_overtime_employee.entertime != null)
@@ -227,7 +227,7 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
         this.Form.controls['modifyusername'].setValue(this.selected_overtime_employee?.modifyusername);
 
       if (this.selected_overtime_employee.modifydate != null)
-        this.Form.controls['modifydate'].setValue(moment(this.selected_overtime_employee?.modifydate).toDate());
+        this.Form.controls['modifydate'].setValue(moment(this.selected_overtime_employee?.modifydate).set({hour: 2}).toDate());
 
 
 
@@ -276,7 +276,7 @@ export class TBLShamelOvertimeEmployeeModifyComponent implements OnInit {
           this.selected_overtime_employee.servicedayes = this.Form.controls['servicedayes'].value;
 
         if (this.Form.controls['birthdateDay'].value != null && this.Form.controls['birthdateMonth'].value != null && this.Form.controls['birthdateYear'].value != null)
-          this.selected_overtime_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate();
+          this.selected_overtime_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 2}).toDate();
 
         if (this.Form.controls['sex_name'].value != null)
           this.selected_overtime_employee.sex_name = this.Form.controls['sex_name'].value;
