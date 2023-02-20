@@ -25,6 +25,9 @@ import { TblShamelMoneyM3PayDestService } from 'src/app/modules/shared/services/
 import { TBLShamelOvertimeEmployeeService } from 'src/app/modules/shared/services/finance_department/broker/tblshamel-overtime-employee.service';
 import { ConfirmationDialogComponent } from '../../common/confirmation-dialog/confirmation-dialog.component';
 import { TblShamelBrokerShatebModifyComponent } from '../tbl-shamel-broker-shateb-modify/tbl-shamel-broker-shateb-modify.component';
+import { ExportToCsv } from 'export-to-csv';
+import * as moment from 'moment';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-broker-shateb-list',
@@ -54,7 +57,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   Selected_TBLShamelBrokerShateb: TblShamelBrokerShateb;
 
   displayedColumns: string[] = ['area_id', 'payrol_id', 'year_id', 'month_id', 'school_id', 'broker_id',
-    'daycount'];
+    'daycount', 'action'];
 
     Form: FormGroup;
     Fixed_Month: TBLShamelMonth;
@@ -76,18 +79,35 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   allData: any[]= [];
 
+  
   pageChanged(event: PageEvent) {
     console.log('event', event);
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
-    this.OnSearch();
+    this.FillTable();
   }
+
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
 
     ngAfterViewInit() {
 
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }
+
+    darkTheme: boolean;
 
   constructor(private frmBuilder: FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
@@ -99,7 +119,8 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
-    @Inject(DOCUMENT) private _document: Document) { 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) { 
 
   this.dataSource = new MatTableDataSource<TblShamelBrokerShateb>(this.broker_shateb_List);
       this.LoadingFinish = true;
@@ -368,6 +389,19 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
               this.dataSource.data = this.allData;
               this.totalRows= data.Item2;
               this.dataSource._updatePaginator(this.totalRows);
+
+              this.allData.forEach((datum, index) =>{
+                this.excelData[index]= {
+                                        'المنطقة': datum?.area_id,
+                                        'رقم الشطب': datum?.payrol_id,
+                                        'العام': datum?.year_id,
+                                        'الشهر': datum?.month_id,
+                                        'المدرسة': datum?.school_id,
+                                        'اسم المعلم المكلف': datum?.broker_id,
+                                        'أيام الخدمة': datum?.daycount,
+                                        }; 
+      
+              });
             }
   
           }
@@ -378,8 +412,32 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
     }
   
-    Add() {
+    Add(name: string): void {
+      // Init selected_overtime_employee
+      this.selected_broker_shateb = {
+        // serial: 0,
+        // broker_id: 0,
+        // area_id: 0,
+        // month_id: 0,
+        // year_id: 0,
+        // school_id: 0,
+      };
   
+      const dialogRef = this.dialog.open(TblShamelBrokerShatebModifyComponent, {
+        height: '40%',
+        width: '60%',
+        data: { obj: this.selected_broker_shateb }
+      });
+  
+      dialogRef.afterClosed().toPromise().then(result => {
+        console.log(result);
+        if (result) {
+          this.currentPage=1;
+          this.pageSize=5;
+          this.FillTable();
+          
+        }
+      });
     }
   
     Refresh() {
@@ -387,6 +445,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     }
     Delete(element: TblShamelBrokerShateb) { 
       try {
+        console.log('element1', element);
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: {
             message: 'هل أنت متأكد من الحذف?',
@@ -403,6 +462,8 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
               this.tblShamelBrokerEmployeeService.delete(element?.serial).subscribe
                 (
                   data => {
+                    this.currentPage=1;
+                     this.pageSize=5;
                     this.FillTable();
                   }
   
@@ -410,6 +471,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.snackBar.open('تم الحذف', '', {
               duration: 2000,
+              panelClass: ['green-snackbar']
             });
   
           }
@@ -425,17 +487,20 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
         this.selected_broker_shateb = element;
   
         const dialogRef = this.dialog.open(TblShamelBrokerShatebModifyComponent, {
-          height: '60%',
-          width: '80%',
+          height: '40%',
+        width: '60%',
           data: { obj: this.selected_broker_shateb }
         });
   
         dialogRef.afterClosed().toPromise().then(result => {
+          this.currentPage=1;
+        this.pageSize=5;
           this.FillTable();
   
           if (result)
             this.snackBar.open('تم التعديل', '', {
               duration: 2000,
+              panelClass: ['green-snackbar']
             });
         });
     }
@@ -454,10 +519,15 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
   
     OnSearch()
     {
+      this.currentPage=1;
+      this.pageSize=5;
       this.FillTable();
     }
   
     ngOnInit(): void {
+      this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+        this.darkTheme= res;
+      })
     }
   
   
@@ -487,4 +557,9 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
         element.focus();
       }
     }
+
+    exportToExcel() {
+      const csvExporter = new ExportToCsv(this.excelOptions);
+     csvExporter.generateCsv(this.excelData);
+   }
 }

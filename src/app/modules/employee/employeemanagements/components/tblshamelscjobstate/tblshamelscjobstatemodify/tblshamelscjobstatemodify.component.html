@@ -9,8 +9,6 @@
 
   <form [formGroup]="Form">
 
-    <div class="row justify-content-between text-left">
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المرسوم</mat-label>
           <input type="text" matInput [formControl]="incmarsoom_id" formControlName="incmarsoom_id"
@@ -34,7 +32,6 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
 
         <div class="date">
           <span>تاريخ التبدل:</span>
@@ -63,7 +60,6 @@
         </div>
 
 
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> سبب التبدل</mat-label>
           <input type="text" matInput [formControl]="changereason_id" [matAutocomplete]="auto_changereason_id"
@@ -76,11 +72,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
-    </div>
 
-    <div class="row justify-content-between text-left">
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> القسم </mat-label>
           <input type="text" matInput [formControl]="department_id" [matAutocomplete]="auto_department_id"
@@ -94,8 +86,6 @@
         </mat-form-field>
 
 
-      </div>
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> اسم الوظيفة</mat-label>
           <input type="text" matInput [formControl]="jobname_id" [matAutocomplete]="auto_jobname_id"
@@ -107,8 +97,6 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> المركز الوظيفي </mat-label>
           <input type="text" matInput [formControl]="jobkind_id" [matAutocomplete]="auto_jobkind_id"
@@ -120,13 +108,6 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-
-      </div>
-    </div>
-
-    <div class="row  text-left">
-
-      <div class="form-group col-sm-4 flex-column d-flex">
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> الفئة </mat-label>
@@ -141,16 +122,12 @@
         </mat-form-field>
 
 
-      </div>
-
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>الراتب</mat-label>
           <input matInput type="number" [formControl]="salary"
             [(ngModel)]="Selected_Employee_JobState.salary"
             id="salary" (keyup.enter)="focusNext('beginDateDay')">
         </mat-form-field>
-      </div>
 
 
         <div class="date">
@@ -177,19 +154,9 @@
               id="beginDateYear" (keyup.enter)="focusNext('documenttype_id')">
           </mat-form-field>
           </div>
+
         </div>
 
-
-
-    </div>
-
-
-
-
-
-
-    <div class="row text-left">
-      <div class="form-group col-sm-4 flex-column d-flex">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label> المستند</mat-label>
           <input type="text" matInput [formControl]="documenttype_id" [matAutocomplete]="auto_documenttype_id"
@@ -202,15 +169,13 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </div>
-      <div class="form-group col-sm-4 flex-column d-flex">
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>رقم المستند</mat-label>
           <input matInput type="number" [formControl]="doc_number"
           id="doc_number" (keyup.enter)="focusNext('docDateDay')">
         </mat-form-field>
-      </div>
+
         <div class="date">
           <span>تاريخ المستند:</span>
           <div class="dateContent">
@@ -236,7 +201,6 @@
           </mat-form-field>
           </div>
       </div>
-    </div>
 
 
 

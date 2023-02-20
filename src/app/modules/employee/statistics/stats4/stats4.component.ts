@@ -19,6 +19,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort } from '@angular/material/sort';
 import { DOCUMENT } from '@angular/common';
 import { ThemeService } from 'src/app/modules/shared/services/theme.service';
+import { ExportToCsv } from 'export-to-csv';
+
 
 @Component({
   selector: 'app-stats4',
@@ -86,6 +88,19 @@ export class stats4 implements OnInit, OnDestroy {
 
   darkTheme: boolean;
 
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
 
   constructor(private service: EmployeeStatsService,
     private tblshamelmalakstateService:TblshamelmalakstateService,
@@ -287,6 +302,12 @@ export class stats4 implements OnInit, OnDestroy {
     this._Subscription.unsubscribe();
   }
 
+  SearchClicked(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.Search();
+  }
+
   Search()
   {
     if (this.FirstDateMonth.value == null || this.FirstDateDay.value == null || this.FirstDateYear.value == null ||
@@ -300,8 +321,8 @@ export class stats4 implements OnInit, OnDestroy {
 
     this.request= {...this.request,
       malakState_Name: this.MalakState.value,
-      first_Date: moment(this.FirstDateMonth.value+'/'+this.FirstDateDay.value+'/'+this.FirstDateYear.value).set({hour: 2}).toDate(),
-      end_Date: moment(this.EndDateMonth.value+'/'+this.EndDateDay.value+'/'+this.EndDateYear.value).set({hour: 2}).toDate(),
+      first_Date: moment(this.FirstDateMonth.value+'/'+this.FirstDateDay.value+'/'+this.FirstDateYear.value).set({hour: 4}).toDate(),
+      end_Date: moment(this.EndDateMonth.value+'/'+this.EndDateDay.value+'/'+this.EndDateYear.value).set({hour: 4}).toDate(),
       pageSize: this.pageSize,            
       pageNumber: this.currentPage};
     this.service.Stats4(this.request).subscribe(
@@ -311,6 +332,26 @@ export class stats4 implements OnInit, OnDestroy {
         this.dataSource.data = this.allData;
         this.totalRows= res.Item2;
         this.dataSource._updatePaginator(this.totalRows);
+
+        this.allData.forEach((data, index) =>{
+          this.excelData[index]= {
+                                  'رقم الإضبارة': data?.ID,
+                                  'رقم الحاسوب': data?.COMPUTER_ID,
+                                  'الاسم': data?.FNAME,
+                                  'الكنية': data?.LNAME,
+                                  'الأب': data?.FATHER,
+                                  'الأم': data?.MOTHER,
+                                  'الفئة': data?.CLASS_NAME,
+                                  'الصفة الوظيفة': data?.JOBNAME_NAME,
+                                  'تاريخ الولادة': data?.BIRTHDATE,
+                                  'تاريخ المباشرة': data?.STARTDATE,
+                                  'الوضع بالملاك': data?.MALAKSTATE_NAME,
+                                  'نوع المستند': data?.DOCUMENTTYPE_NAME,
+                                  'رقم المستند': data?.DOC_NUMBER, 
+                                  'تاريخ المستند': data?.DOC_DATE
+                                  }; 
+
+        });
       }
     );
     
@@ -418,4 +459,9 @@ export class stats4 implements OnInit, OnDestroy {
   clearDataSource(){
     this.allData= [];
   }
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

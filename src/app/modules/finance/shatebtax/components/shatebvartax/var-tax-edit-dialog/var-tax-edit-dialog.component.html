@@ -1,104 +1,106 @@
-<h1 mat-dialog-title>تعديل السجل</h1>
-<div mat-dialog-content>
-    <form class="example-form" [formGroup]="Form" #form="ngForm">
-      <mat-form-field color="primary" id="id" appearance="fill">
-        <mat-label>الإضبارة</mat-label>
-        <input matInput formControlName="id" id="id" (keyup.enter)="focusNext('fullname')" (change)="OnIdChange($event)">
-        <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">رقم الإضبارة متكرر</mat-error>
-        <mat-error *ngIf="Form.controls['id'].hasError('required')">رقم الإضبارة مطلوب</mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>اسم الموظف</mat-label>
-        <input matInput [matAutocomplete]="auto_empName" formControlName='fullname' id="fullname" (keyup.enter)="focusNext('fcl_percent')" required>
-        <mat-autocomplete #auto_empName="matAutocomplete" [displayWith]="displayFn"
-          (optionSelected)="onEmployeeSelected($event)">
-          <mat-option *ngIf="isLoading" class="is-loading">
-            <mat-spinner diameter="50"></mat-spinner>
-          </mat-option>
-          <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let emp of List_Employee_Filter | async" [value]="emp">
-              <small>{{ emp.fullname }}</small>
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
-      </mat-form-field>
-
-        <mat-form-field color="primary" class="" appearance="fill">
-            <mat-label>النسبة</mat-label>
-            <input type="number" matInput formControlName="fcl_percent" id="fcl_percent" (keyup.enter)="focusNext('fcl_duration')" required>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <h1 mat-dialog-title>شطب الحسميات</h1>
+  <div mat-dialog-content>
+      <form class="example-form" [formGroup]="Form" #form="ngForm">
+        <mat-form-field color="primary" id="id" appearance="fill">
+          <mat-label>الإضبارة</mat-label>
+          <input matInput formControlName="id" id="id" (keyup.enter)="focusNext('fullname')" (change)="OnIdChange($event)">
+          <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">رقم الإضبارة متكرر</mat-error>
+          <mat-error *ngIf="Form.controls['id'].hasError('required')">رقم الإضبارة مطلوب</mat-error>
         </mat-form-field>
-
-        <mat-form-field color="primary" class="" appearance="fill">
-            <mat-label>المدة</mat-label>
-            <input matInput formControlName="fcl_duration" id="fcl_duration" (keyup.enter)="focusNext('documenttype_id')" required>
-        </mat-form-field>
-
+  
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>المستند</mat-label>
-          <input type="text" matInput formControlName="documenttype_id" id="documenttype_id" (keyup.enter)="focusNext('fcl_documentnum')" [matAutocomplete]="auto_documenttype_id">
-          <mat-autocomplete #auto_documenttype_id="matAutocomplete"
-            [displayWith]="displayDocumentTypeProperty.bind(this)">
-            <mat-option *ngFor="let option of List_DocumentType_Filter | async" [value]="option.documenttype_id">
-              {{option.documenttype_name}}
+          <mat-label>اسم الموظف</mat-label>
+          <input matInput [matAutocomplete]="auto_empName" formControlName='fullname' id="fullname" (keyup.enter)="focusNext('fcl_percent')" required>
+          <mat-autocomplete #auto_empName="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onEmployeeSelected($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
             </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let emp of List_Employee_Filter | async" [value]="emp">
+                <small>{{ emp.fullname }}</small>
+              </mat-option>
+            </ng-container>
           </mat-autocomplete>
         </mat-form-field>
-
-        <mat-form-field color="primary" class="" appearance="fill">
-            <mat-label>رقم المستند</mat-label>
-            <input matInput formControlName="fcl_documentnum" id="fcl_documentnum" (keyup.enter)="focusNext('documentdate_Day')" required>
-        </mat-form-field>
-
-        <div class="date">
-          <span>تاريخ المستند:</span>
-          <div class="content">
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>اليوم</mat-label>
-              <input type="number" matInput formControlName="documentdate_Day" id="documentdate_Day" (keyup.enter)="focusNext('documentdate_Month')" placeholder="ex: 21">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>الشهر</mat-label>
-              <input type="number" matInput formControlName="documentdate_Month" id="documentdate_Month" (keyup.enter)="focusNext('documentdate_Year')" placeholder="ex: 1">
-            </mat-form-field>
-            <mat-form-field class="example-full-width small-width" appearance="fill">
-              <mat-label>العام</mat-label>
-              <input type="number" matInput formControlName="documentdate_Year" id="documentdate_Year" (keyup.enter)="focusNext('fcl_salary')" placeholder="ex: 2023">
-            </mat-form-field>
-          </div>
-        </div>
-
-        <mat-form-field class="example-full-width fitContent" appearance="fill">
-            <mat-label>الحسميات</mat-label>
-            <input matInput formControlName="vartax_id" id="vartax_id" [matAutocomplete]="auto_vartax_id">
-            <mat-autocomplete #auto_vartax_id="matAutocomplete">
-              <mat-option *ngFor="let option of List_TblShamelVarTax_Filter | async" [value]="option.vartax_id">
-                {{option.vartax_name}
+  
+          <mat-form-field color="primary" class="" appearance="fill">
+              <mat-label>النسبة</mat-label>
+              <input type="number" matInput formControlName="fcl_percent" id="fcl_percent" (keyup.enter)="focusNext('fcl_duration')" required>
+          </mat-form-field>
+  
+          <mat-form-field color="primary" class="" appearance="fill">
+              <mat-label>المدة</mat-label>
+              <input matInput formControlName="fcl_duration" id="fcl_duration" (keyup.enter)="focusNext('documenttype_id')" required>
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>المستند</mat-label>
+            <input type="text" matInput formControlName="documenttype_id" id="documenttype_id" (keyup.enter)="focusNext('fcl_documentnum')" [matAutocomplete]="auto_documenttype_id">
+            <mat-autocomplete #auto_documenttype_id="matAutocomplete"
+              [displayWith]="displayDocumentTypeProperty.bind(this)">
+              <mat-option *ngFor="let option of List_DocumentType_Filter | async" [value]="option.documenttype_id">
+                {{option.documenttype_name}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          
-        <mat-form-field color="primary"  id="id" class="" appearance="fill">
-            <mat-label>الراتب</mat-label>
-            <input type="number" matInput formControlName="fcl_salary" id="fcl_salary" (keyup.enter)="focusNext('fcl_amount')">
-        </mat-form-field>
-
-        <mat-form-field color="primary"  id="id" class="" appearance="fill">
-            <mat-label>المبلغ</mat-label>
-            <input type="number" matInput formControlName="fcl_amount" id="fcl_amount" (keyup.enter)="focusNext('id')">
-        </mat-form-field>
-
-    </form>
-</div>
-
-<div mat-dialog-actions>
-    <button mat-raised-button (click)="onNoClick()">
-      <mat-icon class="mat-icon-rtl-mirror">close
+  
+          <mat-form-field color="primary" class="" appearance="fill">
+              <mat-label>رقم المستند</mat-label>
+              <input matInput formControlName="fcl_documentnum" id="fcl_documentnum" (keyup.enter)="focusNext('documentdate_Day')" required>
+          </mat-form-field>
+  
+          <div class="date">
+            <span class="white">تاريخ المستند:</span>
+            <div class="content">
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>اليوم</mat-label>
+                <input type="number" matInput formControlName="documentdate_Day" id="documentdate_Day" (keyup.enter)="focusNext('documentdate_Month')" placeholder="ex: 21">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>الشهر</mat-label>
+                <input type="number" matInput formControlName="documentdate_Month" id="documentdate_Month" (keyup.enter)="focusNext('documentdate_Year')" placeholder="ex: 1">
+              </mat-form-field>
+              <mat-form-field class="example-full-width small-width" appearance="fill">
+                <mat-label>العام</mat-label>
+                <input type="number" matInput formControlName="documentdate_Year" id="documentdate_Year" (keyup.enter)="focusNext('fcl_salary')" placeholder="ex: 2023">
+              </mat-form-field>
+            </div>
+          </div>
+  
+          <mat-form-field class="example-full-width fitContent" appearance="fill">
+              <mat-label>الحسميات</mat-label>
+              <input matInput formControlName="vartax_id" id="vartax_id" [matAutocomplete]="auto_vartax_id">
+              <mat-autocomplete #auto_vartax_id="matAutocomplete">
+                <mat-option *ngFor="let option of List_TblShamelVarTax_Filter | async" [value]="option.vartax_id">
+                  {{option.vartax_name}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            
+          <mat-form-field color="primary"  id="id" class="" appearance="fill">
+              <mat-label>الراتب</mat-label>
+              <input type="number" matInput formControlName="fcl_salary" id="fcl_salary" (keyup.enter)="focusNext('fcl_amount')">
+          </mat-form-field>
+  
+          <mat-form-field color="primary"  id="id" class="" appearance="fill">
+              <mat-label>المبلغ</mat-label>
+              <input type="number" matInput formControlName="fcl_amount" id="fcl_amount" (keyup.enter)="focusNext('id')">
+          </mat-form-field>
+  
+      </form>
+  </div>
+  
+  <div mat-dialog-actions>
+      <button mat-raised-button color="warn" (click)="onNoClick()">
+        <mat-icon class="mat-icon-rtl-mirror">close
+        </mat-icon>
+        إلغاء الأمر</button>
+      <button mat-raised-button class="edit" [mat-dialog-close]="data" cdkFocusInitial
+      (click)="save()" [disabled]="!form.valid">
+      <mat-icon class="mat-icon-rtl-mirror">save
       </mat-icon>
-      إلغاء الأمر</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial
-    (click)="save()" [disabled]="!form.valid">
-    <mat-icon class="mat-icon-rtl-mirror">save
-    </mat-icon>
-    حفظ</button>
+      حفظ</button>
+  </div>
 </div>

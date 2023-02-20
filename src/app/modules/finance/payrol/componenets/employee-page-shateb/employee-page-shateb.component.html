@@ -1,113 +1,116 @@
-<c-row>
-    <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
-</c-row>
-<ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
-<form class="example-form" [formGroup]="Form" #form="ngForm">
+<div class="theme" [class.darkTheme]="darkTheme">
+    <c-row>
+        <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
+    </c-row>
+    <ngx-hover-opacity [isHoverVisible]="!LoadingFinish">
+    <form class="example-form" [formGroup]="Form" #form="ngForm">
+        
+        <mat-form-field class="example-full-width fitContent" appearance="fill">
+            <mat-label>عام الترفيع</mat-label>
+            <input type="number"
+                    matInput
+                    [formControl]="UpgradeYear"
+                    [matAutocomplete]="autoUpgradeYear"
+                    id="UpgradeYear"
+                    >
+            <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
+            [displayWith]="displayUpgradeYearProperty.bind(this)"
+            (optionSelected)="clearDataSource()">
+                <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
+                {{option.YEAR_ID}}
+                </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
+    </form>
+    <button class="view" mat-raised-button class="edit" (click)="View()" [disabled]="!(pageService.id && UpgradeYear.value)">عرض</button>
+    <button class="view" mat-raised-button class="edit" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
+    <button class="view" mat-raised-button class="edit" [disabled]="!dataSource.data[0]" printSectionId="shateb-page-section" ngxPrint><mat-icon>print</mat-icon>طباعة صفحة الشطب</button>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+            <ng-container matColumnDef="serial">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>التسلسل</th>
+                <td mat-cell *matCellDef="let element">{{element.serial }}</td>
+            </ng-container>
+            <ng-container matColumnDef="itemp_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >البيان </th>
+                <td mat-cell *matCellDef="let element">{{element.itemp_name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="month1">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >كانون الثاني </th>
+                <td mat-cell *matCellDef="let element">{{element.month1 }}</td>
+            </ng-container>
     
-    <mat-form-field class="example-full-width fitContent" appearance="fill">
-        <mat-label>عام الترفيع</mat-label>
-        <input type="number"
-                matInput
-                [formControl]="UpgradeYear"
-                [matAutocomplete]="autoUpgradeYear"
-                id="UpgradeYear"
-                >
-        <mat-autocomplete #autoUpgradeYear="matAutocomplete" 
-        [displayWith]="displayUpgradeYearProperty.bind(this)"
-        (optionSelected)="clearDataSource()">
-            <mat-option *ngFor="let option of filteredUpgradeYearOptions | async" [value]="option.YEAR_ID">
-            {{option.YEAR_ID}}
-            </mat-option>
-        </mat-autocomplete>
-        </mat-form-field>
-</form>
-<button class="view" mat-raised-button color="primary" (click)="View()" [disabled]="!(pageService.id && UpgradeYear.value)">عرض</button>
-<button class="view" mat-raised-button color="primary" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]">معايرة تذييل الطباعة</button>
-<button class="view" mat-raised-button color="primary" [disabled]="!dataSource.data[0]" printSectionId="shateb-page-section" ngxPrint>طباعة صفحة الشطب</button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-        <ng-container matColumnDef="serial">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>التسلسل</th>
-            <td mat-cell *matCellDef="let element">{{element.serial }}</td>
-        </ng-container>
-        <ng-container matColumnDef="itemp_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >البيان </th>
-            <td mat-cell *matCellDef="let element">{{element.itemp_name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="month1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >كانون الثاني </th>
-            <td mat-cell *matCellDef="let element">{{element.month1 }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >شباط </th>
-            <td mat-cell *matCellDef="let element">{{element.month2 }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >اذار</th>
-            <td mat-cell *matCellDef="let element">{{element.month3}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month4">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >نيسان</th>
-            <td mat-cell *matCellDef="let element">{{element.month4}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month5">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >أيار</th>
-            <td mat-cell *matCellDef="let element">{{element.month5}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month6">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >حزيران</th>
-            <td mat-cell *matCellDef="let element">{{element.month6}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month7">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >تموز</th>
-            <td mat-cell *matCellDef="let element">{{element.month7}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month8">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >اب</th>
-            <td mat-cell *matCellDef="let element">{{element.month8}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month9">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >ايلول</th>
-            <td mat-cell *matCellDef="let element">{{element.month9}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month10">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >تشرين الأول</th>
-            <td mat-cell *matCellDef="let element">{{element.month10}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month11">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >تشرين الثاني</th>
-            <td mat-cell *matCellDef="let element">{{element.month11}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="month12">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header >كانون الأول</th>
-            <td mat-cell *matCellDef="let element">{{element.month12}}</td>
-        </ng-container>
-
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
-        [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
-        (click)="changeTableRowColor(idx)"></tr>
-    </table>
-    <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
-
-    <div id="shateb-page-section">
-        <app-print-employee-shateb-page
-        [year]="UpgradeYear.value"
-        [data]="dataSource.data"
-        [name]="pageService?.TBLShamelEmployee?.FName+' '+pageService?.TBLShamelEmployee?.LName"
-        [id]="pageService?.TBLShamelEmployee?.id"
-        ></app-print-employee-shateb-page>
-    </div>
-</ngx-hover-opacity>
-
+            <ng-container matColumnDef="month2">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >شباط </th>
+                <td mat-cell *matCellDef="let element">{{element.month2 }}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month3">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >اذار</th>
+                <td mat-cell *matCellDef="let element">{{element.month3}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month4">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >نيسان</th>
+                <td mat-cell *matCellDef="let element">{{element.month4}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month5">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >أيار</th>
+                <td mat-cell *matCellDef="let element">{{element.month5}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month6">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >حزيران</th>
+                <td mat-cell *matCellDef="let element">{{element.month6}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month7">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >تموز</th>
+                <td mat-cell *matCellDef="let element">{{element.month7}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month8">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >اب</th>
+                <td mat-cell *matCellDef="let element">{{element.month8}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month9">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >ايلول</th>
+                <td mat-cell *matCellDef="let element">{{element.month9}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month10">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >تشرين الأول</th>
+                <td mat-cell *matCellDef="let element">{{element.month10}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month11">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >تشرين الثاني</th>
+                <td mat-cell *matCellDef="let element">{{element.month11}}</td>
+            </ng-container>
+    
+            <ng-container matColumnDef="month12">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header >كانون الأول</th>
+                <td mat-cell *matCellDef="let element">{{element.month12}}</td>
+            </ng-container>
+    
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let idx=index;"
+            [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
+            (click)="changeTableRowColor(idx)"></tr>
+        </table>
+        <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+    
+        <div id="shateb-page-section">
+            <app-print-employee-shateb-page
+            [year]="UpgradeYear.value"
+            [data]="dataSource.data"
+            [name]="pageService?.TBLShamelEmployee?.FName+' '+pageService?.TBLShamelEmployee?.LName"
+            [id]="pageService?.TBLShamelEmployee?.id"
+            ></app-print-employee-shateb-page>
+        </div>
+    </ngx-hover-opacity>
+    
+    
+</div>

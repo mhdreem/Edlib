@@ -13,6 +13,7 @@ import { TBLShamelAccounterService } from 'src/app/modules/shared/services/emplo
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 import { TblShamelNewPayrolAddPageServiceService } from '../../newpayroladd/TbLShamelNewPayrol/tbl-shamel-new-payrol-add-page-service.service';
 import { SearchEmployeeDialogComponent } from '../search-employee-dialog/search-employee-dialog.component';
@@ -42,6 +43,8 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
 
   ViewTBLShamelEmployee_BehaviorSubject : BehaviorSubject<ViewTBLShamelEmployee> = new BehaviorSubject<ViewTBLShamelEmployee>({});
 
+  darkTheme: boolean;
+
   constructor(
     public dialog: MatDialog,
     private frmBuilder: FormBuilder,
@@ -50,7 +53,8 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
     public ShamelYearService: TBLShamelYearService,
     public viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
     public employeeService: EmployeeServiceService,
-    public pageService: TblShamelNewPayrolAddPageServiceService
+    public pageService: TblShamelNewPayrolAddPageServiceService,
+    private themeService: ThemeService
   ) {
     this.isLoadingFinish = true;
     this.BuildForm();
@@ -85,6 +89,9 @@ export class EmployeeSearchComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   BuildForm() {

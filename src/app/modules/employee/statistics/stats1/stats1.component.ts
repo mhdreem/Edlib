@@ -31,6 +31,8 @@ import { PrintComponent } from '../../employeemanagements/components/print/print
 import { PrintCardComponent } from '../../employeemanagements/components/print/print-card/print-card.component';
 import { DOCUMENT } from '@angular/common';
 import { ThemeService } from 'src/app/modules/shared/services/theme.service';
+import { ExportToCsv } from 'export-to-csv';
+
 @Component({
   selector: 'app-stats1',
   templateUrl: './stats1.component.html',
@@ -123,6 +125,20 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   }
 
   darkTheme: boolean;
+  
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
 
   constructor(
   
@@ -499,6 +515,13 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     return '';
   }
   //#endregion
+
+  SearchClicked(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.ExcuteSearch();
+  }
+
   ExcuteSearch ()
   {
     let SearchRequest =
@@ -542,6 +565,31 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
         this.dataSource.data = this.allData;
         this.totalRows= data.Item2;
         this.dataSource._updatePaginator(this.totalRows);
+        this.allData.forEach((data, index) =>{
+          this.excelData[index]= {
+                                  'رقم الإضبارة': data?.ID,
+                                  'رقم الحاسوب': data?.COMPUTER_ID,
+                                  'الرقم الذاتي': data?.GLOBAL_ID,
+                                  'الرقم التأميني': data?.INSURANCE_ID,
+                                  'رقم الشطب': data?.PAYROL_ID,
+                                  'الاسم': data?.FNAME,
+                                  'الكنية': data?.LNAME,
+                                  'الأب': data?.FATHER,
+                                  'الأم': data?.MOTHER,
+                                  'اسم الوظيفة': data?.JOBNAME_NAME,
+                                  'اسم المعتمد': data?.ACCOUNTER_NAME,
+                                  'رقم التسلسل': data?.ACCOUNTER_ID,
+                                  'الراتب المقطوع': data?.SALARY,
+                                  'الراتب التأميني': data?.INSURANCESALARY,
+                                  'الوضع بالملاك': data?.MALAKSTATE_NAME,
+                                  'تاريخ التبديل': data?.CHANGEDATE,
+                                  'آخر سبب تبديل': data?.CHANGEREASON_NAME,
+                                  'نوع المستند': data?.DOCUMENTTYPE_NAME,
+                                  'رقم المستند': data?.DOC_NUMBER, 
+                                  'تاريخ المستند': data?.DOC_DATE
+                                  }; 
+
+        });
       }
         
     );
@@ -567,4 +615,9 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   clearDataSource(){
     this.allData= [];
   }
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

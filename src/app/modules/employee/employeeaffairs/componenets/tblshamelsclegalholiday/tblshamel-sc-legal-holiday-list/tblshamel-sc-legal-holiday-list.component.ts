@@ -170,6 +170,7 @@ ngAfterViewInit() {
       });
       this.snackBar.open('تم الحذف', 'Fechar', {
         duration: 2000,
+        panelClass: ['green-snackbar']
       });
   
       this.snackBar.dismiss();

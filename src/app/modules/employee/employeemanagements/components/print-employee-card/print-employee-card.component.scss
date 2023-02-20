@@ -37,6 +37,11 @@ app-print, app-print-card{
     display: none;
 }
 
+::ng-deep .mat-expansion-indicator{
+    left: 720px !important;
+    position: relative !important;
+  }
+
 
 .darkTheme ::ng-deep .mat-radio-outer-circle{
     border-color: white !important;

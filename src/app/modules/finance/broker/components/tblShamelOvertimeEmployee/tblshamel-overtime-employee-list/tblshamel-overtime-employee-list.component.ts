@@ -17,6 +17,9 @@ import { TBLShamelSex } from 'src/app/modules/shared/models/employees_department
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
 import { DOCUMENT } from '@angular/common';
+import { ExportToCsv } from 'export-to-csv';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
+
 
 @Component({
   selector: 'app-tblshamel-overtime-employee-list',
@@ -49,7 +52,7 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
     console.log('event', event);
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
-    this.OnSearch();
+    this.FillTable();
   }
 
 
@@ -84,6 +87,22 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   dataSource = new MatTableDataSource<TBLShamelOvertimeEmployee>(this.overtime_employee_List);
 
 
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
+
+  darkTheme: boolean;
+
   // constructor First Method Call 
   constructor(public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
     public dialog: MatDialog,
@@ -91,7 +110,8 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
     private _liveAnnouncer: LiveAnnouncer,
     private frmBuilder : FormBuilder,
     private tblShamelSexService: TBLShamelSexService,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
   ) {
 
     // Init dataSource
@@ -125,7 +145,7 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
       lname: '',
       father: '',
       mother: '',
-      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
+      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 4}).toDate(),
       sex_name: '',
       servicedayes: 0,
     };
@@ -229,7 +249,9 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   
@@ -252,7 +274,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
         "lname": this.Form.controls['lname'].value,
         "father": this.Form.controls['father'].value,
         "mother": this.Form.controls['mother'].value,
-        "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate(),
+        "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 4}).toDate(),
         "sex_name": this.Form.controls['sex_name'].value,
         "servicedayes": this.Form.controls['servicedayes'].value,
         "servicedayes_operator": this.Form.controls['servicedayes_operator'].value,
@@ -269,6 +291,20 @@ Load_Sex() : Observable<TBLShamelSex[]>
             this.dataSource.data = this.allData;
             this.totalRows= data.Item2;
             this.dataSource._updatePaginator(this.totalRows);
+
+            this.allData.forEach((datum, index) =>{
+              this.excelData[index]= {
+                                      'التسلسل': datum?.serial,
+                                      'الأسم': datum?.fname,
+                                      'الكنية': datum?.lname,
+                                      'الأب': datum?.father,
+                                      'الأم': datum?.mother,
+                                      'تاريخ الولادة': datum?.birthdate,
+                                      'الجنس': datum?.sexname,
+                                      'ساعات الخدمة': datum?.servicedayes,
+                                      }; 
+    
+            });
           }
 
         }
@@ -281,6 +317,8 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
   OnSearch()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.FillTable();
   }
 
@@ -311,20 +349,22 @@ Load_Sex() : Observable<TBLShamelSex[]>
       lname: '',
       father: '',
       mother: '',
-      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 2}).toDate(),
+      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 4}).toDate(),
       sex_name: '',
       servicedayes: 0,
     };
 
     const dialogRef = this.dialog.open(TBLShamelOvertimeEmployeeModifyComponent, {
-      height: '60%',
-      width: '60%',
-      data: { obj: this.selected_overtime_employee }
+      height: '40%',
+        width: '60%',
+      data: { obj: this.selected_overtime_employee, source: "add" }
     });
 
     dialogRef.afterClosed().toPromise().then(result => {
       console.log(result);
       if (result) {
+        this.currentPage=1;
+        this.pageSize=5;
         this.FillTable();
         this.dataSource.paginator = this.paginator;
         
@@ -353,6 +393,8 @@ Load_Sex() : Observable<TBLShamelSex[]>
             this.ShamelOvertimeEmployeeService.delete(element?.serial).subscribe
               (
                 data => {
+                  this.currentPage=1;
+                  this.pageSize=5;
                   this.FillTable();
                 }
 
@@ -364,6 +406,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
           this.dataSource.paginator = this.paginator;
           this.snackBar.open('تم الحذف', '', {
             duration: 2000,
+            panelClass: ['green-snackbar']
           });
 
 
@@ -382,12 +425,14 @@ Load_Sex() : Observable<TBLShamelSex[]>
       this.selected_overtime_employee = element;
 
       const dialogRef = this.dialog.open(TBLShamelOvertimeEmployeeModifyComponent, {
-        height: '60%',
-        width: '80%',
-        data: { obj: this.selected_overtime_employee }
+        height: '40%',
+        width: '60%',
+        data: { obj: this.selected_overtime_employee, source: "edit" }
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
+        this.currentPage=1;
+        this.pageSize=5;
         this.FillTable();
 
         if (result){
@@ -407,4 +452,9 @@ Load_Sex() : Observable<TBLShamelSex[]>
       element.focus();
     }
   } 
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

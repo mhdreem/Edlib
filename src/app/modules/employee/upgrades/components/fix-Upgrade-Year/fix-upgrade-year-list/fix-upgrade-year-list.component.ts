@@ -135,6 +135,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
                     this.dataSource.paginator = this.paginator;
                     this.snackBar.open('تم الحذف', '', {
                       duration: 3000,
+                      panelClass: ['green-snackbar']
                     });
                   }
                 }

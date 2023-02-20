@@ -350,7 +350,7 @@ export class NewEmployeeCardComponent implements OnInit, OnDestroy {
       },error=>
       {
         this.LoadingFinish = true;
-        this._snackBar.open('حدث خطأ اثناء تحميل البيانات','موافق');
+        this._snackBar.open('حدث خطأ اثناء تحميل البيانات','موافق', {panelClass: ['red-snackbar']});
       }
     );
 
@@ -541,7 +541,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.empService.update(this.Selected_Employee).subscribe(
         data => {
           if (data > 0) {
-            this._snackBar.open('تم بنجاح', 'موافق');
+            this._snackBar.open('تم بنجاح', 'موافق', {panelClass: ['green-snackbar']});
           }
 
         }
@@ -554,7 +554,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
         data => {
           console.log('data99', data);
           if (data > 0) {
-            this._snackBar.open('تم بنجاح', 'موافق');
+            this._snackBar.open('تم بنجاح', 'موافق', {panelClass: ['green-snackbar']});
           }
         }
       );
@@ -598,7 +598,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
 
 
     if (this.Selected_Employee != null && this.BirthDate.value != null)
-      this.Selected_Employee.BirthDate = moment(this.BirthDate.value).format('YYYY/MM/DD');
+      this.Selected_Employee.BirthDate = moment(this.BirthDate.value).set({hour: 4}).format('YYYY/MM/DD');
 
     if (this.Selected_Employee != null && this.Kayd_Place.value != null)
       this.Selected_Employee.Kayd_Place = this.Kayd_Place.value;
@@ -668,7 +668,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.Selected_Employee.Qarar_Num = this.Qarar_Num.value;
 
     if (this.Selected_Employee != null && this.QararDate.value != null)
-      this.Selected_Employee.QararDate = moment(this.QararDate.value).toDate();
+      this.Selected_Employee.QararDate = moment(this.QararDate.value).set({hour: 4}).toDate();
 
 
     if (this.Emp_IN_Military_Service.value == true)
@@ -713,7 +713,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
 
 
     if (this.Selected_Employee.BirthDate != null)
-      this.BirthDate.setValue(moment(this.Selected_Employee.BirthDate).toDate());
+      this.BirthDate.setValue(moment(this.Selected_Employee.BirthDate).set({hour: 4}).toDate());
 
     if (this.Selected_Employee.Kayd_Place != null)
       this.Kayd_Place.setValue(this.Selected_Employee.Kayd_Place);
@@ -779,7 +779,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.Qarar_Num.setValue(this.Selected_Employee.Qarar_Num);
 
     if (this.Selected_Employee.QararDate != null)
-      this.QararDate.setValue(moment(this.Selected_Employee.QararDate).toDate());
+      this.QararDate.setValue(moment(this.Selected_Employee.QararDate).set({hour: 4}).toDate());
 
   }
 
@@ -841,7 +841,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.birthdayYearIsFilled= true;
 
     if (this.birthdayDayIsFilled && this.birthdayMonthIsFilled && this.birthdayYearIsFilled){
-      this.BirthDate.setValue(moment(this.birthdayMonth+'/'+this.birthdayDay+'/'+this.birthdayYear).set({hour: 2}).toDate());
+      this.BirthDate.setValue(moment(this.birthdayMonth+'/'+this.birthdayDay+'/'+this.birthdayYear).set({hour: 4}).toDate());
 
     }
    }
@@ -855,7 +855,7 @@ this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.qararYearIsFilled= true;
 
     if (this.qararDayIsFilled && this.qararMonthIsFilled && this.qararYearIsFilled){
-      this.QararDate.setValue(moment(this.qararMonth+'/'+this.qararDay+'/'+this.qararYear).set({hour: 2}).toDate());
+      this.QararDate.setValue(moment(this.qararMonth+'/'+this.qararDay+'/'+this.qararYear).set({hour: 4}).toDate());
 
     }
    }

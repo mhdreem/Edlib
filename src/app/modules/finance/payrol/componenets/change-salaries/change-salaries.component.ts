@@ -6,6 +6,7 @@ import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_departme
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-change-salaries',
@@ -46,9 +47,13 @@ export class ChangeSalariesComponent implements OnInit {
 
   fixedYear: string;
   fixedMonth: TBLShamelMonth;
+
+  darkTheme: boolean;
+
   constructor(private tblShamelYearService: TBLShamelYearService,
     public ShamelMonthService: TBLShamelMonthService,
-    private tblShamelNewShatebService: TBLShamelNewShatebService) { }
+    private tblShamelNewShatebService: TBLShamelNewShatebService,
+    private themeService: ThemeService) { }
 
   ngAfterViewInit() {
 
@@ -57,6 +62,9 @@ export class ChangeSalariesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TblShamelNewPayrolAddDetail } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolAddDetail';
 import { TblShamelNewPayrolTax } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolTax';
 import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-tax.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelNewPayrolAddPageServiceService } from '../tbl-shamel-new-payrol-add-page-service.service';
 
 @Component({
@@ -67,9 +68,12 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
   Form :FormGroup ;
 
 
+  darkTheme: boolean;
+
   constructor(
     public pageService:TblShamelNewPayrolAddPageServiceService,
-    public tblshamelnewpayroltaxservice :TblShamelNewPayrolTaxService ) { 
+    public tblshamelnewpayroltaxservice :TblShamelNewPayrolTaxService ,
+    private themeService: ThemeService) { 
     this.BuildForm();
   }
 
@@ -244,6 +248,9 @@ export class SubTblshamelNewPayrolAddComponent implements OnInit, OnChanges  {
   
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   bindModelToForm(model: any, form: FormGroup) {

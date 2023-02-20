@@ -80,7 +80,7 @@ export class RemainingOldQararsComponent implements OnInit {
   }
 
   View(){
-    this.tblshamelScJobStateService.ListQarar({'old_Qara_Date': moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 2}).toDate()}).subscribe(
+    this.tblshamelScJobStateService.ListQarar({'old_Qara_Date': moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 4}).toDate()}).subscribe(
       res => {
         this.dataSource.data= res as any;
         console.log('res', res);

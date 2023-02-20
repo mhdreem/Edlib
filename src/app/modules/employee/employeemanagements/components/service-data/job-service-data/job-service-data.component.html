@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     
-                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="jobName-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="jobName-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
                     <button mat-raised-button class="add" (click)="adjustPrintFooter1()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
                 </fieldset>
             </div>
@@ -50,7 +50,7 @@
                         <mat-checkbox color="primary" class="white" (change)="onCheckBoxChange()" formControlName="jobStateCheckbox" >الوضع الوظيفي</mat-checkbox>
                     </div>
         
-                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="employeeStateData-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="employeeStateData-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
                     <button  mat-raised-button class="add" (click)="adjustPrintFooter2()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
                 </fieldset>
             </div>
@@ -58,7 +58,7 @@
             <div class="right">
                 <fieldset>
                     <legend class="white">بيان خدمة</legend>
-                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="service-data-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                    <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="service-data-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
                     <button mat-raised-button class="add" (click)="adjustPrintFooter3()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
                 </fieldset>
             </div>

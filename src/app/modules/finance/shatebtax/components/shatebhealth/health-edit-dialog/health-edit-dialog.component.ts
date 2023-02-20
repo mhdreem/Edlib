@@ -20,6 +20,7 @@ import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/em
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TbLShamelHealthNoSalaryService } from 'src/app/modules/shared/services/finance_department/shatebtax/tbl-shamel-health-no-salary.service';
 import { TBLShamelShatebHealthService } from 'src/app/modules/shared/services/finance_department/shatebtax/tblshamel-shateb-health.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { Uniqe } from './validate_formgroup';
 import { Validate_ID } from './validate_id';
 
@@ -54,6 +55,8 @@ export class HealthEditDialogComponent implements OnInit {
 
   Form: FormGroup;
 
+  darkTheme: boolean;
+
   constructor(
     public frmBuild:FormBuilder,
     public viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
@@ -66,7 +69,8 @@ export class HealthEditDialogComponent implements OnInit {
     public ShamelShatebHealthService: TBLShamelShatebHealthService,
     @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebHealth,
     private _snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
       this._matDialogRef= dialogRef;
 
@@ -80,6 +84,10 @@ export class HealthEditDialogComponent implements OnInit {
 
   }
   ngOnInit(): void {
+
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
     const matDialogConfig: MatDialogConfig = new MatDialogConfig();
     matDialogConfig.position = { top: `100px` };
@@ -407,7 +415,7 @@ export class HealthEditDialogComponent implements OnInit {
         this.Form.controls['startdate_Day'].setValue(moment(this.Selected_Health.startdate).date());
         this.Form.controls['startdate_Month'].setValue(moment(this.Selected_Health.startdate).month()+1);
         this.Form.controls['startdate_Year'].setValue(moment(this.Selected_Health.startdate).year());
-        this.Form.controls['startdate'].setValue(moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).toDate());
+        this.Form.controls['startdate'].setValue(moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).set({hour: 4}).toDate());
       }
         
 
@@ -427,7 +435,7 @@ export class HealthEditDialogComponent implements OnInit {
     let obj : TBLShamelShatebHealth =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 2}).toDate(),
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 4}).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,
@@ -437,16 +445,16 @@ export class HealthEditDialogComponent implements OnInit {
       salary : this.Form.controls['salary'].value,
       serial : this.Form.controls['serial'].value,
       //shateb_number : this.Form.controls['shateb_number'].value,
-      startdate : moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).set({hour: 2}).toDate(),
+      startdate : moment(this.Form.controls['startdate_Month'].value+'/'+this.Form.controls['startdate_Day'].value+'/'+this.Form.controls['startdate_Year'].value).set({hour: 4}).toDate(),
       year_id : this.Form.controls['year_id'].value,
 
 
     };
     console.log('obj', obj);
    if (this.Form.controls['serial'].value == null || this.Form.controls['serial'].value == undefined || this.Form.controls['serial'].value <0)
-     this.ShamelShatebHealthService.add(obj).subscribe((result) => {if(result == 1){ this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 });}});
+     this.ShamelShatebHealthService.add(obj).subscribe((result) => {if(result == 1){ this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});}});
      else 
-     this.ShamelShatebHealthService.update(obj).subscribe((result: any) => {if(result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 });}});
+     this.ShamelShatebHealthService.update(obj).subscribe((result: any) => {if(result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});}});
   }
 
   onNoClick(): void {

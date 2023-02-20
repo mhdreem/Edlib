@@ -6,6 +6,7 @@ import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_departme
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-insurance-salary2-salary',
@@ -17,13 +18,20 @@ export class InsuranceSalary2SalaryComponent implements OnInit {
   fixedYear: string;
   fixedMonth: TBLShamelMonth;
 
+  darkTheme: boolean;
+
   constructor(private tblShamelYearService: TBLShamelYearService,
     public ShamelMonthService: TBLShamelMonthService,
     private tblShamelNewShatebService: TBLShamelNewShatebService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,) { }
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) { }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;
@@ -48,11 +56,13 @@ export class InsuranceSalary2SalaryComponent implements OnInit {
           if (res == 1){
             this.snackBar.open('تمت العملية بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
           }
           else {
             this.snackBar.open('حدث خطأ', '', {
               duration: 3000,
+              panelClass: ['red-snackbar']
             });
           }
         });
@@ -71,11 +81,13 @@ export class InsuranceSalary2SalaryComponent implements OnInit {
           if (res == 1){
             this.snackBar.open('تمت العملية بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
           }
           else {
             this.snackBar.open('حدث خطأ', '', {
               duration: 3000,
+              panelClass: ['red-snackbar']
             });
           }
         });

@@ -384,7 +384,7 @@ if (this.Selected_Employee_SCMergeService != null  )
     this.Selected_Employee_SCMergeService.documenttype_id = this.documenttype_id.value;        
     this.Selected_Employee_SCMergeService.document_number = this.document_number.value;
     if (this.documentdate.value )
-    this.Selected_Employee_SCMergeService.documentdate = moment(this.documentdate.value).toDate();
+    this.Selected_Employee_SCMergeService.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();
     
     
   }
@@ -540,7 +540,7 @@ documentDateChange(changeSource: string){
     this.documentDateYearIsFilled= true;
 
   if (this.documentDateDayIsFilled && this.documentDateMonthIsFilled && this.documentDateYearIsFilled){
-    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 2}).toDate());
+    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 4}).toDate());
     this.addEventDocumentDate(this.documentdate.value);
   }
  }

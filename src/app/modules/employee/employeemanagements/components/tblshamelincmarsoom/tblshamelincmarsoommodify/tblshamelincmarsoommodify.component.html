@@ -16,10 +16,6 @@
   
     <form [formGroup]="Form">
   
-      <div class="row justify-content-between text-left">
-  
-        <div class="form-group col-sm-4 flex-column d-flex">
-  
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>سبب التبدل</mat-label>
             <input type="text" matInput [formControl]="changereason_id" formControlName="changereason_id"
@@ -46,7 +42,6 @@
             </mat-autocomplete>
   
           </mat-form-field>
-        </div>
   
         <div class="date">
           <span>تاريخ التبدل:</span>
@@ -88,12 +83,6 @@
           </div>
         </div>
   
-      </div>
-  
-  
-      <div class="row text-left">
-  
-        <div class="form-group col-sm-4 flex-column d-flex">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>المستند</mat-label>
             <input type="text" matInput [formControl]="documenttype_id" formControlName="documenttype_id"
@@ -106,15 +95,12 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-        </div>
-  
-        <div class="form-group col-sm-4 flex-column d-flex">
+
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>رقم المستند</mat-label>
             <input matInput type="number" placeholder="" value="" [formControl]="document_number"
               formControlName="document_number" id="document_number"  (keyup.enter)="focusNext('docDateDay')">
           </mat-form-field>
-        </div>
   
         <div class="date">
           <span>تاريخ المستند:</span>
@@ -136,28 +122,17 @@
           </div>
       </div>
   
-      </div>
-  
-  
-      <div class="row justify-content-between text-left">
-  
-        <div class="form-group col-sm-6 flex-column d-flex">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>المبلغ الإضافي</mat-label>
             <input matInput type="number" placeholder="" value="" [formControl]="additionalvalue"
               formControlName="additionalvalue" id="additionalvalue"  (keyup.enter)="focusNext('incpercentage')">
           </mat-form-field>
-        </div>
-  
-        <div class="form-group col-sm-6 flex-column d-flex">
+
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>نسبة الزيادة</mat-label>
             <input matInput type="number" placeholder="" value="" [formControl]="incpercentage"
               formControlName="incpercentage" id="incpercentage"  (keyup.enter)="focusNext('Save')">
           </mat-form-field>
-        </div>
-  
-      </div>
   
     </form>
   </mat-dialog-content>

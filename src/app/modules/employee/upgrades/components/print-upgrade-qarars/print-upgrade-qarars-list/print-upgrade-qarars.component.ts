@@ -329,6 +329,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
           if (res ==1){
             this._snackBar.open('تمت الإضافة بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.Load_Text();
           }
@@ -388,6 +389,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
           if (res ==1){
             this._snackBar.open('تمت الإضافة بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.Load_Text();
           }
@@ -411,6 +413,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
           if (res.Result ==1){
             this._snackBar.open('تم التعديل بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.Load_Text();
           }
@@ -446,6 +449,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
           if (res ==1){
             this._snackBar.open('تمت الإضافة بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.Load_Text();
           }
@@ -468,6 +472,7 @@ export class PrintUpgradeQararsComponent implements OnInit {
           if (res.Result ==1){
             this._snackBar.open('تم التعديل بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.Load_Text();
           }
@@ -519,7 +524,8 @@ export class PrintUpgradeQararsComponent implements OnInit {
     }
     else
       this._snackBar.open('يجب اختيار الفئة والصفة الوظيفية أو رقم القرار', '', {
-        duration: 4000
+        duration: 4000,
+        panelClass: ['red-snackbar']
       });
     
   }

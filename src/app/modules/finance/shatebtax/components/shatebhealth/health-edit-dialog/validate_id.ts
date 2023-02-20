@@ -21,7 +21,7 @@ export function  Validate_ID( TBLShamelEmployeeService:ViewTBLShamelEmployeeServ
         pipe(map(
           (data:any ) => 
           {           
-            return (data && data.id == null) ? null : { 'uniq1': true }  ;
+            return (data && data.id == null) ? { 'not found': true } : null  ;
           }
         ));
    

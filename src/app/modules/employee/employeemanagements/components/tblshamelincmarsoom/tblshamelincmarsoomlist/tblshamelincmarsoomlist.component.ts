@@ -153,7 +153,7 @@ this.Load_ITBLShamelIncMarsoom()
 
     const dialogRef = this.dialog.open(TblshamelincmarsoommodifyComponent, {
       height: '60%',
-      width: '35%',
+      width: '60%',
       data: {obj: this.selected_IncMarsoom}
     });
    
@@ -197,6 +197,7 @@ try{
 
               this.snackBar.open('تم الحذف بنجاح', '', {
                 duration: 3000,
+                panelClass: ['green-snackbar']
               });
                 this.LoadFromServer();
               }
@@ -225,7 +226,7 @@ try{
 
       const dialogRef = this.dialog.open(TblshamelincmarsoommodifyComponent, {
         height: '60%',
-        width: '35%',
+        width: '60%',
         data: {obj: this.selected_IncMarsoom}
       });
   

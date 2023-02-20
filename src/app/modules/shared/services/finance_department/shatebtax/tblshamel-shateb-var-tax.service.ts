@@ -69,7 +69,7 @@ export class TBLShamelShatebVarTaxService {
   }
 
   search(obj : TBLShamelShatebVartaxRequest )  {
-    return this.httpClient.post(this.RestUrl +"TBLShamelShatebVarTax/Search",obj);  
+    return this.httpClient.post<{Item1: any[], Item2: number}>(this.RestUrl +"TBLShamelShatebVarTax/Search",obj)as Observable<{Item1: any[], Item2: number}>;  
   }
 
 

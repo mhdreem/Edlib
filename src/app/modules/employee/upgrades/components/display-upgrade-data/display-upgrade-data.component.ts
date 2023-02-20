@@ -387,6 +387,12 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
     else this.rowClicked = idx;
   }
 
+  ViewClicked(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.View();
+  }
+
   View(){
     let request= {
       "year_id": this.UpgradeYear.value,

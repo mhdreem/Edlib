@@ -153,7 +153,7 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
 
     const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
       height: '60%',
-      width: '45%',
+      width: '60%',
       data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
     });
 
@@ -199,6 +199,7 @@ if (element.serial!= null)
 
           this.snackBar.open('تم الحذف', 'Fechar', {
             duration: 2000,
+            panelClass: ['green-snackbar']
           });
 
           this.snackBar.dismiss();
@@ -222,7 +223,7 @@ if (element.serial!= null)
 
       const dialogRef = this.dialog.open(TblshamelscjobstatemodifyComponent, {
         height: '60%',
-        width: '45%',
+        width: '60%',
         data: { obj: this.selected_employee_JobState, id: this.Selected_Emp.id }
       });
 

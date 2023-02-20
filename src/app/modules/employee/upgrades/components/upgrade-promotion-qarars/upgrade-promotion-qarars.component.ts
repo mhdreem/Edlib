@@ -251,11 +251,12 @@ export class UpgradePromotionQararsComponent implements OnInit {
       tblShamelClass: this.Class_List.filter(classItem => classItem.class_id== +this.Class.value)[0],
       blocked: this.blocked,
       qarar_num: +this.MaxQararNum.value,
-      qarar_date: moment(this.month.value+'/'+this.day.value+'/'+this.year.value).toDate()}).subscribe(res =>{
+      qarar_date: moment(this.month.value+'/'+this.day.value+'/'+this.year.value).set({hour: 4}).toDate()}).subscribe(res =>{
         if (res != null)
         console.log('res123', res);
         this.snackBar.open('تم توليد أرقام القرارات', '', {
           duration: 3000,
+          panelClass: ['green-snackbar']
         });
       });
   }

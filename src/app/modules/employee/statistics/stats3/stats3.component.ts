@@ -8,6 +8,7 @@ import { EmployeeStatsService } from 'src/app/modules/shared/services/employees_
 import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { JobServiceDataAdjustPrintDialogComponent } from '../../employeemanagements/components/service-data/job-service-data-adjust-print-dialog/job-service-data-adjust-print-dialog.component';
 import { Stats3PrintComponent } from '../print/stats3-print/stats3-print.component';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'app-stats3',
@@ -33,6 +34,20 @@ export class Stats3Component implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   darkTheme: boolean;
+
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
 
   constructor(public EmployeeStatsService :EmployeeStatsService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -70,6 +85,16 @@ export class Stats3Component implements OnInit {
         if (data!= null ){
           this.dataSource.data = (data as any[]);
           this.fillOutputs(data);
+
+          (data as any[]).forEach((datum, index) =>{
+            this.excelData[index]= {
+                                    'الفئة': datum?.CLASS_NAME,
+                                    'الصفة الوظيفية': datum?.JOBNAME_NAME,
+                                    'ذكور': datum?.MALESCOUNT,
+                                    'إناث': datum?.FEMALESCOUNT,
+                                    }; 
+  
+          });
         }
         else 
           this.dataSource.data = [];
@@ -214,4 +239,9 @@ export class Stats3Component implements OnInit {
       
     });
   }
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

@@ -547,6 +547,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
           this.ClearObject();
           this.snackBar.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
           this.dialogRef.close();
           
@@ -565,6 +566,7 @@ export class TblshamelsceducationmodifyComponent implements OnInit, AfterViewIni
           
           this.snackBar.open('تم التعديل بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
           this.dialogRef.close();
         }

@@ -1,3 +1,4 @@
+<div class="theme" [class.darkTheme]="darkTheme">
 <!-- filtering -->
 <c-row>
   <mat-progress-bar *ngIf="LoadingFinish == false" mode="indeterminate" #progressbar></mat-progress-bar>
@@ -7,9 +8,9 @@
 
     <form [formGroup]="Form">
         <div class="filterGroup1">
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 20px;">
                 <mat-label>المنطقة</mat-label>
-                <input type="text" matInput formControlName="area_name" id="area_name" (keyup.enter)="focusNext('fname')" [matAutocomplete]="auto_area">
+                <input type="text" matInput formControlName="area_name" id="area_name" (keyup.enter)="focusNext('startdateDay')" [matAutocomplete]="auto_area">
                 <mat-autocomplete #auto_area="matAutocomplete"
                   [displayWith]="displayAreaProperty.bind(this)">
                   <mat-option *ngFor="let option of List_AREA_Filter | async" [value]="option.Area_ID">
@@ -22,33 +23,33 @@
 
             
             <div class="date">
-                <span>من تاريخ:</span>
+                <span class="white">من تاريخ:</span>
                 <div class="content">
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>اليوم</mat-label>
-                    <input type="number" matInput formControlName="startdateDay" id="startdateDay" (keyup.enter)="focusNext('fname')" placeholder="ex: 21">
+                    <input type="number" matInput formControlName="startdateDay" id="startdateDay" (keyup.enter)="focusNext('startdateMonth')" placeholder="ex: 21">
                   </mat-form-field>
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>الشهر</mat-label>
-                    <input type="number" matInput formControlName="startdateMonth" id="startdateMonth" (keyup.enter)="focusNext('fname')" placeholder="ex: 1">
+                    <input type="number" matInput formControlName="startdateMonth" id="startdateMonth" (keyup.enter)="focusNext('startdateYear')" placeholder="ex: 1">
                   </mat-form-field>
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>العام</mat-label>
-                    <input type="number" matInput formControlName="startdateYear" id="startdateYear" (keyup.enter)="focusNext('fname')" placeholder="ex: 2023">
+                    <input type="number" matInput formControlName="startdateYear" id="startdateYear" (keyup.enter)="focusNext('enddateDay')" placeholder="ex: 2023">
                   </mat-form-field>
                 </div>
               </div>
 
               <div class="date">
-                <span>الى تاريخ:</span>
+                <span class="white">الى تاريخ:</span>
                 <div class="content">
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>اليوم</mat-label>
-                    <input type="number" matInput formControlName="enddateDay" id="enddateDay" (keyup.enter)="focusNext('fname')" placeholder="ex: 21">
+                    <input type="number" matInput formControlName="enddateDay" id="enddateDay" (keyup.enter)="focusNext('enddateMonth')" placeholder="ex: 21">
                   </mat-form-field>
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>الشهر</mat-label>
-                    <input type="number" matInput formControlName="enddateMonth" id="enddateMonth" (keyup.enter)="focusNext('fname')" placeholder="ex: 1">
+                    <input type="number" matInput formControlName="enddateMonth" id="enddateMonth" (keyup.enter)="focusNext('enddateYear')" placeholder="ex: 1">
                   </mat-form-field>
                   <mat-form-field class="example-full-width small-width" appearance="fill">
                     <mat-label>العام</mat-label>
@@ -68,7 +69,11 @@
 
 <div>
 <h3>
-    <button mat-raised-button color="primary" class="view" (click)="OnSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+    <button mat-raised-button color="primary" class="view edit" (click)="OnSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+    <button mat-raised-button id="excel" (click)="exportToExcel()" [disabled]="dataSource.data[0]== null">
+      <mat-icon>view_comfy</mat-icon>
+      تصدير الى اكسل
+    </button>
 </h3>
 </div>
 
@@ -110,3 +115,4 @@
 
 <!-- </div> -->
 </ngx-hover-opacity>
+</div>

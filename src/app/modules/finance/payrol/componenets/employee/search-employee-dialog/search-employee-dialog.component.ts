@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_department/ViewTBLSamelEmployee';
 import { TblShamelSearchByEmployeeNameInfo } from 'src/app/modules/shared/models/finance_department/payrol/tblShamelSearchByEmployeeNameInfo';
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-search-employee-dialog',
@@ -34,11 +35,17 @@ export class SearchEmployeeDialogComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  darkTheme: boolean;
+
   constructor(public dialogRef: MatDialogRef<SearchEmployeeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService) { }
+    private viewTBLShamelEmployeeService: ViewTBLShamelEmployeeService,
+    private themeService: ThemeService) { }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
     // console.log("val",this.Form.value);
   }
 

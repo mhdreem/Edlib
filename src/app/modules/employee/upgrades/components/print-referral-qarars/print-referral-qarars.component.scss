@@ -30,14 +30,22 @@ button{
 
 td, th{
     padding: 5px !important;
-    text-align: right !important;
+    text-align: center !important;
 }
 
+td{
+  border-left: 1px solid rgba(8, 8, 8, 0.116);
+  padding-inline: 2px !important;
+}
 
 app-print-referrals{
     display: none;
 }
 
+::ng-deep .mat-expansion-indicator{
+  left: 1140PX !important;
+  position: relative !important;
+}
 
   
 .darkTheme mat-form-field, .darkTheme ::ng-deep .mat-form-field-label{
@@ -247,4 +255,9 @@ form{
 
   mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
     background-color: rgba(0,0,0,.12) !important;
+  }
+
+  ::ng-deep .mat-sort-header-container{
+    width: fit-content;
+    margin-inline: auto;
   }

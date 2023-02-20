@@ -21,6 +21,7 @@ import { TblshameljobkindService } from 'src/app/modules/shared/services/employe
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
 import { TblshamelmalakstateService } from 'src/app/modules/shared/services/employees_department/tblshamelmalakstate.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-salary-statistics',
@@ -105,6 +106,8 @@ export class SalaryStatisticsComponent implements OnInit {
     this.ExcuteSearch();
   }
 
+  darkTheme: boolean;
+
   constructor(
   
     public departmentService: TblshameldepartmentService,
@@ -119,7 +122,8 @@ export class SalaryStatisticsComponent implements OnInit {
     private ngZone: NgZone,
     private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
       this.dataSource = new MatTableDataSource<any>([]);
       this.LoadingFinish = true;
@@ -363,6 +367,9 @@ export class SalaryStatisticsComponent implements OnInit {
 
   
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   ngOnDestroy(): void {

@@ -284,7 +284,7 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
 
   updateJobState(){
     this.tblshamelScJobStateService.updateJobState({
-      changedate: moment(this.ChangeDateMonth.value+'/'+this.ChangeDateDay.value+'/'+this.ChangeDateYear.value).set({hour: 2}).toDate(),
+      changedate: moment(this.ChangeDateMonth.value+'/'+this.ChangeDateDay.value+'/'+this.ChangeDateYear.value).set({hour: 4}).set({hour: 2}).toDate(),
       changereason_id: this.ChangeReason.value,
       documenttype_id: this.DocumentType.value,
       department_id: this.Department.value,
@@ -294,7 +294,7 @@ export class RefreshEmployeeCartComponent implements OnInit, OnDestroy {
     });
 
     this.tblShamelUpgradeService.UpgradeJobState({
-      changedate: moment(this.ChangeDateMonth.value+'/'+this.ChangeDateDay.value+'/'+this.ChangeDateYear.value).toDate(),
+      changedate: moment(this.ChangeDateMonth.value+'/'+this.ChangeDateDay.value+'/'+this.ChangeDateYear.value).set({hour: 4}).toDate(),
       changereason_id: this.ChangeReason.value,
       documenttype_id: this.DocumentType.value,
       department_id: this.Department.value,

@@ -290,6 +290,12 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
         if (this.Selected_Employee_SCBouns.documentdate != null)
         {
           this.documentdate.setValue(this.Selected_Employee_SCBouns.documentdate);
+          this.docDateDay= moment(this.documentdate.value).date() + '';
+          this.docDateMonth= (moment(this.documentdate.value).month() + 1) + '';
+          this.docDateYear= moment(this.documentdate.value).year() + '';
+          this.docDateDayIsFilled= true;
+          this.docDateMonthIsFilled= true;
+          this.docDateYearIsFilled= true;
         }
 
 
@@ -314,7 +320,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
         this.Selected_Employee_SCBouns.documenttype_id = this.documenttype_id.value;
         this.Selected_Employee_SCBouns.document_number = this.document_number.value;
 
-        this.Selected_Employee_SCBouns.documentdate = moment(this.documentdate.value).toDate();
+        this.Selected_Employee_SCBouns.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();
 
 
       }
@@ -419,6 +425,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
           this.dialogRef.close();
           this.snackBar.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
 
 
@@ -446,6 +453,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
           this.dialogRef.close();
           this.snackBar.open('تم التعديل بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
 
 
@@ -541,7 +549,7 @@ export class TblshamelscbonusmodifyComponent implements OnInit, AfterViewInit, O
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 4}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

@@ -6,7 +6,7 @@
                 <div class="con">
                     <mat-checkbox class="white" color="primary" (change)="change1($event)" formControlName="allDataCheckbox" [disabled]="true" >جميع بيانات البطاقة الذاتية</mat-checkbox>
                 </div>
-                <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="print-card-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة البطاقة</button>
+                <button mat-raised-button class="add" [disabled]="!Selected_Emp.id" printSectionId="print-card-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة البطاقة</button>
                 
                 <!-- <button  mat-raised-button color="primary" (click)="printInterface()" >طباعة الواجهة</button> -->
             </fieldset>
@@ -21,7 +21,7 @@
                     <mat-checkbox class="white" color="primary" (change)="change2($event)" formControlName="holidaiesCheckbox">إجازات خاصة بلا أجر</mat-checkbox>
                 </div>
         
-                <button mat-raised-button class="add"  [disabled]="!Selected_Emp.id" printSectionId="print-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+                <button mat-raised-button class="add"  [disabled]="!Selected_Emp.id" printSectionId="print-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
                 <button  mat-raised-button class="add" (click)="adjustPrintFooter()" [disabled]="!Selected_Emp.id" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
             </fieldset>
         </div>

@@ -9,6 +9,7 @@ import { TBLShamelSex } from 'src/app/modules/shared/models/employees_department
 import { TblShamelBrokerEmployee } from 'src/app/modules/shared/models/finance_department/broker/TblShamelBrokerEmployee';
 import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_department/tblshamel-sex.service';
 import { TblShamelBrokerEmployeeService } from 'src/app/modules/shared/services/finance_department/broker/tbl-shamel-broker-employee.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { Uniqe } from './validators/validate_formgroup';
 import { Validate_ID } from './validators/validate_id';
 
@@ -30,13 +31,16 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
   submitted = false;
 
+  darkTheme: boolean;
+
   constructor(public dialogRef: MatDialogRef<TblshamelBrokerEmployeeModifyComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelBrokerEmployee },
+    @Inject(MAT_DIALOG_DATA) public data: { obj: TblShamelBrokerEmployee, source: string },
   public tblShamelBrokerEmployeeService: TblShamelBrokerEmployeeService,
   private ShamelSexService: TBLShamelSexService,
   public frmBuild: FormBuilder,
   private snackBar: MatSnackBar,
-  @Inject(DOCUMENT) private _document: Document) {
+  @Inject(DOCUMENT) private _document: Document,
+  private themeService: ThemeService) {
     this.selected_broker_employee = data.obj;
     this.BuildForm();
     this.LoadData();
@@ -94,7 +98,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
     try {
 
       this.Form = this.frmBuild.group({
-        serail: new FormControl<number | null>(null, [Validators.required], [Validate_ID(this.tblShamelBrokerEmployeeService)]),
+        serail: new FormControl<number | null>(null, [], []),
         fname: new FormControl<string | null>(null, [Validators.required]),
         lname: new FormControl<string | null>(null, [Validators.required]),
         father: new FormControl<string | null>(null, [Validators.required]),
@@ -130,7 +134,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
   public SetValue() {
     try {
 
-
+console.log('this.selected_broker_employee', this.selected_broker_employee);
       if (this.selected_broker_employee != null && this.selected_broker_employee.serial != null)
         this.Form.controls['serail'].setValue(this.selected_broker_employee?.serial);
 
@@ -153,8 +157,11 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         this.Form.controls['birthdateYear'].setValue(+moment(this.selected_broker_employee?.birthdate).year());
       }
 
-      if (this.selected_broker_employee != null && this.selected_broker_employee.servicedayes != null)
-        this.Form.controls['servicedayes'].setValue(this.selected_broker_employee?.servicedayes);
+      if (this.selected_broker_employee != null && this.selected_broker_employee.sex_name != null)
+        this.Form.controls['sex_name'].setValue(this.selected_broker_employee?.sex_name);
+
+      if (this.selected_broker_employee != null && this.selected_broker_employee.VShamelBrokerEmpService.ServiceDayes != null)
+        this.Form.controls['servicedayes'].setValue(this.selected_broker_employee?.VShamelBrokerEmpService.ServiceDayes);
 
 
       if (this.selected_broker_employee != null && this.selected_broker_employee.enterusername != null)
@@ -162,7 +169,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
 
       if (this.selected_broker_employee != null && this.selected_broker_employee.enterdate != null)
-        this.Form.controls['enterdate'].setValue(moment(this.selected_broker_employee?.enterdate).toDate());
+        this.Form.controls['enterdate'].setValue(moment(this.selected_broker_employee?.enterdate).set({hour: 4}).toDate());
 
 
       if (this.selected_broker_employee != null && this.selected_broker_employee.entertime != null)
@@ -173,7 +180,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
         this.Form.controls['modifyusername'].setValue(this.selected_broker_employee?.modifyusername);
 
       if (this.selected_broker_employee.modifydate != null)
-        this.Form.controls['modifydate'].setValue(moment(this.selected_broker_employee?.modifydate).set({hour: 2}).toDate());
+        this.Form.controls['modifydate'].setValue(moment(this.selected_broker_employee?.modifydate).set({hour: 4}).toDate());
 
 
 
@@ -194,6 +201,9 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   public getValue() {
@@ -220,11 +230,11 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
 
 
         if (this.Form.controls['servicedayes'].value != null)
-          this.selected_broker_employee.servicedayes = this.Form.controls['servicedayes'].value;
+          this.selected_broker_employee.VShamelBrokerEmpService.ServiceDayes = this.Form.controls['servicedayes'].value;
 
 
         if (this.Form.controls['birthdateDay'].value != null && this.Form.controls['birthdateMonth'].value != null && this.Form.controls['birthdateYear'].value != null)
-          this.selected_broker_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 2}).toDate();
+          this.selected_broker_employee.birthdate =  moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 4}).toDate();
 
         if (this.Form.controls['sex_name'].value != null)
           this.selected_broker_employee.sex_name = this.Form.controls['sex_name'].value;
@@ -262,6 +272,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
             console.log('data456', data);
             this.snackBar.open('تمت الإضافة بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.dialogRef.close();
           }
@@ -275,7 +286,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
       this.selected_broker_employee.serial != null &&
       this.selected_broker_employee.serial > 0) {
 
-      // comment when using real data service
+      console.log('this.selected_broker_employee', this.selected_broker_employee);
       this.tblShamelBrokerEmployeeService.update(this.selected_broker_employee).subscribe(
         data => {
           if (data > 0) // Succeess 
@@ -283,6 +294,7 @@ export class TblshamelBrokerEmployeeModifyComponent implements OnInit {
             console.log('data456', data);
             this.snackBar.open('تم التعديل بنجاح', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
             this.dialogRef.close();
           }

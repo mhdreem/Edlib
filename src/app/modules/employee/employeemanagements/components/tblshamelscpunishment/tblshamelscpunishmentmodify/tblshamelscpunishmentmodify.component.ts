@@ -113,14 +113,11 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
     public PageService: EmployeePageService,
     private themeService: ThemeService
   ) {
-    if (data && data.obj && data.id > 0) {
-      this.id_employee = data.id;
-      this.Selected_Employee_SCPunishment = data.obj;
-    }
-    this.LoadingFinish = true;
-
     this.BuildForm();
     this.Load_Data();
+    
+    this.LoadingFinish = true;
+
   }
   //#endregion
 
@@ -130,16 +127,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.ShamelPunishmentService.List_ITBLShamelPunishment == undefined ||
       this.ShamelPunishmentService.List_ITBLShamelPunishment.length == 0) {
 
-        this.ShamelPunishmentService.list().subscribe
-          (
-            res => {
-
-              this.TBLShamelPunishment_List = res;
-              this.filteredPunishmentOptions = of(res);
-              this.ShamelPunishmentService.List_ITBLShamelPunishment = res;
-            }
-      );
-
+        return this.ShamelPunishmentService.list();
     }
 
     return of(this.ShamelPunishmentService.List_ITBLShamelPunishment);
@@ -151,36 +139,19 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.PunishmentReasonService.List_ITBLShamelPunishmentReason == undefined ||
       this.PunishmentReasonService.List_ITBLShamelPunishmentReason.length == 0) {
 
-        this.PunishmentReasonService.list().subscribe
-          (
-            res => {
-              this.TBLShamelPunishmentReason_List = res;
-              this.filteredPunishmentReasonOptions = of(res);
-              this.PunishmentReasonService.List_ITBLShamelPunishmentReason = res;
-              this.PunishmentReasonService.List_ITBLShamelPunishmentReason_BehaviorSubject.next(res);
-              return of(res);
-
-            }
-          );
-
-
+        return this.PunishmentReasonService.list()
+          
     }
     return of(this.PunishmentReasonService.List_ITBLShamelPunishmentReason);
 
 
   }
 
-  Load_List_ITBLShamelDocumentType(): Observable<ITBLShamelDocumentType[]> {
+  Load_List_ITBLShamelDocumentType() {
     if (this.ShameldocumenttypeService.List_ITBLShamelDocumentType == null ||
       this.ShameldocumenttypeService.List_ITBLShamelDocumentType == undefined ||
       this.ShameldocumenttypeService.List_ITBLShamelDocumentType.length == 0) {
-        this.ShameldocumenttypeService.fill();
-        this.ShameldocumenttypeService.List_ITBLShamelDocumentType_BehaviorSubject.subscribe(
-          data => {
-            this.DocumentType_List = data;
-            this.filteredDocumentTypeOptions = of(this.DocumentType_List);
-            return of(data);
-          })
+        return this.ShameldocumenttypeService.list();
     }
 
     return of(this.ShameldocumenttypeService.List_ITBLShamelDocumentType);
@@ -223,6 +194,13 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
               this.filteredPunishmentReasonOptions = of(this.TBLShamelPunishmentReason_List);
 
               this.FillArrayUsingService();
+
+              if (this.data && this.data.obj && this.data.id > 0) {
+                this.id_employee = this.data.id;
+                this.Selected_Employee_SCPunishment = this.data.obj;
+                console.log('this.Selected_Employee_SCPunishment', this.Selected_Employee_SCPunishment);
+              }
+
               this.LoadingFinish = true;
 
             }
@@ -362,6 +340,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
         if (this.Selected_Employee_SCPunishment.reason_id != null)
           this.reason_id.setValue(this.Selected_Employee_SCPunishment.reason_id);
 
+          console.log('1 this.reason_id', this.reason_id);
         if (this.Selected_Employee_SCPunishment.punishment_id != null)
           this.punishment_id.setValue(this.Selected_Employee_SCPunishment.punishment_id);
 
@@ -369,8 +348,15 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
           this.documenttype_id.setValue(this.Selected_Employee_SCPunishment.documenttype_id);
 
         if (this.Selected_Employee_SCPunishment.documentdate != null &&
-          this.Selected_Employee_SCPunishment.documentdate != undefined)
-          this.documentdate.setValue(moment(this.Selected_Employee_SCPunishment.documentdate).toDate());
+          this.Selected_Employee_SCPunishment.documentdate != undefined){
+            this.documentdate.setValue(moment(this.Selected_Employee_SCPunishment.documentdate).set({hour: 4}).toDate());
+            this.docDateDay= moment(this.documentdate.value).date() + '';
+            this.docDateMonth= (moment(this.documentdate.value).month() + 1) + '';
+            this.docDateYear= moment(this.documentdate.value).year() + '';
+            this.docDateDayIsFilled= true;
+            this.docDateMonthIsFilled= true;
+            this.docDateYearIsFilled= true;
+          }
 
         if (this.Selected_Employee_SCPunishment.document_number != null)
           this.document_number.setValue(this.Selected_Employee_SCPunishment.document_number);
@@ -407,7 +393,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
 
         if (this.documentdate.value != null && this.documentdate.value != undefined)
-          this.Selected_Employee_SCPunishment.documentdate = moment(this.documentdate.value).toDate();
+          this.Selected_Employee_SCPunishment.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();
 
         if (this.is_cancel.value != null && this.is_cancel.value != undefined)
           this.Selected_Employee_SCPunishment.is_cancel = this.Selected_Employee_SCPunishment.is_cancel;
@@ -462,7 +448,10 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
 
   public displayPunishmentReasonProperty(value: string): string {
     if (value && this.TBLShamelPunishmentReason_List) {
+      console.log('2');
+      console.log('this.TBLShamelPunishmentReason_List', this.TBLShamelPunishmentReason_List);
       let punishmentreason: any = this.TBLShamelPunishmentReason_List.find(crs => crs.punishmentreason_id.toString() == value);
+      console.log('3 punishmentreason', punishmentreason);
       if (punishmentreason != null)
         return punishmentreason.punishmentreason_name;
     }
@@ -509,6 +498,8 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
         if (res == 1) {
           this._snaker.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
+
           });
           this.dialogRef.close();
         } else {
@@ -523,12 +514,13 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.Selected_Employee_SCPunishment.serial > 0
     ) {
 
-
+      console.log('this.Selected_Employee_SCPunishment', this.Selected_Employee_SCPunishment);
       this.tblshamelscpunishmentservice.update(this.Selected_Employee_SCPunishment).toPromise().then(res => {
         console.log(res)
         if (res == 1) {
           this._snaker.open('تم التعديل بنجاح', '', {
-            duration: 3000,
+            panelClass: ['greenSnackbar']
+
           });
           this.dialogRef.close();
 
@@ -601,7 +593,7 @@ export class TblshamelscpunishmentmodifyComponent implements OnInit, AfterViewIn
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 4}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

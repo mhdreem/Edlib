@@ -389,17 +389,17 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
 
 
         if (this.enddate.value != null && this.enddate.value != undefined)
-          this.Selected_Employee_SCHealthHoliday.enddate = moment(this.enddate.value).toDate();
+          this.Selected_Employee_SCHealthHoliday.enddate = moment(this.enddate.value).set({hour: 4}).toDate();
 
         if (this.startdate.value != null && this.startdate.value != undefined)
-          this.Selected_Employee_SCHealthHoliday.startdate = moment(this.startdate.value).toDate();
+          this.Selected_Employee_SCHealthHoliday.startdate = moment(this.startdate.value).set({hour: 4}).toDate();
 
         if (this.documenttype_id.value != null)
           this.Selected_Employee_SCHealthHoliday.documenttype_id = this.documenttype_id.value;
           this.Selected_Employee_SCHealthHoliday.document_number = this.document_number.value;
 
         if (this.documentdate.value != null && this.documentdate.value != undefined)
-          this.Selected_Employee_SCHealthHoliday.documentdate = moment(this.documentdate.value).toDate();
+          this.Selected_Employee_SCHealthHoliday.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();
 
 
       }
@@ -592,7 +592,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.startDateYearIsFilled= true;
 
     if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
-      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 2}).toDate());
+      this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 4}).toDate());
       this.addEventStartDate(this.startdate.value);
     }
    }
@@ -606,7 +606,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.endDateYearIsFilled= true;
 
     if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
-      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 2}).toDate());
+      this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 4}).toDate());
       this.addEventEndDate(this.enddate.value);
     }
    }
@@ -620,7 +620,7 @@ export class TblshamelschealthholidayModifyComponent implements OnInit, OnDestro
       this.documentDateYearIsFilled= true;
 
     if (this.documentDateDayIsFilled && this.documentDateMonthIsFilled && this.documentDateYearIsFilled){
-      this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 2}).toDate());
+      this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 4}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

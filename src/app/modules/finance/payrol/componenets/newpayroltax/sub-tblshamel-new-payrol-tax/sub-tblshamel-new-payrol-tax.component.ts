@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { TblShamelNewPayrolTax } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolTax';
 import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-tax.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelNewPayrolTaxValidatorFormGroup } from './TblShamelNewPayrolTaxValidatorFormGroup';
 
 
@@ -49,10 +50,13 @@ return {};
   @Output() OnDelete = new EventEmitter<any>();
   Form : FormGroup;
 
+  darkTheme: boolean;
+
 
   constructor( 
     private FrmBuilder:FormBuilder,
-    private tblShamelNewPayrolTaxService : TblShamelNewPayrolTaxService) { 
+    private tblShamelNewPayrolTaxService : TblShamelNewPayrolTaxService,
+    private themeService: ThemeService) { 
     this.BuildForm();
   }
 //انشاء الفورم
@@ -202,6 +206,9 @@ return {};
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 }

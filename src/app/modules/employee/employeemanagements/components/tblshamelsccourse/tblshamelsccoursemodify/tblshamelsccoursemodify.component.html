@@ -129,16 +129,6 @@
         </mat-form-field>
         
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>مدة الدورة</mat-label>
-
-          <input matInput placeholder="مدة الدورة" formControlName="studyduration"
-          id="studyduration" (keyup.enter)="focusNext('course_id')">
-
-        </mat-form-field>
-      </div>
-
-      <div class="group4">
-        <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>المدينة</mat-label>
           <input type="text" matInput  formControlName="city_id"
             [matAutocomplete]="auto_city_id"
@@ -150,7 +140,16 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>مدة الدورة</mat-label>
+
+          <input matInput placeholder="مدة الدورة" formControlName="studyduration"
+          id="studyduration" (keyup.enter)="focusNext('course_id')">
+
+        </mat-form-field>
       </div>
+
     </div>
         
 

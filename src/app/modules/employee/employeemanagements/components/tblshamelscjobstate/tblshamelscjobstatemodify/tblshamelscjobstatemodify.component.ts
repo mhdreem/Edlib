@@ -542,20 +542,45 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
         if (this.Selected_Employee_JobState.id != null &&
           this.Selected_Employee_JobState.id != undefined)
-          this.serial.setValue(this.Selected_Employee_JobState.id);
+          this.id.setValue(this.Selected_Employee_JobState.id);
+        
+          if (this.Selected_Employee_JobState.changereason_id != null &&
+          this.Selected_Employee_JobState.changereason_id != undefined)
+          this.changereason_id.setValue(this.Selected_Employee_JobState.changereason_id);
 
 
         if (this.Selected_Employee_JobState.changedate != null &&
-          this.Selected_Employee_JobState.changedate != undefined)
-          this.changedate.setValue(moment(this.Selected_Employee_JobState.changedate).toDate());
+          this.Selected_Employee_JobState.changedate != undefined){
+            this.changedate.setValue(moment(this.Selected_Employee_JobState.changedate).set({hour: 4}).toDate());
+            this.changeDateDay= moment(this.changedate.value).date() + '';
+            this.changeDateMonth= (moment(this.changedate.value).month() + 1) + '';
+            this.changeDateYear= moment(this.changedate.value).year() + '';
+            this.changeDateDayIsFilled= true;
+            this.changeDateMonthIsFilled= true;
+            this.changeDateYearIsFilled= true;
+          }
 
         if (this.Selected_Employee_JobState.begindate != null &&
-          this.Selected_Employee_JobState.begindate != undefined)
-          this.begindate.setValue(moment(this.Selected_Employee_JobState.begindate).toDate());
+          this.Selected_Employee_JobState.begindate != undefined){
+            this.begindate.setValue(moment(this.Selected_Employee_JobState.begindate).set({hour: 4}).toDate());
+            this.beginDateDay= moment(this.begindate.value).date() + '';
+            this.beginDateMonth= (moment(this.begindate.value).month() + 1) + '';
+            this.beginDateYear= moment(this.begindate.value).year() + '';
+            this.beginDateDayIsFilled= true;
+            this.beginDateMonthIsFilled= true;
+            this.beginDateYearIsFilled= true;
+          }
 
         if (this.Selected_Employee_JobState.doc_date != null &&
-          this.Selected_Employee_JobState.doc_date != undefined)
-          this.doc_date.setValue(moment(this.Selected_Employee_JobState.doc_date).toDate());
+          this.Selected_Employee_JobState.doc_date != undefined){
+            this.doc_date.setValue(moment(this.Selected_Employee_JobState.doc_date).set({hour: 4}).toDate());
+            this.docDateDay= moment(this.doc_date.value).date() + '';
+            this.docDateMonth= (moment(this.doc_date.value).month() + 1) + '';
+            this.docDateYear= moment(this.doc_date.value).year() + '';
+            this.docDateDayIsFilled= true;
+            this.docDateMonthIsFilled= true;
+            this.docDateYearIsFilled= true;
+          }
 
 
         if (this.Selected_Employee_JobState.class_id != null &&
@@ -604,12 +629,12 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
         if (this.changedate.value != null &&
           this.changedate.value != undefined)
-          this.Selected_Employee_JobState.changedate = moment(this.changedate.value).toDate();
+          this.Selected_Employee_JobState.changedate = moment(this.changedate.value).set({hour: 4}).toDate();
 
 
         if (this.begindate.value != null &&
           this.begindate.value != undefined)
-          this.Selected_Employee_JobState.begindate = moment(this.begindate.value).toDate();
+          this.Selected_Employee_JobState.begindate = moment(this.begindate.value).set({hour: 4}).toDate();
 
 
         if (this.changereason_id.value != null &&
@@ -629,7 +654,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
         if (this.doc_date.value != null &&
           this.doc_date.value != undefined)
-          this.Selected_Employee_JobState.doc_date = moment(this.doc_date.value).toDate();
+          this.Selected_Employee_JobState.doc_date = moment(this.doc_date.value).set({hour: 4}).toDate();
 
         if (this.doc_number.value != null &&
           this.doc_number.value != undefined)
@@ -683,13 +708,13 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
             this.changereason_id.setValue(MarsoomObject?.changereason_id);
 
           if (MarsoomObject?.changedate != null)
-            this.changedate.setValue(moment(MarsoomObject?.changedate).toDate());
+            this.changedate.setValue(moment(MarsoomObject?.changedate).set({hour: 4}).toDate());
 
           if (MarsoomObject?.documentdate != null)
-            this.doc_date.setValue(moment(MarsoomObject?.documentdate).toDate());
+            this.doc_date.setValue(moment(MarsoomObject?.documentdate).set({hour: 4}).toDate());
 
           if (MarsoomObject?.begindate != null)
-            this.begindate.setValue(moment(MarsoomObject?.begindate).toDate());
+            this.begindate.setValue(moment(MarsoomObject?.begindate).set({hour: 4}).toDate());
 
           if (MarsoomObject?.document_number != null)
             this.doc_number.setValue(MarsoomObject?.document_number);
@@ -773,7 +798,9 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
 
   public displayJobNameProperty(value: string): string {
     if (value && this.JobName_List) {
+      console.log('1 this.JobName_List', this.JobName_List);
       let object: any = this.JobName_List.find(obj => obj.jobname_id.toString() == value);
+      console.log('2 object', object);
       if (object)
         return object.jobname_name;
     }
@@ -836,6 +863,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
           this.dialogRef.close();
           this.snackBar.open('تمت الإضافة بنجاح', 'Fechar', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
         } else {
 
@@ -857,6 +885,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
           this.dialogRef.close();
           this.snackBar.open(' تم التعديل بنجاح', 'Fechar', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
         } else {
         }
@@ -937,7 +966,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.changeDateYearIsFilled= true;
 
     if (this.changeDateDayIsFilled && this.changeDateMonthIsFilled && this.changeDateYearIsFilled){
-      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).set({hour: 2}).toDate());
+      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).set({hour: 4}).toDate());
       this.addEvent(this.changedate.value);
     }
    }
@@ -951,7 +980,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.beginDateYearIsFilled= true;
 
     if (this.beginDateDayIsFilled && this.beginDateMonthIsFilled && this.beginDateYearIsFilled){
-      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).set({hour: 2}).toDate());
+      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).set({hour: 4}).toDate());
       this.addEvent(this.begindate.value);
     }
    }
@@ -965,7 +994,7 @@ export class TblshamelscjobstatemodifyComponent implements OnInit, AfterViewInit
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.doc_date.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
+      this.doc_date.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 4}).toDate());
       this.addEvent(this.doc_date.value);
     }
    }

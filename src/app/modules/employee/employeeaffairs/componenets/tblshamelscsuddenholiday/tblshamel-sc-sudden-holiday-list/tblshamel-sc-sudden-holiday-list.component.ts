@@ -173,6 +173,7 @@ if (element.serial != null )
         this.FillTable();
         this.snackBar.open('تم الحذف', 'Fechar', {
           duration: 2000,
+          panelClass: ['green-snackbar']
         });
 
     });

@@ -25,6 +25,8 @@ import { TBLShamelOverTimeShatebService } from 'src/app/modules/shared/services/
 import { TblShamelMoneyM3PayDest } from 'src/app/modules/shared/services/finance_department/broker/TblShamelMoneyM3PayDest';
 import { ConfirmationDialogComponent } from '../../common/confirmation-dialog/confirmation-dialog.component';
 import { TblShamelOvertimeShatebModifyComponent } from '../tbl-shamel-overtime-shateb-modify/tbl-shamel-overtime-shateb-modify.component';
+import { ExportToCsv } from 'export-to-csv';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-overtime-shateb-list',
@@ -57,7 +59,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   Selected_TBLShamelOverTimeShateb: TBLShamelOverTimeShateb;
 
   displayedColumns: string[] = ['area_id', 'payrol_id', 'year_id', 'month_id', 'school_id', 'broker_id',
-    'daycount'];
+    'daycount', 'action'];
 
   Form: FormGroup;
   Fixed_Month: TBLShamelMonth;
@@ -83,8 +85,24 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     console.log('event', event);
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
-    this.OnSearch();
+    this.FillTable();
   }
+
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
+
+  darkTheme: boolean;
 
   constructor(private frmBuilder: FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
@@ -95,7 +113,8 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     private tblShamelOverTimeShatebService: TBLShamelOverTimeShatebService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private _document: Document) {
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) {
 
     this.dataSource = new MatTableDataSource<TBLShamelOverTimeShateb>(this.overtime_shateb_List);
 
@@ -364,6 +383,19 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
             this.dataSource.data = this.allData;
             this.totalRows= data.Item2;
             this.dataSource._updatePaginator(this.totalRows);
+
+            this.allData.forEach((datum, index) =>{
+              this.excelData[index]= {
+                                      'المنطقة': datum?.area_id,
+                                      'رقم الشطب': datum?.payrol_id,
+                                      'العام': datum?.year_id,
+                                      'الشهر': datum?.month_id,
+                                      'المدرسة': datum?.school_id,
+                                      'اسم المعلم المكلف': datum?.broker_id,
+                                      'أيام الخدمة': datum?.daycount,
+                                      }; 
+    
+            });
           }
         }
       )
@@ -374,8 +406,32 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   }
 
 
-  Add() {
+  Add(name: string): void {
+    // Init selected_overtime_employee
+    this.selected_overtime_shateb = {
+      // serial: 0,
+      // broker_id: 0,
+      // area_id: 0,
+      // month_id: 0,
+      // year_id: 0,
+      // school_id: 0,
+    };
 
+    const dialogRef = this.dialog.open(TblShamelOvertimeShatebModifyComponent, {
+      height: '40%',
+      width: '60%',
+      data: { obj: this.selected_overtime_shateb }
+    });
+
+    dialogRef.afterClosed().toPromise().then(result => {
+      console.log(result);
+      if (result) {
+        this.currentPage=1;
+        this.pageSize=5;
+        this.FillTable();
+        
+      }
+    });
   }
 
   Refresh() {
@@ -399,6 +455,8 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
             this.ShamelOvertimeEmployeeService.delete(element?.serial).subscribe
               (
                 data => {
+                  this.currentPage=1;
+                  this.pageSize=5;
                   this.FillTable();
                 }
 
@@ -406,6 +464,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
           this.dataSource.paginator = this.paginator;
           this.snackBar.open('تم الحذف', '', {
             duration: 2000,
+            panelClass: ['green-snackbar']
           });
 
         }
@@ -421,12 +480,14 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
       this.selected_overtime_shateb = element;
 
       const dialogRef = this.dialog.open(TblShamelOvertimeShatebModifyComponent, {
-        height: '60%',
-        width: '80%',
+        height: '40%',
+        width: '60%',
         data: { obj: this.selected_overtime_shateb }
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
+        this.currentPage=1;
+        this.pageSize=5;
         this.FillTable();
 
         if (result){
@@ -434,6 +495,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
         
           this.snackBar.open('تم التعديل', '', {
             duration: 2000,
+            panelClass: ['green-snackbar']
           });
         }
       });
@@ -453,10 +515,15 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
   OnSearch()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.FillTable();
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 
@@ -492,4 +559,9 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
       element.focus();
     }
   } 
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

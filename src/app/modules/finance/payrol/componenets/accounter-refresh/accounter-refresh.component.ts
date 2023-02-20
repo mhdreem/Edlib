@@ -14,6 +14,7 @@ import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TblshamelPayrolSliceService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-payrol-slice.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-accounter-refresh',
@@ -57,6 +58,9 @@ export class AccounterRefreshComponent implements OnInit {
 
   fixedYear: string;
   fixedMonth: TBLShamelMonth;
+
+  darkTheme: boolean;
+
   constructor(@Inject(DOCUMENT) private _document: Document,
     public viewTBLShamelEmployeeService:ViewTBLShamelEmployeeService,
     private tblShamelAccounterService: TBLShamelAccounterService,
@@ -66,7 +70,8 @@ export class AccounterRefreshComponent implements OnInit {
     private tblshamelPayrolSliceService: TblshamelPayrolSliceService,
     private tblShamelNewShatebService: TBLShamelNewShatebService,
     private tblShamelYearService: TBLShamelYearService,
-    public ShamelMonthService: TBLShamelMonthService,) {
+    public ShamelMonthService: TBLShamelMonthService,
+    private themeService: ThemeService) {
 
     this.BuildForm();
     this.Load_Data();
@@ -256,6 +261,10 @@ export class AccounterRefreshComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
+    
     this.serial1.disable();
     this.AccounterName3.disable();
 
@@ -310,6 +319,7 @@ export class AccounterRefreshComponent implements OnInit {
         if (res == 1){
           this.snackBar.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
         }
       });
@@ -321,6 +331,7 @@ export class AccounterRefreshComponent implements OnInit {
                 if (res == 1){
                   this.snackBar.open('تم الحذف بنجاح', '', {
                     duration: 3000,
+                    panelClass: ['green-snackbar']
                   });
                 }
               });

@@ -36,11 +36,14 @@ mat-form-field{
 }
 
 td, th{
-    padding: 10px;
-    text-align: right !important;
+    padding: 5px;
+    text-align: center !important;
 }
 
-
+td{
+    border-left: 1px solid rgba(8, 8, 8, 0.116);
+    padding-inline: 2px !important;
+}
 .date .content{
     display: flex;
 }
@@ -279,4 +282,9 @@ form{
 
   mat-form-field{
     margin-left: 30px;
+  }
+
+  ::ng-deep .mat-sort-header-container{
+    width: fit-content;
+    margin-inline: auto;
   }

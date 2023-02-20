@@ -29,6 +29,7 @@ import { TBLShamelYear } from '../../../../../../modules/shared/models/employees
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
@@ -85,6 +86,8 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
   request: TBLShamelShatebHealthRequest ;
   
+  darkTheme: boolean;
+
   constructor(
     public dialog: MatDialog,
     private healthService: TBLShamelShatebHealthService,
@@ -96,7 +99,8 @@ export class HealthComponent implements OnInit, AfterViewInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     private ShamelAccounterService: AccounterService,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
     ) 
   { 
     this.LoadingFinish = true;
@@ -333,11 +337,15 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-    
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
    
   }
   btnSearchClick()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.Search();  
   }
   Search(){
@@ -355,12 +363,12 @@ export class HealthComponent implements OnInit, AfterViewInit {
       'accounter_id': this.Form.controls['accounter_id'].value,
       'healthnosalary_name': this.Form.controls['healthnosalary_name'].value,
       'tax_status': this.Form.controls['tax_status'].value,
-      'startdate_From': moment(this.Form.controls['startdate_From_Month'].value+'/'+this.Form.controls['startdate_From_Day'].value+'/'+this.Form.controls['startdate_From_Year'].value).set({hour: 2}).toDate(),
-      'startdate_To': moment(this.Form.controls['startdate_To_Month'].value+'/'+this.Form.controls['startdate_To_Day'].value+'/'+this.Form.controls['startdate_To_Year'].value).set({hour: 2}).toDate(),
-      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 2}).toDate(),
-      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 2}).toDate(),
+      'startdate_From': moment(this.Form.controls['startdate_From_Month'].value+'/'+this.Form.controls['startdate_From_Day'].value+'/'+this.Form.controls['startdate_From_Year'].value).set({hour: 4}).toDate(),
+      'startdate_To': moment(this.Form.controls['startdate_To_Month'].value+'/'+this.Form.controls['startdate_To_Day'].value+'/'+this.Form.controls['startdate_To_Year'].value).set({hour: 4}).toDate(),
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 4}).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
     }).subscribe(
       data=>{
         if (data.Item1 != null) {
@@ -378,12 +386,15 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
   editRec(element: TBLShamelShatebHealth){
     const dialogRef = this.dialog.open(HealthEditDialogComponent, {
-      width: '700px',
+      width: '900px',
+      position: {top: '40%'},
       data: element
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("result", result);
+      this.currentPage=1;
+        this.pageSize=5;
       this.Search();
     });
   }
@@ -391,24 +402,36 @@ export class HealthComponent implements OnInit, AfterViewInit {
   deleteRec(element: TBLShamelShatebHealth){
     const dialogRef = this.dialog.open(HealthDeleteDialogComponent, {
       width: '350px',
+      
       data: {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result)
-        this.healthService.delete(element.serial).subscribe((result: any) => {if(result.Result == 1) {this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.healthService.delete(element.serial).subscribe(
+          (result: any) => {
+            if(result.Result == 1) {
+              this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});
+              this.currentPage=1;
+              this.pageSize=5;
+              this.Search();
+            }});
     });
   }
 
   insert(){
     const dialogRef = this.dialog.open(HealthEditDialogComponent, {
-      width: '700px',
+      width: '60%',
+      height: '65%',
+      position: {top: '30%'},
       data: {
         
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
+        this.currentPage=1;
+        this.pageSize=5;
         this.Search();
       }
       console.log('ccc',result);

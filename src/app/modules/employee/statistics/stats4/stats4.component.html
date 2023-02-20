@@ -126,8 +126,11 @@
       </form>
     </mat-expansion-panel>
   </mat-accordion>
-  <button class="view" mat-raised-button style="margin-top: 10px" class="add" (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
-    
+  <button class="view" mat-raised-button style="margin-top: 10px;  margin-left: 10px;" class="add" (click)="SearchClicked()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+  <button mat-raised-button id="excel" (click)="exportToExcel()" [disabled]="dataSource.data[0]== null">
+    <mat-icon>view_comfy</mat-icon>
+    تصدير الى اكسل
+  </button>
   <mat-form-field class="search" appearance="fill">
     <mat-label>بحث</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input>

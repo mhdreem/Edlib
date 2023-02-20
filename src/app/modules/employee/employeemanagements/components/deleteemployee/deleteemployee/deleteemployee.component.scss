@@ -2,12 +2,22 @@
 
 mat-form-field, button{
     margin-left: 10px;
+    width: fit-content;
+}
+
+mat-form-field{
+    width: fit-content;
 }
 
 form{
     padding: 20px;
     width: fit-content;
 }
+
+::ng-deep .mat-expansion-indicator{
+    left: 720px !important;
+    position: relative !important;
+  }
 
 .darkTheme form{
     background-color: $darkBackground;

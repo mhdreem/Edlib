@@ -142,6 +142,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
                 this.dialog.closeAll();
                 this.snackBar.open('تمت الإضافة', '', {
                   duration: 3000,
+                  panelClass: ['green-snackbar']
                 });
               }
 
@@ -161,6 +162,7 @@ export class FixUpgradeYearModifyComponent implements OnInit {
             this.dialog.closeAll();
             this.snackBar.open('تم التعديل', '', {
               duration: 3000,
+              panelClass: ['green-snackbar']
             });
           }
 

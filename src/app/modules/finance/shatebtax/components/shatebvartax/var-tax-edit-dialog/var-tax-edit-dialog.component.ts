@@ -20,6 +20,7 @@ import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/em
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TblShamelVarTaxService } from 'src/app/modules/shared/services/finance_department/shatebtax/tbl-shamel-var-tax.service';
 import { TBLShamelShatebVarTaxService } from 'src/app/modules/shared/services/finance_department/shatebtax/tblshamel-shateb-var-tax.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 import { Validate_ID } from '../../shatebhealth/health-edit-dialog/validate_id';
 import { PunishmentEditDialogComponent } from '../../shatebpunishment/punishment-edit-dialog/punishment-edit-dialog.component';
@@ -53,7 +54,7 @@ export class VarTaxEditDialogComponent implements OnInit {
   Form: FormGroup;
 
 
-
+  darkTheme: boolean;
 
 
   constructor(
@@ -69,7 +70,8 @@ export class VarTaxEditDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PunishmentEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebVartax,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
 
   ) {
 
@@ -151,7 +153,7 @@ export class VarTaxEditDialogComponent implements OnInit {
         this.Form.controls['serial'].setValue(this.Selected_TBLShamelShatebVarTax.serial);
 
       if (this.Selected_TBLShamelShatebVarTax.eisaldate != null)
-        this.Form.controls['eisaldate'].setValue(moment(this.Selected_TBLShamelShatebVarTax.eisaldate).toDate());
+        this.Form.controls['eisaldate'].setValue(moment(this.Selected_TBLShamelShatebVarTax.eisaldate).set({hour: 4}).toDate());
 
         if (this.Selected_TBLShamelShatebVarTax.TBLShamelEmployee != null && this.Selected_TBLShamelShatebVarTax.TBLShamelEmployee.FullName!= null)
         {
@@ -177,6 +179,9 @@ export class VarTaxEditDialogComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   onNoClick(): void {
@@ -386,7 +391,7 @@ export class VarTaxEditDialogComponent implements OnInit {
     let obj : TBLShamelShatebVartax =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 2}).toDate(),
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 4}).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,

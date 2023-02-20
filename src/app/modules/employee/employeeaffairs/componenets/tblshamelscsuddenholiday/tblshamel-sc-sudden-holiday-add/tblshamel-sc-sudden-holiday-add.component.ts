@@ -414,17 +414,17 @@ if (this.Selected_Employee_SCSuddenHoliday != null )
   this.Selected_Employee_SCSuddenHoliday.duration = this.duration.value;
 
   if (this.startdate.value != null )
-  this.Selected_Employee_SCSuddenHoliday.startdate =moment( this.startdate.value).toDate();
+  this.Selected_Employee_SCSuddenHoliday.startdate =moment( this.startdate.value).set({hour: 4}).toDate();
 
   if (this.enddate.value != null )
-    this.Selected_Employee_SCSuddenHoliday.enddate =moment(this.enddate.value).toDate();
+    this.Selected_Employee_SCSuddenHoliday.enddate =moment(this.enddate.value).set({hour: 4}).toDate();
     
     this.Selected_Employee_SCSuddenHoliday.documenttype_id = this.documenttype_id.value;        
     this.Selected_Employee_SCSuddenHoliday.document_number = this.document_number.value;
 
     if (this.documentdate.value )
     
-    this.Selected_Employee_SCSuddenHoliday.documentdate = moment(this.documentdate.value).toDate();    
+    this.Selected_Employee_SCSuddenHoliday.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();    
     this.Selected_Employee_SCSuddenHoliday.notes = this.notes.value    
     this.Selected_Employee_SCSuddenHoliday.suddenholiday_id = this.suddenholiday_id.value
     
@@ -607,7 +607,7 @@ startDateChange(changeSource: string){
     this.startDateYearIsFilled= true;
 
   if (this.startDateDayIsFilled && this.startDateMonthIsFilled && this.startDateYearIsFilled){
-    this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 2}).toDate());
+    this.startdate.setValue(moment(this.startDateMonth+'/'+this.startDateDay+'/'+this.startDateYear).set({hour: 4}).toDate());
     this.addEventStartDate(this.startdate.value);
   }
  }
@@ -621,7 +621,7 @@ startDateChange(changeSource: string){
     this.endDateYearIsFilled= true;
 
   if (this.endDateDayIsFilled && this.endDateMonthIsFilled && this.endDateYearIsFilled){
-    this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 2}).toDate());
+    this.enddate.setValue(moment(this.endDateMonth+'/'+this.endDateDay+'/'+this.endDateYear).set({hour: 4}).toDate());
     this.addEventEndDate(this.enddate.value);
   }
  }
@@ -635,7 +635,7 @@ startDateChange(changeSource: string){
     this.documentDateYearIsFilled= true;
 
   if (this.documentDateDayIsFilled && this.documentDateMonthIsFilled && this.documentDateYearIsFilled){
-    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 2}).toDate());
+    this.documentdate.setValue(moment(this.documentDateMonth+'/'+this.documentDateDay+'/'+this.documentDateYear).set({hour: 4}).toDate());
     this.addEventDocumentDate(this.documentdate.value);
   }
  }

@@ -219,6 +219,7 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
         if (res == 1){
           this.snackBar.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
         }
       });
@@ -230,6 +231,7 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
                 if (res == 1){
                   this.snackBar.open('تم الحذف بنجاح', '', {
                     duration: 3000,
+                    panelClass: ['green-snackbar']
                   });
                 }
               });

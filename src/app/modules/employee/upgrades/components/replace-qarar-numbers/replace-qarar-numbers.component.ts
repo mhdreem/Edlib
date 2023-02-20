@@ -83,9 +83,9 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
 
   View(){
     this.request.old_Qara_Num= +this.Id.value;
-    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).toDate();
+    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 4}).toDate();
     this.request.new_Qara_Num= +this.NewQararNumber.value;
-    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).toDate();
+    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).set({hour: 4}).toDate();
     this.tblshamelScJobStateService.ListQarar(this.request).subscribe(
       (res: any) => {
         this.dataSource.data= res.Result;
@@ -97,9 +97,9 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
 
   Replace(){
     this.request.old_Qara_Num= +this.Id.value;
-    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 2}).toDate();
+    this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 4}).toDate();
     this.request.new_Qara_Num= +this.NewQararNumber.value;
-    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).set({hour: 2}).toDate();
+    this.request.new_Qara_Date= moment(this.NewQararDateMonth.value+'/'+this.NewQararDateDay.value+'/'+this.NewQararDateYear.value).set({hour: 4}).toDate();
     console.log('req', this.request);
     this.tblshamelScJobStateService.UpgradeQarar(this.request).subscribe(
       res => {

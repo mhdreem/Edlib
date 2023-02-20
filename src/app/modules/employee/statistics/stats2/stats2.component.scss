@@ -10,16 +10,6 @@ form .columns{
     display: flex;
 }
 
-.demo-row-is-clicked {
-    background-color: orange !important;
-  }
-
-  .mat-row:nth-child(even){
-    background-color: $LightTableEven;
-}
-.mat-row:nth-child(odd){
-    background-color: white;
-}
 
 .search{
     margin-top: 10px;
@@ -35,7 +25,11 @@ form .columns{
 
 td, th{
     padding: 5px !important;
-    text-align: right !important;
+    text-align: center !important;
+}
+td{
+  border-left: 1px solid rgba(8, 8, 8, 0.116);
+  padding-inline: 2px !important;
 }
 
 .clear{
@@ -53,6 +47,11 @@ td, th{
 .small-width{
     width: 90px;
     margin-left: 10px;
+}
+
+::ng-deep .mat-expansion-indicator{
+  left: 1140px !important;
+  position: relative !important;
 }
 
 
@@ -236,4 +235,19 @@ mat-form-field ::ng-deep .mat-form-field-flex{
     
       mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
         background-color: rgba(0,0,0,.12) !important;
+      }
+
+      #excel{
+        background-color: #1F6E43;
+        color: white;
+      }
+  
+      #excel:disabled{
+        background-color: rgba(0,0,0,.12) !important;
+        color: rgba(0,0,0,.26);
+      }
+
+      ::ng-deep .mat-sort-header-container{
+        width: fit-content;
+        margin-inline: auto;
       }

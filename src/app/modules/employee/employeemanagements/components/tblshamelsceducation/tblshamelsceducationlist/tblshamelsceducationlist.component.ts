@@ -166,6 +166,7 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
               this.FillTable();
               this.snackBar.open('تم الحذف بنجاح', '', {
                 duration: 3000,
+                panelClass: ['green-snackbar']
               });
             } 
 

@@ -447,7 +447,11 @@
     
         </mat-accordion>
     </div>
-    <button class="search" mat-raised-button style="margin-top: 10px" class="add" (click)="ExcuteSearch()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+    <button class="search" mat-raised-button style="margin-top: 10px; margin-left: 10px" class="add" (click)="SearchClicked()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
+    <button mat-raised-button id="excel" (click)="exportToExcel()" [disabled]="dataSource.data[0]== null">
+        <mat-icon>view_comfy</mat-icon>
+        تصدير الى اكسل
+      </button>
     <div class="col-md-12">
         <div class="table-wrap">
     

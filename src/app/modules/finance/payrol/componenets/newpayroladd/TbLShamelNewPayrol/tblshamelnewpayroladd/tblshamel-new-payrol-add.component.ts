@@ -18,6 +18,7 @@ import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { TblShamelNewPayrolAddService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-add.service';
 import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-tax.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TaxDialogComponent } from '../../tax-dialog/tax-dialog.component';
 import { TblShamelNewPayrolAddPageServiceService } from '../tbl-shamel-new-payrol-add-page-service.service';
 
@@ -50,6 +51,7 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
   errorMsg: any;
 
 
+  darkTheme: boolean;
 
 
   constructor(
@@ -63,7 +65,8 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     private tblShamelNewPayrolTaxService: TblShamelNewPayrolTaxService,
-    private snackBar: MatSnackBar,) {
+    private snackBar: MatSnackBar,
+    private themeService: ThemeService) {
 
 
     this.BuildForm();
@@ -403,7 +406,9 @@ export class TbLShamelNewPayrolAddComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 
@@ -666,6 +671,7 @@ console.log( this.Form.controls['FourChild'].value.length);
         isInputsNull = true;
         this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
           duration: 3000,
+          panelClass: ['red-snackbar']
         });
       }
     }
@@ -675,6 +681,7 @@ console.log( this.Form.controls['FourChild'].value.length);
         isInputsNull = true;
         this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للحسمية المراد إضافتها', '', {
           duration: 3000,
+          panelClass: ['red-snackbar']
         });
       }
     }
@@ -684,6 +691,7 @@ console.log( this.Form.controls['FourChild'].value.length);
         isInputsNull = true;
         this.snackBar.open('يجب ملء حقلي المبلغ والنسبة الموافقين للتعويض المراد إضافته', '', {
           duration: 3000,
+          panelClass: ['red-snackbar']
         });
       }
     }
@@ -729,14 +737,14 @@ console.log( this.Form.controls['FourChild'].value.length);
       if (
         this.Form.controls['id'].value == null || this.Form.controls['id'].value <0)
         {
-          this.snackBar.open('يجب ادخال رقم الإضبارة','موافق');
+          this.snackBar.open('يجب ادخال رقم الإضبارة','موافق', {panelClass: ['red-snackbar']});
           return;
         }
 
         if (
           this.Form.controls['wife'].value == null || this.Form.controls['wife'].value <0)
           {
-            this.snackBar.open('يجب ادخال الزوجة','موافق');
+            this.snackBar.open('يجب ادخال الزوجة','موافق', {panelClass: ['red-snackbar']});
             return;
           }
   
@@ -746,35 +754,35 @@ console.log( this.Form.controls['FourChild'].value.length);
           if (
             this.Form.controls['FirstChild'].value == null || this.Form.controls['FirstChild'].value <0)
             {
-              this.snackBar.open('يجب ادخال ترميز الاولاد','موافق');
+              this.snackBar.open('يجب ادخال ترميز الاولاد','موافق', {panelClass: ['red-snackbar']});
               return;
             }
         
             if (
               this.Form.controls['SecondChild'].value == null || this.Form.controls['SecondChild'].value <0)
               {
-                this.snackBar.open('يجب ادخال ترميز الاولاد','موافق');
+                this.snackBar.open('يجب ادخال ترميز الاولاد','موافق', {panelClass: ['red-snackbar']});
                 return;
               }
 
               if (
                 this.Form.controls['ThirdChild'].value == null || this.Form.controls['ThirdChild'].value <0)
                 {
-                  this.snackBar.open('يجب ادخال ترميز الاولاد','موافق');
+                  this.snackBar.open('يجب ادخال ترميز الاولاد','موافق', {panelClass: ['red-snackbar']});
                   return;
                 }
 
                 if (
                   this.Form.controls['FourChild'].value == null || this.Form.controls['FourChild'].value <0)
                   {
-                    this.snackBar.open('يجب ادخال ترميز الاولاد','موافق');
+                    this.snackBar.open('يجب ادخال ترميز الاولاد','موافق', {panelClass: ['red-snackbar']});
                     return;
                   }
 
                   if (
                     this.Form.controls['RestChild'].value == null || this.Form.controls['RestChild'].value <0)
                     {
-                      this.snackBar.open('يجب ادخال ترميز الاولاد','موافق');
+                      this.snackBar.open('يجب ادخال ترميز الاولاد','موافق', {panelClass: ['red-snackbar']});
                       return;
                     }
 
@@ -782,7 +790,7 @@ console.log( this.Form.controls['FourChild'].value.length);
                     if (
                       this.Form.controls['insurance_kind'].value == null || this.Form.controls['insurance_kind'].value <0)
                       {
-                        this.snackBar.open('يجب ادخال نوع التأمين','موافق');
+                        this.snackBar.open('يجب ادخال نوع التأمين','موافق', {panelClass: ['red-snackbar']});
                         return;
                       }
 
@@ -790,7 +798,7 @@ console.log( this.Form.controls['FourChild'].value.length);
                       if (
                         this.Form.controls['salary_old'].value == null || this.Form.controls['salary_old'].value <0)
                         {
-                          this.snackBar.open('يجب ادخال الراتب القديم','موافق');
+                          this.snackBar.open('يجب ادخال الراتب القديم','موافق', {panelClass: ['red-snackbar']});
                           return;
                         }
                         
@@ -803,7 +811,7 @@ console.log( this.Form.controls['FourChild'].value.length);
  
         if (res != null )
         {
-          this.snackBar.open('تم بنجاح','موافق');
+          this.snackBar.open('تم بنجاح','موافق', {panelClass: ['green-snackbar']});
         }
         
       });

@@ -17,4 +17,8 @@ entertime?:Time;
 modifyusername?:string;
 modifydate?:Date;
 modifytime?:Time;
+VShamelBrokerEmpService?: {
+    Broker_ID: number,
+    ServiceDayes: number
+  },
 }

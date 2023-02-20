@@ -81,7 +81,9 @@ import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent 
 import { ConfirmationdialogComponent } from './modules/shared/components/confirmationdialog/confirmationdialog.component';
 import { ThemeButtonComponent } from './modules/shared/components/theme-button/theme-button.component';
 
-
+import {TBLShamelPrivilagesComponent} from './modules/shared/components/user/tblshamel-privilages/tblshamel-privilages.component'
+import {TBLShamelUserEditComponent} from './modules/shared/components/user/tblshamel-user-edit/tblshamel-user-edit.component'
+import {TBLShamelUserListComponent} from './modules/shared/components/user/tblshamel-user-list/tblshamel-user-list.component'
 
 @NgModule({
   declarations: [
@@ -94,7 +96,10 @@ import { ThemeButtonComponent } from './modules/shared/components/theme-button/t
       Page404Component,
       Page500Component,
       ConfirmationdialogComponent,
-      ThemeButtonComponent     
+      ThemeButtonComponent,
+      TBLShamelPrivilagesComponent,
+      TBLShamelUserEditComponent,
+      TBLShamelUserListComponent,     
   ],
   imports: [
     CommonModule,

@@ -175,6 +175,7 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
           
           this.snackBar.open(' تم الحذف بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
 
         }

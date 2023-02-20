@@ -11,6 +11,8 @@ import { TBLShamelArea } from 'src/app/modules/shared/models/employees_departmen
 import { TblShamelBrokerPrintTotals } from 'src/app/modules/shared/models/finance_department/broker/TblShamelBrokerPrintTotals';
 import { TBLShamelAreaService } from 'src/app/modules/shared/services/employees_department/tblshamel-area.service';
 import { TblShamelBrokerShatebService } from 'src/app/modules/shared/services/finance_department/broker/tbl-shamel-broker-shateb.service';
+import { ExportToCsv } from 'export-to-csv';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-broker-print-totals-list',
@@ -36,7 +38,7 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
   // rowInPage = 100;
 
   Form: FormGroup;
-  broker_print_totals_List: TblShamelBrokerPrintTotals[] = [];
+  broker_print_totals_List: any[] = [];
 
   dataSource = new MatTableDataSource<TblShamelBrokerPrintTotals>(this.broker_print_totals_List);
 
@@ -46,17 +48,35 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
 
   displayedColumns: string[] = ['area_name', 'fullname', 'daycount', 'totaldaycount'];
   
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
+
   ngAfterViewInit() {
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
   
+  darkTheme: boolean;
+
+
   constructor(private frmBuilder : FormBuilder,
     private tblShamelAreaService: TBLShamelAreaService,
     private tblShamelBrokerShatebService: TblShamelBrokerShatebService,
     private snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document) { 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) { 
 
       this.dataSource = new MatTableDataSource<TblShamelBrokerPrintTotals>(this.broker_print_totals_List);
 
@@ -135,6 +155,7 @@ OnSearch()
     if(this.Form.controls['startdateDay'].value == null || this.Form.controls['startdateMonth'].value == null || this.Form.controls['startdateYear'].value == null || this.Form.controls['enddateDay'].value == null || this.Form.controls['enddateMonth'].value == null || this.Form.controls['enddateYear'].value == null){
     this.snackBar.open('الرجاء إدخال التواريخ', '', {
       duration: 3000,
+      panelClass: ['red-snackbar']
     });
     return;
   }
@@ -153,8 +174,8 @@ OnSearch()
       // call Search
       this.tblShamelBrokerShatebService.statistics({
         area_name: this.Form.controls['area_name'].value,
-        start_date: moment(this.Form.controls['startdateMonth'].value+'/'+this.Form.controls['startdateDay'].value+'/'+this.Form.controls['startdateYear'].value).set({hour: 2}).toDate(),
-        end_date: moment(this.Form.controls['enddateMonth'].value+'/'+this.Form.controls['enddateDay'].value+'/'+this.Form.controls['enddateYear'].value).set({hour: 2}).toDate()
+        start_date: moment(this.Form.controls['startdateMonth'].value+'/'+this.Form.controls['startdateDay'].value+'/'+this.Form.controls['startdateYear'].value).set({hour: 4}).toDate(),
+        end_date: moment(this.Form.controls['enddateMonth'].value+'/'+this.Form.controls['enddateDay'].value+'/'+this.Form.controls['enddateYear'].value).set({hour: 4}).toDate()
       }).subscribe(
         (data: TblShamelBrokerPrintTotals[] )=> {
 
@@ -164,6 +185,16 @@ OnSearch()
             this.broker_print_totals_List = this.broker_print_totals_List.concat(data);
           }
           this.dataSource.data = this.broker_print_totals_List;
+
+          this.broker_print_totals_List.forEach((datum, index) =>{
+            this.excelData[index]= {
+                                    'المنطقة': datum?.area_name,
+                                    'اسم الوكيل': datum?.fullname,
+                                    'أيام الخدمة': datum?.daycount,
+                                    'مجموع أيام الخدمة': datum?.totaldaycount,
+                                    }; 
+  
+          });
 
         }
       )
@@ -183,6 +214,9 @@ OnSearch()
   // }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   public focusNext(id: string) {
@@ -191,4 +225,9 @@ OnSearch()
       element.focus();
     }
   } 
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

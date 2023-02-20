@@ -32,9 +32,11 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
     super();
   }
   ngOnInit(): void {
+    
     this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
       this.darkTheme= res;
     })
+    
   }
   Logout()
   {
@@ -44,10 +46,13 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
   employeesClicked(){
     this.navItems = [
       {
-        title: true,
         name: 'مديرية الشؤون الادارية',
-        formname: 'مديرية الشؤون الادارية',
         url: 'employees',
+        iconComponent: { name: 'cil-speedometer' },
+        badge: {
+          color: 'info',
+          text: 'NEW'
+        }
       },
     
       {

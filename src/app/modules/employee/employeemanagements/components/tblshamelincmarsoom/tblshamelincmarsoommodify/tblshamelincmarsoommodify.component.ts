@@ -333,14 +333,35 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
         if (this.Selected_IncMarsoom.documenttype_id != null && this.Selected_IncMarsoom.documenttype_id != undefined)
           this.documenttype_id.setValue(this.Selected_IncMarsoom.documenttype_id);
 
-        if (this.Selected_IncMarsoom.documentdate != null && this.Selected_IncMarsoom.documentdate != undefined)
-          this.documentdate.setValue(moment(this.Selected_IncMarsoom.documentdate).toDate());
+        if (this.Selected_IncMarsoom.documentdate != null && this.Selected_IncMarsoom.documentdate != undefined){
+          this.documentdate.setValue(moment(this.Selected_IncMarsoom.documentdate).set({hour: 4}).toDate());
+          this.docDateDay= moment(this.documentdate.value).date() + '';
+          this.docDateMonth= (moment(this.documentdate.value).month() + 1) + '';
+          this.docDateYear= moment(this.documentdate.value).year() + '';
+          this.docDateDayIsFilled= true;
+          this.docDateMonthIsFilled= true;
+          this.docDateYearIsFilled= true;
+        }
 
-        if (this.Selected_IncMarsoom.changedate != null && this.Selected_IncMarsoom.changedate != undefined)
-          this.changedate.setValue(moment(this.Selected_IncMarsoom.changedate).toDate());
+        if (this.Selected_IncMarsoom.changedate != null && this.Selected_IncMarsoom.changedate != undefined){
+          this.changedate.setValue(moment(this.Selected_IncMarsoom.changedate).set({hour: 4}).toDate());
+          this.changeDateDay= moment(this.changedate.value).date() + '';
+          this.changeDateMonth= (moment(this.changedate.value).month() + 1) + '';
+          this.changeDateYear= moment(this.changedate.value).year() + '';
+          this.changeDateDayIsFilled= true;
+          this.changeDateMonthIsFilled= true;
+          this.changeDateYearIsFilled= true;
+        }
 
-        if (this.Selected_IncMarsoom.begindate != null && this.Selected_IncMarsoom.begindate != undefined)
-          this.begindate.setValue(moment(this.Selected_IncMarsoom.begindate).toDate());
+        if (this.Selected_IncMarsoom.begindate != null && this.Selected_IncMarsoom.begindate != undefined){
+          this.begindate.setValue(moment(this.Selected_IncMarsoom.begindate).set({hour: 4}).toDate());
+          this.beginDateDay= moment(this.begindate.value).date() + '';
+          this.beginDateMonth= (moment(this.begindate.value).month() + 1) + '';
+          this.beginDateYear= moment(this.begindate.value).year() + '';
+          this.beginDateDayIsFilled= true;
+          this.beginDateMonthIsFilled= true;
+          this.beginDateYearIsFilled= true;
+        }
 
         if (this.Selected_IncMarsoom.document_number != null && this.Selected_IncMarsoom.document_number != undefined)
           this.document_number.setValue(this.Selected_IncMarsoom.document_number);
@@ -380,13 +401,13 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
       if (this.Selected_IncMarsoom != null && this.Selected_IncMarsoom != undefined) {
 
         if (this.begindate.value != null)
-          this.Selected_IncMarsoom.begindate = moment(this.begindate.value).toDate();
+          this.Selected_IncMarsoom.begindate = moment(this.begindate.value).set({hour: 4}).toDate();
 
         if (this.documentdate.value != null)
-          this.Selected_IncMarsoom.documentdate = moment(this.documentdate.value).toDate();
+          this.Selected_IncMarsoom.documentdate = moment(this.documentdate.value).set({hour: 4}).toDate();
 
         if (this.changedate.value != null)
-          this.Selected_IncMarsoom.changedate = moment(this.changedate.value).toDate();
+          this.Selected_IncMarsoom.changedate = moment(this.changedate.value).set({hour: 4}).toDate();
 
 
         if (this.changereason_id.value != null)
@@ -486,6 +507,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
         
           this.snackBar.open('تمت الإضافة بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
           });
           this.dialogRef.close();
         } else {
@@ -505,6 +527,8 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
         if (res == 1) {
           this.snackBar.open('تم التعديل بنجاح', '', {
             duration: 3000,
+            panelClass: ['green-snackbar']
+
           });
           this.dialogRef.close(1);
 
@@ -580,7 +604,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
       this.changeDateYearIsFilled= true;
 
     if (this.changeDateDayIsFilled && this.changeDateMonthIsFilled && this.changeDateYearIsFilled){
-      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).set({hour: 2}).toDate());
+      this.changedate.setValue(moment(this.changeDateMonth+'/'+this.changeDateDay+'/'+this.changeDateYear).set({hour: 4}).toDate());
       this.addEventChangeDate(this.changedate.value);
     }
    }
@@ -594,7 +618,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
       this.beginDateYearIsFilled= true;
 
     if (this.beginDateDayIsFilled && this.beginDateMonthIsFilled && this.beginDateYearIsFilled){
-      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).set({hour: 2}).toDate());
+      this.begindate.setValue(moment(this.beginDateMonth+'/'+this.beginDateDay+'/'+this.beginDateYear).set({hour: 4}).toDate());
       this.addEventBeginDate(this.begindate.value);
     }
    }
@@ -608,7 +632,7 @@ export class TblshamelincmarsoommodifyComponent implements OnInit, AfterViewInit
       this.docDateYearIsFilled= true;
 
     if (this.docDateDayIsFilled && this.docDateMonthIsFilled && this.docDateYearIsFilled){
-      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 2}).toDate());
+      this.documentdate.setValue(moment(this.docDateMonth+'/'+this.docDateDay+'/'+this.docDateYear).set({hour: 4}).toDate());
       this.addEventDocumentDate(this.documentdate.value);
     }
    }

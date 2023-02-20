@@ -1,10 +1,11 @@
-<h1 mat-dialog-title>تعديل السجل</h1>
+<div class="theme" [class.darkTheme]="darkTheme">
+  <h1 mat-dialog-title >شطب العقوبات</h1>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="Form" #form="ngForm">
       <mat-form-field color="primary" id="id" appearance="fill">
         <mat-label>الإضبارة</mat-label>
         <input matInput formControlName="id" id="id" (keyup.enter)="focusNext('fullname')" (change)="OnIdChange($event)">
-        <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">رقم الإضبارة متكرر</mat-error>
+        <mat-error *ngIf="Form.controls['id'].hasError('not found')">رقم الإضبارة غير موجود</mat-error>
         <mat-error *ngIf="Form.controls['id'].hasError('required')">رقم الإضبارة مطلوب</mat-error>
       </mat-form-field>
 
@@ -51,7 +52,7 @@
         </mat-form-field>
 
         <div class="date">
-          <span>تاريخ المستند:</span>
+          <span class="white">تاريخ المستند:</span>
           <div class="content">
             <mat-form-field class="example-full-width small-width" appearance="fill">
               <mat-label>اليوم</mat-label>
@@ -82,13 +83,14 @@
 </div>
 
 <div mat-dialog-actions>
-    <button mat-raised-button (click)="onNoClick()">
+    <button mat-raised-button color="warn" (click)="onNoClick()">
       <mat-icon class="mat-icon-rtl-mirror">close
       </mat-icon>
       إلغاء الأمر</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial
+    <button mat-raised-button class="edit" [mat-dialog-close]="data" cdkFocusInitial
     (click)="save()" [disabled]="!form.valid">
     <mat-icon class="mat-icon-rtl-mirror">save
     </mat-icon>
     حفظ</button>
+</div>
 </div>

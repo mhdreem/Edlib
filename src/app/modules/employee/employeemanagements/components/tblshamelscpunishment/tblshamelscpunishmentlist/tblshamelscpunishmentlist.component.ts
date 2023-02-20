@@ -119,7 +119,7 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
           },error=>
           {
             this.LoadingFinish = true;  
-            this.snackBar.open('حدث خطأ اثناء التحميل','موافق');
+            this.snackBar.open('حدث خطأ اثناء التحميل','موافق', {panelClass: ['red-snackbar']});
           }
         )
         );
@@ -220,6 +220,7 @@ try{
                 this.FillTable();
                 this.snackBar.open('تم الحذف بنجاح', '', {
                   duration: 3000,
+                  panelClass: ['green-snackbar']
                 });
               }
 

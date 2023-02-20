@@ -156,7 +156,7 @@
         <form class="example-form" [formGroup]="Form1">
             <!-- <mat-checkbox [formControl]="showWord">إظهار كلمة رئيس المكتب التنفيذي</mat-checkbox> -->
         </form>
-        <button mat-raised-button class="add" (click)="print()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
+        <button mat-raised-button class="add" (click)="print()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
         <button mat-raised-button class="add" (click)="adjustPrintFooter()" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
         
     

@@ -56,6 +56,7 @@ export class TblShamelBrokerShatebService {
     }
   
     statistics(obj : TblshamelBrokerStatistics )  {
+      console.log('obj', obj);
       return this.httpClient.post<TblShamelBrokerPrintTotals[]>(this.RestUrl+`/Statistics` ,obj,this.httpOptions);  
     }
   }

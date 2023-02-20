@@ -1,101 +1,105 @@
-<mat-dialog-content class="mat-typography">
-    <form [formGroup]="Form">
-
+<div class="theme" [class.darkTheme]="darkTheme">
+    <mat-dialog-content class="mat-typography">
+        <form [formGroup]="Form">
+    
+            
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>الأسم</mat-label>
+                <input matInput type="text" value="" formControlName="fname" id="fname" (keyup.enter)="focusNext('lname')" required>
+            </mat-form-field>
+    
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>الكنية</mat-label>
+                <input matInput type="text" value="" formControlName="lname" id="lname" (keyup.enter)="focusNext('father')" required>
+            </mat-form-field>
+    
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>الأب</mat-label>
+                <input matInput type="text" value="" formControlName="father" id="father" (keyup.enter)="focusNext('mother')" required>
+            </mat-form-field>
+    
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>الأم</mat-label>
+                <input matInput type="text" value="" formControlName="mother" id="mother" (keyup.enter)="focusNext('birthdateDay')" required>
+            </mat-form-field>
+    
+            <div class="date">
+                <span>تاريخ الولادة:</span>
+                <div class="content">
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>اليوم</mat-label>
+                    <input type="number" matInput formControlName="birthdateDay" id="birthdateDay" (keyup.enter)="focusNext('birthdateMonth')" placeholder="ex: 21">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>الشهر</mat-label>
+                    <input type="number" matInput formControlName="birthdateMonth" id="birthdateMonth" (keyup.enter)="focusNext('birthdateYear')" placeholder="ex: 1">
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width small-width" appearance="fill">
+                    <mat-label>العام</mat-label>
+                    <input type="number" matInput formControlName="birthdateYear" id="birthdateYear" (keyup.enter)="focusNext('sex_name')" placeholder="ex: 2023">
+                  </mat-form-field>
+                </div>
+              </div>
+    
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>الجنس</mat-label>
+                <input type="text" matInput formControlName="sex_name" id="sex_name" (keyup.enter)="focusNext('servicedayes')" [matAutocomplete]="auto_sexname">
+                <mat-autocomplete #auto_sexname="matAutocomplete" [displayWith]="displaySexNameProperty.bind(this)">
+                    <mat-option *ngFor="let option of List_SEX_NAME_Filter | async" [value]="option.Sex_Name">
+                        {{option.Sex_Name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+    
+            <div *ngIf="data.source=='edit'" style="display: inline-block;">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>ساعات الخدمة</mat-label>
         
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>الأسم</mat-label>
-            <input matInput type="text" value="" formControlName="fname" id="fname" (keyup.enter)="focusNext('lname')" required>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>الكنية</mat-label>
-            <input matInput type="text" value="" formControlName="lname" id="lname" (keyup.enter)="focusNext('father')" required>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>الأب</mat-label>
-            <input matInput type="text" value="" formControlName="father" id="father" (keyup.enter)="focusNext('mother')" required>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>الأم</mat-label>
-            <input matInput type="text" value="" formControlName="mother" id="mother" (keyup.enter)="focusNext('birthdateDay')" required>
-        </mat-form-field>
-
-        <div class="date">
-            <span>تاريخ الولادة:</span>
-            <div class="content">
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>اليوم</mat-label>
-                <input type="number" matInput formControlName="birthdateDay" id="birthdateDay" (keyup.enter)="focusNext('birthdateMonth')" placeholder="ex: 21">
-              </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>الشهر</mat-label>
-                <input type="number" matInput formControlName="birthdateMonth" id="birthdateMonth" (keyup.enter)="focusNext('birthdateYear')" placeholder="ex: 1">
-              </mat-form-field>
-              <mat-form-field class="example-full-width small-width" appearance="fill">
-                <mat-label>العام</mat-label>
-                <input type="number" matInput formControlName="birthdateYear" id="birthdateYear" (keyup.enter)="focusNext('sex_name')" placeholder="ex: 2023">
-              </mat-form-field>
+                    <input matInput type="number" value="" formControlName="servicedayes" id="servicedayes" (keyup.enter)="focusNext('fname')" required>
+        
+                </mat-form-field>
             </div>
-          </div>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>الجنس</mat-label>
-            <input type="text" matInput formControlName="sex_name" id="sex_name" (keyup.enter)="focusNext('servicedayes')" [matAutocomplete]="auto_sexname">
-            <mat-autocomplete #auto_sexname="matAutocomplete" [displayWith]="displaySexNameProperty.bind(this)">
-                <mat-option *ngFor="let option of List_SEX_NAME_Filter | async" [value]="option.Sex_Name">
-                    {{option.Sex_Name}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>ساعات الخدمة</mat-label>
-
-            <input matInput type="number" value="" formControlName="servicedayes" id="servicedayes" (keyup.enter)="focusNext('fname')" required>
-
-        </mat-form-field>
-
-
-       
-
-       
-
-      
-
-      
-
-      
-
-
-
-
-    </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-raised-button color="warn" [mat-dialog-close]="false">
-        <mat-icon class="mat-icon-rtl-mirror">close
-        </mat-icon>
-        اغلاق
-    </button>
-
-
-
-
-
-    <button mat-raised-button color="accent" (click)="onReset()">
-        <mat-icon class="mat-icon-rtl-mirror">clear
-        </mat-icon>
-        مسح الشاشة
-    </button>
-
-
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
-        [disabled]="Form.invalid   ">
-        <mat-icon class="mat-icon-rtl-mirror">save
-        </mat-icon>
-        حفظ
-    </button>
-
-</mat-dialog-actions>
+    
+    
+           
+    
+           
+    
+          
+    
+          
+    
+          
+    
+    
+    
+    
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" [mat-dialog-close]="false">
+            <mat-icon class="mat-icon-rtl-mirror">close
+            </mat-icon>
+            اغلاق
+        </button>
+    
+    
+    
+    
+    
+        <button mat-raised-button color="accent" (click)="onReset()">
+            <mat-icon class="mat-icon-rtl-mirror">clear
+            </mat-icon>
+            مسح الشاشة
+        </button>
+    
+    
+        <button mat-raised-button color="primary" cdkFocusInitial (click)="Save()" [mat-dialog-close]="true"
+            [disabled]="Form.invalid   ">
+            <mat-icon class="mat-icon-rtl-mirror">save
+            </mat-icon>
+            حفظ
+        </button>
+    
+    </mat-dialog-actions>
+</div>

@@ -24,7 +24,7 @@ export function  Validate_ID( tblShamelBrokerEmployeeService:TblShamelBrokerEmpl
           (data:any ) => 
           {           
             // return (data && data.length > 0) ? null : { 'uniq1': true }  ;
-            return (data && data.serial == null) ? null : { 'uniq1': true }  ;
+            return (data && data.serial == null) ? { 'not found': true } : null  ;
           }
         ));
    

@@ -80,7 +80,7 @@
     </mat-accordion>
     
     <button class="view" mat-raised-button color="primary" (click)="list()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
-  <button mat-raised-button class="add" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة الإحالات</button>
+  <button mat-raised-button class="add" (click)="print()" printSectionId="printReferral-section" ngxPrint [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة الإحالات</button>
   <button mat-raised-button class="add" (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
   
   <div class="table-wrap">

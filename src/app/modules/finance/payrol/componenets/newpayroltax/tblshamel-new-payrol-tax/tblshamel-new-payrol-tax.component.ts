@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, Observable, of } from 'rxjs';
 import { TblShamelNewPayrolTax } from 'src/app/modules/shared/models/finance_department/payrol/TblShamelNewPayrolTax';
 import { TblShamelNewPayrolTaxService } from 'src/app/modules/shared/services/finance_department/payrol/tbl-shamel-new-payrol-tax.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 @Component({
@@ -21,9 +22,12 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
   isDisabled: boolean = true;
 
 
+  darkTheme: boolean;
+
   constructor(
     public tblShamelNewPayrolTaxService: TblShamelNewPayrolTaxService,
-    public _SnackBar:MatSnackBar 
+    public _SnackBar:MatSnackBar ,
+    private themeService: ThemeService
     ) {       
       this.loadData();     
   }
@@ -111,10 +115,10 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
       res=>
       {
         if (res == 1){
-          this._SnackBar.open('تمت الإضافة بنجاح','موافق');
+          this._SnackBar.open('تمت الإضافة بنجاح','موافق', {panelClass: ['green-snackbar']});
         }
         else
-        this._SnackBar.open('لم تتم الإضافة','موافق');
+        this._SnackBar.open('لم تتم الإضافة','موافق', {panelClass: ['red-snackbar']});
       }
     )
 
@@ -139,6 +143,9 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
   }
 
   ngOnInit(): void {  
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
       const saveButton = document.getElementById('saveButton');     
   }
 
@@ -212,7 +219,7 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
               {
                 if (res!= null && res>0)
                 {
-                  this._SnackBar.open('تم الحذف بنجاح','موافق');
+                  this._SnackBar.open('تم الحذف بنجاح','موافق',  {panelClass: ['green-snackbar']});
                   if (payroltaxtype=='ta3weed')
                   {
                   
@@ -234,7 +241,7 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
                 }
                 else 
                 {
-                  this._SnackBar.open('لم يتم الحذف','موافق');
+                  this._SnackBar.open('لم يتم الحذف','موافق', {panelClass: ['red-snackbar']});
 
                 }
               }
@@ -253,10 +260,10 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
         {
           if (res>0)
           {
-            this._SnackBar.open('تم حذف جميع السجلات','موافق');
+            this._SnackBar.open('تم حذف جميع السجلات','موافق', {panelClass: ['green-snackbar']});
           }else 
           {
-            this._SnackBar.open('لم يتم الحذف','موافق');
+            this._SnackBar.open('لم يتم الحذف','موافق', {panelClass: ['red-snackbar']});
 
           }
         }
@@ -270,10 +277,10 @@ export class TBLShamelNewPayrolTaxComponent  implements OnInit {
         {
           if (res>0)
           {
-            this._SnackBar.open('تم حذف جميع السجلات','موافق');
+            this._SnackBar.open('تم حذف جميع السجلات','موافق', {panelClass: ['green-snackbar']});
           }else 
           {
-            this._SnackBar.open('لم يتم الحذف','موافق');
+            this._SnackBar.open('لم يتم الحذف','موافق', {panelClass: ['red-snackbar']});
 
           }
         }

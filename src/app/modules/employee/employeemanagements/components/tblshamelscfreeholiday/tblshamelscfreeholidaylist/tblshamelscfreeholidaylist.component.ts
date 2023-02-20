@@ -187,6 +187,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
                   this.FillTable();
                   this.snackBar.open(' تم الحذف بنجاح', '', {
                     duration: 3000,
+                    panelClass: ['green-snackbar']
                   }); 
                 }
               });

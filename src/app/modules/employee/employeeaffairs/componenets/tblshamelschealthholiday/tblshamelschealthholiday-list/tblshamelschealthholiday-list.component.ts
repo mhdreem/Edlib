@@ -84,6 +84,7 @@ export class TblshamelschealthholidayListComponent implements OnInit,AfterViewIn
             {
               this.employee_HealthHoliday_List = data.TBLShamelSCHealthHolidays;
               this.dataSource.data = this.employee_HealthHoliday_List;
+              console.log('this.employee_HealthHoliday_List', this.employee_HealthHoliday_List);
             }
 
           }
@@ -120,6 +121,7 @@ ngAfterViewInit() {
          await this.ShamelSCHealthHolidayService.list(this.Selected_Emp.id).subscribe(
            (data:any)=>
            {      
+            console.log('data', data);
              this.employee_HealthHoliday_List=data;  
              this.PageService.Selected_TBLShamelEmployee.TBLShamelSCHealthHolidays = data;                        
              this.dataSource.data =this.employee_HealthHoliday_List;
@@ -193,6 +195,7 @@ ngAfterViewInit() {
                 this.FillTable();
                 this.snackBar.open('تم الحذف', 'Fechar', {
                   duration: 2000,
+                  panelClass: ['green-snackbar']
                 });
                 
  

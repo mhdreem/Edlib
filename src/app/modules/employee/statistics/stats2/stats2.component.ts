@@ -33,6 +33,8 @@ import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
 import { ThemeService } from 'src/app/modules/shared/services/theme.service';
+import { ExportToCsv } from 'export-to-csv';
+
 
 @Component({
   selector: 'app-stats2',
@@ -148,6 +150,20 @@ export class Stats2Component implements OnInit, OnDestroy {
   }
 
   darkTheme: boolean;
+
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
 
   constructor(
   
@@ -650,6 +666,12 @@ export class Stats2Component implements OnInit, OnDestroy {
 
   //#endregion
 
+  SearchClicked(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.ExcuteSearch();
+  }
+
   ExcuteSearch ()
   {
     let SearchRequest =
@@ -678,9 +700,9 @@ export class Stats2Component implements OnInit, OnDestroy {
       'AccounterSerail_To': (this.ID.value!= null?this.AccounterSerail_To.value:null ),            
       'sex_Name': (this.ID.value!= null?this.SexName.value:null ),            
       'nationality_ID': (this.ID.value!= null?this.nationalityId.value:null ),            
-      'birthDate': (this.ID.value!= null? moment(this.birthDateMonth.value+'/'+this.birthDateDay.value+'/'+this.birthDateYear.value).set({hour: 2}).toDate():null ),            
+      'birthDate': (this.ID.value!= null? moment(this.birthDateMonth.value+'/'+this.birthDateDay.value+'/'+this.birthDateYear.value).set({hour: 4}).toDate():null ),            
       'search_BirthDate_Type': (this.ID.value!= null?this.searchBirthDateType.value:null ),            
-      'qararDate': (this.ID.value!= null? moment(this.qararDateMonth.value+'/'+this.qararDateDay.value+'/'+this.qararDateYear.value).set({hour: 2}).toDate():null ),            
+      'qararDate': (this.ID.value!= null? moment(this.qararDateMonth.value+'/'+this.qararDateDay.value+'/'+this.qararDateYear.value).set({hour: 4}).toDate():null ),            
       'search_QaraDate_Type': (this.ID.value!= null?this.qararDateType.value:null ),            
       'phonenum': (this.ID.value!= null?this.phonenum.value:null ),            
       'educationlasT_ID': (this.ID.value!= null?this.educationId.value:null ),            
@@ -699,6 +721,40 @@ export class Stats2Component implements OnInit, OnDestroy {
         this.dataSource.data = this.allData;
         this.totalRows= data.Item2;
         this.dataSource._updatePaginator(this.totalRows);
+
+        this.allData.forEach((data, index) =>{
+          this.excelData[index]= {
+                                  'رقم الإضبارة': data?.ID,
+                                  'رقم الحاسوب': data?.COMPUTER_ID,
+                                  'الرقم الذاتي': data?.GLOBAL_ID,
+                                  'الرقم التأميني': data?.INSURANCE_ID,
+                                  'رقم الشطب': data?.PAYROL_ID,
+                                  'الاسم': data?.FNAME,
+                                  'الكنية': data?.LNAME,
+                                  'الأب': data?.FATHER,
+                                  'الأم': data?.MOTHER,
+                                  'الجنس': data?.SEX_NAME,
+                                  'الجنسية': data?.NATIONALITY_NAME,
+                                  'تاريخ الولادة': data?.BIRTHDATE,
+                                  'تاريخ المباشرة': data?.QARARDATE,
+                                  'اسم الوظيفة': data?.JOBNAME_NAME,
+                                  'الفئة': data?.CLASS_NAME,
+                                  'الشهادة': data?.CERTIFICATE_NAME,
+                                  'الاختصاص': data?.SPECIFICATION_NAME,
+                                  'اسم المعتمد': data?.ACCOUNTER_NAME,
+                                  'رقم التسلسل': data?.ACCOUNTER_ID,
+                                  'الراتب المقطوع': data?.SALARY,
+                                  'الراتب التأميني': data?.INSURANCESALARY,
+                                  'الوضع بالملاك': data?.MALAKSTATE_NAME,
+                                  'رقم الهاتف': data?.PHONENUM,
+                                  'تاريخ التبديل': data?.CHANGEDATE,
+                                  'آخر سبب تبديل': data?.CHANGEREASON_NAME,
+                                  'نوع المستند': data?.DOCUMENTTYPE_NAME,
+                                  'رقم المستند': data?.DOC_NUMBER, 
+                                  'تاريخ المستند': data?.DOC_DATE
+                                  }; 
+
+        });
       }
     )
   }
@@ -722,4 +778,9 @@ export class Stats2Component implements OnInit, OnDestroy {
   clearDataSource(){
     this.allData= [];
   }
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

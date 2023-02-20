@@ -17,6 +17,7 @@ import { TblshameldocumenttypeService } from 'src/app/modules/shared/services/em
 import { ViewTBLShamelEmployeeService } from 'src/app/modules/shared/services/employees_department/view-tbl-shamel-employee.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TBLShamelShatebPunishmentService } from 'src/app/modules/shared/services/finance_department/shatebtax/tblshamel-shateb-punishment.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { Uniqe } from './validate_formgroup';
 import { Validate_ID } from './validate_id';
 
@@ -52,7 +53,7 @@ export class PunishmentEditDialogComponent implements OnInit {
 
 
 
-
+  darkTheme: boolean;
 
   constructor(
 
@@ -65,7 +66,8 @@ export class PunishmentEditDialogComponent implements OnInit {
     public ShamelYearService: TBLShamelYearService,
     public dialogRef: MatDialogRef<PunishmentEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TBLShamelShatebPunishment,
-    @Inject(DOCUMENT) private _document: Document
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
 
   ) {
 
@@ -154,7 +156,7 @@ export class PunishmentEditDialogComponent implements OnInit {
         this.Form.controls['serial'].setValue(this.Selected_Punishment.serial);
 
       if (this.Selected_Punishment.eisaldate != null)
-        this.Form.controls['eisaldate'].setValue(moment(this.Selected_Punishment.eisaldate).toDate());
+        this.Form.controls['eisaldate'].setValue(moment(this.Selected_Punishment.eisaldate).set({hour: 4}).toDate());
 
 
         if (this.Selected_Punishment.TBLShamelEmployee != null && this.Selected_Punishment.TBLShamelEmployee.FullName!= null)
@@ -180,6 +182,9 @@ export class PunishmentEditDialogComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   onNoClick(): void {
@@ -376,7 +381,7 @@ export class PunishmentEditDialogComponent implements OnInit {
     let obj : TBLShamelShatebPunishment =
     {
       amount : this.Form.controls['amount'].value,
-      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 2}).toDate(),
+      documentdate : moment(this.Form.controls['documentdate_Month'].value+'/'+this.Form.controls['documentdate_Day'].value+'/'+this.Form.controls['documentdate_Year'].value).set({hour: 4}).toDate(),
       documentnum : this.Form.controls['documentnum'].value,
       documenttype_id : this.Form.controls['documenttype_id'].value,
       duration : this.Form.controls['duration'].value,

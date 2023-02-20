@@ -26,6 +26,7 @@ import { ViewTBLShamelEmployee } from 'src/app/modules/shared/models/employees_d
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-punishment',
@@ -78,7 +79,7 @@ export class PunishmentComponent implements OnInit {
 
     request: TBLShamelShatebPunishmentRequest ;
 
-
+    darkTheme: boolean;
   
   constructor(
     public dialog: MatDialog,
@@ -90,7 +91,8 @@ export class PunishmentComponent implements OnInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     private _snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document) 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) 
   { 
     this.LoadingFinish = true;
 
@@ -326,9 +328,14 @@ BuilForm()
 
   
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
   btnSearchClick()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.Search();  
   }
   Search(){
@@ -350,10 +357,10 @@ BuilForm()
       'father': this.Form.controls['father'].value,
       'tax_status': this.Form.controls['tax_status'].value,
       'accounter_id': this.Form.controls['accounter_id'].value,
-      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 2}).toDate(),
-      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 2}).toDate(),
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour:4}).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
 
     }).subscribe(data=>{
       if (data.Item1 != null) {
@@ -389,7 +396,15 @@ BuilForm()
     dialogRef.afterClosed().subscribe(result => {
       console.log("result", result);
       if (result)
-        this.ShamelShatebPunishmentService.update(result).subscribe((result: any) => {console.log('rrr', element.serial);if(result.Result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.ShamelShatebPunishmentService.update(result).subscribe((result: any) => 
+        {
+          console.log('rrr', element.serial);
+          if(result.Result == 1) {
+            this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});
+            this.currentPage=1;
+            this.pageSize=5;
+            this.Search();
+          }});
     });
   }
 
@@ -401,7 +416,15 @@ BuilForm()
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result)
-        this.ShamelShatebPunishmentService.delete(element.serial).subscribe((result: any) => {console.log('rrr', element.serial);if(result.Result == 1){ this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.ShamelShatebPunishmentService.delete(element.serial).subscribe((result: any) => 
+        {
+          console.log('rrr', element.serial);
+          if(result.Result == 1){ 
+            this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});
+            this.currentPage=1;
+            this.pageSize=5;
+            this.Search();
+          }});
     });
   }
 
@@ -415,7 +438,14 @@ BuilForm()
     dialogRef.afterClosed().subscribe(result => {
       if (result){
         console.log('res', result);
-        this.ShamelShatebPunishmentService.add(result).subscribe((result) => {console.log('ddd', result);if(result == 1) {this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.ShamelShatebPunishmentService.add(result).subscribe((result) => {
+          console.log('ddd', result);
+          if(result == 1) {
+            this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 , panelClass: ['green-snackbar']});
+            this.currentPage=1;
+            this.pageSize=5;
+            this.Search();
+          }});
       }
     });
   }

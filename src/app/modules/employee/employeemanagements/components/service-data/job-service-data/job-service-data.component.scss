@@ -21,7 +21,7 @@ fieldset{
 
     .right{
         fieldset{
-            width: 280px;
+            width: 320px;
         }
     }
 
@@ -60,6 +60,12 @@ app-service-data-print, app-employee-state-data-print, app-experience-certificat
     display: none;
 }
 
+
+::ng-deep .mat-expansion-indicator{
+    left: 720px !important;
+    position: relative !important;
+  }
+  
 .centerRight{
     margin-top: 15px;
 }

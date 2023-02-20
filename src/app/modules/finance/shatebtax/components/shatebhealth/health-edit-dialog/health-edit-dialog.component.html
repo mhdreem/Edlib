@@ -1,24 +1,17 @@
-<h1 mat-dialog-title>تعديل السجل</h1>
+<div class="theme" [class.darkTheme]="darkTheme">
+
+  <h1 mat-dialog-title class="white">شطب الاجازات الصحية</h1>
 <div mat-dialog-content>
-  <c-container>
-    <mat-card>
-      <mat-card-title>شطب الاجازات </mat-card-title>
-  
-      <mat-card-content>
-        <c-container breakpoint="sm">
         <form class="example-form" [formGroup]="Form" #form="ngForm">
-         
-  
-            <c-row>
-              <c-col>
+
                 <mat-form-field color="primary" appearance="fill">
                   <mat-label>الإضبارة</mat-label>
                   <input matInput formControlName="id" id="id" (change)="OnIdChange($event)" (keyup.enter)="focusNext('auto_empName')">
-                  <mat-error *ngIf="Form.controls['id'].hasError('uniq1')">رقم الإضبارة متكرر</mat-error>
+                  <mat-error *ngIf="Form.controls['id'].hasError('not found')">رقم الإضبارة غير موجود</mat-error>
                   <mat-error *ngIf="Form.controls['id'].hasError('required')">رقم الإضبارة مطلوب</mat-error>
                 </mat-form-field>
-              </c-col>
-              <c-col>
+              
+              
                 <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>اسم الموظف</mat-label>
                   <input matInput [matAutocomplete]="auto_empName" id="auto_empName" formControlName='fullname' (keyup.enter)="focusNext('healthnosalary_name')" required>
@@ -34,16 +27,9 @@
                     </ng-container>
                   </mat-autocomplete>
                 </mat-form-field>
-              </c-col>
-            </c-row>
-            <c-row>
-              <!--  [displayWith]="displayFn"  -->
-  
-  
-            </c-row>
-  
-            <c-row>
-              <c-col>
+              
+
+              
                 <mat-form-field class="example-full-width fitContent" appearance="fill">
                   <mat-label>نوع الحسم</mat-label>
                   <input matInput formControlName="healthnosalary_name" id="healthnosalary_name" (keyup.enter)="focusNext('duration')" [matAutocomplete]="auto_healthnosalary_name"
@@ -55,22 +41,23 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-              </c-col>
-              <c-col>
+              
+            
+            
+              <!--  [displayWith]="displayFn"  -->
   
-              </c-col>
   
-            </c-row>
+            
   
-            <c-row>
+            
   
-              <c-col>
+              
                 <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>المدة</mat-label>
                   <input type="number" matInput formControlName="duration" id="duration" (keyup.enter)="focusNext('startdate_Day')" required>
                 </mat-form-field>
-              </c-col>
-              <c-col>
+              
+              
                 <div class="date">
                   <span>بدء الإجازة:</span>
                   <div class="content">
@@ -89,13 +76,13 @@
                   </div>
                 </div>
                 
-              </c-col>
+              
   
   
-            </c-row>
-            <c-row>
+            
+            
   
-              <c-col>
+              
   
   
                 <mat-form-field class="example-full-width" appearance="fill">
@@ -108,18 +95,15 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-              </c-col>
-              <c-col>
+              
+              
                 <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>رقم المستند</mat-label>
                   <input matInput formControlName="documentnum" id="documentnum" (keyup.enter)="focusNext('documentdate_Day')" required>
                 </mat-form-field>
-              </c-col>
+              
   
-            </c-row>
-  
-            <c-row>
-              <c-col>
+              
                 <div class="date">
                   <span>تاريخ المستند:</span>
                   <div class="content">
@@ -137,36 +121,31 @@
                     </mat-form-field>
                   </div>
                 </div>
-              </c-col>
-              <c-col>
+              
+            
   
-              </c-col>
-            </c-row>
-            <c-row>
-              <c-col>
+            
+              
                 <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>الراتب</mat-label>
                   <input type="number" matInput formControlName="salary" id="salary" (keyup.enter)="focusNext('amount')" required>
                 </mat-form-field>
-              </c-col>
-              <c-col>
+              
+              
                 <mat-form-field color="primary" class="" appearance="fill">
                   <mat-label>المبلغ</mat-label>
                   <input type="number" matInput formControlName="amount" id="amount" (keyup.enter)="focusNext('id')" required>
                 </mat-form-field>
-              </c-col>
-            </c-row>
-            <c-row>
+              
+            
+            
   
-            </c-row>
+            
          
         </form>
-      </c-container>
-      </mat-card-content>
-  
-      <mat-card-actions>
-        <button mat-raised-button (click)="onNoClick()">
-          <mat-icon class="mat-icon-rtl-mirror">close
+      <mat-dialog-actions>
+        <button color="warn" mat-raised-button (click)="onNoClick()">
+          <mat-icon  class="mat-icon-rtl-mirror">close
           </mat-icon>
           إلغاء الأمر</button>
         <button mat-raised-button color="primary" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial
@@ -174,12 +153,8 @@
           <mat-icon class="mat-icon-rtl-mirror">save
           </mat-icon>
           حفظ</button>
-      </mat-card-actions>
-    </mat-card>
-  
-  
-  
-  
-  </c-container>
+      </mat-dialog-actions>
 </div>
 
+
+</div>

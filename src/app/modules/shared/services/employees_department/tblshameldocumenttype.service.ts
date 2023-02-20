@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ITBLShamelDocumentType } from '../../models/employees_department/ITBLShamelDocumentType';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class TblshameldocumenttypeService {
  
   constructor(private httpClient : HttpClient) { }
 
-  list()  {
+  list():Observable<ITBLShamelDocumentType[]>  {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = {  headers: headers };  
     return this.httpClient.get<ITBLShamelDocumentType[]>(this.RestUrl +"TBLShamelDocumentType",options);  

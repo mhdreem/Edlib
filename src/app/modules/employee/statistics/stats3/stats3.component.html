@@ -1,8 +1,11 @@
 <div class="theme" [class.darkTheme]="darkTheme">
     <button class="search add" mat-raised-button  (click)="Search()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض السجلات</button>
 <button class="add"  mat-raised-button  (click)="adjustPrintFooter()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">معايرة تذييل الطباعة</button>
-<button class="view add" mat-raised-button  (click)="print()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'">طباعة</button>
-
+<button class="view add" mat-raised-button  (click)="print()" [disabled]="!dataSource.data[0]" accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon> طباعة</button>
+<button mat-raised-button id="excel" (click)="exportToExcel()" [disabled]="dataSource.data[0]== null">
+    <mat-icon>view_comfy</mat-icon>
+    تصدير الى اكسل
+  </button>
 <div class="col-md-12">
     <div class="table-wrap">
 

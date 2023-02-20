@@ -39,6 +39,7 @@ export class EmployeeComponent implements OnInit , OnDestroy {
         text: 'NEW'
       }
     },
+    
   
     {
       name: 'ش.ادارية البطاقة الذاتية',

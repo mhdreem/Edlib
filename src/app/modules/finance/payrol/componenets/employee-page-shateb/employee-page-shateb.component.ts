@@ -10,6 +10,7 @@ import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_de
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelShatebPageStatisticsService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-shateb-page-statistics.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 import { TblShamelNewPayrolAddPageServiceService } from '../newpayroladd/TbLShamelNewPayrol/tbl-shamel-new-payrol-add-page-service.service';
 
 @Component({
@@ -52,12 +53,16 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
+  darkTheme: boolean;
+
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private fb: UntypedFormBuilder,
     private tblShamelYearService: TBLShamelYearService,
     public dialog: MatDialog,
     private tblShamelShatebPageStatisticsService: TBLShamelShatebPageStatisticsService,
-    public pageService: TblShamelNewPayrolAddPageServiceService,) { 
+    public pageService: TblShamelNewPayrolAddPageServiceService,
+    private themeService: ThemeService) { 
     this.LoadingFinish = true;
     this.BuildForm();
     if (this.pageService.id_BehaviorSubject != null)
@@ -157,6 +162,9 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
     this._Subscription.unsubscribe();
   }
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
   adjustPrintFooter(){

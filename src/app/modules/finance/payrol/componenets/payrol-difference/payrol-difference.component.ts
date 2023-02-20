@@ -14,6 +14,7 @@ import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { TblshamelPayrolSliceService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-payrol-slice.service';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-payrol-difference',
@@ -72,13 +73,17 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
     this.View();
   }
 
+  darkTheme: boolean;
+
+
   constructor(@Inject(DOCUMENT) private _document: Document,
     private tblShamelYearService: TBLShamelYearService,
     public ShamelMonthService: TBLShamelMonthService,
     private tblShamelAccounterService: TBLShamelAccounterService,
     private fb: UntypedFormBuilder,
     private tblShamelNewShatebService: TBLShamelNewShatebService,
-    private tblshamelPayrolSliceService: TblshamelPayrolSliceService
+    private tblshamelPayrolSliceService: TblshamelPayrolSliceService,
+    private themeService: ThemeService
     ) { 
     this.LoadingFinish = true;
 
@@ -274,6 +279,9 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
       }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
     this.tblShamelYearService.GetYearFixed().subscribe(
       res => {
         this.fixedYear = res.year_name;

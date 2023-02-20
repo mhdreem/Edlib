@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, filter, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { TBLShamelArea } from 'src/app/modules/shared/models/employees_department/TBLShamelArea';
@@ -15,6 +18,7 @@ import { TblShamelMoneyM3PayDestService } from 'src/app/modules/shared/services/
 import { TBLShamelOvertimeEmployeeService } from 'src/app/modules/shared/services/finance_department/broker/tblshamel-overtime-employee.service';
 import { TBLShamelOverTimeShatebService } from 'src/app/modules/shared/services/finance_department/broker/tblshamel-overtime-shateb.service';
 import { TblShamelMoneyM3PayDest } from 'src/app/modules/shared/services/finance_department/broker/TblShamelMoneyM3PayDest';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tbl-shamel-overtime-shateb-modify',
@@ -45,7 +49,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
   List_TBLShamelYear: TBLShamelYear[];
   List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
-
+  darkTheme: boolean;
 
   constructor(
     private frmBuilder: FormBuilder,
@@ -53,7 +57,12 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
     public ShamelOvertimeEmployeeService: TBLShamelOvertimeEmployeeService,
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
-    public ShamelMoneyM3PayDestService: TblShamelMoneyM3PayDestService
+    public ShamelMoneyM3PayDestService: TblShamelMoneyM3PayDestService,
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<TblShamelOvertimeShatebModifyComponent>,
+    private tBLShamelOverTimeShatebService: TBLShamelOverTimeShatebService,
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService
   ) {
     this.BuildForm();
     this.LoadData();
@@ -205,7 +214,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
       }
 
-      this.BindValue();
+      this.SetValue();
 
 
     },
@@ -214,7 +223,9 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
 
   }
 
@@ -322,7 +333,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
   }
 
 
-  BindValue() {
+  SetValue() {
     if (this.Selected_TblShamelOvertimeShateb != null) {
 
       if (this.Selected_TblShamelOvertimeShateb.broker_id != null)
@@ -357,7 +368,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
         this.Form.controls['enterusername'].setValue(this.Selected_TblShamelOvertimeShateb.enterusername);
 
       if (this.Selected_TblShamelOvertimeShateb.enterdate != null)
-        this.Form.controls['enterdate'].setValue(moment(this.Selected_TblShamelOvertimeShateb.enterdate).toDate());
+        this.Form.controls['enterdate'].setValue(moment(this.Selected_TblShamelOvertimeShateb.enterdate).set({hour: 4}).toDate());
 
       if (this.Selected_TblShamelOvertimeShateb.entertime != null)
         this.Form.controls['entertime'].setValue(this.Selected_TblShamelOvertimeShateb.entertime);
@@ -366,7 +377,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
         this.Form.controls['modifyusername'].setValue(this.Selected_TblShamelOvertimeShateb.modifyusername);
 
       if (this.Selected_TblShamelOvertimeShateb.modifydate != null)
-        this.Form.controls['modifydate'].setValue(moment(this.Selected_TblShamelOvertimeShateb.modifydate).toDate());
+        this.Form.controls['modifydate'].setValue(moment(this.Selected_TblShamelOvertimeShateb.modifydate).set({hour: 4}).toDate());
 
       if (this.Selected_TblShamelOvertimeShateb.modifytime != null)
         this.Form.controls['modifytime'].setValue(this.Selected_TblShamelOvertimeShateb.modifytime);
@@ -387,6 +398,41 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
     }
 
   }
+
+  public getValue() {
+    try {
+
+      if (this.Selected_TblShamelOvertimeShateb != null) {
+
+        if (this.Form.controls['broker_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.broker_id = this.Form.controls['broker_id'].value;
+        
+        if (this.Form.controls['serial'].value != null)
+          this.Selected_TblShamelOvertimeShateb.serial = this.Form.controls['serial'].value;
+        
+          if (this.Form.controls['area_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.area_id = this.Form.controls['area_id'].value;
+
+        if (this.Form.controls['year_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.year_id = this.Form.controls['year_id'].value;
+
+        if (this.Form.controls['month_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.month_id = this.Form.controls['month_id'].value;
+
+        if (this.Form.controls['school_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.school_id = this.Form.controls['school_id'].value;
+
+          if (this.Form.controls['payrol_id'].value != null)
+          this.Selected_TblShamelOvertimeShateb.payrol_id = this.Form.controls['payrol_id'].value;
+
+          if (this.Form.controls['daycount'].value != null)
+          this.Selected_TblShamelOvertimeShateb.daycount = this.Form.controls['daycount'].value;
+      }
+    } catch (ex: any) {
+
+    }
+
+  }
   /* Handle form errors in Angular 8 */
   public errorHandling = (control: string, error: string) => {
     return this.Form.controls[control].hasError(error);
@@ -395,8 +441,63 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
 
 
-  Save() {
+  public async Save() {
 
+
+
+    //Form Not Valid Then return
+    if (!this.Form.valid == true) {
+      return;
+    }
+    this.getValue();
+
+
+    if (this.Selected_TblShamelOvertimeShateb &&
+      this.Selected_TblShamelOvertimeShateb.serial != null &&
+      this.Selected_TblShamelOvertimeShateb.serial <= 0) {
+
+
+      // comment when using real data service
+      this.tBLShamelOverTimeShatebService.add(this.Selected_TblShamelOvertimeShateb).subscribe(
+        data => {
+          console.log('this.selected_broker_employee',this.Selected_TblShamelOvertimeShateb);
+          if (data > 0) // Succeess 
+          {
+            console.log('data456', data);
+            this.snackBar.open('تمت الإضافة بنجاح', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
+            });
+            this.dialogRef.close();
+          }
+
+        }
+      )
+
+    }
+
+    else if (this.Selected_TblShamelOvertimeShateb &&
+      this.Selected_TblShamelOvertimeShateb.serial != null &&
+      this.Selected_TblShamelOvertimeShateb.serial > 0) {
+
+      console.log('this.selected_broker_employee', this.Selected_TblShamelOvertimeShateb);
+      this.tBLShamelOverTimeShatebService.update(this.Selected_TblShamelOvertimeShateb).subscribe(
+        data => {
+          if (data > 0) // Succeess 
+          {
+            console.log('data456', data);
+            this.snackBar.open('تم التعديل بنجاح', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
+            });
+            this.dialogRef.close();
+          }
+        }
+      )
+
+
+
+    }
   }
 
 
@@ -414,5 +515,16 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
   OnSelectArea(event: MatAutocompleteSelectedEvent) {
 
 
+  }
+
+  onReset() {
+    this.Form.reset();
+  }
+
+  public focusNext(id: string) {
+    let element = this._document.getElementById(id);
+    if (element) {
+      element.focus();
+    }
   }
 }

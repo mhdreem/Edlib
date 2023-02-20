@@ -125,7 +125,7 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
 
     const dialogRef = this.dialog.open(TblshamelsccoursemodifyComponent, {
       height: '60%',
-      width: '40%',
+      width: '50%',
       data: {obj: this.selected_employee_course,id:this.Selected_Emp.id}
     });
    
@@ -169,6 +169,7 @@ try{
                 this.FillTable();
                 this.snackBar.open('تم الحذف بنجاح', '', {
                   duration: 3000,
+                  panelClass: ['green-snackbar']
                 });
               }
 
@@ -195,7 +196,7 @@ try{
 
       const dialogRef = this.dialog.open(TblshamelsccoursemodifyComponent, {
         height: '60%',
-        width: '40%',
+        width: '50%',
         data: {obj: this.selected_employee_course,id:this.Selected_Emp.id}
       });
   

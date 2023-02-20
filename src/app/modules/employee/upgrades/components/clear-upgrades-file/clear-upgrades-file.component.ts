@@ -21,6 +21,7 @@ export class ClearUpgradesFileComponent implements OnInit {
       if (res == 1){
         this.snackBar.open('تم الحذف', '', {
           duration: 3000,
+          panelClass: ['green-snackbar']
         });
       }
     });

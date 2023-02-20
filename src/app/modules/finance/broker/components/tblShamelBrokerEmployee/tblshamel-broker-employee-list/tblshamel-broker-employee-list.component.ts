@@ -15,6 +15,8 @@ import { TBLShamelSexService } from 'src/app/modules/shared/services/employees_d
 import { TblShamelBrokerEmployeeService } from 'src/app/modules/shared/services/finance_department/broker/tbl-shamel-broker-employee.service';
 import { ConfirmationDialogComponent } from '../../common/confirmation-dialog/confirmation-dialog.component';
 import { TblshamelBrokerEmployeeModifyComponent } from '../tblshamel-broker-employee-modify/tblshamel-broker-employee-modify.component';
+import { ExportToCsv } from 'export-to-csv';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 @Component({
   selector: 'app-tblshamel-broker-employee-list',
@@ -44,10 +46,10 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
   allData: any[]= [];
 
   pageChanged(event: PageEvent) {
-    console.log('event', event);
+    console.log('event1', event);
     this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.OnSearch();
+    this.currentPage = event.pageIndex+1;
+    this.FillTable();
   }
 
   Form: FormGroup;
@@ -64,6 +66,19 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
   //Data Source For MatTable
   dataSource = new MatTableDataSource<TblShamelBrokerEmployee>(this.broker_employee_List);
 
+  excelData: any[] = [];
+  excelOptions = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalSeparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: '',
+    useTextFile: false,
+    useBom: true,
+    useKeysAsHeaders: true,
+    // headers: ['الحساب', 'كود الحساب']
+  };
   
   ngAfterViewInit() {
 
@@ -71,13 +86,16 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
     this.dataSource.paginator = this.paginator;
   }
 
+darkTheme: boolean;
+
   constructor(public tblShamelBrokerEmployeeService: TblShamelBrokerEmployeeService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private _liveAnnouncer: LiveAnnouncer,
     private frmBuilder : FormBuilder,
     private tblShamelSexService: TBLShamelSexService,
-    @Inject(DOCUMENT) private _document: Document) { 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) { 
 
       this.dataSource = new MatTableDataSource<TblShamelBrokerEmployee>(this.broker_employee_List);
       this.LoadingFinish = true;
@@ -106,7 +124,7 @@ export class TblshamelBrokerEmployeeListComponent implements OnInit, AfterViewIn
         lname: '',
         father: '',
         mother: '',
-        birthdate: moment("01- 01-2022", 'MM-DD-YYYY').toDate(),
+        birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 4}).toDate(),
         sex_name: '',
         servicedayes: 0,
       };
@@ -170,7 +188,7 @@ public displaySexNameProperty(value: string): string {
 
 public async FillTable() {
 
-
+console.log('this.currentPage', this.currentPage);
   try {
 
     console.log(this.Form.value);
@@ -181,7 +199,7 @@ public async FillTable() {
       "lname": this.Form.controls['lname'].value,
       "father": this.Form.controls['father'].value,
       "mother": this.Form.controls['mother'].value,
-      "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).toDate(),
+      "birthdate": moment(this.Form.controls['birthdateMonth'].value+'/'+this.Form.controls['birthdateDay'].value+'/'+this.Form.controls['birthdateYear'].value).set({hour: 4}).toDate(),
       "sex_name": this.Form.controls['sex_name'].value,
       "servicedayes": this.Form.controls['servicedayes'].value,
       "servicedayes_operator": this.Form.controls['servicedayes_operator'].value,
@@ -189,15 +207,28 @@ public async FillTable() {
       "pagenumber": this.currentPage
     }).subscribe(
       (data)=> {
-
-       
-        // if Success 
         if (data.Item1 != null) {
           this.dataSource.paginator= this.paginator;
           this.allData.push(...data.Item1);
           this.dataSource.data = this.allData;
           this.totalRows= data.Item2;
           this.dataSource._updatePaginator(this.totalRows);
+          console.log('data.Item1', data.Item1);
+          console.log('this.allData', this.allData);
+
+          this.allData.forEach((datum, index) =>{
+            this.excelData[index]= {
+                                    'التسلسل': datum?.serial,
+                                    'الأسم': datum?.fname,
+                                    'الكنية': datum?.lname,
+                                    'الأب': datum?.father,
+                                    'الأم': datum?.mother,
+                                    'تاريخ الولادة': datum?.birthdate,
+                                    'الجنس': datum?.sexname,
+                                    'أيام الخدمة': datum?.servicedayes,
+                                    }; 
+  
+          });
         }
       }
     )
@@ -209,6 +240,8 @@ public async FillTable() {
 
 OnSearch()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.FillTable();
   }
 
@@ -221,6 +254,9 @@ OnSearch()
   }
 
   ngOnInit(): void {
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
   }
 
 
@@ -232,22 +268,23 @@ OnSearch()
       lname: '',
       father: '',
       mother: '',
-      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 2}).toDate(),
+      birthdate: moment("01- 01-2022", 'MM-DD-YYYY').set({hour: 4}).toDate(),
       sex_name: '',
       servicedayes: 0,
     };
 
     const dialogRef = this.dialog.open(TblshamelBrokerEmployeeModifyComponent, {
-      height: '60%',
+      height: '40%',
       width: '60%',
-      data: { obj: this.selected_broker_employee }
+      data: { obj: this.selected_broker_employee, source: "add" }
     });
 
     dialogRef.afterClosed().toPromise().then(result => {
       console.log(result);
       if (result) {
+        this.currentPage=1;
+        this.pageSize=5;
         this.FillTable();
-        this.dataSource.paginator = this.paginator;
         
       }
     });
@@ -274,6 +311,8 @@ OnSearch()
             this.tblShamelBrokerEmployeeService.delete(element?.serial).subscribe
               (
                 data => {
+                  this.currentPage=1;
+                   this.pageSize=5;
                   this.FillTable();
                 }
 
@@ -285,6 +324,7 @@ OnSearch()
           this.dataSource.paginator = this.paginator;
           this.snackBar.open('تم الحذف', '', {
             duration: 2000,
+            panelClass: ['green-snackbar']
           });
 
 
@@ -303,12 +343,14 @@ OnSearch()
       this.selected_broker_employee = element;
 
       const dialogRef = this.dialog.open(TblshamelBrokerEmployeeModifyComponent, {
-        height: '60%',
+        height: '40%',
         width: '60%',
-        data: { obj: this.selected_broker_employee }
+        data: { obj: this.selected_broker_employee , source: "edit"}
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
+        this.currentPage=1;
+        this.pageSize=5;
         this.FillTable();
 
         if (result){
@@ -328,4 +370,9 @@ OnSearch()
       element.focus();
     }
   }
+
+  exportToExcel() {
+    const csvExporter = new ExportToCsv(this.excelOptions);
+   csvExporter.generateCsv(this.excelData);
+ }
 }

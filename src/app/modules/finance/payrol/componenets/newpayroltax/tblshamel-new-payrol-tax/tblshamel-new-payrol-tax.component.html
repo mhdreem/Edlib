@@ -1,3 +1,4 @@
+<div class="theme" [class.darkTheme]="darkTheme">
 <!-- <span class="title">برمجة التعويض والحسم</span> -->
 
 <c-container>
@@ -14,17 +15,17 @@
 </c-container>
 <div class="boxes">
     <div class="right">
-        <span class="title1">التعويضات الدائمة والمؤقتة</span>
-        <button mat-raised-button color="primary" (click)="Add_Tawid()">اضافة تعويض +</button>        
+        <span class="title1 white">التعويضات الدائمة والمؤقتة</span>
+        <button mat-raised-button class="edit" (click)="Add_Tawid()">اضافة تعويض +</button>        
         <div class="spanBox spanBox1">
-            <span> اسم التعويض على الطابعة</span>
-            <span>اسم التعويض على الشاشة</span>
-            <span>جبر الكسور</span>
-            <span>نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
-            <span>الترتيب</span>
-            <span>هل التعويض يدخل في الضريبة؟</span>
-            <span>هل التعويض يدخل في المجموع؟</span>
-            <span>هل التعويض يدخل في التخصص؟</span>
+            <span class="white"> اسم التعويض على الطابعة</span>
+            <span class="white">اسم التعويض على الشاشة</span>
+            <span class="white">جبر الكسور</span>
+            <span class="white">نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
+            <span class="white">الترتيب</span>
+            <span class="white">هل التعويض يدخل في الضريبة؟</span>
+            <span class="white">هل التعويض يدخل في المجموع؟</span>
+            <span class="white">هل التعويض يدخل في التخصص؟</span>
         </div>
         <app-sub-tblshamel-new-payrol-tax 
          [index]="i" 
@@ -36,14 +37,14 @@
 
     </div>
     <div class="middle">
-        <span class="title2">الحسميات الدائمة والمؤقتة</span>
-        <button mat-raised-button color="primary" (click)="Add_Tax()">إضافة حسمية دائمة أو مؤقتة +</button>        
+        <span class="title2 white">الحسميات الدائمة والمؤقتة</span>
+        <button mat-raised-button class="edit" (click)="Add_Tax()">إضافة حسمية دائمة أو مؤقتة +</button>        
         <div class="spanBox spanBox2">
-            <span>اسم الحسمية على الطابعة</span>
-            <span>اسم الحسمية على الشاشة</span>
-            <span>النسبة</span>
-            <span>الترتيب</span>
-            <span>نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
+            <span class="white">اسم الحسمية على الطابعة</span>
+            <span class="white">اسم الحسمية على الشاشة</span>
+            <span class="white">النسبة</span>
+            <span class="white">الترتيب</span>
+            <span class="white">نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
         </div>
         <app-sub-tblshamel-new-payrol-tax  [index]="i" [payroltaxtype]="'taxtemp'"
         *ngFor="let item of tblShamelNewPayrolTaxService.List_taxtemp ; index as i" (OnDelete)="Delete($event)">
@@ -51,13 +52,13 @@
 
     </div>
     <div class="left">
-        <span class="title3">الحسميات ذات الأرصدة</span>
-        <button mat-raised-button color="primary" (click)="Add_Recurr()">إضافة حسمية ذات أرصدة +</button>        
+        <span class="title3 white">الحسميات ذات الأرصدة</span>
+        <button mat-raised-button class="edit" (click)="Add_Recurr()">إضافة حسمية ذات أرصدة +</button>        
         <div class="spanBox spanBox3">
-            <span>اسم الحسمية على الطابعة</span>
-            <span>اسم الحسمية على الشاشة</span>
-            <span>الترتيب</span>
-            <span>نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
+            <span class="white">اسم الحسمية على الطابعة</span>
+            <span class="white">اسم الحسمية على الشاشة</span>
+            <span class="white">الترتيب</span>
+            <span class="white">نوع الراتب الذي سوف يطبق عليه الاحتساب</span>
         </div>
     
 
@@ -73,9 +74,11 @@
 </div>
 
 
-<button id="saveButton" mat-raised-button color="primary" (click)="save()">حفظ</button>
+<button id="saveButton" mat-raised-button class="edit" (click)="save()">حفظ</button>
 
-<button id="DeleteAllButton" mat-raised-button color="primary" (click)="DeleteAll()">حذف الجميع</button>
+<button id="DeleteAllButton" mat-raised-button class="delete" color="warn" (click)="DeleteAll()">حذف الجميع</button>
 
 
-<button id="addFromOldPayRollAdd" mat-raised-button color="primary" (click)="addFromOldPayRollAdd()">اضافة الجميع من القديم</button>
+<button id="addFromOldPayRollAdd" mat-raised-button class="edit" (click)="addFromOldPayRollAdd()">اضافة الجميع من القديم</button>
+
+</div>

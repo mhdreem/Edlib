@@ -1,6 +1,7 @@
-<div class="container">
+<div class="theme" [class.darkTheme]="darkTheme">
+  <div class="container">
     <div class="right">
-        <span class="title">إدخال عامل لملاك معتمد</span>
+        <span class="title white">إدخال عامل لملاك معتمد</span>
         <form [formGroup]="Form1">
             
         
@@ -97,26 +98,26 @@
                     <input matInput [formControl]='serial3' id="serial3" (keyup.enter)="focusNext('Autocomplete_EmployeeName_Ctrl1')">
                   </mat-form-field>
 
-                  <span style="color: red;">الرقم المقترح</span>
+                  <span style="color: red;" class="white">الرقم المقترح</span>
 
                 <div style="display: flex; align-items: center;">
-                    <span style="margin-left: 5px">تأمين ومعاش</span>
-                    <output id="outputInsurance1"></output>
+                    <span style="margin-left: 5px" class="white">تأمين ومعاش</span>
+                    <output id="outputInsurance1" class="white"></output>
                 </div>
 
                 <div style="display: flex; align-items: center;">
-                    <span style="margin-left: 5px">تأمينات اجتماعيه</span>
-                    <output id="outputInsurance2" ></output>
+                    <span style="margin-left: 5px" class="white">تأمينات اجتماعيه</span>
+                    <output id="outputInsurance2" class="white" ></output>
                 </div>
               </div>
         </form>
         
 
-          <button mat-raised-button color="primary" (click)="add()" [disabled]="!Form1.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
+          <button mat-raised-button class="edit" (click)="add()" [disabled]="!Form1.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'00001'">إضافة</button>
     </div>
 
     <div class="left">
-        <span class="title">حذف عامل من ملاك معتمد</span>
+        <span class="title white">حذف عامل من ملاك معتمد</span>
         <form [formGroup]="Form2">
             
             <mat-form-field class="example-full-width fitContent" appearance="fill">
@@ -175,7 +176,8 @@
         </form>
         
 
-          <button mat-raised-button color="primary" (click)="delete()" [disabled]="!Form2.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">حذف</button>
+          <button mat-raised-button class="edit" (click)="delete()" [disabled]="!Form2.valid" accessControl  [FormName]="formname" [CheckedPrivilige]="'10000'">حذف</button>
 
     </div>
+</div>
 </div>

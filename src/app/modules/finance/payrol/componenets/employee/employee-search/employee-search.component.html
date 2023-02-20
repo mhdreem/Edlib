@@ -1,101 +1,104 @@
+<div class="theme" [class.darkTheme]="darkTheme">
 
 
-<mat-progress-bar *ngIf="!isLoadingFinish" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="!isLoadingFinish" mode="indeterminate"></mat-progress-bar>
 
-<ngx-hover-opacity [isHoverVisible]="!isLoadingFinish">
-
-<form class="example-form" [formGroup]="Form"> 
-<c-container fluid>
-<c-row>
-  <c-col xl="5">
-    <c-row>
-      <c-col>
-      <mat-form-field class="example-full-width fitContent" appearance="fill">
-        <mat-label>اسم المعتمد</mat-label>
-        <input type="text"
-               matInput
-               formControlName="accounter_id"
-               [matAutocomplete]="auto_Accounter_ID" >
-        <mat-autocomplete #auto_Accounter_ID="matAutocomplete" 
-        [displayWith]="displayAccounter.bind(this)">
-          <mat-option *ngFor="let option of List_Accounter_Filter | async" [value]="option.accounter_id">
-            {{option.accounter_name}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      </c-col>
-    </c-row>
-    <c-row>
-      <c-col xl="6">
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>رقم التسلسل</mat-label>
-          <input id="serial" matInput formControlName="accounterserial" (change)="serialChanged()">
-      </mat-form-field>
-      </c-col>
-      <c-col>
-        <button mat-raised-button color="primary" (click)="previousSerial()"> < </button>
-        <button mat-raised-button color="primary" (click)="nextSerial()">></button>
-
-      </c-col>
+  <ngx-hover-opacity [isHoverVisible]="!isLoadingFinish">
   
-    </c-row>
-  </c-col>
-
-
-  <c-col xl="5">
-<c-row>
-  <c-col>
-    <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>اسم الموظف</mat-label>
-    <input matInput 
-    [matAutocomplete]="auto_FullName" 
-    formControlName='fullname'>      
-  <mat-autocomplete
-   #auto_FullName="matAutocomplete"
-   [displayWith]="displayFn"
-   (optionSelected)='onEmployeeSelected($event.option.value)'
-   >        
-  <ng-container >
-      <mat-option *ngFor="let emp of List_Employee_Filter | async" [value]="emp">
-        <small>{{ emp.fullname }}</small>        
-      </mat-option>
-    </ng-container>
-  </mat-autocomplete>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="searchEmployee()">...</button>
-  </c-col>
+  <form class="example-form" [formGroup]="Form"> 
+  <c-container fluid>
+  <c-row>
+    <c-col xl="5">
+      <c-row>
+        <c-col>
+        <mat-form-field class="example-full-width fitContent" appearance="fill">
+          <mat-label>اسم المعتمد</mat-label>
+          <input type="text"
+                 matInput
+                 formControlName="accounter_id"
+                 [matAutocomplete]="auto_Accounter_ID" >
+          <mat-autocomplete #auto_Accounter_ID="matAutocomplete" 
+          [displayWith]="displayAccounter.bind(this)">
+            <mat-option *ngFor="let option of List_Accounter_Filter | async" [value]="option.accounter_id">
+              {{option.accounter_name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        </c-col>
+      </c-row>
+      <c-row>
+        <c-col xl="6">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>رقم التسلسل</mat-label>
+            <input id="serial" matInput formControlName="accounterserial" (change)="serialChanged()">
+        </mat-form-field>
+        </c-col>
+        <c-col>
+          <button mat-raised-button class="edit" (click)="previousSerial()"> < </button>
+          <button mat-raised-button class="edit" (click)="nextSerial()">></button>
   
-</c-row>
-<c-row>
-  <c-col>
-     <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>رقم الإضبارة</mat-label>
-    <input id="id" matInput formControlName="id" (change)="idChanged()">
-  </mat-form-field>
-  </c-col>
- <c-col>
-  <button mat-raised-button color="primary" (click)="previousId()"><</button>
-  <button mat-raised-button color="primary" (click)="nextId()">></button>
- </c-col>
-
-
-
-
-</c-row>
-  </c-col>
-
-<c-col xl="1">
+        </c-col>
+    
+      </c-row>
+    </c-col>
   
-</c-col>
-</c-row>
-
-   
-
-
-</c-container>
-</form>
-
-<span class="date" *ngIf="this.Fixed_Month!= null && this.Fixed_Year!= null">{{this.Fixed_Month!.month_name}}\{{this.Fixed_Year!.year_name}}</span>
-
-</ngx-hover-opacity>
-
+  
+    <c-col xl="5">
+  <c-row>
+    <c-col>
+      <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>اسم الموظف</mat-label>
+      <input matInput 
+      [matAutocomplete]="auto_FullName" 
+      formControlName='fullname'>      
+    <mat-autocomplete
+     #auto_FullName="matAutocomplete"
+     [displayWith]="displayFn"
+     (optionSelected)='onEmployeeSelected($event.option.value)'
+     >        
+    <ng-container >
+        <mat-option *ngFor="let emp of List_Employee_Filter | async" [value]="emp">
+          <small>{{ emp.fullname }}</small>        
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+    </mat-form-field>
+    <button mat-raised-button class="edit" (click)="searchEmployee()">...</button>
+    </c-col>
+    
+  </c-row>
+  <c-row>
+    <c-col>
+       <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>رقم الإضبارة</mat-label>
+      <input id="id" matInput formControlName="id" (change)="idChanged()">
+    </mat-form-field>
+    </c-col>
+   <c-col>
+    <button mat-raised-button class="edit" (click)="previousId()"><</button>
+    <button mat-raised-button class="edit" (click)="nextId()">></button>
+   </c-col>
+  
+  
+  
+  
+  </c-row>
+    </c-col>
+  
+  <c-col xl="1">
+    
+  </c-col>
+  </c-row>
+  
+     
+  
+  
+  </c-container>
+  </form>
+  
+  <span class="date white" *ngIf="this.Fixed_Month!= null && this.Fixed_Year!= null">{{this.Fixed_Month!.month_name}}\{{this.Fixed_Year!.year_name}}</span>
+  
+  </ngx-hover-opacity>
+  
+  
+</div>

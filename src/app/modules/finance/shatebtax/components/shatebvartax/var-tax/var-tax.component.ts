@@ -26,6 +26,7 @@ import { VarTaxDeleteDialogComponent } from '../var-tax-delete-dialog/var-tax-de
 import { VarTaxEditDialogComponent } from '../var-tax-edit-dialog/var-tax-edit-dialog.component';
 import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from 'src/app/modules/shared/services/theme.service';
 
 
 
@@ -81,7 +82,8 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
 
     Form : FormGroup;
 
-  
+    darkTheme: boolean;
+
   constructor(
     public dialog: MatDialog,
     private frmBuild:FormBuilder,
@@ -93,7 +95,8 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
     public ShamelMonthService: TBLShamelMonthService,
     public ShamelYearService: TBLShamelYearService,
     private _snackBar: MatSnackBar,
-    @Inject(DOCUMENT) private _document: Document) 
+    @Inject(DOCUMENT) private _document: Document,
+    private themeService: ThemeService) 
   { 
     this.LoadingFinish = true;
 
@@ -111,7 +114,9 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
+      this.darkTheme= res;
+    })
    
   }
 
@@ -365,11 +370,13 @@ BuilForm()
   
   btnSearchClick()
   {
+    this.currentPage=1;
+    this.pageSize=5;
     this.Search();  
   }
   Search(){
    
-    this.ShamelShatebVarTaxService.list({
+    this.ShamelShatebVarTaxService.search({
       'rowInPage': this.pageSize,
       'pageIndex': this.currentPage,
       'serial': this.Form.controls['serial'].value,
@@ -381,10 +388,10 @@ BuilForm()
       'father': this.Form.controls['father'].value,
       'tax_status': this.Form.controls['tax_status'].value,
       'accounter_id': this.Form.controls['accounter_id'].value,
-      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 2}).toDate(),
-      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 2}).toDate(),
-      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 2}).toDate(),
+      'documentdate_From': moment(this.Form.controls['documentdate_From_Month'].value+'/'+this.Form.controls['documentdate_From_Day'].value+'/'+this.Form.controls['documentdate_From_Year'].value).set({hour: 4}).toDate(),
+      'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
+      'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
 
     }).subscribe(data =>{
       if (data.Item1 != null) {
@@ -401,14 +408,20 @@ BuilForm()
 
   editRec(element: TBLShamelShatebVartax){
     const dialogRef = this.dialog.open(VarTaxEditDialogComponent, {
-      width: '350px',
+      width: '800px',
       data: {
       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("result", result);
-      this.ShamelVarTaxService.update(result).subscribe((result: any) => {if(result.Result == 1) {this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000 }); this.Search();}});
+      this.ShamelVarTaxService.update(result).subscribe((result: any) => {
+        if(result.Result == 1) {
+          this._snackBar.open("تم التعديل بنجاح","" ,{ duration: 3000, panelClass: ['green-snackbar'] });
+          this.currentPage=1;
+          this.pageSize=5;
+          this.Search();
+        }});
     });
   }
 
@@ -420,20 +433,33 @@ BuilForm()
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result)
-        this.ShamelVarTaxService.delete(element.serial).subscribe((result: any) => {if(result.Result == 1) {this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.ShamelVarTaxService.delete(element.serial).subscribe((result: any) => {
+          if(result.Result == 1) {
+            this._snackBar.open("تم الحذف بنجاح","" ,{ duration: 3000, panelClass: ['green-snackbar'] });
+            this.currentPage=1;
+            this.pageSize=5;
+            this.Search();
+          }});
     });
   }
 
   insert(){
     const dialogRef = this.dialog.open(VarTaxEditDialogComponent, {
-      width: '1150px',
+      width: '800px',
       data: {
         
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result){
-        this.ShamelVarTaxService.add(result).subscribe((result) => {console.log('ddd', result);if(result == 1) {this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000 }); this.Search();}});
+        this.ShamelVarTaxService.add(result).subscribe((result) => {
+          console.log('ddd', result);
+          if(result == 1) {
+            this._snackBar.open("تمت الإضافة بنجاح","" ,{ duration: 3000, panelClass: ['green-snackbar'] });
+            this.currentPage=1;
+            this.pageSize=5;
+            this.Search();
+          }});
       }
       console.log('ccc',result);
     });

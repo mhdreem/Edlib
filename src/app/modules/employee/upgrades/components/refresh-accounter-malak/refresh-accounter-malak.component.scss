@@ -253,3 +253,8 @@ form{
 mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
   background-color: rgba(0,0,0,.12) !important;
 }
+
+::ng-deep .mat-sort-header-container{
+  width: fit-content;
+  margin-inline: auto;
+}
