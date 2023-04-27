@@ -76,23 +76,15 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   filteredEmployeeNameList: ViewTBLShamelEmployee[] = [];
   isLoading = false;
 
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.View();
-  }
 
   rankInput: ITBLShamelUpgrade[];
 
   darkTheme: boolean;
 
+  isDataSourceLoading: boolean= false;
 
   constructor(private upgradeYear: TblShamelUpgradeYearService,
     private tblshamelclassService: TblshamelclassService,
@@ -373,8 +365,23 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.View();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isDataSourceLoading= false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -390,31 +397,16 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   ViewClicked(){
     this.currentPage=1;
     this.pageSize=5;
-    this.View();
+    this.View().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isDataSourceLoading= false;
+    });
   }
 
   View(){
-    let request= {
-      "year_id": this.UpgradeYear.value,
-      "class_id": this.Class.value,
-      "jobname_id": this.JobName.value,
-      "accounter_id": this.Accounter.value,
-      "qualitygrade": this.Rank.value,
-      "id_start": this.idStart.value,
-      "id_end": this.idEnd.value,
-      "type_display_Option": this.TypeDisplay.value,
-      'pageSize': this.pageSize,            
-      'pageNumber': this.currentPage,
-    };
-    this.tblShamelUpgradeService.list(request).subscribe(
-      (res: any) =>{
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...res.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= res.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-      }
-    );
+    this.isDataSourceLoading= true;
 
     let printRequest= {
       "year_id": this.UpgradeYear.value,
@@ -433,6 +425,22 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
         console.log('this.rankInput', this.rankInput);
       }
     );
+
+    let request= {
+      "year_id": this.UpgradeYear.value,
+      "class_id": this.Class.value,
+      "jobname_id": this.JobName.value,
+      "accounter_id": this.Accounter.value,
+      "qualitygrade": this.Rank.value,
+      "id_start": this.idStart.value,
+      "id_end": this.idEnd.value,
+      "type_display_Option": this.TypeDisplay.value,
+      'pageSize': this.pageSize,            
+      'pageNumber': this.currentPage,
+    };
+    return this.tblShamelUpgradeService.list(request);
+
+    
   }
 
   adjustPrintFooter(){
@@ -454,6 +462,6 @@ export class DisplayUpgradeDataComponent implements OnInit, AfterViewInit {
   }
   
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 }

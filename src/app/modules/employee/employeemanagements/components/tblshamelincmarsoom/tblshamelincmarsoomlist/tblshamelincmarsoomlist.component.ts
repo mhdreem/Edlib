@@ -34,7 +34,7 @@ _Subscription:Subscription =new Subscription();
   displayedColumns: string[] = [ 'changedate','documenttype_name', 'document_number',
                                 'documentdate', 'changereason_name' , 'incpercentage','additionalvalue','begindate','action'];
 
-
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   constructor(
@@ -81,6 +81,7 @@ this.IncMarsoomService.List_ITBLShamelIncMarsoom_BehaviorSubject.subscribe(
     Load_Data()
     {
       this.LoadingFinish =false;
+      this.isLoading= true;
 
       this._Subscription.add(
       forkJoin(
@@ -91,6 +92,7 @@ this.Load_ITBLShamelIncMarsoom()
           this.IncMarsoomService.List_ITBLShamelIncMarsoom= res[0];
           this.IncMarsoomService.List_ITBLShamelIncMarsoom_BehaviorSubject.next(res[0]) ;
           this.dataSource.data =  res[0];
+          this.isLoading= false;
 
 
         },

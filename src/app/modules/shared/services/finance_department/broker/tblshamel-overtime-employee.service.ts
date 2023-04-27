@@ -23,12 +23,12 @@ export class TBLShamelOvertimeEmployeeService {
     
 
     EmployeeFullName(searchName:string)  {     
-      return this.httpClient.get<TBLShamelOvertimeEmployee[]>(  `${this.RestUrl}\EmployeeFullName\${searchName}`);        
+      return this.httpClient.get<TBLShamelOvertimeEmployee[]>(  `${this.RestUrl}\\EmployeeFullName\\${searchName}`);        
     }
 
 
     listName(name:string)  {     
-      return this.httpClient.get<TBLShamelOvertimeEmployee[]>(  `${this.RestUrl}\ListBrokerName\${name}`,this.httpOptions);        
+      return this.httpClient.get<TBLShamelOvertimeEmployee[]>(  `${this.RestUrl}\\ListBrokerName\\${name}`,this.httpOptions);        
     }
 
 

@@ -48,6 +48,7 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
   
   fixedYear: string;
 
+  isLoading: boolean= false;
   ngAfterViewInit() {
 
     this.dataSource.sort = this.sort;
@@ -179,8 +180,11 @@ export class EmployeePageShatebComponent implements OnInit, AfterViewInit {
   }
 
   View(){
+    this.isLoading= true;
+
     this.tblShamelShatebPageStatisticsService.list(this.pageService.id,this.UpgradeYear.value).subscribe((res: any) =>{
       this.dataSource.data = [res];
+      this.isLoading= false;
     });
   }
 

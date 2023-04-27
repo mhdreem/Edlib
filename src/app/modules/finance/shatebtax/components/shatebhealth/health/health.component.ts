@@ -51,18 +51,9 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
     Form: FormGroup;
 
-    totalRows = 0;
     pageSize = 5;
-    currentPage = 1;
+    currentPage = 0;
     pageSizeOptions: number[] = [5, 10, 25, 100];
-    allData: any[]= [];
-  
-    pageChanged(event: PageEvent) {
-      console.log('event', event);
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.Search();
-    }
 
   LoadingFinish : boolean;
 
@@ -87,6 +78,8 @@ export class HealthComponent implements OnInit, AfterViewInit {
   request: TBLShamelShatebHealthRequest ;
   
   darkTheme: boolean;
+
+  isLoading: boolean= false;
 
   constructor(
     public dialog: MatDialog,
@@ -331,8 +324,23 @@ export class HealthComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.Search();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
 
@@ -346,11 +354,17 @@ export class HealthComponent implements OnInit, AfterViewInit {
   {
     this.currentPage=1;
     this.pageSize=5;
-    this.Search();  
+    this.Search().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    }); 
   }
   Search(){
+    this.isLoading= true;
 
-    this.healthService.list({
+    return this.healthService.list({
       'pageIndex': this.currentPage,
       'rowInPage': this.pageSize,
       'id': this.Form.controls['id'].value,
@@ -369,18 +383,7 @@ export class HealthComponent implements OnInit, AfterViewInit {
       'documentdate_To': moment(this.Form.controls['documentdate_To_Month'].value+'/'+this.Form.controls['documentdate_To_Day'].value+'/'+this.Form.controls['documentdate_To_Year'].value).set({hour: 4}).toDate(),
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
-    }).subscribe(
-      data=>{
-        if (data.Item1 != null) {
-          console.log('data', data);
-          this.dataSource.paginator= this.paginator;
-          this.allData.push(...data.Item1);
-          this.dataSource.data = this.allData;
-          this.totalRows= data.Item2;
-          this.dataSource._updatePaginator(this.totalRows);
-        }
-      }
-    );
+    });
 
   }
 

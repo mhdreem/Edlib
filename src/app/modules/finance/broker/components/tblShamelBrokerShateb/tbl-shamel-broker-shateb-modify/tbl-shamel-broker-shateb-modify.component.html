@@ -5,9 +5,9 @@
                     <mat-form-field appearance="fill" class="full-width">
                         <mat-label>اسم الموظف</mat-label>
                         <input type="text" placeholder="اسم الموظف" aria-label="اسم الموظف" matInput
-                            formControlName="broker_id" [matAutocomplete]="auto_broker_id" 
-                            (keyup.enter)="focusNext('area_id')" id="broker_id"/>
-                        <mat-autocomplete #auto_broker_id="matAutocomplete"
+                            formControlName="broker" [matAutocomplete]="auto_broker" 
+                            (keyup.enter)="focusNext('area_id')" id="broker"/>
+                        <mat-autocomplete #auto_broker="matAutocomplete"
                             [displayWith]="Display_broker_Employee_Fn.bind(this)"
                             (optionSelected)="OnBrokerEmployeeSelected($event)">
                             <mat-option *ngFor="let broker of List_broker_employee_Name_Filter | async"
@@ -29,8 +29,8 @@
                             [displayWith]="Display_Area_Property.bind(this)"
                             (optionSelected)="OnSelectArea($event)">
                             <mat-option *ngFor="let option of List_Area_Id_Filter  | async"
-                                [value]="option.area_id">
-                                {{option.area_name}}
+                                [value]="option.Area_ID">
+                                {{option.Area_Name}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
@@ -99,27 +99,27 @@
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>أيام الخدمة</mat-label>
             
-                        <input matInput type="number" value="" formControlName="daycount" id="daycount" (keyup.enter)="focusNext('broker_id')">
+                        <input matInput type="number" value="" formControlName="daycount" id="daycount" (keyup.enter)="focusNext('broker')">
             
                     </mat-form-field>
 
         </form>
 
 
-<mat-dialog-actions>
-    <button mat-raised-button color="warn" [mat-dialog-close]="false">
-        <mat-icon class="mat-icon-rtl-mirror">close
-        </mat-icon>
-        اغلاق
-    </button>
-
-    <button mat-raised-button color="accent" (click)="onReset()">
-        <mat-icon class="mat-icon-rtl-mirror">clear
-        </mat-icon>
-        مسح الشاشة
-    </button>
-    <button mat-raised-button class="edit" (click)="Save()">حفظ</button>
-</mat-dialog-actions>
-
-</div>
+        
+    </div>
+    <mat-dialog-actions>
+        <button mat-raised-button color="warn" [mat-dialog-close]="false">
+            <mat-icon class="mat-icon-rtl-mirror">close
+            </mat-icon>
+            اغلاق
+        </button>
+    
+        <button mat-raised-button color="accent" (click)="onReset()">
+            <mat-icon class="mat-icon-rtl-mirror">clear
+            </mat-icon>
+            مسح الشاشة
+        </button>
+        <button mat-raised-button class="edit" (click)="Save()">حفظ</button>
+    </mat-dialog-actions>
 </div>

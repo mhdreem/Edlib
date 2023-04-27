@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { ExportToCsv } from 'export-to-csv';
   templateUrl: './stats3.component.html',
   styleUrls: ['./stats3.component.scss']
 })
-export class Stats3Component implements OnInit {
+export class Stats3Component implements OnInit, AfterViewInit {
   formname:string = 'احصائيات وظيفية';
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,7 +32,7 @@ export class Stats3Component implements OnInit {
   pageSize = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   excelData: any[] = [];
@@ -77,6 +77,8 @@ export class Stats3Component implements OnInit {
   }
 
   Search(){
+    this.isLoading= true;
+
     this.EmployeeStatsService.Stats3().subscribe
     (
       data=>
@@ -84,6 +86,8 @@ export class Stats3Component implements OnInit {
         console.log('data1', data);
         if (data!= null ){
           this.dataSource.data = (data as any[]);
+          this.isLoading= false;
+
           this.fillOutputs(data);
 
           (data as any[]).forEach((datum, index) =>{

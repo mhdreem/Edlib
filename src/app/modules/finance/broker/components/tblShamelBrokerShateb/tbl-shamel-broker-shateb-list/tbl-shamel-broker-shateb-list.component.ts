@@ -73,19 +73,10 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     List_TBLShamelYear: TBLShamelYear[];
     List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
-    totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
   
-  pageChanged(event: PageEvent) {
-    console.log('event', event);
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.FillTable();
-  }
 
   excelData: any[] = [];
   excelOptions = {
@@ -105,8 +96,24 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
 
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.FillTable();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
     }
 
+    isLoading: boolean= false;
     darkTheme: boolean;
 
   constructor(private frmBuilder: FormBuilder,
@@ -370,45 +377,38 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
       return '';
     }
   
+    OnSearch()
+    {
+      this.currentPage=1;
+    this.pageSize=5;
+    this.FillTable().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
+    }
 
-    public async FillTable() {
+    public FillTable() {
 
+      this.isLoading= true;
 
-      try {
-  
         console.log('form', this.Form.value);
         // call Search
-        this.tblShamelBrokerShatebService.Search(this.Form.value, this.currentPage, this.pageSize).subscribe(
-          (data )=> {
-  
-           console.log('data', data);
-            // if Success 
-            if (data.Item1!= null) {
-              this.dataSource.paginator= this.paginator;
-              this.allData.push(...data.Item1);
-              this.dataSource.data = this.allData;
-              this.totalRows= data.Item2;
-              this.dataSource._updatePaginator(this.totalRows);
+        return this.tblShamelBrokerShatebService.Search(this.Form.value, this.currentPage, this.pageSize);
 
-              this.allData.forEach((datum, index) =>{
-                this.excelData[index]= {
-                                        'المنطقة': datum?.area_id,
-                                        'رقم الشطب': datum?.payrol_id,
-                                        'العام': datum?.year_id,
-                                        'الشهر': datum?.month_id,
-                                        'المدرسة': datum?.school_id,
-                                        'اسم المعلم المكلف': datum?.broker_id,
-                                        'أيام الخدمة': datum?.daycount,
-                                        }; 
+              // this.allData.forEach((datum, index) =>{
+              //   this.excelData[index]= {
+              //                           'المنطقة': datum?.area_id,
+              //                           'رقم الشطب': datum?.payrol_id,
+              //                           'العام': datum?.year_id,
+              //                           'الشهر': datum?.month_id,
+              //                           'المدرسة': datum?.school_id,
+              //                           'اسم المعلم المكلف': datum?.broker_id,
+              //                           'أيام الخدمة': datum?.daycount,
+              //                           }; 
       
-              });
-            }
-  
-          }
-        )
-  
-      } catch (ex: any) { }
-  
+              // });
   
     }
   
@@ -426,15 +426,13 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
       const dialogRef = this.dialog.open(TblShamelBrokerShatebModifyComponent, {
         height: '40%',
         width: '60%',
-        data: { obj: this.selected_broker_shateb }
+        data: null
       });
   
       dialogRef.afterClosed().toPromise().then(result => {
         console.log(result);
+        this.OnSearch();
         if (result) {
-          this.currentPage=1;
-          this.pageSize=5;
-          this.FillTable();
           
         }
       });
@@ -459,21 +457,17 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
         dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
           if (confirmed) {
             if (element?.serial != null && element.serial > 0)
-              this.tblShamelBrokerEmployeeService.delete(element?.serial).subscribe
+              this.tblShamelBrokerShatebService.delete(element?.serial).subscribe
                 (
                   data => {
-                    this.currentPage=1;
-                     this.pageSize=5;
-                    this.FillTable();
+                    this.OnSearch();
+                    this.dataSource.paginator = this.paginator;
+                    this.snackBar.open('تم الحذف', '', {
+                      duration: 2000,
+                      panelClass: ['green-snackbar']
+                    });
                   }
-  
                 )
-            this.dataSource.paginator = this.paginator;
-            this.snackBar.open('تم الحذف', '', {
-              duration: 2000,
-              panelClass: ['green-snackbar']
-            });
-  
           }
         });
       } catch (ex: any) {
@@ -489,13 +483,11 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
         const dialogRef = this.dialog.open(TblShamelBrokerShatebModifyComponent, {
           height: '40%',
         width: '60%',
-          data: { obj: this.selected_broker_shateb }
+          data: this.selected_broker_shateb
         });
   
         dialogRef.afterClosed().toPromise().then(result => {
-          this.currentPage=1;
-        this.pageSize=5;
-          this.FillTable();
+          this.OnSearch();
   
           if (result)
             this.snackBar.open('تم التعديل', '', {
@@ -517,12 +509,7 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
       });
     }
   
-    OnSearch()
-    {
-      this.currentPage=1;
-      this.pageSize=5;
-      this.FillTable();
-    }
+    
   
     ngOnInit(): void {
       this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
@@ -548,7 +535,8 @@ export class TblShamelBrokerShatebListComponent implements OnInit {
     }
   
     clearDataSource(){
-      this.allData= [];
+      this.dataSource.data= [];
+
     }
 
     public focusNext(id: string) {

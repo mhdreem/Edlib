@@ -7,6 +7,7 @@ import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
 import { TBLShamelNewShatebService } from 'src/app/modules/shared/services/finance_department/payrol/tblshamel-new-shateb.service';
 import { ThemeService } from 'src/app/modules/shared/services/theme.service';
+import { map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stopped-salaries',
@@ -19,18 +20,10 @@ export class StoppedSalariesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.View();
-  }
+  isLoading: boolean= false;
 
   rowClicked: number;
 
@@ -59,6 +52,22 @@ export class StoppedSalariesComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.View();
+        })
+      )
+      .subscribe((data: any) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+
+      });
   }
 
   ngOnInit(): void {
@@ -79,23 +88,30 @@ export class StoppedSalariesComponent implements OnInit, AfterViewInit {
     );
   }
 
+  onViewClick(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.View().subscribe((data: any)=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });  
+  }
+
   View(){
+    this.isLoading= true;
+
     let request= {
       "year_id": this.fixedYear,
       "month_id": this.fixedMonth.month_id,
       'pagesize': this.pageSize,            
       'pagenumber': this.currentPage,
     };
-    this.tblShamelNewShatebService.stoppedSalaries(request).subscribe((res: any) =>{
-      this.dataSource.paginator= this.paginator;
-      this.allData.push(...res.Item1);
-      this.dataSource.data = this.allData;
-      this.totalRows= res.Item2;
-      this.dataSource._updatePaginator(this.totalRows);
-    });
+    return this.tblShamelNewShatebService.stoppedSalaries(request);
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 }

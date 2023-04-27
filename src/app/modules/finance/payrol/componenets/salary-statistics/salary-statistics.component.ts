@@ -1,12 +1,12 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, NgZone, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
+import { forkJoin, map, Observable, of, startWith, Subscription, switchMap } from 'rxjs';
 import { ITBLShamelClass } from 'src/app/modules/shared/models/employees_department/ITBLShamelClass';
 import { ITBLShamelDepartment } from 'src/app/modules/shared/models/employees_department/ITBLShamelDepartment';
 import { ITBLShamelJobKind } from 'src/app/modules/shared/models/employees_department/ITBLShamelJobKind';
@@ -28,7 +28,7 @@ import { ThemeService } from 'src/app/modules/shared/services/theme.service';
   templateUrl: './salary-statistics.component.html',
   styleUrls: ['./salary-statistics.component.scss']
 })
-export class SalaryStatisticsComponent implements OnInit {
+export class SalaryStatisticsComponent implements OnInit, AfterViewInit {
   formname:string = 'احصائيات';
 
   LoadingFinish : boolean;
@@ -92,22 +92,14 @@ export class SalaryStatisticsComponent implements OnInit {
   ];
 
   //for pagination
-  totalRows = 0;
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
 
-  pageChanged(event: PageEvent) {
-    
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.ExcuteSearch();
-  }
 
   darkTheme: boolean;
 
+  isLoading: boolean= false;
   constructor(
   
     public departmentService: TblshameldepartmentService,
@@ -136,6 +128,21 @@ export class SalaryStatisticsComponent implements OnInit {
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.ExcuteSearch();
+        })
+      )
+      .subscribe((data: any) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
     }
 
     announceSortChange(sortState: any) {
@@ -432,8 +439,22 @@ export class SalaryStatisticsComponent implements OnInit {
     return '';
   }
   //#endregion
+
+  onSearchClick(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.ExcuteSearch().subscribe((data: any)=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    }); 
+  }
+
   ExcuteSearch ()
   {
+    this.isLoading= true;
+
     let SearchRequest =
     {
       'id': (this.ID.value!= null?this.ID.value:null ),
@@ -456,25 +477,12 @@ export class SalaryStatisticsComponent implements OnInit {
       'accounterSerail_From': (this.ID.value!= null?this.AccounterSerail_From.value:null ),            
       'accounterSerail_To': (this.ID.value!= null?this.AccounterSerail_To.value:null ), 
       'pageSize': this.pageSize-1,            
-      'pageNumber': this.currentPage+1,            
+      'pageNumber': this.currentPage,            
 
     }
     console.log('searchRequest', SearchRequest);
     
-    this.tblShamelNewShatebService.newPayrolShatebStatistics(SearchRequest).subscribe
-    (
-      (data: any) =>
-      {
-        console.log('data.Item1', data.Item1);
-        console.log('data.Item2', data.Item2);
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...data.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= data.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-      }
-        
-    );
+    return this.tblShamelNewShatebService.newPayrolShatebStatistics(SearchRequest);
   }
 
   rowClicked: number;
@@ -495,7 +503,7 @@ export class SalaryStatisticsComponent implements OnInit {
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 
 }

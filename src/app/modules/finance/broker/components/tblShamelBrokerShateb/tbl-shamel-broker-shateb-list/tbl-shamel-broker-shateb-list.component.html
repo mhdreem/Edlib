@@ -107,29 +107,29 @@
               <!-- area_id cOLUMN -->
               <ng-container matColumnDef="area_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>المنطقة</th>
-                  <td mat-cell *matCellDef="let element">{{element.area_id }}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.TBLShamelArea?.Area_Name}}</td>
               </ng-container>
               <!-- payrol_id Column -->
               <ng-container matColumnDef="payrol_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>رقم الشطب </th>
-                  <td mat-cell *matCellDef="let element">{{element.payrol_id }}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.payrol_id }}</td>
               </ng-container>
               <!-- year_id Column -->
               <ng-container matColumnDef="year_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>العام </th>
-                  <td mat-cell *matCellDef="let element">{{element.year_id }}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.year_id }}</td>
               </ng-container>
       
               <!-- month_id Column -->
               <ng-container matColumnDef="month_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>الشهر </th>
-                  <td mat-cell *matCellDef="let element">{{element.month_id }}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.TBLShamelMonth?.month_name}}</td>
               </ng-container>
       
               <!-- school_id Column -->
               <ng-container matColumnDef="school_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>المدرسة</th>
-                  <td mat-cell *matCellDef="let element">{{element.school_id}}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.TBLShamelMoneyM3PayDest?.paydest_name}}</td>
               </ng-container>
       
       
@@ -137,13 +137,13 @@
               <!-- broker_id Column -->
               <ng-container matColumnDef="broker_id">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعلم المكلف </th>
-                  <td mat-cell *matCellDef="let element">{{element.broker_id}}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.TBLShamelBrokerEmployee?.lname+&nbsp;element?.TBLShamelBrokerEmployee?.fname}}</td>
               </ng-container>
       
               <!-- daycount Column -->
               <ng-container matColumnDef="daycount">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>أيام الخدمة </th>
-                  <td mat-cell *matCellDef="let element">{{element.daycount }}</td>
+                  <td mat-cell *matCellDef="let element">{{element?.daycount }}</td>
               </ng-container>
       
       
@@ -167,8 +167,9 @@
               [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
           (click)="changeTableRowColor(idx)"></tr>
           </table>
-          <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-          [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <mat-paginator #paginator
+          [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
     
       </div>
   </ngx-hover-opacity>

@@ -34,7 +34,7 @@ export class TBLShamelSCLEgalHolidayListComponent implements OnInit,AfterViewIni
   selected_employee_ShamelSCLegalHoliday :TBLShamelSCLegalHoliday;
   displayedColumns: string[] = ['duration', 'startdate', 'enddate','documenttype_id','document_number','documentdate','action'];
   darkTheme: boolean;
-  
+  isLoading: boolean= false;
   
   constructor(
     public PageService: EmployeePageService,
@@ -88,6 +88,8 @@ ngAfterViewInit() {
     public async FillTable()
     {
      try{
+      this.isLoading= true;
+
       console.log('Fill Table ID = ' + this.Selected_Emp.id); 
 
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
@@ -97,6 +99,7 @@ ngAfterViewInit() {
           {      
             this.employee_List_TBLShamelSCLegalHoliday=data;  
             this.dataSource.data =this.employee_List_TBLShamelSCLegalHoliday;     
+            this.isLoading= false;
           }
         );
        }

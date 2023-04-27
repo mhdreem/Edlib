@@ -62,19 +62,19 @@ export class RefreshAccounterMalakComponent implements OnInit, OnDestroy {
     try {
       this.Form1 = this.fb.group(
         {
-          'AccounterName1: ': this.AccounterName1 = new FormControl<number | null>(null, [Validators.required]),
-          'Autocomplete_EmployeeName_Ctrl1: ': this.Autocomplete_EmployeeName_Ctrl1 = new FormControl<number | null>(null, [Validators.required]),
-          'id1: ': this.id1 = new FormControl<number | null>(null, [Validators.required]),
-          'serial1: ': this.serial1 = new FormControl<number | null>(null, [Validators.required]),
+          'AccounterName1': this.AccounterName1 = new FormControl<number | null>(null, [Validators.required]),
+          'Autocomplete_EmployeeName_Ctrl1': this.Autocomplete_EmployeeName_Ctrl1 = new FormControl<number | null>(null, [Validators.required]),
+          'id1': this.id1 = new FormControl<number | null>(null, [Validators.required]),
+          'serial1': this.serial1 = new FormControl<number | null>(null, [Validators.required]),
         }
       );
 
       this.Form2 = this.fb.group(
         {
-          'AccounterName2: : ': this.AccounterName2 = new FormControl<number | null>(null, [Validators.required]),
-          'Autocomplete_EmployeeName_Ctrl2: ': this.Autocomplete_EmployeeName_Ctrl2 = new FormControl<number | null>(null, [Validators.required]),
-          'id2: ': this.id2 = new FormControl<number | null>(null, [Validators.required]),
-          'serial2: ': this.serial2 = new FormControl<number | null>(null, [Validators.required]),
+          'AccounterName2': this.AccounterName2 = new FormControl<number | null>(null, [Validators.required]),
+          'Autocomplete_EmployeeName_Ctrl2': this.Autocomplete_EmployeeName_Ctrl2 = new FormControl<number | null>(null, [Validators.required]),
+          'id2': this.id2 = new FormControl<number | null>(null, [Validators.required]),
+          'serial2': this.serial2 = new FormControl<number | null>(null, [Validators.required]),
         }
       );
 

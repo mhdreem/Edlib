@@ -261,3 +261,7 @@ form{
     width: fit-content;
     margin-inline: auto;
   }
+
+  ::ng-deep .mat-paginator-range-label{
+    direction: ltr;
+  }

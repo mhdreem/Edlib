@@ -43,6 +43,8 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
   // Select Object
   selected_employee_JobState_Rows = new Set<ITBLShamelSCJobState>();
 
+  isLoading: boolean= false;
+
   darkTheme: boolean;
 
   constructor(
@@ -100,12 +102,18 @@ export class TblshamelscjobstatelistComponent implements OnInit, AfterViewInit, 
 
   public async FillTable() {
     try {
+      this.isLoading= true;
+
       if (this.Selected_Emp && this.Selected_Emp.id > 0) {
         this.jobStateService.list(this.Selected_Emp.id).toPromise().then(
           (data: any) => {
             this.employee_JobState_List = data;
             this.dataSource = new MatTableDataSource<ITBLShamelSCJobState>(this.employee_JobState_List);
+            this.PageService.Selected_TBLShamelEmployee.TBLShamelSCJobStates = this.employee_JobState_List;
+
             this.dataSource.paginator = this.paginator;
+            this.isLoading= false;
+
 
 
 

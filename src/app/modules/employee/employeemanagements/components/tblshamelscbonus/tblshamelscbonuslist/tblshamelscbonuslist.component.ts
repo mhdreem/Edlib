@@ -44,6 +44,7 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
   selected_employee_Bonus_Rows = new Set<ITBLShamelSCBonus>();
   dataSource: MatTableDataSource<ITBLShamelSCBonus>;
 
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   constructor(
@@ -101,6 +102,8 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
 
   public async FillTable() {
     try {
+      this.isLoading= true;
+
       this.LoadingFinish = false;
 
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
@@ -111,6 +114,8 @@ export class TblshamelscbonuslistComponent implements OnInit, AfterViewInit,OnDe
             this.employee_Bonus_List = data;
             this.dataSource.data = this.employee_Bonus_List;
             this.PageService.Selected_TBLShamelEmployee.TBLShamelSCBonuss = this.employee_Bonus_List;
+            this.isLoading= false;
+
           },error=>
           {
             this.LoadingFinish = true;

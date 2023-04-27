@@ -32,6 +32,7 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
 
   darkTheme: boolean;
 
+  isLoading: boolean= false;
   constructor(private tblShamelYearService: TBLShamelYearService,
     private tblShamelUpgradeYearService: TblShamelUpgradeYearService,
     public dialog: MatDialog,
@@ -70,12 +71,14 @@ export class FixUpgradeYearListComponent implements OnInit, AfterViewInit {
 
 
     try {
-  
+      this.isLoading= true;
+
       this.tblShamelUpgradeYearService.fill();
     this.tblShamelUpgradeYearService.List_TblShamelUpgradeYear_BehaviorSubject.subscribe(
       res =>{
         console.log('this.dataSource.data', this.dataSource.data);
         this.dataSource.data= res;
+        this.isLoading= false;
       }
     );
 

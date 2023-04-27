@@ -318,3 +318,6 @@ form{
 
 
 
+  ::ng-deep .mat-paginator-range-label{
+    direction: ltr;
+  }

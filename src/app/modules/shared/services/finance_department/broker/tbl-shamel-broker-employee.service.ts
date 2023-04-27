@@ -18,8 +18,9 @@ export class TblShamelBrokerEmployeeService {
     return this.httpClient.post<TblShamelBrokerEmployee[]>(this.RestUrl + `/isUniqueRecord`, emp);
   }
 
-  EmployeeFullName(searchName:string)  {     
-    return this.httpClient.get<TblShamelBrokerEmployee[]>(  `${this.RestUrl}\EmployeeFullName\${searchName}`);        
+  EmployeeFullName(searchName:string)  { 
+    console.log('searchName', searchName);    
+    return this.httpClient.get<TblShamelBrokerEmployee[]>(  `${this.RestUrl}\\EmployeeFullName\\${searchName}`);        
   }
 
   list() {
@@ -58,7 +59,7 @@ export class TblShamelBrokerEmployeeService {
   }
 
   SearchById(serail:number)  {
-    return this.httpClient.get<TblShamelBrokerEmployee[]>(this.RestUrl +`/SearchById/${serail}`);        
+    return this.httpClient.get<TblShamelBrokerEmployee>(this.RestUrl +`/SearchById/${serail}`);        
   }
 
 

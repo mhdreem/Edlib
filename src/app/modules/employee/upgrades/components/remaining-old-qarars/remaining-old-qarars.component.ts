@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +14,7 @@ import { ThemeService } from 'src/app/modules/shared/services/theme.service';
   templateUrl: './remaining-old-qarars.component.html',
   styleUrls: ['./remaining-old-qarars.component.scss']
 })
-export class RemainingOldQararsComponent implements OnInit {
+export class RemainingOldQararsComponent implements OnInit, AfterViewInit {
   formname:string = 'القرارات الوهمية المتبقية';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,6 +28,7 @@ export class RemainingOldQararsComponent implements OnInit {
   QararDateMonth: FormControl<number | null>;
   QararDateYear: FormControl<number | null>;
 
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   constructor(private fb: UntypedFormBuilder,
@@ -80,9 +81,12 @@ export class RemainingOldQararsComponent implements OnInit {
   }
 
   View(){
+    this.isLoading= true;
+
     this.tblshamelScJobStateService.ListQarar({'old_Qara_Date': moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 4}).toDate()}).subscribe(
       res => {
         this.dataSource.data= res as any;
+        this.isLoading= false;
         console.log('res', res);
       }
     );

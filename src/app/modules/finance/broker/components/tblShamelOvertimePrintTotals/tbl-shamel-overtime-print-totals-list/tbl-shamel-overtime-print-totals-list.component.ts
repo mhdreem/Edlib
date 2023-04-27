@@ -63,6 +63,8 @@ export class TblShamelOvertimePrintTotalsListComponent implements OnInit, AfterV
     // headers: ['الحساب', 'كود الحساب']
   };
 
+  isLoading: boolean= false;
+
   ngAfterViewInit() {
 
     this.dataSource.sort = this.sort;
@@ -154,16 +156,19 @@ public displayAreaProperty(value: string): string {
 
 OnSearch()
   {
+
     if(this.Form.controls['startdateDay'].value == null || this.Form.controls['startdateMonth'].value == null || this.Form.controls['startdateYear'].value == null || this.Form.controls['enddateDay'].value == null || this.Form.controls['enddateMonth'].value == null || this.Form.controls['enddateYear'].value == null){
     this.snackBar.open('الرجاء إدخال التواريخ', '', {
       duration: 2000,
       panelClass: ['red-snackbar']
     });
+    this.isLoading= false;
     return;
   }
     // this.pageIndex =1;
     this.overtime_print_totals_List = [];
     this.dataSource.data = this.overtime_print_totals_List;
+    
     this.FillTable();
   }
 
@@ -171,6 +176,7 @@ OnSearch()
 
 
     try {
+      this.isLoading= true;
 
       console.log(this.Form.value);
       // call Search
@@ -187,6 +193,7 @@ OnSearch()
             this.overtime_print_totals_List = this.overtime_print_totals_List.concat(data);
           }
           this.dataSource.data = this.overtime_print_totals_List;
+          this.isLoading= false;
 
           this.overtime_print_totals_List.forEach((datum, index) =>{
             this.excelData[index]= {

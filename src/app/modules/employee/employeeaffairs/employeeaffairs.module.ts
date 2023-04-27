@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeaffairsRoutingModule } from './employeeaffairs-routing.module';
 import { EmployeeaffairsComponent } from './employeeaffairs.component';
 import { NgxHoverOpacityModule } from 'ngx-hover-opacity';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 
@@ -27,6 +28,7 @@ import {
   SidebarModule,
   TabsModule,
   UtilitiesModule,
+  
   
   
 } from '@coreui/angular';
@@ -162,7 +164,8 @@ import { CommonmoduleModule } from '../../commonmodule/commonmodule.module';
  IconModule,
     EmployeeaffairsRoutingModule,
     NgxHoverOpacityModule,
-    CommonmoduleModule
+    CommonmoduleModule,
+    MatProgressBarModule
   ]
 })
 export class EmployeeaffairsModule { }

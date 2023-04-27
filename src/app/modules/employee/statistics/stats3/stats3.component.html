@@ -38,9 +38,9 @@
             [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
             (click)="changeTableRowColor(idx)"></tr>
         </table>
-
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
         <mat-paginator showFirstLastButtons
-        #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+        #paginator [length]="totalRows"
     [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 
 

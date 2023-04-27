@@ -4,7 +4,7 @@ import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { TblShamelUpgradeYearService } from 'src/app/modules/shared/services/employees_department/tbl-shamel-upgrade-year.service';
 import { TblshamelclassService } from 'src/app/modules/shared/services/employees_department/tblshamelclass.service';
 import { TblshameljobnameService } from 'src/app/modules/shared/services/employees_department/tblshameljobname.service';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import { TBLShamelUpgradeService } from 'src/app/modules/shared/services/employees_department/tblshamel-upgrade.service';
 import { TblShamelUpgradeYear } from 'src/app/modules/shared/models/employees_department/TblShamelUpgradeYear';
 import { Stats4 } from 'src/app/modules/shared/models/employees_department/Stats4';
@@ -59,22 +59,29 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   fixedYear: string;
 
   //for pagination
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.Search();
-  }
+  isLoading: boolean= false;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.Search();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
   referralInput: any[];
@@ -263,11 +270,35 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
     this.jobNameToAdd= jobName;
   }
 
+  onSearchClick(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.Search().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
+  }
 
   request :TblShamelUpgradeGovReportSearch = {};
 
   Search()
   {
+    this.isLoading= true;
+
+    let request= {
+      year_id: +this.UpgradeYear.value,
+      class_name:  this.Class.value,
+      jobname_name: this.JobName.value,
+      first_qarar_num: +this.FirstQararNum.value,
+      last_qarar_num: +this.LastQararNum.value,
+      };
+
+    this.tblShamelUpgradeGovReportService.Search(request).subscribe(
+      (res: any)=>{
+        this.referralInput= res.Item1;
+      });
 
     this.request= {
       year_id: +this.UpgradeYear.value,
@@ -278,32 +309,10 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
       pageSize: this.pageSize,            
       pageNumber: this.currentPage};
 
-    this.tblShamelUpgradeGovReportService.Search(this.request).subscribe(
-      (res: any)=>{
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...res.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= res.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
+    return this.tblShamelUpgradeGovReportService.Search(this.request)
 
-        this.referralInput= this.dataSource.data;
-        console.log('res', res);
-        console.log('req', this.request);
 
-        let request= {
-          year_id: +this.UpgradeYear.value,
-          class_name:  this.Class.value,
-          jobname_name: this.JobName.value,
-          first_qarar_num: +this.FirstQararNum.value,
-          last_qarar_num: +this.LastQararNum.value,
-          };
-
-        this.tblShamelUpgradeGovReportService.Search(request).subscribe(
-          (res: any)=>{
-            this.referralInput= res.Item1;
-          });
-      }
-    );
+        
     
   }
 
@@ -350,6 +359,6 @@ export class PrintReferralQararsComponent implements OnInit, AfterViewInit, OnDe
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 }

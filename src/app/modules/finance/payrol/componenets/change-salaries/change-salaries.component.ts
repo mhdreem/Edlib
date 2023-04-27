@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { startWith, switchMap } from 'rxjs';
 import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
 import { TBLShamelMonthService } from 'src/app/modules/shared/services/employees_department/tblshamel-month.service';
 import { TBLShamelYearService } from 'src/app/modules/shared/services/employees_department/tblshamel-year.service';
@@ -19,18 +20,9 @@ export class ChangeSalariesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  totalRows = 0;
   pageSize = 5;
   currentPage = 1;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.View();
-  }
 
   rowClicked: number;
 
@@ -50,6 +42,8 @@ export class ChangeSalariesComponent implements OnInit {
 
   darkTheme: boolean;
 
+  isLoading: boolean= false;
+
   constructor(private tblShamelYearService: TBLShamelYearService,
     public ShamelMonthService: TBLShamelMonthService,
     private tblShamelNewShatebService: TBLShamelNewShatebService,
@@ -59,6 +53,21 @@ export class ChangeSalariesComponent implements OnInit {
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.View();
+        })
+      )
+      .subscribe((data: any) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
   ngOnInit(): void {
@@ -78,23 +87,30 @@ export class ChangeSalariesComponent implements OnInit {
     );
   }
 
+  onViewClick(){
+    this.currentPage=0;
+    this.pageSize=5;
+    this.View().subscribe((data: any)=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    }); 
+  }
+
   View(){
+    this.isLoading= true;
+
     let request= {
       "year_id": this.fixedYear,
       "month_id": this.fixedMonth.month_id,
       'pagesize': this.pageSize,            
       'pagenumber': this.currentPage,
     };
-    this.tblShamelNewShatebService.changeSalaries(request).subscribe((res: any) =>{
-      this.dataSource.paginator= this.paginator;
-      this.allData.push(...res.Item1);
-      this.dataSource.data = this.allData;
-      this.totalRows= res.Item2;
-      this.dataSource._updatePaginator(this.totalRows);
-    });
+    return this.tblShamelNewShatebService.changeSalaries(request);
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 }

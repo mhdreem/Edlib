@@ -104,7 +104,7 @@
             </div>
         </form>
     
-        <button class="view" mat-raised-button class="edit" (click)="View()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
+        <button class="view" mat-raised-button class="edit" (click)="onViewClick()" accessControl  [FormName]="formname" [CheckedPrivilige]="'00100'">عرض</button>
         <button class="view" mat-raised-button class="edit" [disabled]="!dataSource.data[0]" printSectionId="rank-section" ngxPrint accessControl  [FormName]="formname" [CheckedPrivilige]="'01000'"><mat-icon>print</mat-icon>طباعة</button>
     
         <div class="table-wrap">
@@ -249,9 +249,9 @@
                 [style.background-color]="rowClicked == idx ? 'yellow': 'none'"
                 (click)="changeTableRowColor(idx)"></tr>
             </table>
-            
-            <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-            [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" showFirstLastButtons></mat-paginator>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <mat-paginator #paginator 
+            [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
             
             
             </div>

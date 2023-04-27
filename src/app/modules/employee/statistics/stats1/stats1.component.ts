@@ -15,7 +15,7 @@ import { TblshameldepartmentService } from '../../../shared/services/employees_d
 import { TblshameljobkindService } from '../../../shared/services/employees_department/tblshameljobkind.service';
 import { TblshameljobnameService } from '../../../shared/services/employees_department/tblshameljobname.service';
 
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { TBLShamelEmployee } from '../../../shared/models/employees_department/TBLShamelEmployee';
 import { MatTableDataSource } from '@angular/material/table';
 import { TblshamelmalakstateService } from '../../../shared/services/employees_department/tblshamelmalakstate.service';
@@ -110,19 +110,10 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   //for pagination
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.ExcuteSearch();
-  }
+  isLoading: boolean= false;
 
   darkTheme: boolean;
   
@@ -166,8 +157,24 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.ExcuteSearch();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+
+      });
     }
 
     announceSortChange(sortState: any) {
@@ -519,11 +526,17 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   SearchClicked(){
     this.currentPage=1;
     this.pageSize=5;
-    this.ExcuteSearch();
+    this.ExcuteSearch().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
   }
 
   ExcuteSearch ()
   {
+    this.isLoading= true;
     let SearchRequest =
     {
       'ID': (this.ID.value!= null?this.ID.value:null ),
@@ -548,51 +561,39 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
 
       'AccounterSerail_From': (this.ID.value!= null?this.AccounterSerail_From.value:null ),            
       'AccounterSerail_To': (this.ID.value!= null?this.AccounterSerail_To.value:null ), 
-      'pageSize': this.pageSize-1,            
-      'pageNumber': this.currentPage+1,            
+      'pageSize': this.pageSize,            
+      'pageNumber': this.currentPage,            
 
     }
     console.log('searchRequest', SearchRequest);
     
-    this.EmployeeStatsService.Stats1(SearchRequest).subscribe
-    (
-      (data: any) =>
-      {
-        console.log('data.Item1', data.Item1);
-        console.log('data.Item2', data.Item2);
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...data.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= data.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-        this.allData.forEach((data, index) =>{
-          this.excelData[index]= {
-                                  'رقم الإضبارة': data?.ID,
-                                  'رقم الحاسوب': data?.COMPUTER_ID,
-                                  'الرقم الذاتي': data?.GLOBAL_ID,
-                                  'الرقم التأميني': data?.INSURANCE_ID,
-                                  'رقم الشطب': data?.PAYROL_ID,
-                                  'الاسم': data?.FNAME,
-                                  'الكنية': data?.LNAME,
-                                  'الأب': data?.FATHER,
-                                  'الأم': data?.MOTHER,
-                                  'اسم الوظيفة': data?.JOBNAME_NAME,
-                                  'اسم المعتمد': data?.ACCOUNTER_NAME,
-                                  'رقم التسلسل': data?.ACCOUNTER_ID,
-                                  'الراتب المقطوع': data?.SALARY,
-                                  'الراتب التأميني': data?.INSURANCESALARY,
-                                  'الوضع بالملاك': data?.MALAKSTATE_NAME,
-                                  'تاريخ التبديل': data?.CHANGEDATE,
-                                  'آخر سبب تبديل': data?.CHANGEREASON_NAME,
-                                  'نوع المستند': data?.DOCUMENTTYPE_NAME,
-                                  'رقم المستند': data?.DOC_NUMBER, 
-                                  'تاريخ المستند': data?.DOC_DATE
-                                  }; 
+    return this.EmployeeStatsService.Stats1(SearchRequest);
+    
+    //     this.allData.forEach((data, index) =>{
+    //       this.excelData[index]= {
+    //                               'رقم الإضبارة': data?.ID,
+    //                               'رقم الحاسوب': data?.COMPUTER_ID,
+    //                               'الرقم الذاتي': data?.GLOBAL_ID,
+    //                               'الرقم التأميني': data?.INSURANCE_ID,
+    //                               'رقم الشطب': data?.PAYROL_ID,
+    //                               'الاسم': data?.FNAME,
+    //                               'الكنية': data?.LNAME,
+    //                               'الأب': data?.FATHER,
+    //                               'الأم': data?.MOTHER,
+    //                               'اسم الوظيفة': data?.JOBNAME_NAME,
+    //                               'اسم المعتمد': data?.ACCOUNTER_NAME,
+    //                               'رقم التسلسل': data?.ACCOUNTER_ID,
+    //                               'الراتب المقطوع': data?.SALARY,
+    //                               'الراتب التأميني': data?.INSURANCESALARY,
+    //                               'الوضع بالملاك': data?.MALAKSTATE_NAME,
+    //                               'تاريخ التبديل': data?.CHANGEDATE,
+    //                               'آخر سبب تبديل': data?.CHANGEREASON_NAME,
+    //                               'نوع المستند': data?.DOCUMENTTYPE_NAME,
+    //                               'رقم المستند': data?.DOC_NUMBER, 
+    //                               'تاريخ المستند': data?.DOC_DATE
+    //                               }; 
 
-        });
-      }
-        
-    );
+    //     });
   }
 
   rowClicked: number;
@@ -613,7 +614,7 @@ export class Stats1Component implements OnInit, OnDestroy, AfterViewInit {
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 
   exportToExcel() {

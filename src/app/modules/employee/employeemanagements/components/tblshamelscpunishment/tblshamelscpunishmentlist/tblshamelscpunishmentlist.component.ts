@@ -43,7 +43,7 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
  
   _Subscription:Subscription   = new Subscription();
   LoadingFinish:Boolean;
-
+  isLoading: boolean= false;
   
   darkTheme: boolean;
 
@@ -102,7 +102,10 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
 
     public async FillTable()
     {
+
      try{
+      this.isLoading= true;
+
       this.LoadingFinish = false;
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) 
       {
@@ -115,6 +118,12 @@ export class TblshamelscpunishmentlistComponent implements OnInit ,AfterViewInit
           {    
             this.LoadingFinish = true;  
             this.employee_Punishment_List=data;   
+            this.dataSource.data = this.employee_Punishment_List;
+            this.PageService.Selected_TBLShamelEmployee.TBLShamelSCPunishments = this.employee_Punishment_List;
+
+            this.isLoading= false;
+
+
                 
           },error=>
           {

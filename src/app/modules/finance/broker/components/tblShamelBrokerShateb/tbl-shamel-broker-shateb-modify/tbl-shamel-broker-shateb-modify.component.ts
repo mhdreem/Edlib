@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { debounceTime, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
@@ -61,6 +61,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TblShamelBrokerShatebModifyComponent>,
     private tblShamelBrokerShatebService: TblShamelBrokerShatebService,
+    @Inject(MAT_DIALOG_DATA) public data: TblShamelBrokerShateb,
     @Inject(DOCUMENT) private _document: Document,
     private themeService: ThemeService) {
       this.BuildForm();
@@ -70,7 +71,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
      BuildForm() {
       this.Form = this.frmBuilder.group({
         serial: new FormControl<number | undefined | null>(null),
-        broker_id: new FormControl<number | undefined | null>(null),
+        broker: new FormControl<number | undefined | null>(null),
         area_id: new FormControl<number | undefined | null>(null),
         year_id: new FormControl<number | undefined | null>(null),
         month_id: new FormControl<number | undefined | null>(null),
@@ -139,6 +140,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
         this.List_Area_Id_Filter = of(res[0]);
         this.tblShamelAreaService.List_TBLShamelArea = this.List_Area_Id;
         this.tblShamelAreaService.List_TBLShamelArea_BehaviorSubject.next(this.List_Area_Id);
+        console.log('this.List_Area_Id', this.List_Area_Id);
   
         this.List_TBLShamelMonth = res[1];
         this.List_TBLShamelMonth_Filter = of(res[1]);
@@ -158,12 +160,11 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
         this.List_ShamelMoneyM3PayDest_Filter = of(res[3]);
         this.ShamelMoneyM3PayDestService.List_TblShamelMoneyM3PayDest = this.List_ShamelMoneyM3PayDest;
         this.ShamelMoneyM3PayDestService.List_TblShamelMoneyM3PayDest_BehaviorSubject.next(this.List_ShamelMoneyM3PayDest);
-  
+        console.log('this.List_ShamelMoneyM3PayDest', this.List_ShamelMoneyM3PayDest);
   
   
         if (this.Form != null) {
-  
-          this.Form.controls['broker_id']
+          this.Form.controls['broker']
             .valueChanges
             .pipe(
               debounceTime(300),
@@ -175,6 +176,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
               )
             )
             .subscribe(emps => {
+              console.log('emps', emps);
               if (emps != null && (emps as TblShamelBrokerEmployee[]).length > 0
               ) {
                 this.List_broker_employee_Name = emps as TblShamelBrokerEmployee[];
@@ -211,7 +213,15 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
   
         }
   
-        this.SetValue();
+        if (this.data != null){
+          this.Selected_TblShamelBrokerShateb= this.data;
+          this.SetValue();
+        }
+
+        else {
+          this.Selected_TblShamelBrokerShateb= {};
+          this.Selected_TblShamelBrokerShateb.serial= 0;
+        }
   
   
       },
@@ -229,7 +239,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
   Display_broker_Employee_Fn(emp: TblShamelBrokerEmployee) {
     if (emp != null && emp.serial > 0) {
-
+      console.log('emp', emp);
       return emp.fullname;
     }
     return '';
@@ -237,6 +247,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
   private _Filtered_Month_Id(value: string): TBLShamelMonth[] {
     if (value != null) {
+      console.log('value', value);
       const filterValue = value;
       return this.List_TBLShamelMonth.filter(obj => obj.month_name.includes(filterValue));
     }
@@ -257,10 +268,10 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
     const id = emp.id;
 
-    this.Form.controls['id'].setValue(id);
+    this.Form.controls['broker'].setValue(emp);
 
-    if (id != null && id > 0) {
-      this.Form.controls['id'].setValue(id);
+    // if (id != null && id > 0) {
+    //   this.Form.controls['broker'].setValue(id);
       /*
       this.ShamelNewShatebService.GetNetCash(id, this.Fixed_Year.year_id, this.Fixed_Month.month_id).subscribe
         (
@@ -270,7 +281,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
         )
   */
 
-    }
+    // }
 
   }
 
@@ -278,7 +289,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
   private _Filtered_Aria_Id(value: string): TBLShamelArea[] {
     if (value != null && this.List_Area_Id != null && this.List_Area_Id.length > 0) {
       const filterValue = value;
-      return this.List_Area_Id.filter(obj => obj.area_name.includes(filterValue));
+      return this.List_Area_Id.filter(obj => obj.Area_Name.includes(filterValue));
     }
     return this.List_Area_Id.slice();
   }
@@ -296,7 +307,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
     if (value != null && this.List_TBLShamelMonth != null && this.List_TBLShamelMonth.length > 0) {
       let Month: any = this.List_TBLShamelMonth.find(crs => crs.month_id == value);
       if (Month != null)
-        return Month.documenttype_name;
+        return Month.month_name;
     }
     return '';
   }
@@ -313,9 +324,9 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
   public Display_Area_Property(value: number): string {
     if (value != null && this.List_Area_Id != null && this.List_Area_Id.length > 0) {
-      let Area: any = this.List_Area_Id.find(crs => crs.area_id == value);
+      let Area: any = this.List_Area_Id.find(crs => crs.Area_ID == value);
       if (Area != null)
-        return Area.area_name;
+        return Area.Area_Name;
     }
     return '';
   }
@@ -330,11 +341,16 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
   }
 
   SetValue() {
+    console.log('this._Selected_TblShamelBrokerShateb', this._Selected_TblShamelBrokerShateb);
     if (this._Selected_TblShamelBrokerShateb != null) {
 
-      if (this._Selected_TblShamelBrokerShateb.broker_id != null)
-        this.Form.controls['broker_id'].setValue(this._Selected_TblShamelBrokerShateb.broker_id);
-
+      if (this._Selected_TblShamelBrokerShateb.broker_id != null){
+        this.tblShamelBrokerEmployeeService.SearchById(this._Selected_TblShamelBrokerShateb.serial).subscribe(broker=>{
+          this.Form.controls['broker'].setValue(broker);
+          console.log('aaa', this.Form.controls['broker'].value);
+          console.log('bbb', broker);
+        });
+      }
 
       if (this._Selected_TblShamelBrokerShateb.serial != null)
         this.Form.controls['serial'].setValue(this._Selected_TblShamelBrokerShateb.serial);
@@ -346,9 +362,9 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
       if (this._Selected_TblShamelBrokerShateb.year_id != null)
         this.Form.controls['year_id'].setValue(this._Selected_TblShamelBrokerShateb.year_id);
 
+        console.log('this.List_TBLShamelMonth', this.List_TBLShamelMonth);
       if (this._Selected_TblShamelBrokerShateb.month_id != null)
         this.Form.controls['month_id'].setValue(this._Selected_TblShamelBrokerShateb.month_id);
-
 
       if (this._Selected_TblShamelBrokerShateb.school_id != null)
         this.Form.controls['school_id'].setValue(this._Selected_TblShamelBrokerShateb.school_id);
@@ -378,29 +394,25 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
       if (this._Selected_TblShamelBrokerShateb.modifytime != null)
         this.Form.controls['modifytime'].setValue(this._Selected_TblShamelBrokerShateb.modifytime);
 
+      // if (this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee != null && this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.fullname != null) {
+      //   let emp: TblShamelBrokerEmployee =
+      //   {
 
-      if (this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee != null && this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.fullname != null) {
-        let emp: TblShamelBrokerEmployee =
-        {
-
-          fullname: this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.fullname,
-          serial: this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.serial,
-        }
-        this.List_broker_employee_Name_Filter = of([emp]);
-        this.Form.controls['fullname'].setValue(emp);
-
-      }
+      //     fullname: this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.fullname,
+      //     serial: this._Selected_TblShamelBrokerShateb.TBLShamelBrokerEmployee.serial,
+      //   }
+      //   this.List_broker_employee_Name_Filter = of([emp]);
+      //   this.Form.controls['fullname'].setValue(emp);
+      //   console.log('this.Form.controls', this.Form.controls['fullname'].value);
+      // }
 
     }
   }
 
   public getValue() {
-    try {
 
-      if (this._Selected_TblShamelBrokerShateb != null) {
-
-        if (this.Form.controls['broker_id'].value != null)
-          this._Selected_TblShamelBrokerShateb.broker_id = this.Form.controls['broker_id'].value;
+        if (this.Form.controls['broker'].value != null)
+          this._Selected_TblShamelBrokerShateb.broker_id = this.Form.controls['broker'].value.serial;
         
         if (this.Form.controls['serial'].value != null)
           this._Selected_TblShamelBrokerShateb.serial = this.Form.controls['serial'].value;
@@ -423,10 +435,9 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
           if (this.Form.controls['daycount'].value != null)
           this._Selected_TblShamelBrokerShateb.daycount = this.Form.controls['daycount'].value;
 
-      }
-    } catch (ex: any) {
+      console.log('this.selected_broker_employee', this._Selected_TblShamelBrokerShateb);
 
-    }
+    
 
   }
 
@@ -440,6 +451,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
     //Form Not Valid Then return
     if (!this.Form.valid == true) {
+      console.log('this.Form', this.Form.errors);
       return;
     }
     this.getValue();
@@ -451,6 +463,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
 
       // comment when using real data service
+      console.log('this.selected_broker_employee', this._Selected_TblShamelBrokerShateb);
       this.tblShamelBrokerShatebService.add(this._Selected_TblShamelBrokerShateb).subscribe(
         data => {
           console.log('this.selected_broker_employee',this._Selected_TblShamelBrokerShateb);
@@ -516,6 +529,7 @@ export class TblShamelBrokerShatebModifyComponent implements OnInit {
 
   public focusNext(id: string) {
     let element = this._document.getElementById(id);
+    console.log('element', element);
     if (element) {
       element.focus();
     }

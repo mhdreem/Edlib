@@ -68,6 +68,7 @@ export class TblShamelBrokerPrintTotalsListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   
+  isLoading: boolean= false;
   darkTheme: boolean;
 
 
@@ -152,11 +153,14 @@ public displayAreaProperty(value: string): string {
 
 OnSearch()
   {
+    this.isLoading= true;
+
     if(this.Form.controls['startdateDay'].value == null || this.Form.controls['startdateMonth'].value == null || this.Form.controls['startdateYear'].value == null || this.Form.controls['enddateDay'].value == null || this.Form.controls['enddateMonth'].value == null || this.Form.controls['enddateYear'].value == null){
     this.snackBar.open('الرجاء إدخال التواريخ', '', {
       duration: 3000,
       panelClass: ['red-snackbar']
     });
+    this.isLoading= false;
     return;
   }
     // this.pageIndex =1;
@@ -185,6 +189,7 @@ OnSearch()
             this.broker_print_totals_List = this.broker_print_totals_List.concat(data);
           }
           this.dataSource.data = this.broker_print_totals_List;
+          this.isLoading= false;
 
           this.broker_print_totals_List.forEach((datum, index) =>{
             this.excelData[index]= {

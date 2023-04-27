@@ -43,18 +43,9 @@ export class PunishmentComponent implements OnInit {
   displayedColumns: string[] = [
     'id','payrol_ID','fullName','percent','duration','documenttype_id', 'documentnum', 'documentdate', 'salary','amount', 'month_id','year_id', 'edit', 'delete'];
 
-    totalRows = 0;
     pageSize = 5;
-    currentPage = 1;
+    currentPage = 0;
     pageSizeOptions: number[] = [5, 10, 25, 100];
-    allData: any[]= [];
-  
-    pageChanged(event: PageEvent) {
-      console.log('event', event);
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.Search();
-    }
 
   LoadingFinish : boolean;
 
@@ -80,6 +71,8 @@ export class PunishmentComponent implements OnInit {
     request: TBLShamelShatebPunishmentRequest ;
 
     darkTheme: boolean;
+
+    isLoading: boolean= false;
   
   constructor(
     public dialog: MatDialog,
@@ -322,8 +315,23 @@ BuilForm()
 
   
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.Search();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
   
@@ -336,11 +344,17 @@ BuilForm()
   {
     this.currentPage=1;
     this.pageSize=5;
-    this.Search();  
+    this.Search().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    }); 
   }
   Search(){
-   
-    this.ShamelShatebPunishmentService.list({
+    this.isLoading= true;
+
+    return this.ShamelShatebPunishmentService.list({
       'rowInPage': this.pageSize,
       'pageIndex': this.currentPage,
       'serial': this.Form.controls['serial'].value,
@@ -362,15 +376,6 @@ BuilForm()
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
 
-    }).subscribe(data=>{
-      if (data.Item1 != null) {
-        console.log('data', data);
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...data.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= data.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-      }
     });
 
   }

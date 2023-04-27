@@ -75,18 +75,10 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
   List_TBLShamelYear: TBLShamelYear[];
   List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log('event', event);
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.FillTable();
-  }
+  isLoading: boolean= false;
 
   excelData: any[] = [];
   excelOptions = {
@@ -365,44 +357,38 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     return '';
   }
 
-  public async FillTable() {
+  OnSearch()
+  {
+    this.currentPage=1;
+    this.pageSize=5;
+    this.FillTable().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
+  }
 
+  public FillTable() {
 
-    try {
+    this.isLoading= true;
 
       console.log('form',this.Form.value);
       // call Search
-      this.tblShamelOverTimeShatebService.Search(this.Form.value, this.currentPage, this.pageSize).subscribe(
-        (data)=> {
+      return this.tblShamelOverTimeShatebService.Search(this.Form.value, this.currentPage, this.pageSize);
 
-         
-          // if Success 
-          if (data.Item1 != null) {
-            this.dataSource.paginator= this.paginator;
-            this.allData.push(...data.Item1);
-            this.dataSource.data = this.allData;
-            this.totalRows= data.Item2;
-            this.dataSource._updatePaginator(this.totalRows);
-
-            this.allData.forEach((datum, index) =>{
-              this.excelData[index]= {
-                                      'المنطقة': datum?.area_id,
-                                      'رقم الشطب': datum?.payrol_id,
-                                      'العام': datum?.year_id,
-                                      'الشهر': datum?.month_id,
-                                      'المدرسة': datum?.school_id,
-                                      'اسم المعلم المكلف': datum?.broker_id,
-                                      'أيام الخدمة': datum?.daycount,
-                                      }; 
+            // this.allData.forEach((datum, index) =>{
+            //   this.excelData[index]= {
+            //                           'المنطقة': datum?.area_id,
+            //                           'رقم الشطب': datum?.payrol_id,
+            //                           'العام': datum?.year_id,
+            //                           'الشهر': datum?.month_id,
+            //                           'المدرسة': datum?.school_id,
+            //                           'اسم المعلم المكلف': datum?.broker_id,
+            //                           'أيام الخدمة': datum?.daycount,
+            //                           }; 
     
-            });
-          }
-        }
-      )
-
-    } catch (ex: any) { }
-
-
+            // });
   }
 
 
@@ -420,15 +406,13 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     const dialogRef = this.dialog.open(TblShamelOvertimeShatebModifyComponent, {
       height: '40%',
       width: '60%',
-      data: { obj: this.selected_overtime_shateb }
+      data: null
     });
 
     dialogRef.afterClosed().toPromise().then(result => {
       console.log(result);
       if (result) {
-        this.currentPage=1;
-        this.pageSize=5;
-        this.FillTable();
+        this.OnSearch();
         
       }
     });
@@ -452,21 +436,17 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
       dialogRef.afterClosed().toPromise().then((confirmed: boolean) => {
         if (confirmed) {
           if (element?.serial != null && element.serial > 0)
-            this.ShamelOvertimeEmployeeService.delete(element?.serial).subscribe
+            this.tblShamelOverTimeShatebService.delete(element?.serial).subscribe
               (
                 data => {
-                  this.currentPage=1;
-                  this.pageSize=5;
-                  this.FillTable();
+                  this.OnSearch();
+                  this.dataSource.paginator = this.paginator;
+                  this.snackBar.open('تم الحذف', '', {
+                    duration: 2000,
+                    panelClass: ['green-snackbar']
+                  });
                 }
-
               )
-          this.dataSource.paginator = this.paginator;
-          this.snackBar.open('تم الحذف', '', {
-            duration: 2000,
-            panelClass: ['green-snackbar']
-          });
-
         }
       });
     } catch (ex: any) {
@@ -482,13 +462,11 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
       const dialogRef = this.dialog.open(TblShamelOvertimeShatebModifyComponent, {
         height: '40%',
         width: '60%',
-        data: { obj: this.selected_overtime_shateb }
+        data: this.selected_overtime_shateb
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
-        this.currentPage=1;
-        this.pageSize=5;
-        this.FillTable();
+        this.OnSearch();
 
         if (result){
           this.dataSource.paginator = this.paginator;
@@ -513,12 +491,7 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
     });
   }
 
-  OnSearch()
-  {
-    this.currentPage=1;
-    this.pageSize=5;
-    this.FillTable();
-  }
+  
 
   ngOnInit(): void {
     this.themeService.darkTheme_BehaviorSubject.subscribe(res =>{
@@ -547,10 +520,25 @@ export class TblShamelOvertimeShatebListComponent implements OnInit, AfterViewIn
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator.page
+    .pipe(
+      startWith({}),
+      switchMap(()=>{
+        this.pageSize = this.paginator.pageSize;
+        this.currentPage = this.paginator.pageIndex + 1;
+        return this.FillTable();
+      })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array ;
+        this.isLoading= false;
+      });
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 
   public focusNext(id: string) {

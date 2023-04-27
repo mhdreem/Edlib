@@ -37,6 +37,7 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
   selected_employee_education_Rows = new Set<ITBLShamelSCEducation>();
   dataSource: MatTableDataSource<ITBLShamelSCEducation>;
 
+  isLoading: boolean= false;
   darkTheme: boolean;
 
 
@@ -92,6 +93,7 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
 
   public async FillTable() {
     try {
+      this.isLoading= true;
 
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
 
@@ -100,6 +102,8 @@ export class TblshamelsceducationlistComponent implements OnInit, AfterViewInit 
             this.employee_education_List = data;
             this.dataSource.data = this.employee_education_List;
             this.PageService.Selected_TBLShamelEmployee.TBLShamelSCEducations = this.employee_education_List;
+            this.isLoading= false;
+
           }
         );
 

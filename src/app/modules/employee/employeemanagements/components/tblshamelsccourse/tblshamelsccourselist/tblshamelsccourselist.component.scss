@@ -262,3 +262,7 @@ mat-form-field.mat-form-field-disabled ::ng-deep  .mat-form-field-flex{
 mat-form-field{
   width: fit-content;
 }
+
+::ng-deep .mat-paginator-range-label{
+  direction: ltr;
+}

@@ -52,6 +52,7 @@ export class TblshamelschealthholidayListComponent implements OnInit,AfterViewIn
 
   darkTheme: boolean;
 
+  isLoading: boolean= false;
 
   constructor(
     public PageService: EmployeePageService,
@@ -114,6 +115,8 @@ ngAfterViewInit() {
     public async FillTable()
     {
      try{
+      this.isLoading= true;
+
       console.log('Fill Table ID = ' + this.Selected_Emp.id); 
 
       if (this.Selected_Emp != null  && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
@@ -125,6 +128,7 @@ ngAfterViewInit() {
              this.employee_HealthHoliday_List=data;  
              this.PageService.Selected_TBLShamelEmployee.TBLShamelSCHealthHolidays = data;                        
              this.dataSource.data =this.employee_HealthHoliday_List;
+             this.isLoading= false;
            }
          );
         }

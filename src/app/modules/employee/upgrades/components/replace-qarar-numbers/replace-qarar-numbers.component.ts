@@ -37,7 +37,7 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
 
 
   request: TblShamelReplaceQararNumbers= {};
-
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   constructor(private tblshamelScJobStateService: TblshamelScJobStateService,
@@ -82,6 +82,8 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
   }
 
   View(){
+    this.isLoading= true;
+
     this.request.old_Qara_Num= +this.Id.value;
     this.request.old_Qara_Date= moment(this.QararDateMonth.value+'/'+this.QararDateDay.value+'/'+this.QararDateYear.value).set({hour: 4}).toDate();
     this.request.new_Qara_Num= +this.NewQararNumber.value;
@@ -89,6 +91,7 @@ export class ReplaceQararNumbersComponent implements OnInit, AfterViewInit {
     this.tblshamelScJobStateService.ListQarar(this.request).subscribe(
       (res: any) => {
         this.dataSource.data= res.Result;
+        this.isLoading= false;
         console.log('res', res);
         console.log('req', this.request);
       }

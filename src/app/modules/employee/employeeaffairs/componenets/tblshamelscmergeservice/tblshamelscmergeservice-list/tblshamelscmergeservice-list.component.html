@@ -80,7 +80,7 @@
               <td class="mat-cell" colspan="4">لا يوجد بيانات مطابقة للبحث "{{input.value}}"</td>
             </tr>
           </table>
-      
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
           <mat-paginator #paginator [pageSizeOptions]="[10, 15, 30]" showFirstLastButtons></mat-paginator>
       
       </div>

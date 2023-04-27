@@ -34,6 +34,7 @@ export class TblshamelscmergeserviceListComponent implements OnInit,AfterViewIni
   selected_employee_MergeService :TBLShamelSCMergeService = {};
   displayedColumns: string[] = ['years', 'months', 'days','mergeservicereason_id','documenttype_id','document_number', 'documentdate','action'];
   
+  isLoading: boolean= false;
   darkTheme: boolean;
  
   
@@ -91,7 +92,8 @@ ngAfterViewInit() {
     public async FillTable()
     {
      try{
-    
+      this.isLoading= true;
+
       if (this.Selected_Emp != null  && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
 
         await this.SCMergeServiceService.list(this.Selected_Emp.id).subscribe(
@@ -102,7 +104,8 @@ ngAfterViewInit() {
             if (this.PageService.Selected_TBLShamelEmployee != null)
               this.PageService.Selected_TBLShamelEmployee.TBLShamelSCMergeServices = data;                        
             this.employee_List_TBLShamelSCMergeService=data;  
-            this.dataSource.data =this.employee_List_TBLShamelSCMergeService;     
+            this.dataSource.data =this.employee_List_TBLShamelSCMergeService;   
+            this.isLoading= false;  
           }
         );
        }

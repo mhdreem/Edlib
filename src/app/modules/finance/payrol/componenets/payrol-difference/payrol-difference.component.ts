@@ -4,7 +4,7 @@ import { FormControl, FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { forkJoin, map, Observable, of, startWith, Subscription } from 'rxjs';
+import { forkJoin, map, Observable, of, startWith, Subscription, switchMap } from 'rxjs';
 import { ITBLShamelAccounter } from 'src/app/modules/shared/models/employees_department/TBLShamelAccounter';
 import { TBLShamelMonth } from 'src/app/modules/shared/models/employees_department/TBLShamelMonth';
 import { TBLShamelYear } from 'src/app/modules/shared/models/employees_department/TBLShamelYear';
@@ -60,21 +60,13 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
   List_TBLShamelYear: TBLShamelYear[];
   List_TBLShamelYear_Filter: Observable<TBLShamelYear[]> = of([]);
 
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
 
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.View();
-  }
 
   darkTheme: boolean;
-
+  isLoading: boolean= false;
 
   constructor(@Inject(DOCUMENT) private _document: Document,
     private tblShamelYearService: TBLShamelYearService,
@@ -308,12 +300,27 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.View();
+        })
+      )
+      .subscribe((data: any) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -326,7 +333,20 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
     else this.rowClicked = idx;
   }
 
+  onViewClick(){
+    this.currentPage=1;
+    this.pageSize=5;
+    this.View().subscribe((data: any)=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
+  }
+
   View(){
+    this.isLoading= true;
+
     let request= {
       "year_id_start": this.year_id_first.value,
       "year_id_end": this.year_id_last.value,
@@ -345,15 +365,7 @@ export class PayrolDifferenceComponent implements OnInit, AfterViewInit {
       'page_size': this.pageSize,            
       'page_index': this.currentPage,
     };
-    this.tblShamelNewShatebService.newPayrolDifference(request).subscribe(
-      (res: any) =>{
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...res.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= res.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-      }
-    );
+    return this.tblShamelNewShatebService.newPayrolDifference(request);
   }
 
   public focusNext(id: string) {

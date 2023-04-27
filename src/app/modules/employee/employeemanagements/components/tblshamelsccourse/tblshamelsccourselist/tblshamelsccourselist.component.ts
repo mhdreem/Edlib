@@ -39,7 +39,7 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
   selected_employee_course :ITBLShamelSCCourse;
   displayedColumns: string[] = ['course_name', 'specification_name', 'studyduration', 'country_name'
                                 ,'startdate','enddate' ,'action'];
-
+  isLoading: boolean= false;
   darkTheme: boolean;
 
   constructor(
@@ -93,6 +93,8 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
     public async FillTable()
     {
      try{
+      this.isLoading= true;
+
        if (this.Selected_Emp && this.Selected_Emp.id>0)
        {
         this.courseService.list(this.Selected_Emp.id).toPromise().then(
@@ -101,6 +103,8 @@ export class TblshamelsccourselistComponent   implements OnInit ,AfterViewInit  
             this.employee_course_List=data;                   
             this.dataSource.data= this.employee_course_List ;
             this.PageService.Selected_TBLShamelEmployee.TBLShamelSCCourses =  this.employee_course_List;
+            this.isLoading= false;
+
             
           }
         );

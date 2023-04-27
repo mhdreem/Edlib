@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest, forkJoin, Observable, of, Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { EmployeeStatsService } from 'src/app/modules/shared/services/employees_
 import { TBLShamelSuddenHolidayService } from 'src/app/modules/shared/services/employees_department/tblshamel-sudden-holiday.service';
 import { TblshamelchangereasonService } from 'src/app/modules/shared/services/employees_department/tblshamelchangereason.service';
 import { TblshamelmalakstateService } from 'src/app/modules/shared/services/employees_department/tblshamelmalakstate.service';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
@@ -27,7 +27,7 @@ import { ExportToCsv } from 'export-to-csv';
   templateUrl: './stats4.component.html',
   styleUrls: ['./stats4.component.scss']
 })
-export class stats4 implements OnInit, OnDestroy {
+export class stats4 implements OnInit, OnDestroy, AfterViewInit {
   formname:string = 'احصائيات بين تاريخين';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -73,18 +73,11 @@ export class stats4 implements OnInit, OnDestroy {
 
   
   //for pagination
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.Search();
-  }
+  isLoading: boolean= false;
+  
 
   darkTheme: boolean;
 
@@ -116,19 +109,28 @@ export class stats4 implements OnInit, OnDestroy {
       this.BuildForm();
       this.Load_Data();
 
-
-      
-
-
-
-
-
    }
 
    ngAfterViewInit() {
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.Search();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+
+      });
   }
 
   announceSortChange(sortState: any) {
@@ -305,55 +307,57 @@ export class stats4 implements OnInit, OnDestroy {
   SearchClicked(){
     this.currentPage=1;
     this.pageSize=5;
-    this.Search();
+    this.Search().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+
+    });
   }
 
   Search()
   {
+    this.isLoading= true;
+
     if (this.FirstDateMonth.value == null || this.FirstDateDay.value == null || this.FirstDateYear.value == null ||
       this.EndDateMonth.value == null || this.EndDateDay.value == null || this.EndDateYear.value == null){
       this.snackBar.open('يجب تحديد تاريخي البداية والنهاية', '', {
         duration: 4000,
         panelClass: ['red-snackbar']
       });
-    return;
-    }
+      this.isLoading= false;
 
+    return of(null);
+    }
+    
     this.request= {...this.request,
       malakState_Name: this.MalakState.value,
       first_Date: moment(this.FirstDateMonth.value+'/'+this.FirstDateDay.value+'/'+this.FirstDateYear.value).set({hour: 4}).toDate(),
       end_Date: moment(this.EndDateMonth.value+'/'+this.EndDateDay.value+'/'+this.EndDateYear.value).set({hour: 4}).toDate(),
       pageSize: this.pageSize,            
       pageNumber: this.currentPage};
-    this.service.Stats4(this.request).subscribe(
-      (res: any)=>{
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...res.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= res.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
+    return this.service.Stats4(this.request);
 
-        this.allData.forEach((data, index) =>{
-          this.excelData[index]= {
-                                  'رقم الإضبارة': data?.ID,
-                                  'رقم الحاسوب': data?.COMPUTER_ID,
-                                  'الاسم': data?.FNAME,
-                                  'الكنية': data?.LNAME,
-                                  'الأب': data?.FATHER,
-                                  'الأم': data?.MOTHER,
-                                  'الفئة': data?.CLASS_NAME,
-                                  'الصفة الوظيفة': data?.JOBNAME_NAME,
-                                  'تاريخ الولادة': data?.BIRTHDATE,
-                                  'تاريخ المباشرة': data?.STARTDATE,
-                                  'الوضع بالملاك': data?.MALAKSTATE_NAME,
-                                  'نوع المستند': data?.DOCUMENTTYPE_NAME,
-                                  'رقم المستند': data?.DOC_NUMBER, 
-                                  'تاريخ المستند': data?.DOC_DATE
-                                  }; 
+        // this.allData.forEach((data, index) =>{
+        //   this.excelData[index]= {
+        //                           'رقم الإضبارة': data?.ID,
+        //                           'رقم الحاسوب': data?.COMPUTER_ID,
+        //                           'الاسم': data?.FNAME,
+        //                           'الكنية': data?.LNAME,
+        //                           'الأب': data?.FATHER,
+        //                           'الأم': data?.MOTHER,
+        //                           'الفئة': data?.CLASS_NAME,
+        //                           'الصفة الوظيفة': data?.JOBNAME_NAME,
+        //                           'تاريخ الولادة': data?.BIRTHDATE,
+        //                           'تاريخ المباشرة': data?.STARTDATE,
+        //                           'الوضع بالملاك': data?.MALAKSTATE_NAME,
+        //                           'نوع المستند': data?.DOCUMENTTYPE_NAME,
+        //                           'رقم المستند': data?.DOC_NUMBER, 
+        //                           'تاريخ المستند': data?.DOC_DATE
+        //                           }; 
 
-        });
-      }
-    );
+        // });
     
   }
 
@@ -457,7 +461,7 @@ export class stats4 implements OnInit, OnDestroy {
   }
 
   clearDataSource(){
-    this.allData= [];
+    this.dataSource.data= [];
   }
 
   exportToExcel() {

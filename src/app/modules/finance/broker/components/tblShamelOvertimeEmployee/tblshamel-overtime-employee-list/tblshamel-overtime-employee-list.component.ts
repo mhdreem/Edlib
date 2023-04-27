@@ -42,27 +42,13 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   }
 
 
-  totalRows = 0;
   pageSize = 5;
-  currentPage = 1;
+  currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  allData: any[]= [];
-
-  pageChanged(event: PageEvent) {
-    console.log('event', event);
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.FillTable();
-  }
 
 
   // Reactive Filter Form 
   Form: FormGroup;
-
-
-  rowInPage = 100;
-  pageIndex = 1;
-
 
   List_SEX_NAME: TBLShamelSex[] = [];
   List_SEX_NAME_Filter: Observable<TBLShamelSex[]> = of([]);
@@ -86,6 +72,7 @@ export class TBLShamelOvertimeEmployeeListComponent implements OnInit {
   //Data Source For MatTable
   dataSource = new MatTableDataSource<TBLShamelOvertimeEmployee>(this.overtime_employee_List);
 
+  isLoading: boolean= false;
 
   excelData: any[] = [];
   excelOptions = {
@@ -241,6 +228,22 @@ Load_Sex() : Observable<TBLShamelSex[]>
 
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.FillTable();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+
+        this.isLoading= false;
+      });
   }
 
   ngOnChanges() {
@@ -254,21 +257,14 @@ Load_Sex() : Observable<TBLShamelSex[]>
     })
   }
 
-  
-  onScroll() {
-
-    this.FillTable();
-  }
 
   // Call Server to Fetch Data And Then To Concat to Result Output List 
-  public async FillTable() {
-
-
-    try {
+  public FillTable() {
+    this.isLoading= true;
 
       console.log(this.Form.value);
       // call Search
-      this.ShamelOvertimeEmployeeService.Search({
+      return this.ShamelOvertimeEmployeeService.Search({
         "serial": this.Form.controls['serial'].value,
         "fname": this.Form.controls['fname'].value,
         "lname": this.Form.controls['lname'].value,
@@ -280,38 +276,21 @@ Load_Sex() : Observable<TBLShamelSex[]>
         "servicedayes_operator": this.Form.controls['servicedayes_operator'].value,
         "pagesize": this.pageSize,
       "pagenumber": this.currentPage
-      }).subscribe(
-        (data)=> {
+      });
 
-         
-          // if Success 
-          if (data.Item1 != null) {
-            this.dataSource.paginator= this.paginator;
-            this.allData.push(...data.Item1);
-            this.dataSource.data = this.allData;
-            this.totalRows= data.Item2;
-            this.dataSource._updatePaginator(this.totalRows);
-
-            this.allData.forEach((datum, index) =>{
-              this.excelData[index]= {
-                                      'التسلسل': datum?.serial,
-                                      'الأسم': datum?.fname,
-                                      'الكنية': datum?.lname,
-                                      'الأب': datum?.father,
-                                      'الأم': datum?.mother,
-                                      'تاريخ الولادة': datum?.birthdate,
-                                      'الجنس': datum?.sexname,
-                                      'ساعات الخدمة': datum?.servicedayes,
-                                      }; 
+            // this.allData.forEach((datum, index) =>{
+            //   this.excelData[index]= {
+            //                           'التسلسل': datum?.serial,
+            //                           'الأسم': datum?.fname,
+            //                           'الكنية': datum?.lname,
+            //                           'الأب': datum?.father,
+            //                           'الأم': datum?.mother,
+            //                           'تاريخ الولادة': datum?.birthdate,
+            //                           'الجنس': datum?.sexname,
+            //                           'ساعات الخدمة': datum?.servicedayes,
+            //                           }; 
     
-            });
-          }
-
-        }
-      )
-
-    } catch (ex: any) { }
-
+            // });
 
   }
 
@@ -319,7 +298,12 @@ Load_Sex() : Observable<TBLShamelSex[]>
   {
     this.currentPage=1;
     this.pageSize=5;
-    this.FillTable();
+    this.FillTable().subscribe(data=>{
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    });
   }
 
   announceSortChange(sortState: any) {
@@ -363,9 +347,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
     dialogRef.afterClosed().toPromise().then(result => {
       console.log(result);
       if (result) {
-        this.currentPage=1;
-        this.pageSize=5;
-        this.FillTable();
+        this.OnSearch();
         this.dataSource.paginator = this.paginator;
         
       }
@@ -393,9 +375,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
             this.ShamelOvertimeEmployeeService.delete(element?.serial).subscribe
               (
                 data => {
-                  this.currentPage=1;
-                  this.pageSize=5;
-                  this.FillTable();
+                  this.OnSearch();
                 }
 
               )
@@ -431,9 +411,7 @@ Load_Sex() : Observable<TBLShamelSex[]>
       });
 
       dialogRef.afterClosed().toPromise().then(result => {
-        this.currentPage=1;
-        this.pageSize=5;
-        this.FillTable();
+        this.OnSearch();
 
         if (result){
 

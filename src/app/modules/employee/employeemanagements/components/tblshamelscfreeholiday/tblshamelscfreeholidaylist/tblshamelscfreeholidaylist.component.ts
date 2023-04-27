@@ -47,6 +47,7 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
     // Select Object
     selected_employee_freeHoliday_Rows = new Set<ITBLShamelSCFreeHoliday>();                              
    
+    isLoading: boolean= false;
     darkTheme: boolean;
   
     constructor(
@@ -108,6 +109,8 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
       public async FillTable()
       {
        try{
+        this.isLoading= true;
+
         console.log('Fill Table ID = ' + this.id); 
 
         if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
@@ -117,6 +120,10 @@ export class TblshamelscfreeholidaylistComponent   implements OnInit ,AfterViewI
             {      
               this.employee_freeHoliday_List=data;  
               this.dataSource.data =this.employee_freeHoliday_List;
+            this.PageService.Selected_TBLShamelEmployee.TBLShamelSCFreeHolidays = this.employee_freeHoliday_List;
+
+              this.isLoading= false;
+
               console.log(this.employee_freeHoliday_List); 
                   
             }

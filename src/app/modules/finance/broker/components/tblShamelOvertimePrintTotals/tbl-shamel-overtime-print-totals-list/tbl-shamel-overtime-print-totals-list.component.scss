@@ -311,6 +311,9 @@ form{
     background-color: rgba(0,0,0,.12) !important;
   }
 
+  ::ng-deep .mat-paginator-range-label{
+    direction: ltr;
+  }
 
 
 

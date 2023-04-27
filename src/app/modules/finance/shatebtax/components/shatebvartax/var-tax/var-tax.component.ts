@@ -46,18 +46,10 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
 
     LoadingFinish : boolean;
  
-    totalRows = 0;
     pageSize = 5;
-    currentPage = 1;
+    currentPage = 0;
     pageSizeOptions: number[] = [5, 10, 25, 100];
-    allData: any[]= [];
-  
-    pageChanged(event: PageEvent) {
-      console.log('event', event);
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.Search();
-    }
+    
 
     List_DocumentType: ITBLShamelDocumentType[] = [];
     List_DocumentType_Filter: Observable<ITBLShamelDocumentType[]> = of([]);
@@ -83,6 +75,8 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
     Form : FormGroup;
 
     darkTheme: boolean;
+
+    isLoading: boolean= false;
 
   constructor(
     public dialog: MatDialog,
@@ -111,6 +105,21 @@ export class VarTaxComponent implements OnInit, AfterViewInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.paginator.page
+      .pipe(
+        startWith({}),
+        switchMap(()=>{
+          this.pageSize = this.paginator.pageSize;
+          this.currentPage = this.paginator.pageIndex + 1;
+          return this.Search();
+        })
+      )
+      .subscribe((data) => {
+        var array = new Array(data.Item2);
+        array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+        this.dataSource.data = array;
+        this.isLoading= false;
+      });
   }
 
   ngOnInit(): void {
@@ -372,11 +381,18 @@ BuilForm()
   {
     this.currentPage=1;
     this.pageSize=5;
-    this.Search();  
+    this.Search().subscribe(data=>{
+      console.log('data', data);
+      var array = new Array(data.Item2);
+      array.splice((this.currentPage-1)*this.pageSize, this.pageSize,...data.Item1);
+      this.dataSource.data = array;
+      this.isLoading= false;
+    }); 
   }
   Search(){
-   
-    this.ShamelShatebVarTaxService.search({
+    this.isLoading= true;
+
+    return this.ShamelShatebVarTaxService.search({
       'rowInPage': this.pageSize,
       'pageIndex': this.currentPage,
       'serial': this.Form.controls['serial'].value,
@@ -393,15 +409,6 @@ BuilForm()
       'eisaldate_From': moment(this.Form.controls['eisaldate_From_Month'].value+'/'+this.Form.controls['eisaldate_From_Day'].value+'/'+this.Form.controls['eisaldate_From_Year'].value).set({hour: 4}).toDate(),
       'eisaldate_To': moment(this.Form.controls['eisaldate_To_Month'].value+'/'+this.Form.controls['eisaldate_To_Day'].value+'/'+this.Form.controls['eisaldate_To_Year'].value).set({hour: 4}).toDate(),
 
-    }).subscribe(data =>{
-      if (data.Item1 != null) {
-        console.log('data', data);
-        this.dataSource.paginator= this.paginator;
-        this.allData.push(...data.Item1);
-        this.dataSource.data = this.allData;
-        this.totalRows= data.Item2;
-        this.dataSource._updatePaginator(this.totalRows);
-      }
     });
 
   }

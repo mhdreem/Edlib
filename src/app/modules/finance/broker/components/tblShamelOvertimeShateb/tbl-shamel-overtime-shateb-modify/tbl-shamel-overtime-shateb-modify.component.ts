@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { debounceTime, distinctUntilChanged, filter, finalize, forkJoin, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
@@ -60,6 +60,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
     public ShamelMoneyM3PayDestService: TblShamelMoneyM3PayDestService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TblShamelOvertimeShatebModifyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: TBLShamelOverTimeShateb,
     private tBLShamelOverTimeShatebService: TBLShamelOverTimeShatebService,
     @Inject(DOCUMENT) private _document: Document,
     private themeService: ThemeService
@@ -71,7 +72,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
   BuildForm() {
     this.Form = this.frmBuilder.group({
       serial: new FormControl<number | undefined | null>(null),
-      broker_id: new FormControl<number | undefined | null>(null),
+      broker: new FormControl<number | undefined | null>(null),
       area_id: new FormControl<number | undefined | null>(null),
       year_id: new FormControl<number | undefined | null>(null),
       month_id: new FormControl<number | undefined | null>(null),
@@ -166,7 +167,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
       if (this.Form != null) {
 
-        this.Form.controls['fullname']
+        this.Form.controls['broker']
           .valueChanges
           .pipe(
             debounceTime(300),
@@ -214,7 +215,15 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
       }
 
-      this.SetValue();
+      if (this.data != null){
+        this.Selected_TblShamelOvertimeShateb= this.data;
+        this.SetValue();
+      }
+
+      else {
+        this.Selected_TblShamelOvertimeShateb= {};
+        this.Selected_TblShamelOvertimeShateb.serial= 0;
+      }
 
 
     },
@@ -260,10 +269,10 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
     const id = emp.id;
 
-    this.Form.controls['id'].setValue(id);
+    this.Form.controls['broker'].setValue(emp);
 
-    if (id != null && id > 0) {
-      this.Form.controls['id'].setValue(id);
+    // if (id != null && id > 0) {
+    //   this.Form.controls['id'].setValue(id);
       /*
       this.ShamelNewShatebService.GetNetCash(id, this.Fixed_Year.year_id, this.Fixed_Month.month_id).subscribe
         (
@@ -273,7 +282,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
         )
   */
 
-    }
+    // }
 
   }
 
@@ -299,7 +308,7 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
     if (value != null && this.List_TBLShamelMonth != null && this.List_TBLShamelMonth.length > 0) {
       let Month: any = this.List_TBLShamelMonth.find(crs => crs.month_id == value);
       if (Month != null)
-        return Month.documenttype_name;
+        return Month.month_name;
     }
     return '';
   }
@@ -316,9 +325,9 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
   public Display_Area_Property(value: number): string {
     if (value != null && this.List_Area_Id != null && this.List_Area_Id.length > 0) {
-      let Area: any = this.List_Area_Id.find(crs => crs.area_id == value);
+      let Area: any = this.List_Area_Id.find(crs => crs.Area_ID == value);
       if (Area != null)
-        return Area.area_name;
+        return Area.Area_Name;
     }
     return '';
   }
@@ -334,11 +343,15 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
 
   SetValue() {
+    console.log('this.Selected_TblShamelOvertimeShateb', this.Selected_TblShamelOvertimeShateb);
     if (this.Selected_TblShamelOvertimeShateb != null) {
 
       if (this.Selected_TblShamelOvertimeShateb.broker_id != null)
-        this.Form.controls['broker_id'].setValue(this.Selected_TblShamelOvertimeShateb.broker_id);
-
+          this.ShamelOvertimeEmployeeService.SearchById(this.Selected_TblShamelOvertimeShateb.serial).subscribe(broker=>{
+            this.Form.controls['broker'].setValue(broker);
+            console.log('aaa', this.Form.controls['broker'].value);
+            console.log('bbb', broker);
+          });
 
       if (this.Selected_TblShamelOvertimeShateb.serial != null)
         this.Form.controls['serial'].setValue(this.Selected_TblShamelOvertimeShateb.serial);
@@ -383,29 +396,26 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
         this.Form.controls['modifytime'].setValue(this.Selected_TblShamelOvertimeShateb.modifytime);
 
 
-      if (this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee != null && this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.fullname != null) {
-        let emp: TBLShamelOvertimeEmployee =
-        {
+      // if (this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee != null && this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.fullname != null) {
+      //   let emp: TBLShamelOvertimeEmployee =
+      //   {
 
-          fullname: this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.fullname,
-          serial: this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.serial,
-        }
-        this.List_Overtime_employee_Name_Filter = of([emp]);
-        this.Form.controls['fullname'].setValue(emp);
+      //     fullname: this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.fullname,
+      //     serial: this.Selected_TblShamelOvertimeShateb.TBLShamelOvertimeEmployee.serial,
+      //   }
+      //   this.List_Overtime_employee_Name_Filter = of([emp]);
+      //   this.Form.controls['fullname'].setValue(emp);
 
-      }
+      // }
 
     }
 
   }
 
   public getValue() {
-    try {
 
-      if (this.Selected_TblShamelOvertimeShateb != null) {
-
-        if (this.Form.controls['broker_id'].value != null)
-          this.Selected_TblShamelOvertimeShateb.broker_id = this.Form.controls['broker_id'].value;
+        if (this.Form.controls['broker'].value != null)
+          this.Selected_TblShamelOvertimeShateb.broker_id = this.Form.controls['broker'].value.serial;
         
         if (this.Form.controls['serial'].value != null)
           this.Selected_TblShamelOvertimeShateb.serial = this.Form.controls['serial'].value;
@@ -427,11 +437,6 @@ export class TblShamelOvertimeShatebModifyComponent implements OnInit {
 
           if (this.Form.controls['daycount'].value != null)
           this.Selected_TblShamelOvertimeShateb.daycount = this.Form.controls['daycount'].value;
-      }
-    } catch (ex: any) {
-
-    }
-
   }
   /* Handle form errors in Angular 8 */
   public errorHandling = (control: string, error: string) => {

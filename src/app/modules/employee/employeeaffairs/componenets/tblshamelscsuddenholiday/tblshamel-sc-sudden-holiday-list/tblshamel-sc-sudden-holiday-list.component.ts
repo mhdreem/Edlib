@@ -33,7 +33,7 @@ employee_SuddenHoliday_List :TBLShamelSCSuddenHoliday []=[];
 selected_employee_SuddenHoliday :TBLShamelSCSuddenHoliday;
 displayedColumns: string[] = [ 'startdate', 'enddate','duration','suddenholiday_id','documenttype_id', 'document_number',
                               'documentdate','action'];
-
+isLoading: boolean= false;
 darkTheme: boolean;
 
 
@@ -90,6 +90,8 @@ ngAfterViewInit() {
     public async FillTable()
     {
      try{
+      this.isLoading= true;
+
       console.log('Fill Table ID = ' + this.Selected_Emp.id); 
 
       if (this.Selected_Emp && this.Selected_Emp.id != null && this.Selected_Emp.id > 0) {
@@ -100,7 +102,9 @@ ngAfterViewInit() {
           this.employee_SuddenHoliday_List=data;  
           this.PageService.Selected_TBLShamelEmployee.TBLShamelSCSuddenHolidays = data;
             
-          this.dataSource.data =this.employee_SuddenHoliday_List;     
+          this.dataSource.data =this.employee_SuddenHoliday_List;  
+          this.isLoading= false;
+   
         }
       );
      }
